@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is part of DLect. DLect is a suite of code that facilitates the downloading of lecture recordings.
+
+Copyright © 2014 Lee Symes.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>DaaS-Maven</artifactId>
+        <groupId>org.dlect</groupId>
+        <version>1.1</version>
+    </parent>
+
+    <groupId>org.dlect</groupId>
+    <artifactId>DaaS-Maven-ear</artifactId>
+    <version>1.1</version>
+    <packaging>ear</packaging>
+
+    <name>DaaS-Maven-ear</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+  
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>                        
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-database</artifactId>
+                        </jarModule>                   
+                        <ejbModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-database-util</artifactId>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-data</artifactId>
+                        </jarModule>
+                        
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb</artifactId>
+                        </jarModule>
+                        <ejbModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-impl</artifactId>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-util</artifactId>
+                        </jarModule>
+                        
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-internal-university</artifactId>
+                        </jarModule>
+                        <ejbModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-internal-university-impl</artifactId>
+                        </ejbModule>
+                        
+                        <jarModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-internal-provider</artifactId>
+                        </jarModule>
+                        <ejbModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-internal-provider-impl</artifactId>
+                        </ejbModule>
+                        <ejbModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-ejb-internal-provider-impl-blackboard</artifactId>
+                        </ejbModule>
+                                                
+                        <webModule>
+                            <groupId>org.dlect</groupId>
+                            <artifactId>DaaS-Maven-web2</artifactId>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>                   
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-database</artifactId>
+            <version>${project.version}</version>
+        </dependency>                   
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-database-util</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-impl</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-internal-university</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-internal-university-impl</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+               
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-internal-provider</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-internal-provider-impl</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-ejb-internal-provider-impl-blackboard</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+               
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DaaS-Maven-web2</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>ejb-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+    </dependencies>
+</project>
