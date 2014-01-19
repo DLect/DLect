@@ -27,15 +27,17 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
         <artifactId>DLect-Parent</artifactId>
         <version>1.1</version>
     </parent>
+      
+    <packaging>pom</packaging>
     
     <groupId>org.dlect.web</groupId>
-    <artifactId>DLect-Web</artifactId>
+    <artifactId>DLect-Web-Parent</artifactId>
     <version>1.1</version>
 
-    <packaging>pom</packaging>
+    <name>DLect Web Parent</name>
 
-    <name>DLect Parent Pom</name>
-
+    <url>uqlectures.sourceforge.net</url>
+    
     <modules>
         <module>Base</module>
         <module>Database</module>

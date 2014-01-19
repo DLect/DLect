@@ -1,0 +1,12 @@
+dependencies {
+    compile     slf4j
+    compile     slf4j_jdk
+
+    compile     junit
+    compile     mockito
+    compile     powermock_mockito
+    compile     powermock_junit
+    compile     reflections
+    
+    compile     commons_lang
+}

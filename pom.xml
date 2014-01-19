@@ -37,29 +37,31 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
         <module>Web</module>
     </modules>
     
-    <!-- Configuring plugins to use 1.7 -->
-    <pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </pluginManagement>
+    <build>
+        <!-- Configuring plugins to use 1.7 -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     
     <licenses>
         <license>
             <name>GNU General Public License, Version 3.0</name>
             <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
             <distribution>repo</distribution>
-            <comment>
+            <comments>
                 All sub-projects are licensed under GPLv3 except for the Web Interfaces. These are licensed under the related AGPLv3; an extended GPL license for online services.
-            </comment>
+            </comments>
         </license>
     </licenses>
     
@@ -71,7 +73,7 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
         <org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_j2eeVersion>1.7</org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_j2eeVersion>
         <org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>gfv3ee6</org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>
 
-        <netbeans.hint.licensePath>${project.basedir}/licenseheader.txt</netbeans.hint.licensePath>
+        <netbeans.hint.licensePath>${basedir}/licenseheader.txt</netbeans.hint.licensePath>
 
         <org-netbeans-modules-editor-indent.CodeStyle.usedProfile>project</org-netbeans-modules-editor-indent.CodeStyle.usedProfile>
         <org-netbeans-modules-editor-indent.CodeStyle.project.spaces-per-tab>4</org-netbeans-modules-editor-indent.CodeStyle.project.spaces-per-tab>

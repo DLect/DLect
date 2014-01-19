@@ -1,0 +1,28 @@
+rootProject.name = 'DLect Root Project'
+
+// Find the directories containing a "build.gradle" file in the root directory
+// of the project. That is, every directory containing a "build.gradle" will
+// be automatically the subproject of this project.
+
+
+def recurse(String base, File parent) {
+    parent.listFiles(new FileFilter() {
+            public boolean accept(File file) {
+                return file.isDirectory() && !file.name.startsWith(".")
+            }
+        }).each { File dir ->
+        if(dir.isDirectory()) {
+            String base2 = base + ":" + dir.name
+            if(new File(dir, 'build.gradle').isFile()) {
+                println "Incl       "
+                println base2
+                println dir
+                include base2
+            } else {
+                recurse(base2, dir);
+            }
+        }
+    }
+}
+
+recurse("", rootDir)

@@ -1,0 +1,46 @@
+/////////// Adding Dependencies on request. //////////
+
+
+apply plugin: 'maven'
+
+if (hasProperty('googleGuava')) {
+    dependencies {
+        compile guava
+    }
+}
+
+if (hasProperty('httpClient')) {
+    dependencies {
+        compile httpclient
+        compile httpcore
+    }
+}
+
+if (hasProperty('java-ee')) {
+    println "Java EE"
+    dependencies {
+        provided    jsr311
+        provided    java_ee_api
+        provided    "javax.ejb:ejb-api:3.0"
+    }
+}
+
+if(hasProperty('Testing-JAX-B')) {
+    dependencies {
+        testCompile project(':Utilities:Testing:JAX-B')
+    }
+}
+
+if(hasProperty('Testing-EJB')) {
+    dependencies {
+        testCompile project(':Utilities:Testing:EJB')
+    }
+}
+
+println projects_testing_common
+
+if(hasProperty('Testing-Common')) {
+    dependencies {
+        testCompile project(projects_testing_common)
+    }
+}

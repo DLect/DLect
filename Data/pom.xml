@@ -25,7 +25,7 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
     
     <parent>
         <groupId>org.dlect</groupId>
-        <artifactId>DaaS-Maven</artifactId>
+        <artifactId>DLect-Parent</artifactId>
         <version>1.1</version>
     </parent>
     
@@ -33,7 +33,7 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
     <artifactId>DLect-Data</artifactId>
     <version>1.1</version>
     
-    <name>DaaS-Maven-data</name>
+    <name>DLect Common Data</name>
     
     <url>uqlectures.sourceforge.net</url>
     
@@ -43,10 +43,6 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -56,9 +52,15 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
     </properties>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>            
+        </dependency>
+        <dependency>
+            <!-- TODO: DEPRECATED -->
+            <groupId>org.dlect</groupId>
             <artifactId>DaaS-Maven-testing-utils</artifactId>
-            <version>${project.version}</version>
+            <version>1.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>

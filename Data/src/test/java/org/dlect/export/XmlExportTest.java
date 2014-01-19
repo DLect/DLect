@@ -38,6 +38,7 @@ public class XmlExportTest {
 
     @Test
     public void testLecture() {
+        System.out.println("Hello - I'm A TEST");
         testMarshalNonRootObject(Lecture.class);
     }
 
