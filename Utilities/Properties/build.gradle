@@ -1,3 +1,0 @@
-dependencies {
-    compile project(projects_testing_common)
-}

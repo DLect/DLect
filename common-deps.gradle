@@ -25,6 +25,10 @@ if (hasProperty('java-ee')) {
     }
 }
 
+if(hasProperty('DLect-Data')) {
+    compile project(':Data')
+}
+
 if(hasProperty('Testing-JAX-B')) {
     dependencies {
         testCompile project(':Utilities:Testing:JAX-B')
