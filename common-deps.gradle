@@ -1,8 +1,7 @@
 /////////// Adding Dependencies on request. //////////
 
 
-apply plugin: 'maven'
-
+/*
 if (hasProperty('googleGuava')) {
     dependencies {
         compile guava
@@ -41,10 +40,9 @@ if(hasProperty('Testing-EJB')) {
     }
 }
 
-println projects_testing_common
-
 if(hasProperty('Testing-Common')) {
     dependencies {
         testCompile project(projects_testing_common)
     }
 }
+*/

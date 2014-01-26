@@ -1,3 +1,8 @@
+applyJava();
+
 dependencies {
-    compile project(projects_testing_common)
+    compile googleGuava()
+    compile httpClient()
+    
+    compile projectTestingCommon()
 }

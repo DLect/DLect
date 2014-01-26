@@ -24,3 +24,6 @@ task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the pro
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
     gradleVersion = '1.10'
 }
+
+apply from: rootProject.file('common-deps.gradle')
+apply from: rootProject.file('deps.gradle')

@@ -1,4 +1,8 @@
+applyJava()
+
 dependencies {
+    compile     googleGuava()
+    
     compile     slf4j
     compile     slf4j_jdk
 

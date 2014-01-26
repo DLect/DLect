@@ -4,14 +4,7 @@
 
 if(!file("build.gradle").exists()) return;
 
-
 apply plugin: 'maven'
-apply plugin: 'java'
-
-String mavenVersion = '3.0-ALPHA'
-
-sourceCompatibility = '1.7'
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenLocal()
@@ -21,41 +14,34 @@ repositories {
     //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:repositories
 }
 
-dependencies {
-    compile     slf4j
-
-    testCompile junit
-    testCompile mockito
-    testCompile slf4j_jdk
-}
-
 group = mavenGroupId
 version = mavenVersion
+/*
+if(hasProperty('build-java')) {
+    println "Apply Java - YAY"
+    apply plugin: 'java'
 
-task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+    dependencies {
+        compile     slf4j
 
-artifacts {
-    archives jar
-    archives sourcesJar
-}
-
-configurations {
-    provided
-}
-
-sourceSets.main.compileClasspath += configurations.provided
-sourceSets.test.compileClasspath += configurations.provided
-
-configure(install.repositories.mavenInstaller) {
-    pom.project {
-        groupId = mavenGroupId
-        artifactId = mavenArtifactId
-        version = mavenVersion
+        testCompile junit
+        testCompile mockito
+        testCompile slf4j_jdk
     }
-}
+
+    sourceCompatibility = '1.7'
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives jar
+        archives sourcesJar
+    }
+}*/
 
 task createFolders(description: 'Creates the source folders if they do not exist.') doLast {
     sourceSets*.allSource*.srcDirs*.each { File srcDir ->

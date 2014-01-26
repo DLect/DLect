@@ -1,0 +1,8 @@
+applyJava();
+
+dependencies {
+    compile     googleGuava();
+    compile     projectData();
+}
+    
+javaEEDep();

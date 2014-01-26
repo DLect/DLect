@@ -1,0 +1,96 @@
+/////////// Adding Dependencies on request. //////////
+
+
+apply plugin: 'maven'
+
+gradle.allprojects {
+    ext.googleGuava = {
+        return (String) guava
+    }
+    ext.httpClient = {
+        /*dependencies {
+            compile httpclient
+            compile httpcore
+        }*/
+        return [httpclient, httpcore];
+    }
+    ext.javaEE = {
+        println "Java EE"
+        return [jsr311, java_ee_api, "javax.ejb:ejb-api:3.0"];
+    }
+    ext.projectData = {
+        return project(':Data')
+    }
+    ext.projectTestingJaxB = {
+        return project(':Utilities:Testing:JAX-B')
+    }
+    ext.projectTestingEjb = {
+        return project(':Utilities:Testing:EJB')
+    }
+    ext.projectTestingCommon = {
+        return project(':Utilities:Testing:Common')    
+    }
+    ext.javaEEDep = {
+        println "Java EE Dep"
+        dependencies {
+            provided javaEE();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ext.applyJava = {
+        println "Apply Java - YAY"
+        apply plugin: 'java'
+
+        dependencies {
+            compile     slf4j
+
+            testCompile junit
+            testCompile mockito
+            testCompile slf4j_jdk
+        }
+
+        sourceCompatibility = '1.7'
+        [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+        task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        artifacts {
+            archives jar
+            archives sourcesJar
+        }
+        
+        // Setup other config that can be applied.
+        project.ext.needsProvided()
+        project.ext.needsInstall()
+    }
+    ext.needsProvided = {
+        configurations {
+            provided
+        }
+        if(hasProperty("sourceSets")) {
+            sourceSets.main.compileClasspath += configurations.provided
+            sourceSets.test.compileClasspath += configurations.provided
+        }
+    }
+    ext.needsInstall = {   
+        configure(install.repositories.mavenInstaller) {
+            pom.project {
+                groupId = mavenGroupId
+                artifactId = mavenArtifactId
+                version = mavenVersion
+            }
+        }
+    }
+}
