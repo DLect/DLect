@@ -1,0 +1,616 @@
+Etc/GMT+12, -43200000, 0, false, GMT-12:00
+Etc/GMT+11, -39600000, 0, false, GMT-11:00
+Pacific/Midway, -39600000, 0, false, Samoa Standard Time
+Pacific/Niue, -39600000, 0, false, Niue Time
+Pacific/Pago_Pago, -39600000, 0, false, Samoa Standard Time
+Pacific/Samoa, -39600000, 0, false, Samoa Standard Time
+US/Samoa, -39600000, 0, false, Samoa Standard Time
+America/Adak, -36000000, 3600000, true, Hawaii-Aleutian Standard Time
+America/Atka, -36000000, 3600000, true, Hawaii-Aleutian Standard Time
+Etc/GMT+10, -36000000, 0, false, GMT-10:00
+HST, -36000000, 0, false, Hawaii Standard Time
+Pacific/Honolulu, -36000000, 0, false, Hawaii Standard Time
+Pacific/Johnston, -36000000, 0, false, Hawaii Standard Time
+Pacific/Rarotonga, -36000000, 0, false, Cook Is. Time
+Pacific/Tahiti, -36000000, 0, false, Tahiti Time
+SystemV/HST10, -36000000, 0, false, Hawaii Standard Time
+US/Aleutian, -36000000, 3600000, true, Hawaii-Aleutian Standard Time
+US/Hawaii, -36000000, 0, false, Hawaii Standard Time
+Pacific/Marquesas, -34200000, 0, false, Marquesas Time
+AST, -32400000, 3600000, true, Alaska Standard Time
+America/Anchorage, -32400000, 3600000, true, Alaska Standard Time
+America/Juneau, -32400000, 3600000, true, Alaska Standard Time
+America/Nome, -32400000, 3600000, true, Alaska Standard Time
+America/Sitka, -32400000, 3600000, true, Alaska Standard Time
+America/Yakutat, -32400000, 3600000, true, Alaska Standard Time
+Etc/GMT+9, -32400000, 0, false, GMT-09:00
+Pacific/Gambier, -32400000, 0, false, Gambier Time
+SystemV/YST9, -32400000, 0, false, Alaska Standard Time
+SystemV/YST9YDT, -32400000, 3600000, true, Alaska Standard Time
+US/Alaska, -32400000, 3600000, true, Alaska Standard Time
+America/Dawson, -28800000, 3600000, true, Pacific Standard Time
+America/Ensenada, -28800000, 3600000, true, Pacific Standard Time
+America/Los_Angeles, -28800000, 3600000, true, Pacific Standard Time
+America/Metlakatla, -28800000, 0, false, Metlakatla Standard Time
+America/Santa_Isabel, -28800000, 3600000, true, Pacific Standard Time
+America/Tijuana, -28800000, 3600000, true, Pacific Standard Time
+America/Vancouver, -28800000, 3600000, true, Pacific Standard Time
+America/Whitehorse, -28800000, 3600000, true, Pacific Standard Time
+Canada/Pacific, -28800000, 3600000, true, Pacific Standard Time
+Canada/Yukon, -28800000, 3600000, true, Pacific Standard Time
+Etc/GMT+8, -28800000, 0, false, GMT-08:00
+Mexico/BajaNorte, -28800000, 3600000, true, Pacific Standard Time
+PST, -28800000, 3600000, true, Pacific Standard Time
+PST8PDT, -28800000, 3600000, true, Pacific Standard Time
+Pacific/Pitcairn, -28800000, 0, false, Pitcairn Standard Time
+SystemV/PST8, -28800000, 0, false, Pacific Standard Time
+SystemV/PST8PDT, -28800000, 3600000, true, Pacific Standard Time
+US/Pacific, -28800000, 3600000, true, Pacific Standard Time
+US/Pacific-New, -28800000, 3600000, true, Pacific Standard Time
+America/Boise, -25200000, 3600000, true, Mountain Standard Time
+America/Cambridge_Bay, -25200000, 3600000, true, Mountain Standard Time
+America/Chihuahua, -25200000, 3600000, true, Mountain Standard Time
+America/Creston, -25200000, 0, false, Mountain Standard Time
+America/Dawson_Creek, -25200000, 0, false, Mountain Standard Time
+America/Denver, -25200000, 3600000, true, Mountain Standard Time
+America/Edmonton, -25200000, 3600000, true, Mountain Standard Time
+America/Hermosillo, -25200000, 0, false, Mountain Standard Time
+America/Inuvik, -25200000, 3600000, true, Mountain Standard Time
+America/Mazatlan, -25200000, 3600000, true, Mountain Standard Time
+America/Ojinaga, -25200000, 3600000, true, Mountain Standard Time
+America/Phoenix, -25200000, 0, false, Mountain Standard Time
+America/Shiprock, -25200000, 3600000, true, Mountain Standard Time
+America/Yellowknife, -25200000, 3600000, true, Mountain Standard Time
+Canada/Mountain, -25200000, 3600000, true, Mountain Standard Time
+Etc/GMT+7, -25200000, 0, false, GMT-07:00
+MST, -25200000, 0, false, Mountain Standard Time
+MST7MDT, -25200000, 3600000, true, Mountain Standard Time
+Mexico/BajaSur, -25200000, 3600000, true, Mountain Standard Time
+Navajo, -25200000, 3600000, true, Mountain Standard Time
+PNT, -25200000, 0, false, Mountain Standard Time
+SystemV/MST7, -25200000, 0, false, Mountain Standard Time
+SystemV/MST7MDT, -25200000, 3600000, true, Mountain Standard Time
+US/Arizona, -25200000, 0, false, Mountain Standard Time
+US/Mountain, -25200000, 3600000, true, Mountain Standard Time
+America/Bahia_Banderas, -21600000, 3600000, true, Central Standard Time
+America/Belize, -21600000, 0, false, Central Standard Time
+America/Cancun, -21600000, 3600000, true, Central Standard Time
+America/Chicago, -21600000, 3600000, true, Central Standard Time
+America/Costa_Rica, -21600000, 0, false, Central Standard Time
+America/El_Salvador, -21600000, 0, false, Central Standard Time
+America/Guatemala, -21600000, 0, false, Central Standard Time
+America/Indiana/Knox, -21600000, 3600000, true, Central Standard Time
+America/Indiana/Tell_City, -21600000, 3600000, true, Central Standard Time
+America/Knox_IN, -21600000, 3600000, true, Central Standard Time
+America/Managua, -21600000, 0, false, Central Standard Time
+America/Matamoros, -21600000, 3600000, true, Central Standard Time
+America/Menominee, -21600000, 3600000, true, Central Standard Time
+America/Merida, -21600000, 3600000, true, Central Standard Time
+America/Mexico_City, -21600000, 3600000, true, Central Standard Time
+America/Monterrey, -21600000, 3600000, true, Central Standard Time
+America/North_Dakota/Beulah, -21600000, 3600000, true, Central Standard Time
+America/North_Dakota/Center, -21600000, 3600000, true, Central Standard Time
+America/North_Dakota/New_Salem, -21600000, 3600000, true, Central Standard Time
+America/Rainy_River, -21600000, 3600000, true, Central Standard Time
+America/Rankin_Inlet, -21600000, 3600000, true, Central Standard Time
+America/Regina, -21600000, 0, false, Central Standard Time
+America/Resolute, -21600000, 3600000, true, Central Standard Time
+America/Swift_Current, -21600000, 0, false, Central Standard Time
+America/Tegucigalpa, -21600000, 0, false, Central Standard Time
+America/Winnipeg, -21600000, 3600000, true, Central Standard Time
+CST, -21600000, 3600000, true, Central Standard Time
+CST6CDT, -21600000, 3600000, true, Central Standard Time
+Canada/Central, -21600000, 3600000, true, Central Standard Time
+Canada/East-Saskatchewan, -21600000, 0, false, Central Standard Time
+Canada/Saskatchewan, -21600000, 0, false, Central Standard Time
+Chile/EasterIsland, -21600000, 3600000, true, Easter Is. Time
+Etc/GMT+6, -21600000, 0, false, GMT-06:00
+Mexico/General, -21600000, 3600000, true, Central Standard Time
+Pacific/Easter, -21600000, 3600000, true, Easter Is. Time
+Pacific/Galapagos, -21600000, 0, false, Galapagos Time
+SystemV/CST6, -21600000, 0, false, Central Standard Time
+SystemV/CST6CDT, -21600000, 3600000, true, Central Standard Time
+US/Central, -21600000, 3600000, true, Central Standard Time
+US/Indiana-Starke, -21600000, 3600000, true, Central Standard Time
+America/Atikokan, -18000000, 0, false, Eastern Standard Time
+America/Bogota, -18000000, 0, false, Colombia Time
+America/Cayman, -18000000, 0, false, Eastern Standard Time
+America/Coral_Harbour, -18000000, 0, false, Eastern Standard Time
+America/Detroit, -18000000, 3600000, true, Eastern Standard Time
+America/Fort_Wayne, -18000000, 3600000, true, Eastern Standard Time
+America/Grand_Turk, -18000000, 3600000, true, Eastern Standard Time
+America/Guayaquil, -18000000, 0, false, Ecuador Time
+America/Havana, -18000000, 3600000, true, Cuba Standard Time
+America/Indiana/Indianapolis, -18000000, 3600000, true, Eastern Standard Time
+America/Indiana/Marengo, -18000000, 3600000, true, Eastern Standard Time
+America/Indiana/Petersburg, -18000000, 3600000, true, Eastern Standard Time
+America/Indiana/Vevay, -18000000, 3600000, true, Eastern Standard Time
+America/Indiana/Vincennes, -18000000, 3600000, true, Eastern Standard Time
+America/Indiana/Winamac, -18000000, 3600000, true, Eastern Standard Time
+America/Indianapolis, -18000000, 3600000, true, Eastern Standard Time
+America/Iqaluit, -18000000, 3600000, true, Eastern Standard Time
+America/Jamaica, -18000000, 0, false, Eastern Standard Time
+America/Kentucky/Louisville, -18000000, 3600000, true, Eastern Standard Time
+America/Kentucky/Monticello, -18000000, 3600000, true, Eastern Standard Time
+America/Lima, -18000000, 0, false, Peru Time
+America/Louisville, -18000000, 3600000, true, Eastern Standard Time
+America/Montreal, -18000000, 3600000, true, Eastern Standard Time
+America/Nassau, -18000000, 3600000, true, Eastern Standard Time
+America/New_York, -18000000, 3600000, true, Eastern Standard Time
+America/Nipigon, -18000000, 3600000, true, Eastern Standard Time
+America/Panama, -18000000, 0, false, Eastern Standard Time
+America/Pangnirtung, -18000000, 3600000, true, Eastern Standard Time
+America/Port-au-Prince, -18000000, 0, false, Eastern Standard Time
+America/Thunder_Bay, -18000000, 3600000, true, Eastern Standard Time
+America/Toronto, -18000000, 3600000, true, Eastern Standard Time
+Canada/Eastern, -18000000, 3600000, true, Eastern Standard Time
+Cuba, -18000000, 3600000, true, Cuba Standard Time
+EST, -18000000, 0, false, Eastern Standard Time
+EST5EDT, -18000000, 3600000, true, Eastern Standard Time
+Etc/GMT+5, -18000000, 0, false, GMT-05:00
+IET, -18000000, 3600000, true, Eastern Standard Time
+Jamaica, -18000000, 0, false, Eastern Standard Time
+SystemV/EST5, -18000000, 0, false, Eastern Standard Time
+SystemV/EST5EDT, -18000000, 3600000, true, Eastern Standard Time
+US/East-Indiana, -18000000, 3600000, true, Eastern Standard Time
+US/Eastern, -18000000, 3600000, true, Eastern Standard Time
+US/Michigan, -18000000, 3600000, true, Eastern Standard Time
+America/Caracas, -16200000, 0, false, Venezuela Time
+America/Anguilla, -14400000, 0, false, Atlantic Standard Time
+America/Antigua, -14400000, 0, false, Atlantic Standard Time
+America/Argentina/San_Luis, -14400000, 0, false, Western Argentine Time
+America/Aruba, -14400000, 0, false, Atlantic Standard Time
+America/Asuncion, -14400000, 3600000, true, Paraguay Time
+America/Barbados, -14400000, 0, false, Atlantic Standard Time
+America/Blanc-Sablon, -14400000, 0, false, Atlantic Standard Time
+America/Boa_Vista, -14400000, 0, false, Amazon Time
+America/Campo_Grande, -14400000, 3600000, true, Amazon Time
+America/Cuiaba, -14400000, 3600000, true, Amazon Time
+America/Curacao, -14400000, 0, false, Atlantic Standard Time
+America/Dominica, -14400000, 0, false, Atlantic Standard Time
+America/Eirunepe, -14400000, 0, false, Amazon Time
+America/Glace_Bay, -14400000, 3600000, true, Atlantic Standard Time
+America/Goose_Bay, -14400000, 3600000, true, Atlantic Standard Time
+America/Grenada, -14400000, 0, false, Atlantic Standard Time
+America/Guadeloupe, -14400000, 0, false, Atlantic Standard Time
+America/Guyana, -14400000, 0, false, Guyana Time
+America/Halifax, -14400000, 3600000, true, Atlantic Standard Time
+America/Kralendijk, -14400000, 0, false, Atlantic Standard Time
+America/La_Paz, -14400000, 0, false, Bolivia Time
+America/Lower_Princes, -14400000, 0, false, Atlantic Standard Time
+America/Manaus, -14400000, 0, false, Amazon Time
+America/Marigot, -14400000, 0, false, Atlantic Standard Time
+America/Martinique, -14400000, 0, false, Atlantic Standard Time
+America/Moncton, -14400000, 3600000, true, Atlantic Standard Time
+America/Montserrat, -14400000, 0, false, Atlantic Standard Time
+America/Port_of_Spain, -14400000, 0, false, Atlantic Standard Time
+America/Porto_Acre, -14400000, 0, false, Amazon Time
+America/Porto_Velho, -14400000, 0, false, Amazon Time
+America/Puerto_Rico, -14400000, 0, false, Atlantic Standard Time
+America/Rio_Branco, -14400000, 0, false, Amazon Time
+America/Santiago, -14400000, 3600000, true, Chile Time
+America/Santo_Domingo, -14400000, 0, false, Atlantic Standard Time
+America/St_Barthelemy, -14400000, 0, false, Atlantic Standard Time
+America/St_Kitts, -14400000, 0, false, Atlantic Standard Time
+America/St_Lucia, -14400000, 0, false, Atlantic Standard Time
+America/St_Thomas, -14400000, 0, false, Atlantic Standard Time
+America/St_Vincent, -14400000, 0, false, Atlantic Standard Time
+America/Thule, -14400000, 3600000, true, Atlantic Standard Time
+America/Tortola, -14400000, 0, false, Atlantic Standard Time
+America/Virgin, -14400000, 0, false, Atlantic Standard Time
+Antarctica/Palmer, -14400000, 3600000, true, Chile Time
+Atlantic/Bermuda, -14400000, 3600000, true, Atlantic Standard Time
+Brazil/Acre, -14400000, 0, false, Amazon Time
+Brazil/West, -14400000, 0, false, Amazon Time
+Canada/Atlantic, -14400000, 3600000, true, Atlantic Standard Time
+Chile/Continental, -14400000, 3600000, true, Chile Time
+Etc/GMT+4, -14400000, 0, false, GMT-04:00
+PRT, -14400000, 0, false, Atlantic Standard Time
+SystemV/AST4, -14400000, 0, false, Atlantic Standard Time
+SystemV/AST4ADT, -14400000, 3600000, true, Atlantic Standard Time
+America/St_Johns, -12600000, 3600000, true, Newfoundland Standard Time
+CNT, -12600000, 3600000, true, Newfoundland Standard Time
+Canada/Newfoundland, -12600000, 3600000, true, Newfoundland Standard Time
+AGT, -10800000, 0, false, Argentine Time
+America/Araguaina, -10800000, 0, false, Brasilia Time
+America/Argentina/Buenos_Aires, -10800000, 0, false, Argentine Time
+America/Argentina/Catamarca, -10800000, 0, false, Argentine Time
+America/Argentina/ComodRivadavia, -10800000, 0, false, Argentine Time
+America/Argentina/Cordoba, -10800000, 0, false, Argentine Time
+America/Argentina/Jujuy, -10800000, 0, false, Argentine Time
+America/Argentina/La_Rioja, -10800000, 0, false, Argentine Time
+America/Argentina/Mendoza, -10800000, 0, false, Argentine Time
+America/Argentina/Rio_Gallegos, -10800000, 0, false, Argentine Time
+America/Argentina/Salta, -10800000, 0, false, Argentine Time
+America/Argentina/San_Juan, -10800000, 0, false, Argentine Time
+America/Argentina/Tucuman, -10800000, 0, false, Argentine Time
+America/Argentina/Ushuaia, -10800000, 0, false, Argentine Time
+America/Bahia, -10800000, 3600000, true, Brasilia Time
+America/Belem, -10800000, 0, false, Brasilia Time
+America/Buenos_Aires, -10800000, 0, false, Argentine Time
+America/Catamarca, -10800000, 0, false, Argentine Time
+America/Cayenne, -10800000, 0, false, French Guiana Time
+America/Cordoba, -10800000, 0, false, Argentine Time
+America/Fortaleza, -10800000, 0, false, Brasilia Time
+America/Godthab, -10800000, 3600000, true, Western Greenland Time
+America/Jujuy, -10800000, 0, false, Argentine Time
+America/Maceio, -10800000, 0, false, Brasilia Time
+America/Mendoza, -10800000, 0, false, Argentine Time
+America/Miquelon, -10800000, 3600000, true, Pierre & Miquelon Standard Time
+America/Montevideo, -10800000, 3600000, true, Uruguay Time
+America/Paramaribo, -10800000, 0, false, Suriname Time
+America/Recife, -10800000, 0, false, Brasilia Time
+America/Rosario, -10800000, 0, false, Argentine Time
+America/Santarem, -10800000, 0, false, Brasilia Time
+America/Sao_Paulo, -10800000, 3600000, true, Brasilia Time
+Antarctica/Rothera, -10800000, 0, false, Rothera Time
+Atlantic/Stanley, -10800000, 0, false, Falkland Is. Time
+BET, -10800000, 3600000, true, Brasilia Time
+Brazil/East, -10800000, 3600000, true, Brasilia Time
+Etc/GMT+3, -10800000, 0, false, GMT-03:00
+America/Noronha, -7200000, 0, false, Fernando de Noronha Time
+Atlantic/South_Georgia, -7200000, 0, false, South Georgia Standard Time
+Brazil/DeNoronha, -7200000, 0, false, Fernando de Noronha Time
+Etc/GMT+2, -7200000, 0, false, GMT-02:00
+America/Scoresbysund, -3600000, 3600000, true, Eastern Greenland Time
+Atlantic/Azores, -3600000, 3600000, true, Azores Time
+Atlantic/Cape_Verde, -3600000, 0, false, Cape Verde Time
+Etc/GMT+1, -3600000, 0, false, GMT-01:00
+Africa/Abidjan, 0, 0, false, Greenwich Mean Time
+Africa/Accra, 0, 0, false, Ghana Mean Time
+Africa/Bamako, 0, 0, false, Greenwich Mean Time
+Africa/Banjul, 0, 0, false, Greenwich Mean Time
+Africa/Bissau, 0, 0, false, Greenwich Mean Time
+Africa/Casablanca, 0, 3600000, true, Western European Time
+Africa/Conakry, 0, 0, false, Greenwich Mean Time
+Africa/Dakar, 0, 0, false, Greenwich Mean Time
+Africa/El_Aaiun, 0, 0, false, Western European Time
+Africa/Freetown, 0, 0, false, Greenwich Mean Time
+Africa/Lome, 0, 0, false, Greenwich Mean Time
+Africa/Monrovia, 0, 0, false, Greenwich Mean Time
+Africa/Nouakchott, 0, 0, false, Greenwich Mean Time
+Africa/Ouagadougou, 0, 0, false, Greenwich Mean Time
+Africa/Sao_Tome, 0, 0, false, Greenwich Mean Time
+Africa/Timbuktu, 0, 0, false, Greenwich Mean Time
+America/Danmarkshavn, 0, 0, false, Greenwich Mean Time
+Atlantic/Canary, 0, 3600000, true, Western European Time
+Atlantic/Faeroe, 0, 3600000, true, Western European Time
+Atlantic/Faroe, 0, 3600000, true, Western European Time
+Atlantic/Madeira, 0, 3600000, true, Western European Time
+Atlantic/Reykjavik, 0, 0, false, Greenwich Mean Time
+Atlantic/St_Helena, 0, 0, false, Greenwich Mean Time
+Eire, 0, 3600000, true, Greenwich Mean Time
+Etc/GMT, 0, 0, false, GMT+00:00
+Etc/GMT+0, 0, 0, false, GMT+00:00
+Etc/GMT-0, 0, 0, false, GMT+00:00
+Etc/GMT0, 0, 0, false, GMT+00:00
+Etc/Greenwich, 0, 0, false, Greenwich Mean Time
+Etc/UCT, 0, 0, false, Coordinated Universal Time
+Etc/UTC, 0, 0, false, Coordinated Universal Time
+Etc/Universal, 0, 0, false, Coordinated Universal Time
+Etc/Zulu, 0, 0, false, Coordinated Universal Time
+Europe/Belfast, 0, 3600000, true, Greenwich Mean Time
+Europe/Dublin, 0, 3600000, true, Greenwich Mean Time
+Europe/Guernsey, 0, 3600000, true, Greenwich Mean Time
+Europe/Isle_of_Man, 0, 3600000, true, Greenwich Mean Time
+Europe/Jersey, 0, 3600000, true, Greenwich Mean Time
+Europe/Lisbon, 0, 3600000, true, Western European Time
+Europe/London, 0, 3600000, true, Greenwich Mean Time
+GB, 0, 3600000, true, Greenwich Mean Time
+GB-Eire, 0, 3600000, true, Greenwich Mean Time
+GMT, 0, 0, false, Greenwich Mean Time
+GMT0, 0, 0, false, GMT+00:00
+Greenwich, 0, 0, false, Greenwich Mean Time
+Iceland, 0, 0, false, Greenwich Mean Time
+Portugal, 0, 3600000, true, Western European Time
+UCT, 0, 0, false, Coordinated Universal Time
+UTC, 0, 0, false, Coordinated Universal Time
+Universal, 0, 0, false, Coordinated Universal Time
+WET, 0, 3600000, true, Western European Time
+Zulu, 0, 0, false, Coordinated Universal Time
+Africa/Algiers, 3600000, 0, false, Central European Time
+Africa/Bangui, 3600000, 0, false, Western African Time
+Africa/Brazzaville, 3600000, 0, false, Western African Time
+Africa/Ceuta, 3600000, 3600000, true, Central European Time
+Africa/Douala, 3600000, 0, false, Western African Time
+Africa/Kinshasa, 3600000, 0, false, Western African Time
+Africa/Lagos, 3600000, 0, false, Western African Time
+Africa/Libreville, 3600000, 0, false, Western African Time
+Africa/Luanda, 3600000, 0, false, Western African Time
+Africa/Malabo, 3600000, 0, false, Western African Time
+Africa/Ndjamena, 3600000, 0, false, Western African Time
+Africa/Niamey, 3600000, 0, false, Western African Time
+Africa/Porto-Novo, 3600000, 0, false, Western African Time
+Africa/Tunis, 3600000, 0, false, Central European Time
+Africa/Windhoek, 3600000, 3600000, true, Western African Time
+Arctic/Longyearbyen, 3600000, 3600000, true, Central European Time
+Atlantic/Jan_Mayen, 3600000, 3600000, true, Central European Time
+CET, 3600000, 3600000, true, Central European Time
+ECT, 3600000, 3600000, true, Central European Time
+Etc/GMT-1, 3600000, 0, false, GMT+01:00
+Europe/Amsterdam, 3600000, 3600000, true, Central European Time
+Europe/Andorra, 3600000, 3600000, true, Central European Time
+Europe/Belgrade, 3600000, 3600000, true, Central European Time
+Europe/Berlin, 3600000, 3600000, true, Central European Time
+Europe/Bratislava, 3600000, 3600000, true, Central European Time
+Europe/Brussels, 3600000, 3600000, true, Central European Time
+Europe/Budapest, 3600000, 3600000, true, Central European Time
+Europe/Copenhagen, 3600000, 3600000, true, Central European Time
+Europe/Gibraltar, 3600000, 3600000, true, Central European Time
+Europe/Ljubljana, 3600000, 3600000, true, Central European Time
+Europe/Luxembourg, 3600000, 3600000, true, Central European Time
+Europe/Madrid, 3600000, 3600000, true, Central European Time
+Europe/Malta, 3600000, 3600000, true, Central European Time
+Europe/Monaco, 3600000, 3600000, true, Central European Time
+Europe/Oslo, 3600000, 3600000, true, Central European Time
+Europe/Paris, 3600000, 3600000, true, Central European Time
+Europe/Podgorica, 3600000, 3600000, true, Central European Time
+Europe/Prague, 3600000, 3600000, true, Central European Time
+Europe/Rome, 3600000, 3600000, true, Central European Time
+Europe/San_Marino, 3600000, 3600000, true, Central European Time
+Europe/Sarajevo, 3600000, 3600000, true, Central European Time
+Europe/Skopje, 3600000, 3600000, true, Central European Time
+Europe/Stockholm, 3600000, 3600000, true, Central European Time
+Europe/Tirane, 3600000, 3600000, true, Central European Time
+Europe/Vaduz, 3600000, 3600000, true, Central European Time
+Europe/Vatican, 3600000, 3600000, true, Central European Time
+Europe/Vienna, 3600000, 3600000, true, Central European Time
+Europe/Warsaw, 3600000, 3600000, true, Central European Time
+Europe/Zagreb, 3600000, 3600000, true, Central European Time
+Europe/Zurich, 3600000, 3600000, true, Central European Time
+MET, 3600000, 3600000, true, Middle Europe Time
+Poland, 3600000, 3600000, true, Central European Time
+ART, 7200000, 0, false, Eastern European Time
+Africa/Blantyre, 7200000, 0, false, Central African Time
+Africa/Bujumbura, 7200000, 0, false, Central African Time
+Africa/Cairo, 7200000, 0, false, Eastern European Time
+Africa/Gaborone, 7200000, 0, false, Central African Time
+Africa/Harare, 7200000, 0, false, Central African Time
+Africa/Johannesburg, 7200000, 0, false, South Africa Standard Time
+Africa/Kigali, 7200000, 0, false, Central African Time
+Africa/Lubumbashi, 7200000, 0, false, Central African Time
+Africa/Lusaka, 7200000, 0, false, Central African Time
+Africa/Maputo, 7200000, 0, false, Central African Time
+Africa/Maseru, 7200000, 0, false, South Africa Standard Time
+Africa/Mbabane, 7200000, 0, false, South Africa Standard Time
+Africa/Tripoli, 7200000, 0, false, Eastern European Time
+Asia/Amman, 7200000, 3600000, true, Eastern European Time
+Asia/Beirut, 7200000, 3600000, true, Eastern European Time
+Asia/Damascus, 7200000, 3600000, true, Eastern European Time
+Asia/Gaza, 7200000, 0, false, Eastern European Time
+Asia/Hebron, 7200000, 0, false, Eastern European Time
+Asia/Istanbul, 7200000, 3600000, true, Eastern European Time
+Asia/Jerusalem, 7200000, 3600000, true, Israel Standard Time
+Asia/Nicosia, 7200000, 3600000, true, Eastern European Time
+Asia/Tel_Aviv, 7200000, 3600000, true, Israel Standard Time
+CAT, 7200000, 0, false, Central African Time
+EET, 7200000, 3600000, true, Eastern European Time
+Egypt, 7200000, 0, false, Eastern European Time
+Etc/GMT-2, 7200000, 0, false, GMT+02:00
+Europe/Athens, 7200000, 3600000, true, Eastern European Time
+Europe/Bucharest, 7200000, 3600000, true, Eastern European Time
+Europe/Chisinau, 7200000, 3600000, true, Eastern European Time
+Europe/Helsinki, 7200000, 3600000, true, Eastern European Time
+Europe/Istanbul, 7200000, 3600000, true, Eastern European Time
+Europe/Kiev, 7200000, 3600000, true, Eastern European Time
+Europe/Mariehamn, 7200000, 3600000, true, Eastern European Time
+Europe/Nicosia, 7200000, 3600000, true, Eastern European Time
+Europe/Riga, 7200000, 3600000, true, Eastern European Time
+Europe/Simferopol, 7200000, 3600000, true, Eastern European Time
+Europe/Sofia, 7200000, 3600000, true, Eastern European Time
+Europe/Tallinn, 7200000, 3600000, true, Eastern European Time
+Europe/Tiraspol, 7200000, 3600000, true, Eastern European Time
+Europe/Uzhgorod, 7200000, 3600000, true, Eastern European Time
+Europe/Vilnius, 7200000, 3600000, true, Eastern European Time
+Europe/Zaporozhye, 7200000, 3600000, true, Eastern European Time
+Israel, 7200000, 3600000, true, Israel Standard Time
+Libya, 7200000, 0, false, Eastern European Time
+Turkey, 7200000, 3600000, true, Eastern European Time
+Africa/Addis_Ababa, 10800000, 0, false, Eastern African Time
+Africa/Asmara, 10800000, 0, false, Eastern African Time
+Africa/Asmera, 10800000, 0, false, Eastern African Time
+Africa/Dar_es_Salaam, 10800000, 0, false, Eastern African Time
+Africa/Djibouti, 10800000, 0, false, Eastern African Time
+Africa/Juba, 10800000, 0, false, Eastern African Time
+Africa/Kampala, 10800000, 0, false, Eastern African Time
+Africa/Khartoum, 10800000, 0, false, Eastern African Time
+Africa/Mogadishu, 10800000, 0, false, Eastern African Time
+Africa/Nairobi, 10800000, 0, false, Eastern African Time
+Antarctica/Syowa, 10800000, 0, false, Syowa Time
+Asia/Aden, 10800000, 0, false, Arabia Standard Time
+Asia/Baghdad, 10800000, 0, false, Arabia Standard Time
+Asia/Bahrain, 10800000, 0, false, Arabia Standard Time
+Asia/Kuwait, 10800000, 0, false, Arabia Standard Time
+Asia/Qatar, 10800000, 0, false, Arabia Standard Time
+Asia/Riyadh, 10800000, 0, false, Arabia Standard Time
+EAT, 10800000, 0, false, Eastern African Time
+Etc/GMT-3, 10800000, 0, false, GMT+03:00
+Europe/Kaliningrad, 10800000, 0, false, Further-Eastern European Time
+Europe/Minsk, 10800000, 0, false, Further-Eastern European Time
+Indian/Antananarivo, 10800000, 0, false, Eastern African Time
+Indian/Comoro, 10800000, 0, false, Eastern African Time
+Indian/Mayotte, 10800000, 0, false, Eastern African Time
+Asia/Riyadh87, 11224000, 0, false, GMT+03:07
+Asia/Riyadh88, 11224000, 0, false, GMT+03:07
+Asia/Riyadh89, 11224000, 0, false, GMT+03:07
+Mideast/Riyadh87, 11224000, 0, false, GMT+03:07
+Mideast/Riyadh88, 11224000, 0, false, GMT+03:07
+Mideast/Riyadh89, 11224000, 0, false, GMT+03:07
+Asia/Tehran, 12600000, 3600000, true, Iran Standard Time
+Iran, 12600000, 3600000, true, Iran Standard Time
+Asia/Baku, 14400000, 3600000, true, Azerbaijan Time
+Asia/Dubai, 14400000, 0, false, Gulf Standard Time
+Asia/Muscat, 14400000, 0, false, Gulf Standard Time
+Asia/Tbilisi, 14400000, 0, false, Georgia Time
+Asia/Yerevan, 14400000, 0, false, Armenia Time
+Etc/GMT-4, 14400000, 0, false, GMT+04:00
+Europe/Moscow, 14400000, 0, false, Moscow Standard Time
+Europe/Samara, 14400000, 0, false, Samara Time
+Europe/Volgograd, 14400000, 0, false, Volgograd Time
+Indian/Mahe, 14400000, 0, false, Seychelles Time
+Indian/Mauritius, 14400000, 0, false, Mauritius Time
+Indian/Reunion, 14400000, 0, false, Reunion Time
+NET, 14400000, 0, false, Armenia Time
+W-SU, 14400000, 0, false, Moscow Standard Time
+Asia/Kabul, 16200000, 0, false, Afghanistan Time
+Antarctica/Mawson, 18000000, 0, false, Mawson Time
+Asia/Aqtau, 18000000, 0, false, Aqtau Time
+Asia/Aqtobe, 18000000, 0, false, Aqtobe Time
+Asia/Ashgabat, 18000000, 0, false, Turkmenistan Time
+Asia/Ashkhabad, 18000000, 0, false, Turkmenistan Time
+Asia/Dushanbe, 18000000, 0, false, Tajikistan Time
+Asia/Karachi, 18000000, 0, false, Pakistan Time
+Asia/Oral, 18000000, 0, false, Oral Time
+Asia/Samarkand, 18000000, 0, false, Uzbekistan Time
+Asia/Tashkent, 18000000, 0, false, Uzbekistan Time
+Etc/GMT-5, 18000000, 0, false, GMT+05:00
+Indian/Kerguelen, 18000000, 0, false, French Southern & Antarctic Lands Time
+Indian/Maldives, 18000000, 0, false, Maldives Time
+PLT, 18000000, 0, false, Pakistan Time
+Asia/Calcutta, 19800000, 0, false, India Standard Time
+Asia/Colombo, 19800000, 0, false, India Standard Time
+Asia/Kolkata, 19800000, 0, false, India Standard Time
+IST, 19800000, 0, false, India Standard Time
+Asia/Kathmandu, 20700000, 0, false, Nepal Time
+Asia/Katmandu, 20700000, 0, false, Nepal Time
+Antarctica/Vostok, 21600000, 0, false, Vostok Time
+Asia/Almaty, 21600000, 0, false, Alma-Ata Time
+Asia/Bishkek, 21600000, 0, false, Kirgizstan Time
+Asia/Dacca, 21600000, 0, false, Bangladesh Time
+Asia/Dhaka, 21600000, 0, false, Bangladesh Time
+Asia/Qyzylorda, 21600000, 0, false, Qyzylorda Time
+Asia/Thimbu, 21600000, 0, false, Bhutan Time
+Asia/Thimphu, 21600000, 0, false, Bhutan Time
+Asia/Yekaterinburg, 21600000, 0, false, Yekaterinburg Time
+BST, 21600000, 0, false, Bangladesh Time
+Etc/GMT-6, 21600000, 0, false, GMT+06:00
+Indian/Chagos, 21600000, 0, false, Indian Ocean Territory Time
+Asia/Rangoon, 23400000, 0, false, Myanmar Time
+Indian/Cocos, 23400000, 0, false, Cocos Islands Time
+Antarctica/Davis, 25200000, 0, false, Davis Time
+Asia/Bangkok, 25200000, 0, false, Indochina Time
+Asia/Ho_Chi_Minh, 25200000, 0, false, Indochina Time
+Asia/Hovd, 25200000, 0, false, Hovd Time
+Asia/Jakarta, 25200000, 0, false, West Indonesia Time
+Asia/Novokuznetsk, 25200000, 0, false, Novosibirsk Time
+Asia/Novosibirsk, 25200000, 0, false, Novosibirsk Time
+Asia/Omsk, 25200000, 0, false, Omsk Time
+Asia/Phnom_Penh, 25200000, 0, false, Indochina Time
+Asia/Pontianak, 25200000, 0, false, West Indonesia Time
+Asia/Saigon, 25200000, 0, false, Indochina Time
+Asia/Vientiane, 25200000, 0, false, Indochina Time
+Etc/GMT-7, 25200000, 0, false, GMT+07:00
+Indian/Christmas, 25200000, 0, false, Christmas Island Time
+VST, 25200000, 0, false, Indochina Time
+Antarctica/Casey, 28800000, 0, false, Western Standard Time (Australia)
+Asia/Brunei, 28800000, 0, false, Brunei Time
+Asia/Choibalsan, 28800000, 0, false, Choibalsan Time
+Asia/Chongqing, 28800000, 0, false, China Standard Time
+Asia/Chungking, 28800000, 0, false, China Standard Time
+Asia/Harbin, 28800000, 0, false, China Standard Time
+Asia/Hong_Kong, 28800000, 0, false, Hong Kong Time
+Asia/Kashgar, 28800000, 0, false, China Standard Time
+Asia/Krasnoyarsk, 28800000, 0, false, Krasnoyarsk Time
+Asia/Kuala_Lumpur, 28800000, 0, false, Malaysia Time
+Asia/Kuching, 28800000, 0, false, Malaysia Time
+Asia/Macao, 28800000, 0, false, China Standard Time
+Asia/Macau, 28800000, 0, false, China Standard Time
+Asia/Makassar, 28800000, 0, false, Central Indonesia Time
+Asia/Manila, 28800000, 0, false, Philippines Time
+Asia/Shanghai, 28800000, 0, false, China Standard Time
+Asia/Singapore, 28800000, 0, false, Singapore Time
+Asia/Taipei, 28800000, 0, false, China Standard Time
+Asia/Ujung_Pandang, 28800000, 0, false, Central Indonesia Time
+Asia/Ulaanbaatar, 28800000, 0, false, Ulaanbaatar Time
+Asia/Ulan_Bator, 28800000, 0, false, Ulaanbaatar Time
+Asia/Urumqi, 28800000, 0, false, China Standard Time
+Australia/Perth, 28800000, 0, false, Western Standard Time (Australia)
+Australia/West, 28800000, 0, false, Western Standard Time (Australia)
+CTT, 28800000, 0, false, China Standard Time
+Etc/GMT-8, 28800000, 0, false, GMT+08:00
+Hongkong, 28800000, 0, false, Hong Kong Time
+PRC, 28800000, 0, false, China Standard Time
+Singapore, 28800000, 0, false, Singapore Time
+Australia/Eucla, 31500000, 0, false, Central Western Standard Time (Australia)
+Asia/Dili, 32400000, 0, false, Timor-Leste Time
+Asia/Irkutsk, 32400000, 0, false, Irkutsk Time
+Asia/Jayapura, 32400000, 0, false, East Indonesia Time
+Asia/Pyongyang, 32400000, 0, false, Korea Standard Time
+Asia/Seoul, 32400000, 0, false, Korea Standard Time
+Asia/Tokyo, 32400000, 0, false, Japan Standard Time
+Etc/GMT-9, 32400000, 0, false, GMT+09:00
+JST, 32400000, 0, false, Japan Standard Time
+Japan, 32400000, 0, false, Japan Standard Time
+Pacific/Palau, 32400000, 0, false, Palau Time
+ROK, 32400000, 0, false, Korea Standard Time
+ACT, 34200000, 0, false, Central Standard Time (Northern Territory)
+Australia/Adelaide, 34200000, 3600000, true, Central Standard Time (South Australia)
+Australia/Broken_Hill, 34200000, 3600000, true, Central Standard Time (South Australia/New South Wales)
+Australia/Darwin, 34200000, 0, false, Central Standard Time (Northern Territory)
+Australia/North, 34200000, 0, false, Central Standard Time (Northern Territory)
+Australia/South, 34200000, 3600000, true, Central Standard Time (South Australia)
+Australia/Yancowinna, 34200000, 3600000, true, Central Standard Time (South Australia/New South Wales)
+AET, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Antarctica/DumontDUrville, 36000000, 0, false, Dumont-d'Urville Time
+Asia/Yakutsk, 36000000, 0, false, Yakutsk Time
+Australia/ACT, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Australia/Brisbane, 36000000, 0, false, Eastern Standard Time (Queensland)
+Australia/Canberra, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Australia/Currie, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Australia/Hobart, 36000000, 3600000, true, Eastern Standard Time (Tasmania)
+Australia/Lindeman, 36000000, 0, false, Eastern Standard Time (Queensland)
+Australia/Melbourne, 36000000, 3600000, true, Eastern Standard Time (Victoria)
+Australia/NSW, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Australia/Queensland, 36000000, 0, false, Eastern Standard Time (Queensland)
+Australia/Sydney, 36000000, 3600000, true, Eastern Standard Time (New South Wales)
+Australia/Tasmania, 36000000, 3600000, true, Eastern Standard Time (Tasmania)
+Australia/Victoria, 36000000, 3600000, true, Eastern Standard Time (Victoria)
+Etc/GMT-10, 36000000, 0, false, GMT+10:00
+Pacific/Chuuk, 36000000, 0, false, Chuuk Time
+Pacific/Guam, 36000000, 0, false, Chamorro Standard Time
+Pacific/Port_Moresby, 36000000, 0, false, Papua New Guinea Time
+Pacific/Saipan, 36000000, 0, false, Chamorro Standard Time
+Pacific/Truk, 36000000, 0, false, Chuuk Time
+Pacific/Yap, 36000000, 0, false, Chuuk Time
+Australia/LHI, 37800000, 1800000, true, Lord Howe Standard Time
+Australia/Lord_Howe, 37800000, 1800000, true, Lord Howe Standard Time
+Antarctica/Macquarie, 39600000, 0, false, Macquarie Island Time
+Asia/Sakhalin, 39600000, 0, false, Sakhalin Time
+Asia/Vladivostok, 39600000, 0, false, Vladivostok Time
+Etc/GMT-11, 39600000, 0, false, GMT+11:00
+Pacific/Efate, 39600000, 0, false, Vanuatu Time
+Pacific/Guadalcanal, 39600000, 0, false, Solomon Is. Time
+Pacific/Kosrae, 39600000, 0, false, Kosrae Time
+Pacific/Noumea, 39600000, 0, false, New Caledonia Time
+Pacific/Pohnpei, 39600000, 0, false, Pohnpei Time
+Pacific/Ponape, 39600000, 0, false, Pohnpei Time
+SST, 39600000, 0, false, Solomon Is. Time
+Pacific/Norfolk, 41400000, 0, false, Norfolk Time
+Antarctica/McMurdo, 43200000, 3600000, true, New Zealand Standard Time
+Antarctica/South_Pole, 43200000, 3600000, true, New Zealand Standard Time
+Asia/Anadyr, 43200000, 0, false, Anadyr Time
+Asia/Kamchatka, 43200000, 0, false, Petropavlovsk-Kamchatski Time
+Asia/Magadan, 43200000, 0, false, Magadan Time
+Etc/GMT-12, 43200000, 0, false, GMT+12:00
+Kwajalein, 43200000, 0, false, Marshall Islands Time
+NST, 43200000, 3600000, true, New Zealand Standard Time
+NZ, 43200000, 3600000, true, New Zealand Standard Time
+Pacific/Auckland, 43200000, 3600000, true, New Zealand Standard Time
+Pacific/Fiji, 43200000, 0, false, Fiji Time
+Pacific/Funafuti, 43200000, 0, false, Tuvalu Time
+Pacific/Kwajalein, 43200000, 0, false, Marshall Islands Time
+Pacific/Majuro, 43200000, 0, false, Marshall Islands Time
+Pacific/Nauru, 43200000, 0, false, Nauru Time
+Pacific/Tarawa, 43200000, 0, false, Gilbert Is. Time
+Pacific/Wake, 43200000, 0, false, Wake Time
+Pacific/Wallis, 43200000, 0, false, Wallis & Futuna Time
+NZ-CHAT, 45900000, 3600000, true, Chatham Standard Time
+Pacific/Chatham, 45900000, 3600000, true, Chatham Standard Time
+Etc/GMT-13, 46800000, 0, false, GMT+13:00
+MIT, 46800000, 0, false, West Samoa Time
+Pacific/Apia, 46800000, 0, false, West Samoa Time
+Pacific/Enderbury, 46800000, 0, false, Phoenix Is. Time
+Pacific/Tongatapu, 46800000, 0, false, Tonga Time
+Etc/GMT-14, 50400000, 0, false, GMT+14:00
+Pacific/Fakaofo, 50400000, 0, false, Tokelau Time
+Pacific/Kiritimati, 50400000, 0, false, Line Is. Time

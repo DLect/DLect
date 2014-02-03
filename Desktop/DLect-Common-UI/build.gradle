@@ -1,0 +1,12 @@
+applyJava();
+
+dependencies {
+    compile        swinglabs.jxlayer()
+    compile        swinglabs.swingx.painter()
+    compile        swinglabs.swingx.layout()
+    compile        swinglabs.swingx.core()
+    compile        desktop.data()
+    
+    testCompile    projectTestingCommon()
+    testCompile    desktop.testing()
+}

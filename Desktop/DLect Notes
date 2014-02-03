@@ -1,0 +1,4 @@
+DLect:
+
+Downloading threads: 
+Use ExecutorService.invokeAll(Collection) (@ http://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ExecutorService.html#invokeAll(java.util.Collection)) for the downloading. This should allow for a single thread execution whilst allowing for finish fast and not shutting down the service.

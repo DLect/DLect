@@ -1,0 +1,6 @@
+applyJava();
+
+dependencies {
+    testCompile    projectTestingCommon()
+    testCompile    projectTestingJaxB()
+}

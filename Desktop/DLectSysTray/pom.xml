@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.lee</groupId>
+        <artifactId>DLect-all</artifactId>
+        <version>2.1-2</version>
+    </parent>
+    <groupId>org.lee</groupId>
+    <artifactId>DLect-System-Tray</artifactId>
+    <version>2.1-SNAPSHOT</version>
+    <name>DLect System Tray</name>
+    <url>uqlectures.sourceforge.net</url>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DLect-Data</artifactId>
+            <version>2.1-2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>DLect-Common-UI</artifactId>
+            <version>2.1-2</version>
+        </dependency>
+    </dependencies>
+    
+</project>
