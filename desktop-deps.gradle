@@ -1,0 +1,8 @@
+/////////// Adding Dependencies on request. //////////
+gradle.allprojects {
+    ext.desktop = new Object() {
+        def data() {
+            return proj(':Desktop:Data-2')
+        }
+    }
+}

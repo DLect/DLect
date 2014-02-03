@@ -1,9 +1,0 @@
-applyJava();
-
-dependencies {
-    compile         googleGuava()
-    compile         httpClient()
-    
-    testCompile    projectTestingCommon()
-    testCompile    projectTestingJaxB()
-}

@@ -1,0 +1,24 @@
+applyJava();
+
+applyEJB();
+
+dependencies {
+    compile googleGuava()
+    compile httpClient()
+
+    compile projectData()
+    compile web.baseEjbInterfaces()
+    compile web.database()
+    compile web.databaseUtils()
+    compile web.beans()
+    
+    compile web.plugin.ejbInterface()
+    
+    compile web.plugin.providerBase()
+    compile web.plugin.searchBase()
+    
+    provided javaEE()
+
+    testCompile projectTestingCommon()
+    testCompile commonsLang3()
+}

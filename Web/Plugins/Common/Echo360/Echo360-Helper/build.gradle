@@ -1,0 +1,11 @@
+applyJava();
+
+dependencies {
+    compile     googleGuava()
+    compile     projectData()
+    compile     web.database()
+    compile     web.databaseUtils()
+    compile     web.beans()
+    
+    provided    javaEE()
+}

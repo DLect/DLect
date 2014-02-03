@@ -8,21 +8,19 @@ rootProject.name = 'DLect Root Project'
 def recurse(String base, File parent) {
     parent.listFiles(new FileFilter() {
             public boolean accept(File file) {
-                return file.isDirectory() && !file.name.startsWith(".")
+                return file.isDirectory() && !file.name.startsWith(".") && !file.name.matches("^(src|build|target)")
             }
-        }).each { File dir ->
-        if(dir.isDirectory()) {
+        }).each({ File dir ->
             String base2 = base + ":" + dir.name
             if(new File(dir, 'build.gradle').isFile()) {
-                println "Incl       "
-                println base2
-                println dir
                 include base2
+                def p = project(base2);
+                p.name = base2.substring(1).replace(":", "-")
+                println "\t" + base2 + "\n\t   \\" + p.name
             } else {
                 recurse(base2, dir);
             }
-        }
-    }
+        })
 }
 
 recurse("", rootDir)

@@ -5,9 +5,9 @@ apply plugin: 'base' // To add "clean" task to the root project.
 subprojects {
     //apply from: file('maven.gradle')
     apply from: rootProject.file('common.gradle')
-    apply from: rootProject.file('common-deps.gradle')
 }
 
+/*
 task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the projects.') {
     title = 'All modules'
     destinationDir = new File(project.buildDir, 'merged-javadoc')
@@ -20,10 +20,12 @@ task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the pro
         subprojects*.configurations*.compile*.copyRecursive({ !(it instanceof ProjectDependency); })*.resolve()
     }
 }
-
+*/
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
     gradleVersion = '1.10'
 }
 
-apply from: rootProject.file('common-deps.gradle')
+apply from: rootProject.file('project-config.gradle')
+apply from: rootProject.file('maven-config.gradle')
 apply from: rootProject.file('deps.gradle')
+apply from: rootProject.file('web-deps.gradle')

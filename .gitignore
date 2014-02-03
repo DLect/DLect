@@ -1,3 +1,12 @@
 build
 .gradle
 .nb-gradle
+target
+DLect.dat
+timings.txt
+output.txt
+gradle-app.settings
+
+
+# Override the exclude of anything in a src directory.
+!src

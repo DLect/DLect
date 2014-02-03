@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is part of DLect. DLect is a suite of code that facilitates the downloading of lecture recordings.
+
+Copyright © 2014 Lee Symes.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
+
+-->
+
+<offering>
+  <id>15423</id>
+  <course>DECO2500</course>
+  <semester>
+    <id>6320</id>
+    <name>Semester 1, 2013</name>
+    <number>1</number>
+    <year>2013</year>
+  </semester>
+  <location>St Lucia</location>
+  <mode>Internal</mode>
+  <sinet_class>21260</sinet_class>
+  <campus>
+    <code>STLUC</code>
+    <name>St Lucia</name>
+  </campus>
+  <last_update>2013-04-27T03:27:48+00:00</last_update>
+  <series>
+    <series>
+      <id>7989</id>
+      <name>L</name>
+      <groups>
+        <group>
+          <id>24422</id>
+          <name>01</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29116</id>
+              <day>Mon</day>
+              <start>8:00 AM</start>
+              <finish>8:50 AM</finish>
+              <startmins>480</startmins>
+              <finishmins>530</finishmins>
+              <room>234</room>
+              <building>
+                <id>235</id>
+                <campus>STLUC</campus>
+                <number>7</number>
+                <name>Parnell Building</name>
+              </building>
+              <events>
+                <event date="2013-02-25" taught="true"/>
+                <event date="2013-03-04" taught="true"/>
+                <event date="2013-03-11" taught="true"/>
+                <event date="2013-03-18" taught="true"/>
+                <event date="2013-03-25" taught="true"/>
+                <event date="2013-04-01" taught="false"/>
+                <event date="2013-04-08" taught="true"/>
+                <event date="2013-04-15" taught="true"/>
+                <event date="2013-04-22" taught="true"/>
+                <event date="2013-04-29" taught="true"/>
+                <event date="2013-05-06" taught="true"/>
+                <event date="2013-05-13" taught="true"/>
+                <event date="2013-05-20" taught="true"/>
+                <event date="2013-05-27" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+      </groups>
+    </series>
+    <series>
+      <id>7995</id>
+      <name>P</name>
+      <groups>
+        <group>
+          <id>24432</id>
+          <name>01</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29127</id>
+              <day>Wed</day>
+              <start>8:00 AM</start>
+              <finish>9:50 AM</finish>
+              <startmins>480</startmins>
+              <finishmins>590</finishmins>
+              <room>201</room>
+              <building>
+                <id>230</id>
+                <campus>STLUC</campus>
+                <number>9</number>
+                <name>Michie Building</name>
+              </building>
+              <events>
+                <event date="2013-02-27" taught="true"/>
+                <event date="2013-03-06" taught="true"/>
+                <event date="2013-03-13" taught="true"/>
+                <event date="2013-03-20" taught="true"/>
+                <event date="2013-03-27" taught="true"/>
+                <event date="2013-04-03" taught="false"/>
+                <event date="2013-04-10" taught="true"/>
+                <event date="2013-04-17" taught="true"/>
+                <event date="2013-04-24" taught="true"/>
+                <event date="2013-05-01" taught="true"/>
+                <event date="2013-05-08" taught="true"/>
+                <event date="2013-05-15" taught="true"/>
+                <event date="2013-05-22" taught="true"/>
+                <event date="2013-05-29" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+        <group>
+          <id>24441</id>
+          <name>02</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29136</id>
+              <day>Thu</day>
+              <start>8:00 AM</start>
+              <finish>9:50 AM</finish>
+              <startmins>480</startmins>
+              <finishmins>590</finishmins>
+              <room>201</room>
+              <building>
+                <id>36</id>
+                <campus>STLUC</campus>
+                <number>39A</number>
+                <name>General Purpose North 3</name>
+              </building>
+              <events>
+                <event date="2013-02-28" taught="true"/>
+                <event date="2013-03-07" taught="true"/>
+                <event date="2013-03-14" taught="true"/>
+                <event date="2013-03-21" taught="true"/>
+                <event date="2013-03-28" taught="true"/>
+                <event date="2013-04-04" taught="false"/>
+                <event date="2013-04-11" taught="true"/>
+                <event date="2013-04-18" taught="true"/>
+                <event date="2013-04-25" taught="true"/>
+                <event date="2013-05-02" taught="true"/>
+                <event date="2013-05-09" taught="true"/>
+                <event date="2013-05-16" taught="true"/>
+                <event date="2013-05-23" taught="true"/>
+                <event date="2013-05-30" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+        <group>
+          <id>24449</id>
+          <name>03</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29145</id>
+              <day>Thu</day>
+              <start>12:00 PM</start>
+              <finish>1:50 PM</finish>
+              <startmins>720</startmins>
+              <finishmins>830</finishmins>
+              <room>211</room>
+              <building>
+                <id>230</id>
+                <campus>STLUC</campus>
+                <number>9</number>
+                <name>Michie Building</name>
+              </building>
+              <events>
+                <event date="2013-02-28" taught="true"/>
+                <event date="2013-03-07" taught="true"/>
+                <event date="2013-03-14" taught="true"/>
+                <event date="2013-03-21" taught="true"/>
+                <event date="2013-03-28" taught="true"/>
+                <event date="2013-04-04" taught="false"/>
+                <event date="2013-04-11" taught="true"/>
+                <event date="2013-04-18" taught="true"/>
+                <event date="2013-04-25" taught="true"/>
+                <event date="2013-05-02" taught="true"/>
+                <event date="2013-05-09" taught="true"/>
+                <event date="2013-05-16" taught="true"/>
+                <event date="2013-05-23" taught="true"/>
+                <event date="2013-05-30" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+        <group>
+          <id>24458</id>
+          <name>04</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29153</id>
+              <day>Wed</day>
+              <start>3:00 PM</start>
+              <finish>4:50 PM</finish>
+              <startmins>900</startmins>
+              <finishmins>1010</finishmins>
+              <room>213</room>
+              <building>
+                <id>39</id>
+                <campus>STLUC</campus>
+                <number>32</number>
+                <name>Gordon Greenwood Building</name>
+              </building>
+              <events>
+                <event date="2013-02-27" taught="true"/>
+                <event date="2013-03-06" taught="true"/>
+                <event date="2013-03-13" taught="true"/>
+                <event date="2013-03-20" taught="true"/>
+                <event date="2013-03-27" taught="true"/>
+                <event date="2013-04-03" taught="false"/>
+                <event date="2013-04-10" taught="true"/>
+                <event date="2013-04-17" taught="true"/>
+                <event date="2013-04-24" taught="true"/>
+                <event date="2013-05-01" taught="true"/>
+                <event date="2013-05-08" taught="true"/>
+                <event date="2013-05-15" taught="true"/>
+                <event date="2013-05-22" taught="true"/>
+                <event date="2013-05-29" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+        <group>
+          <id>24469</id>
+          <name>05</name>
+          <groupname/>
+          <sessions>
+            <session>
+              <id>29165</id>
+              <day>Thu</day>
+              <start>3:00 PM</start>
+              <finish>4:50 PM</finish>
+              <startmins>900</startmins>
+              <finishmins>1010</finishmins>
+              <room>207</room>
+              <building>
+                <id>96</id>
+                <campus>STLUC</campus>
+                <number>51</number>
+                <name>Zelman Cowen Building</name>
+              </building>
+              <events>
+                <event date="2013-02-28" taught="true"/>
+                <event date="2013-03-07" taught="true"/>
+                <event date="2013-03-14" taught="true"/>
+                <event date="2013-03-21" taught="true"/>
+                <event date="2013-03-28" taught="true"/>
+                <event date="2013-04-04" taught="false"/>
+                <event date="2013-04-11" taught="true"/>
+                <event date="2013-04-18" taught="true"/>
+                <event date="2013-04-25" taught="true"/>
+                <event date="2013-05-02" taught="true"/>
+                <event date="2013-05-09" taught="true"/>
+                <event date="2013-05-16" taught="true"/>
+                <event date="2013-05-23" taught="true"/>
+                <event date="2013-05-30" taught="true"/>
+              </events>
+            </session>
+          </sessions>
+        </group>
+      </groups>
+    </series>
+  </series>
+  <assessment>
+  </assessment>
+</offering>

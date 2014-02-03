@@ -1,0 +1,15 @@
+applyJava();
+
+applyJpaModelGen()
+applyEJB()
+
+dependencies {
+    compile googleGuava()
+    compile httpClient()
+    compile projectData()
+    compile jpaModel()
+    
+    provided javaEE()
+
+    testCompile projectTestingCommon()
+}

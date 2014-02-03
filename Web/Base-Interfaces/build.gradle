@@ -1,0 +1,9 @@
+applyJava();
+
+dependencies {
+    compile projectData()
+    
+    provided javaEE()
+
+    testCompile projectTestingCommon()
+}
