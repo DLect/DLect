@@ -3,14 +3,9 @@ applyJava()
 dependencies {
     compile     googleGuava()
     
-    compile     slf4j
-    compile     slf4j_jdk
-
-    compile     junit
-    compile     mockito
-    compile     powermock_mockito
-    compile     powermock_junit
-    compile     reflections
+    compile     testing()
+    compile     powermock()
+    compile     reflections()
     
-    compile     commons_lang
+    compile     commonsLang()
 }

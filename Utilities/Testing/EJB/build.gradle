@@ -5,4 +5,6 @@ dependencies {
     compile httpClient()
     
     compile projectTestingCommon()
+    
+    provided javaEE();
 }
