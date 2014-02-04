@@ -1,27 +1,29 @@
 def printObject(obj, prefix, maxLevels) {
-try {
-    obj.properties.each { prop, val ->
-        if(prop.equals("class")) {
-        } else if(maxLevels <= 0 || val == null) {
-            println prefix + prop + " => {" + val + "}"
-        } else {
-            println prefix + prop + " =\\"
-            printObject(val, prefix + "\t", maxLevels - 1)
+    try {
+        obj.properties.each { prop, val ->
+            if(prop.equals("class")) {
+            } else if(maxLevels <= 0 || val == null) {
+                println prefix + prop + " => {" + val + "}"
+            } else {
+                println prefix + prop + " =\\"
+                printObject(val, prefix + "\t", maxLevels - 1)
+            }
         }
-    }
     }catch(Exception e)  {
     }
 }
 
 def configureJava(task) {
     if(!task.options.compilerArgs.find({item -> 
-        item.startsWith("-proc:")
-        })) {
+                item.startsWith("-proc:")
+            })) {
         task.options.compilerArgs += [
             "-proc:none"
         ]
     }
-    task.options.compilerArgs += ["-Xlint:all"]
+    if(hasProperty("warnAll") && warnAll) {
+        task.options.compilerArgs += ["-Xlint:all"]
+    }
     task.options.warnings=true
     task.sourceCompatibility = 1.7
     task.targetCompatibility = 1.7
@@ -31,9 +33,8 @@ def configureJava(task) {
 
 gradle.allprojects {
     ext.applyJava = {
-        println buildStart
         apply plugin: 'java'
-
+        
         dependencies {
             compile     slf4jBase()
             
@@ -77,9 +78,14 @@ gradle.allprojects {
         
     }
     
+    ext.executableJar = { mainName ->
+        apply plugin:'application'
+        mainClassName = mainName
+    }
+    
     ext.applyJpaModelGen = {
         configurations {
-             jpaModelGen
+            jpaModelGen
         }
         dependencies.jpaModelGen "org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.5.1"
         
@@ -95,12 +101,12 @@ gradle.allprojects {
                 into destDir
             }
             task ("${taskName}", type: JavaCompile, group: 'build'){
-                 source = sourceSet.java
-                 classpath = sourceSet.compileClasspath + configurations.jpaModelGen
-                 options.compilerArgs += [
+                source = sourceSet.java
+                classpath = sourceSet.compileClasspath + configurations.jpaModelGen
+                options.compilerArgs += [
                         "-proc:only"
-                 ]
-                 destinationDir = destDir
+                ]
+                destinationDir = destDir
             }
             configureJava(tasks[taskName])
             
@@ -115,12 +121,12 @@ gradle.allprojects {
     ext.applyProvided = {
         project.sourceSets {
             main {
-              compileClasspath = configurations.compile + configurations.provided + configurations.optional
-           }
-           test {
-              compileClasspath = compileClasspath + configurations.provided + configurations.optional
-              runtimeClasspath = runtimeClasspath + configurations.provided + configurations.optional
-           }
+                compileClasspath = configurations.compile + configurations.provided + configurations.optional
+            }
+            test {
+                compileClasspath = compileClasspath + configurations.provided + configurations.optional
+                runtimeClasspath = runtimeClasspath + configurations.provided + configurations.optional
+            }
         }
     }
 }

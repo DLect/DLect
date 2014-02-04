@@ -28,4 +28,5 @@ task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper
 apply from: rootProject.file('project-config.gradle')
 apply from: rootProject.file('maven-config.gradle')
 apply from: rootProject.file('deps.gradle')
+apply from: rootProject.file('desktop-deps.gradle')
 apply from: rootProject.file('web-deps.gradle')

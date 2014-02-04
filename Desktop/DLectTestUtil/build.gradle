@@ -1,0 +1,8 @@
+applyJava()
+
+executableJar("Updater")
+
+dependencies {
+    compile testing()
+    compile httpClient()
+}

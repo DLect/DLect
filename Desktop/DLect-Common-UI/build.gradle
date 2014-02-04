@@ -2,10 +2,15 @@ applyJava();
 
 dependencies {
     compile        swinglabs.jxlayer()
-    compile        swinglabs.swingx.painter()
+    compile        swinglabs.swingx.painters()
     compile        swinglabs.swingx.layout()
     compile        swinglabs.swingx.core()
+    compile        jhlabsFilters()
+    
     compile        desktop.data()
+    compile        desktop.oldData()
+    
+    
     
     testCompile    projectTestingCommon()
     testCompile    desktop.testing()

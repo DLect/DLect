@@ -1,6 +1,6 @@
 gradle.allprojects {
     ext.buildStart = {
-        def outFormat = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss'Z'")
+        def outFormat = new java.text.SimpleDateFormat("yyyyMMdd.HHmmss")
         outFormat.timeZone = java.util.TimeZone.getTimeZone("UTC")
         return outFormat.format(new Date())
     }()

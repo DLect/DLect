@@ -2,7 +2,52 @@
 gradle.allprojects {
     ext.desktop = new Object() {
         def data() {
-            return proj(':Desktop:Data-2')
+            return proj(':Desktop:DLect-Data-2')
+        }
+        def testing() {
+            return proj(":Desktop:DLectTestUtil")
+        }
+        def commonUI() {
+            return proj(":Desktop:DLect-Common-UI")
+        }
+        def standalone() {
+            return proj(":Desktop:DLect-Standalone")
+        }
+        def updater() {
+            return proj(":Desktop:DLectUpdater")
+        }
+        def oldData() {
+            deprecated("oldData")
+            return proj(":Desktop:DLectData")
         }
     }
+    
+    ext.swinglabs = new Object() {
+        def jxlayer() {
+            return "org.swinglabs:jxlayer:3.0.4"
+        }
+        def swingx = new Object() {
+            def painters() {
+                return 'org.swinglabs.swingx:swingx-painters:1.6.5-1'
+            }
+            def layout() {
+                return 'org.swinglabs:swing-layout:1.0.3'
+            }
+            def core() {
+                return 'org.swinglabs.swingx:swingx-core:1.6.5-1'
+            }
+        }
+        
+    }
+    ext.jhlabsFilters = {
+        return "com.jhlabs:filters:2.0.235-1"
+    }
+    ext.mp4parser = {
+        return "com.googlecode.mp4parser:isoparser:1.0-RC-23-SNAPSHOT"
+    }
+    ext.jaudiotagger = {
+        return "org:jaudiotagger:2.0.3"
+    }
+    
+    
 }
