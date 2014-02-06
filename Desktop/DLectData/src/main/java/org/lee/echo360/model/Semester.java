@@ -31,7 +31,6 @@ public class Semester implements Comparable<Semester>, Serializable {
         this.longName = longName;
         this.coursePostfixName = coursePostfixName;
         this.allSubjectsReference = allSubjects;
-
     }
 
     public String getCoursePostfixName() {

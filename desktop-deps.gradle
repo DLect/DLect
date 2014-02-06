@@ -7,6 +7,9 @@ gradle.allprojects {
         def testing() {
             return proj(":Desktop:DLectTestUtil")
         }
+        def events() {
+            return proj(":Desktop:DLect-Events")
+        }
         def commonUI() {
             return proj(":Desktop:DLect-Common-UI")
         }

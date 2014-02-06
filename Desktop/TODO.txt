@@ -19,3 +19,9 @@ FIXED     - Not finding the wiki page
 UQ
 FIXED     - There seems to be trailing spaces on Course names - Check out UQ's REGEXP
 FIXED     - 12:00:00 is interpreted as 00:00:00
+
+
+Make a request to:
+Request URL:
+http://lecture.recordings.uq.edu.au:8080/ess/client/api/sections/<<COURSE-UUID>>/presentations/<<LECTURE-UUID>>/details.json?callback=EC.loadDetailsSuccess&isFaculty=false&timeZone=Australia/Brisbane&_=1391516418301
+
