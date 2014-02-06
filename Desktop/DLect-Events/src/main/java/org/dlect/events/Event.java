@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.events;
 
 /**
  *
  * @author lee
  */
-public abstract class  Event {
-    
-    
-    
+public interface Event {
+
+    public Object getOrigin();
+
+    public Class<?> getOriginClass();
 }

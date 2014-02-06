@@ -10,8 +10,8 @@ package org.dlect.events;
  * @author lee
  * @param <T>
  */
-public interface EventListener<T extends Event> {
+public interface EventMatcher<T extends Event> {
 
-    public void eventFired(T event);
+    public boolean supports(T e);
 
 }
