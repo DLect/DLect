@@ -46,6 +46,10 @@ gradle.allprojects {
             configureJava(task);
         }
 
+        test {
+            ignoreFailures = true
+        }
+        
         task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
             classifier = 'sources'
             from sourceSets.main.allSource

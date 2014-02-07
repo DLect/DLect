@@ -2,4 +2,7 @@ applyJava()
 
 dependencies {
     compile googleGuava()
+    
+    testCompile desktop.testing()
+    testCompile projectTestingCommon()
 }

@@ -25,8 +25,11 @@ task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper
     gradleVersion = '1.10'
 }
 
-apply from: rootProject.file('project-config.gradle')
-apply from: rootProject.file('maven-config.gradle')
+apply from: rootProject.file('config-project.gradle')
+apply from: rootProject.file('config-maven.gradle')
+if(hasProperty("sonar")) {
+    apply from: rootProject.file('config-sonar.gradle')
+}
 apply from: rootProject.file('deps.gradle')
-apply from: rootProject.file('desktop-deps.gradle')
-apply from: rootProject.file('web-deps.gradle')
+apply from: rootProject.file('deps-desktop.gradle')
+apply from: rootProject.file('deps-web.gradle')

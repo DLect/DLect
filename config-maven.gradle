@@ -11,6 +11,7 @@ gradle.allprojects {
     } else {
         throw new InvalidUserDataException("Maven Version should be num[.num]+-[ALPHA|BETA|SNAPSHOT|RC]: " + mavenVersion)
     }
+    ext.version = completeVersion;
     
     ext.applyMaven = {   
         project.group = mavenGroupId

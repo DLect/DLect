@@ -1,0 +1,16 @@
+apply plugin: "sonar-runner"
+
+subprojects {
+    sonarRunner {
+        sonarProperties {
+            property "sonar.sourceEncoding", "UTF-8"
+        }
+    }
+}
+
+buildscript {
+    repositories { mavenCentral() }    
+    dependencies { classpath 'org.ajoberstar:gradle-jacoco:0.1.0' }
+}
+
+// All sonar properties are given on a command line

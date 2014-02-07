@@ -16,7 +16,6 @@ def recurse(String base, File parent) {
                 include base2
                 def p = project(base2);
                 p.name = base2.substring(1).replace(":", "-")
-                println "\t" + base2 + "\n\t   \\" + p.name
             } else {
                 recurse(base2, dir);
             }
