@@ -4,14 +4,19 @@ rootProject.name = 'DLect-Root-Project'
 // of the project. That is, every directory containing a "build.gradle" will
 // be automatically the subproject of this project.
 
-def recurse(String base, File parent) {
+def regex = hasProperty("ignoreProjects");
+
+def recurse = {}; // Init the variable first so that the closure doesn't complain that it can't find it.
+
+recurse = { String base, File parent ->
     parent.listFiles(new FileFilter() {
             public boolean accept(File file) {
                 return file.isDirectory() && !file.name.startsWith(".") && !file.name.matches("^(src|build|target)")
             }
         }).each({ File dir ->
             String base2 = base + ":" + dir.name
-            if(hasProperty("ignoreProjects") && dir.name =~ ignoreProjects) { // If it matches the regex `ignoreAllMatching`
+            println base2 + " -- " + (base2 =~ ignoreProjects ? true : false)
+            if(regex && base2 =~ ignoreProjects) { // If it matches the regex `ignoreAllMatching`
                 return 
             } else if(new File(dir, 'build.gradle').isFile()) {
                 include base2
