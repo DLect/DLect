@@ -11,18 +11,13 @@ output.txt
 
 *.jar
 
-# Override the exclude of anything in a src directory.
-#!src
 
 # OS Specifics - From https://github.com/github/gitignore/blob/master/Global/
 .DS_Store
 ._.DS_Store
+*DS_Store*
 .AppleDouble
 .LSOverride
-
-# Icon must ends with two \r.
-Icon
-
 
 # Thumbnails
 ._*
@@ -38,3 +33,6 @@ ehthumbs.db
 # Folder config file
 Desktop.ini
 
+
+# Override the exclude of anything in a src directory.
+#!src
