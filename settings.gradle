@@ -15,7 +15,6 @@ recurse = { String base, File parent ->
             }
         }).each({ File dir ->
             String base2 = base + ":" + dir.name
-            println base2 + " -- " + (base2 =~ ignoreProjects ? true : false)
             if(regex && base2 =~ ignoreProjects) { // If it matches the regex `ignoreAllMatching`
                 return 
             } else if(new File(dir, 'build.gradle').isFile()) {
