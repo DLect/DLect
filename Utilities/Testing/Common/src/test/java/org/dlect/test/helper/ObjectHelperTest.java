@@ -9,10 +9,10 @@ import org.dlect.test.Resettable;
 import org.dlect.test.helper.testClasses.MultipleStaticAndNonStatic;
 import org.dlect.test.helper.testClasses.SingleNonStatic;
 import org.dlect.test.helper.testClasses.SingleStatic;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  *
@@ -73,6 +73,7 @@ public class ObjectHelperTest {
      * Test of setStaticField method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testSetStaticField() throws Exception {
         
         
@@ -82,6 +83,7 @@ public class ObjectHelperTest {
      * Test of getStaticFieldResetter method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testGetStaticFieldResetter() throws Exception {
     }
 
@@ -89,6 +91,7 @@ public class ObjectHelperTest {
      * Test of getStaticField method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testGetStaticField() throws Exception {
     }
 
@@ -96,6 +99,7 @@ public class ObjectHelperTest {
      * Test of getClassField method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testGetClassField() throws Exception {
     }
 
@@ -103,6 +107,7 @@ public class ObjectHelperTest {
      * Test of setField method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testSetField() throws Exception {
     }
 
@@ -110,6 +115,7 @@ public class ObjectHelperTest {
      * Test of getField method, of class ObjectHelper.
      */
     @Test
+    @Ignore
     public void testGetField() throws Exception {
     }
 
