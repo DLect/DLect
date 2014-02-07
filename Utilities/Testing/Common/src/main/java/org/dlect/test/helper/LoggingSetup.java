@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.dlect.test.Resettable;
 
 /**
  *
@@ -57,7 +58,7 @@ public class LoggingSetup {
         return new LoggingSetupReset(levels);
     }
 
-    public static class LoggingSetupReset {
+    public static class LoggingSetupReset implements Resettable{
 
         private final Map<Logger, Level> levels;
 

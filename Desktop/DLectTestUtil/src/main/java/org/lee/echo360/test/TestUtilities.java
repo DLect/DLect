@@ -80,29 +80,49 @@ public class TestUtilities {
     public static void setField(Object o, String name, Object val) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         assert o != null;
         Field pcsFeild = o.getClass().getDeclaredField(name);
-        pcsFeild.setAccessible(true);
-        pcsFeild.set(o, val);
+        boolean access = pcsFeild.isAccessible();
+        try {
+            pcsFeild.setAccessible(true);
+            pcsFeild.set(o, val);
+        } finally {
+            pcsFeild.setAccessible(access);
+        }
     }
 
     public static Object getField(Object o, String name) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         assert o != null;
         Field pcsFeild = o.getClass().getDeclaredField(name);
-        pcsFeild.setAccessible(true);
-        return pcsFeild.get(o);
+        boolean access = pcsFeild.isAccessible();
+        try {
+            pcsFeild.setAccessible(true);
+            return pcsFeild.get(o);
+        } finally {
+            pcsFeild.setAccessible(access);
+        }
     }
 
-    public static Object getStaticField(Class c, String name) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public static Object getStaticField(Class<?> c, String name) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         assert c != null;
         Field pcsFeild = c.getDeclaredField(name);
-        pcsFeild.setAccessible(true);
-        return pcsFeild.get(null);
+        boolean access = pcsFeild.isAccessible();
+        try {
+            pcsFeild.setAccessible(true);
+            return pcsFeild.get(null);
+        } finally {
+            pcsFeild.setAccessible(access);
+        }
     }
 
-    public static void setStaticField(Class c, String name, Object val) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public static void setStaticField(Class<?> c, String name, Object val) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         assert c != null;
         Field pcsFeild = c.getDeclaredField(name);
-        pcsFeild.setAccessible(true);
-        pcsFeild.set(null, val);
+        boolean access = pcsFeild.isAccessible();
+        try {
+            pcsFeild.setAccessible(true);
+            pcsFeild.set(null, val);
+        } finally {
+            pcsFeild.setAccessible(access);
+        }
     }
 
     public static void assertNotMutable(String desc, List<?> result) {
@@ -114,7 +134,6 @@ public class TestUtilities {
                 result.remove(null);
                 Assert.fail(desc + ": Remove null succeeds");
             } catch (UnsupportedOperationException e2) {
-                return; // Success
             }
         }
     }
@@ -124,13 +143,7 @@ public class TestUtilities {
         try {
             Class<?> reporter = cl.loadClass("org.lee.echo360.util.ExceptionReporter");
             setStaticField(reporter, "executeOnSeperateThread", multiThreaded);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TestUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchFieldException ex) {
-            Logger.getLogger(TestUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(TestUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(TestUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
