@@ -18,16 +18,4 @@ sonarRunner {
     }
 }
 
-buildscript {
-    repositories { mavenCentral() }    
-    dependencies { classpath 'org.ajoberstar:gradle-jacoco:0.1.0' }
-}
-
-
-gradle.allprojects {
-    applyJava = applyJava << {
-        apply plugin: 'jacoco'
-    }
-}
-
 // All sonar properties are given on a command line

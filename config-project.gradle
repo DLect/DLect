@@ -34,6 +34,7 @@ def configureJava(task) {
 gradle.allprojects {
     ext.applyJava = {
         apply plugin: 'java'
+        apply plugin: 'jacoco'
         
         dependencies {
             compile     slf4jBase()
@@ -42,6 +43,19 @@ gradle.allprojects {
             
             testCompile testing()
         }
+        
+        jacocoTestReport {
+            group = "reporting"
+            description = "Generate Jacoco coverage reports after running tests."
+            reports {
+                xml.enabled true
+                html.enabled true
+                csv.enabled false
+            }
+        }
+        
+        tasks["build"].dependsOn jacocoTestReport
+        
         tasks.withType( JavaCompile.class ).all { task->
             configureJava(task);
         }
