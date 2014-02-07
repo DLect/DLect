@@ -11,15 +11,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import org.dlect.events.DataEvent;
-import org.dlect.events.DataEventAcceptor;
 
 /**
  *
  * @author lee
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Semester extends DataEventAcceptor<Semester>{
+public class Semester {
 
     @XmlElement(name = "number")
     private int num;
