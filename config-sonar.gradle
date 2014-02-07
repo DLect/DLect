@@ -1,5 +1,9 @@
 apply plugin: "sonar-runner"
 
+if(hasProperty("configureSonarRunner")) {
+    configureSonarRunner()
+}
+
 subprojects {
     sonarRunner {
         sonarProperties {
