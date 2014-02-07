@@ -6,10 +6,10 @@
 package org.dlect.test.helper;
 
 import com.google.common.collect.Lists;
-import org.dlect.test.Resettable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import org.dlect.test.Resettable;
 import org.dlect.test.Resettables;
 
 /**
@@ -25,7 +25,8 @@ public class ObjectHelper {
         for (Class<?> clz : classes) {
             Field[] declaredFields = clz.getDeclaredFields();
             for (Field f : declaredFields) {
-                if (Modifier.isStatic(f.getModifiers())) {
+                // only restore static non-final fields.
+                if (Modifier.isStatic(f.getModifiers()) && !Modifier.isFinal(f.getModifiers())) {
                     fieldResetters.add(new ObjectConfig(f, null, getField(f, null)));
                 }
             }

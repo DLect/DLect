@@ -7,8 +7,10 @@ package org.dlect.test.helper;
 
 import org.dlect.test.Resettable;
 import org.dlect.test.helper.testClasses.MultipleStaticAndNonStatic;
+import org.dlect.test.helper.testClasses.PrivateStatic;
 import org.dlect.test.helper.testClasses.SingleNonStatic;
 import org.dlect.test.helper.testClasses.SingleStatic;
+import org.dlect.test.helper.testClasses.StaticFinal;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -58,15 +60,83 @@ public class ObjectHelperTest {
         String f1 = MultipleStaticAndNonStatic.field1;
         String f2 = MultipleStaticAndNonStatic.field2;
         Resettable r = ObjectHelper.storeStaticStateOf(MultipleStaticAndNonStatic.class);
-        assertEquals("Method changed variable field1", f1,  MultipleStaticAndNonStatic.field1);
-        assertEquals("Method changed variable field2", f2,  MultipleStaticAndNonStatic.field2);
+        assertEquals("Method changed variable field1", f1, MultipleStaticAndNonStatic.field1);
+        assertEquals("Method changed variable field2", f2, MultipleStaticAndNonStatic.field2);
 
         MultipleStaticAndNonStatic.field1 = f1 + " - DIFFERENT";
         MultipleStaticAndNonStatic.field2 = f2 + " - DIFFERENT";
         r.reset();
-        
+
         assertEquals("Method failed to reset field1", f1, MultipleStaticAndNonStatic.field1);
-        assertEquals("Method failed to reset field1", f2, MultipleStaticAndNonStatic.field2);
+        assertEquals("Method failed to reset field2", f2, MultipleStaticAndNonStatic.field2);
+    }
+
+    /**
+     * Test of storeStaticStateOf method, of class ObjectHelper.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testStoreStaticStateOf_PrivateStaticField() throws Exception {
+        String field = PrivateStatic.getField();
+
+        Resettable r = ObjectHelper.storeStaticStateOf(SingleStatic.class, StaticFinal.class);
+
+        assertEquals("Method changed variable field1", field, PrivateStatic.getField());
+
+        PrivateStatic.changeField();
+
+        r.reset();
+
+        assertEquals("Method failed to reset a private field.", field, PrivateStatic.getField());
+    }
+
+    /**
+     * Test of storeStaticStateOf method, of class ObjectHelper.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testStoreStaticStateOf_NoResetStaticFinalField() throws Exception {
+        String finalF = StaticFinal.finalField;
+        String nonFinalF = StaticFinal.nonFinalField;
+
+        Resettable r = ObjectHelper.storeStaticStateOf(StaticFinal.class);
+
+        assertEquals("Method changed variable field1", finalF, StaticFinal.finalField);
+        assertEquals("Method changed variable field2", nonFinalF, StaticFinal.nonFinalField);
+
+        StaticFinal.nonFinalField = nonFinalF + " - DIFFERENT";
+        StaticFinal.changeFinalField();
+
+        r.reset();
+
+        assertEquals("Method reset a static final field.", finalF, StaticFinal.finalField);
+        assertNotEquals("Method failed to reset a non-final field", nonFinalF, StaticFinal.nonFinalField);
+    }
+
+    /**
+     * Test of storeStaticStateOf method, of class ObjectHelper.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testStoreStaticStateOf_ResetMultipleClassses() throws Exception {
+        String ssField = SingleStatic.field;
+        String sfField = StaticFinal.nonFinalField;
+
+        Resettable r = ObjectHelper.storeStaticStateOf(SingleStatic.class, StaticFinal.class);
+
+        assertEquals("Method changed variable field1", ssField, SingleStatic.field);
+        assertEquals("Method changed variable field2", sfField, StaticFinal.nonFinalField);
+
+        SingleStatic.field = ssField + " - DIFFERENT";
+        StaticFinal.nonFinalField = sfField + " - DIFFERENT";
+
+        r.reset();
+
+        assertEquals("Method failed to reset a field in SingleStatic.", ssField, SingleStatic.field);
+        assertEquals("Method failed to reset a field in StaticFinal.", sfField, StaticFinal.nonFinalField);
     }
 
     /**
@@ -75,8 +145,7 @@ public class ObjectHelperTest {
     @Test
     @Ignore
     public void testSetStaticField() throws Exception {
-        
-        
+
     }
 
     /**
