@@ -7,15 +7,13 @@ if(hasProperty("configureSonarRunner")) {
 subprojects {
     sonarRunner {
         sonarProperties {
+            property "sonar.projectVersion", completeVersion
             property "sonar.sourceEncoding", "UTF-8"
+            property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+            property "sonar.surefire.reportsPath", "${test.testResultsDir}"
         }
     }
 }
 
-sonarRunner {
-    sonarProperties {
-        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-    }
-}
 
 // All sonar properties are given on a command line
