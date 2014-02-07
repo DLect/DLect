@@ -10,9 +10,7 @@ subprojects {
             property "sonar.projectVersion", completeVersion
             property "sonar.sourceEncoding", "UTF-8"
             property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
-            if(project.hasProperty("test")) {
-                property "sonar.surefire.reportsPath", "${project.test.testResultsDir}"
-            }
+            property "sonar.surefire.reportsPath", "${project.buildDir}/test-results/"
         }
     }
 }
