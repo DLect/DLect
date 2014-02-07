@@ -13,7 +13,6 @@ subprojects {
             if(project.hasProperty("test")) {
                 property "sonar.surefire.reportsPath", "${project.test.testResultsDir}"
             }
-            }
         }
     }
 }
