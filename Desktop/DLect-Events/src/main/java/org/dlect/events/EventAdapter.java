@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 /**
  * An adaptor that allows for events to be fired to listeners.
  *
+ * <p />
  * Note that all event listeners are compared using the {@linkplain EventListener#equals(java.lang.Object)} method not
  * object identity.
  *
@@ -19,7 +20,7 @@ public interface EventAdapter {
 
     /**
      * Adds the given event listener to this class, with an optional filtering by event origin classes.
-     * <p>
+     * <p />
      * All implementers must uphold the following contract:
      * <ul>
      * <li>If no listening classes are given then the event listener will be fired for all events passing this adaptor.
@@ -42,6 +43,7 @@ public interface EventAdapter {
     /**
      * Removes the event listener from this adaptor.
      *
+     * <p />
      * Calling this method guarantees that any events fired after this method completes will not notify the given event
      * listener.
      *
@@ -54,8 +56,9 @@ public interface EventAdapter {
     /**
      * Sets the given {@link EventAdapter} as the parent of this adaptor; or resets it if the given adapter is null.
      *
+     * <p />
      * If this adaptor is not {@code null} then this method will check for a cycle in the parent tree; throwing an
-     * exception if a cycle is found.
+     * exception if a cycle is found. Implementers must check for a cycle anywhere in the tree; not just
      *
      * @param e The adaptor to be set as parent adapter. If this is null then it will remove the parent.
      *
@@ -63,8 +66,25 @@ public interface EventAdapter {
      */
     public void setParentAdapter(EventAdapter e);
 
+    /**
+     * Gets the current parent adapter or {@code null} if none is defined.
+     *
+     * @return The parent adapter of {@code null} if none is defined.
+     */
     public EventAdapter getParentAdapter();
 
+    /**
+     * Fires the given event to all the event listeners and then fires the same event on this adapters parent(given one
+     * exists).
+     *
+     * <p />
+     * Implementers should respect the filtering given for event listeners added using
+     * {@link #addListener(org.dlect.events.EventListener, java.lang.Class...) }. The implementer should also fire the
+     * event to the parent after firing to all event listeners. Implementers should not copy the event as the event
+     * itself is immutable.
+     *
+     * @param e
+     */
     public void fireEvent(Event e);
 
 }
