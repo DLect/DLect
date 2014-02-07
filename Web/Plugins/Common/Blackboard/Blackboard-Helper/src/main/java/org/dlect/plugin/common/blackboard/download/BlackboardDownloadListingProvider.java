@@ -29,6 +29,7 @@ import org.dlect.internal.data.merge.PartialLectureContent;
  * @author lee
  */
 public class BlackboardDownloadListingProvider implements DownloadListingProvider {
+    private static final long serialVersionUID = 1L;
     
     @Override
     public Set<PartialLectureContent> getContentFor(LectureData data) {

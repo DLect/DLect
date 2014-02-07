@@ -18,8 +18,6 @@
  */
 package org.dlect.ejb.internal.provder.lecture.impl;
 
-import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapItem;
-import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapResponse;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
@@ -51,6 +49,8 @@ import org.dlect.internal.data.merge.PartialLectureWithStream;
 import org.dlect.internal.data.merge.PartialStream;
 import org.dlect.internal.object.ProviderLectureData;
 import org.dlect.object.ResultType;
+import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapItem;
+import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapResponse;
 
 import static org.dlect.db.DatabaseToExport.*;
 import static org.dlect.helpers.JAXBHelper.responseHandlerFor;

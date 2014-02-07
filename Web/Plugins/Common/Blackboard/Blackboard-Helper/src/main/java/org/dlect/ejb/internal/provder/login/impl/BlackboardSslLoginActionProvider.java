@@ -33,7 +33,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.dlect.ejb.internal.provder.login.LoginActionProvider;
-import org.dlect.ejb.internal.provder.login.impl.obj.BlackboardLoginXml;
+import org.dlect.provider.common.blackboard.xml.BlackboardLoginXml;
 import org.dlect.except.CommonExceptionBuilder;
 import org.dlect.except.DLectException;
 import org.dlect.export.University;

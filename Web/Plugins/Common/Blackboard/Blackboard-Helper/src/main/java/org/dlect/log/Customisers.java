@@ -27,4 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Customisers {
     public static final Logger LOG = LoggerFactory.getLogger(Customisers.class);
+
+    private Customisers() {
+    }
 }

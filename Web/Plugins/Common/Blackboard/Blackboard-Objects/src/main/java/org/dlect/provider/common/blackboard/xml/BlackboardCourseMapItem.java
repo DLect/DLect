@@ -18,7 +18,6 @@
  */
 package org.dlect.provider.common.blackboard.xml;
 
-import org.dlect.provider.common.blackboard.xml.adapters.BlackboardXmlDateTypeAdapter;
 import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,6 +26,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.dlect.provider.common.blackboard.xml.adapters.BlackboardXmlDateTypeAdapter;
 
 import static org.dlect.helpers.DataHelpers.*;
 

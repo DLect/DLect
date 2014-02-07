@@ -20,8 +20,8 @@
 package org.dlect.ejb.internal.provder.impl;
 
 import org.dlect.export.University;
-import org.dlect.provider.common.blackboard.helpers.BlackboardMobileHelper;
 import org.dlect.object.UniversitySupport;
+import org.dlect.provider.common.blackboard.helpers.BlackboardMobileHelper;
 
 public abstract class BlackboardUniversityActionProvider {
 

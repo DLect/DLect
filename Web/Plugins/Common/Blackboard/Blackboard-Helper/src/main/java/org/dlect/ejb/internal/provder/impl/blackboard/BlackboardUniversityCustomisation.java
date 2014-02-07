@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
-import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapItem;
 import org.dlect.export.Lecture;
 import org.dlect.export.Semester;
 import org.dlect.export.Subject;
@@ -33,6 +32,7 @@ import org.dlect.internal.data.merge.PartialLectureWithStream;
 import org.dlect.internal.data.merge.PartialSemester;
 import org.dlect.internal.data.merge.PartialStream;
 import org.dlect.internal.data.merge.PartialSubjectWithSemester;
+import org.dlect.provider.common.blackboard.xml.BlackboardCourseMapItem;
 
 /**
  * .

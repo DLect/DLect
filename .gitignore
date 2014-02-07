@@ -12,7 +12,7 @@ output.txt
 *.jar
 
 # Override the exclude of anything in a src directory.
-!src
+#!src
 
 # OS Specifics - From https://github.com/github/gitignore/blob/master/Global/
 .DS_Store
