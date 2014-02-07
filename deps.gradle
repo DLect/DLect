@@ -22,7 +22,7 @@ gradle.allprojects {
         return proj(project.parent.path + ':' + projectName)
     }
     ext.deprecated = { name ->
-        println project.path + " Uses ${name}. It should not."
+        println "Project " + project.path + " Uses ${name}. It should not."
     }
     
     
