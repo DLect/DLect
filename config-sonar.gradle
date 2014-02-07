@@ -25,7 +25,7 @@ buildscript {
 
 
 gradle.allprojects {
-    ext.applyJava << {
+    applyJava = applyJava << {
         apply plugin: 'jacoco'
     }
 }
