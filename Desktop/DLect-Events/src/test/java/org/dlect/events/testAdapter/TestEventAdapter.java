@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.events.testAdapter;
 
 import org.dlect.events.Event;
@@ -15,6 +14,8 @@ import org.dlect.events.EventListener;
  * @author lee
  */
 public class TestEventAdapter implements EventAdapter {
+
+    private EventAdapter parentAdapter;
 
     @Override
     public boolean addListener(EventListener l, Class<?>... listeningClasses) {
@@ -28,19 +29,17 @@ public class TestEventAdapter implements EventAdapter {
 
     @Override
     public EventAdapter getParentAdapter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.parentAdapter;  
     }
 
     @Override
     public void setParentAdapter(EventAdapter e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.parentAdapter = e;
     }
 
     @Override
     public boolean removeListener(EventListener l) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }
