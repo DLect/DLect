@@ -100,6 +100,23 @@ public class BaseEventAdapterTest {
      * Test of addListener method, of class BaseEventAdapter.
      */
     @Test
+    public void testAddListener_NonExistingAllListenerNullClassArray() {
+        EventListener l = new TestEventListener();
+
+        boolean addListener = nonMockedTestObject.addListener(l, (Class[]) null);
+
+        assertTrue(addListener);
+
+        assertTrue(nonMockedScel.isEmpty());
+        assertTrue(nonMockedAcl.size() == 1);
+        // First element.
+        assertTrue(nonMockedAcl.iterator().next() == l);
+    }
+
+    /**
+     * Test of addListener method, of class BaseEventAdapter.
+     */
+    @Test
     public void testAddListener_AddExistingFilterListenerNowAll() {
         EventListener l = new TestEventListener();
 
@@ -116,6 +133,91 @@ public class BaseEventAdapterTest {
         assertTrue(nonMockedAcl.size() == 1);
         // First element.
         assertTrue(nonMockedAcl.iterator().next() == l);
+    }
+
+    /**
+     * Test of addListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testAddListener_AddFilteredListener() {
+        EventListener l = new TestEventListener();
+
+        boolean addListener = nonMockedTestObject.addListener(l, Object.class);
+
+        // The listener was added.
+        assertTrue(addListener);
+
+        assertTrue(nonMockedScel.size() == 1);
+
+        assertTrue(nonMockedScel.containsEntry(Object.class, l));
+
+        // The adapter added it to the list.
+        assertTrue(nonMockedAcl.isEmpty());
+
+    }
+
+    /**
+     * Test of addListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testAddListener_AddMultiFilteredListener() {
+        EventListener l = new TestEventListener();
+
+        boolean addListener = nonMockedTestObject.addListener(l, Object.class, Number.class, Integer.class);
+
+        // The listener was added.
+        assertTrue(addListener);
+
+        assertTrue(nonMockedScel.size() == 3);
+
+        assertTrue(nonMockedScel.containsEntry(Object.class, l));
+        assertTrue(nonMockedScel.containsEntry(Number.class, l));
+        assertTrue(nonMockedScel.containsEntry(Integer.class, l));
+
+        assertTrue(nonMockedAcl.isEmpty());
+    }
+
+    /**
+     * Test of addListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testAddListener_AddExistingFilteredListener() {
+        EventListener l = new TestEventListener();
+
+        nonMockedScel.put(Object.class, l);
+
+        boolean addListener = nonMockedTestObject.addListener(l, Object.class);
+
+        // The listener was added.
+        assertFalse(addListener);
+
+        assertTrue(nonMockedScel.size() == 1);
+
+        assertTrue(nonMockedScel.containsEntry(Object.class, l));
+
+        assertTrue(nonMockedAcl.isEmpty());
+    }
+
+    /**
+     * Test of addListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testAddListener_AddExistingMulitFilteredListener() {
+        EventListener l = new TestEventListener();
+
+        nonMockedScel.put(Object.class, l);
+
+        // Object.class already exists but integer does not.
+        boolean addListener = nonMockedTestObject.addListener(l, Object.class, Integer.class);
+
+        assertTrue(addListener);
+
+        assertTrue(nonMockedScel.size() == 2);
+
+        assertTrue(nonMockedScel.containsEntry(Object.class, l));
+        assertTrue(nonMockedScel.containsEntry(Integer.class, l));
+
+        assertTrue(nonMockedAcl.isEmpty());
     }
 
     /**
