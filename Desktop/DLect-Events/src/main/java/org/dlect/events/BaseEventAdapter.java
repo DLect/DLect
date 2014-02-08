@@ -63,7 +63,13 @@ public class BaseEventAdapter implements EventAdapter {
         }
     }
 
-    private void checkForParentLoop(EventAdapter e) {
+    /**
+     * This method checks for a loop contained in the given event adapter if it were added to {@code this}. This will
+     * throw an {@link IllegalArgumentException} if a cycle is found.
+     *
+     * @param e
+     */
+    protected void checkForParentLoop(EventAdapter e) {
         Set<EventAdapter> adapters = Sets.newLinkedHashSet();
         // Linked to keep order if there is a problem.
         adapters.add(this);

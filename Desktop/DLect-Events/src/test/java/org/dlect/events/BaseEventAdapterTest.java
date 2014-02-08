@@ -231,17 +231,58 @@ public class BaseEventAdapterTest {
     /**
      * Test of getParentAdapter method, of class BaseEventAdapter.
      */
-    @Ignore
     @Test
-    public void testGetParentAdapter() {
+    public void testGetParentAdapter_EnsureDefaultIsNull() {
+        assertNull("Default parent is not null", nonMockedTestObject.getParentAdapter());
     }
 
     /**
      * Test of setParentAdapter method, of class BaseEventAdapter.
      */
-    @Ignore
     @Test
-    public void testSetParentAdapter() {
+    public void testSetParentAdapter_NullAdapter() {
+        nonMockedTestObject.setParentAdapter(null);
+
+        assertNull(nonMockedTestObject.getParentAdapter());
+    }
+
+    /**
+     * Test of setParentAdapter method, of class BaseEventAdapter.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetParentAdapter_CyclicAdapter() {
+        nonMockedTestObject.setParentAdapter(nonMockedTestObject);
+    }
+
+    /**
+     * Test of setParentAdapter method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testSetParentAdapter_CyclicAdapter2() {
+        BaseEventAdapter e2 = mock(BaseEventAdapter.class);
+        when(e2.getParentAdapter()).thenReturn(nonMockedTestObject);
+        try {
+            nonMockedTestObject.setParentAdapter(e2);
+            fail("No exception thrown");
+        } catch (IllegalArgumentException e) {
+            verify(e2).getParentAdapter();
+            verifyNoMoreInteractions(e2);
+        }
+    }
+
+    /**
+     * Test of setParentAdapter method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testSetParentAdapter_ValidParent() {
+        BaseEventAdapter e2 = mock(BaseEventAdapter.class);
+        when(e2.getParentAdapter()).thenReturn(null); // No parent.
+        nonMockedTestObject.setParentAdapter(e2);
+
+        assertEquals("Wrong parent", e2, nonMockedTestObject.getParentAdapter());
+
+        verify(e2).getParentAdapter();
+        verifyNoMoreInteractions(e2);
     }
 
     /**
