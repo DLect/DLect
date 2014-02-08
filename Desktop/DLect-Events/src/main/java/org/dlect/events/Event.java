@@ -59,10 +59,7 @@ public class Event {
         if (!Objects.equals(this.getBefore(), other.getBefore())) {
             return false;
         }
-        if (!Objects.equals(this.getAfter(), other.getAfter())) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.getAfter(), other.getAfter());
     }
 
     public Object getSource() {

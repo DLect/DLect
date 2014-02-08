@@ -66,6 +66,7 @@ public class BaseEventAdapterTest {
     /**
      * Test of addListener method, of class BaseEventAdapter.
      */
+    @Test
     public void testAddListener_ExistingListener() {
         EventListener l = new TestEventListener();
 
@@ -81,6 +82,7 @@ public class BaseEventAdapterTest {
     /**
      * Test of addListener method, of class BaseEventAdapter.
      */
+    @Test
     public void testAddListener_NonExistingAllListener() {
         EventListener l = new TestEventListener();
 
@@ -97,6 +99,7 @@ public class BaseEventAdapterTest {
     /**
      * Test of addListener method, of class BaseEventAdapter.
      */
+    @Test
     public void testAddListener_AddExistingFilterListenerNowAll() {
         EventListener l = new TestEventListener();
 

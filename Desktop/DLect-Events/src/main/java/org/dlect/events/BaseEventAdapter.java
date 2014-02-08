@@ -21,9 +21,10 @@ import javax.annotation.Nonnull;
  */
 public class BaseEventAdapter implements EventAdapter {
 
-    private transient final Set<EventListener> anyClassListeners;
     private EventAdapter parentAdapter;
-    private transient final Multimap<Class<?>, EventListener> specificClassEventListeners;
+
+    private final transient Set<EventListener> anyClassListeners;
+    private final transient Multimap<Class<?>, EventListener> specificClassEventListeners;
 
     public BaseEventAdapter() {
         this.anyClassListeners = Sets.newHashSet();
