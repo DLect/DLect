@@ -108,7 +108,7 @@ public class EventAdapterBuilderTest {
         Resettable s = getStaticFieldResetter(EventAdapterBuilder.class, "defaultAdapterClass");
         Object oldClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
         try {
-            EventAdapterBuilder.setDefaultAdapterClass(EventAdapter.class);
+            EventAdapterBuilder.setEventAdapterClass(EventAdapter.class);
             fail("Invalid class succeeded.");
         } catch (IllegalArgumentException e) {
             Object newClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
@@ -128,7 +128,7 @@ public class EventAdapterBuilderTest {
         Resettable s = getStaticFieldResetter(EventAdapterBuilder.class, "defaultAdapterClass");
         Object oldClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
         try {
-            EventAdapterBuilder.setDefaultAdapterClass(TestEventAdapter.class);
+            EventAdapterBuilder.setEventAdapterClass(TestEventAdapter.class);
             Object newClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
             assertNotEquals("Class not changed even though the method succeded", oldClass, newClass);
             assertEquals("Class not the expected one.", TestEventAdapter.class, newClass);
@@ -147,7 +147,7 @@ public class EventAdapterBuilderTest {
         setStaticField(EventAdapterBuilder.class, "defaultAdapterClass", TestEventAdapter.class);
         Object oldClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
 
-        EventAdapterBuilder.setDefaultAdapterClass(null);
+        EventAdapterBuilder.setEventAdapterClass(null);
 
         Object newClass = getStaticField(EventAdapterBuilder.class, "defaultAdapterClass");
         assertNotEquals("Class not changed even though the method succeded", oldClass, newClass);
@@ -164,7 +164,7 @@ public class EventAdapterBuilderTest {
         Class<?> setClass = TestEventAdapter.class;
         setStaticField(EventAdapterBuilder.class, "defaultAdapterClass", setClass);
         
-        Class<? extends EventAdapter> clz = EventAdapterBuilder.getDefaultAdapterClass();
+        Class<? extends EventAdapter> clz = EventAdapterBuilder.getEventAdapterClass();
 
         assertEquals("Class returned is not the one that was set.", setClass, clz);
     }
@@ -180,7 +180,7 @@ public class EventAdapterBuilderTest {
         
         EventAdapterBuilder.resetDefaultAdapterClass();
         
-        Class<? extends EventAdapter> clz = EventAdapterBuilder.getDefaultAdapterClass();
+        Class<? extends EventAdapter> clz = EventAdapterBuilder.getEventAdapterClass();
 
         assertEquals("Class returned is not the one that was set.", resetDefault, clz);
     }
