@@ -5,9 +5,6 @@
  */
 package org.dlect.events;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author lee
@@ -18,7 +15,7 @@ public class EventAdapterBuilder {
 
     private static Class<? extends EventAdapter> defaultAdapterClass = DEFAULT_ADAPTER_CLASS;
 
-    public static  EventAdapter getNewAdapter() {
+    public static EventAdapter getNewAdapter() {
         try {
             return defaultAdapterClass.newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -31,8 +28,20 @@ public class EventAdapterBuilder {
         }
     }
 
+    /**
+     * Configures the adapter class to be used when {@link #getNewAdapter() } is called. This does not affect any
+     * previous {@link EventAdapter} retrieved from {@link #getNewAdapter() }.
+     *
+     * @param adapter The new class to be initilised. This class will have a new instance created(through
+     *                {@link Class#newInstance() adapter.newInstance() }). If creating this instance fails for any
+     *                reason including the default constructor not being accessible then this method throws an
+     *                {@link IllegalArgumentException} and does not set the information.
+     *
+     * @throws IllegalArgumentException
+     */
     public static void setDefaultAdapterClass(Class<? extends EventAdapter> adapter) throws IllegalArgumentException {
-        if (adapter == null || adapter == DEFAULT_ADAPTER_CLASS) { // No point checking if I can init the default class.
+        if (adapter == null || adapter == DEFAULT_ADAPTER_CLASS) {
+            // No point checking if I can init the default class.
             defaultAdapterClass = DEFAULT_ADAPTER_CLASS;
             return;
         }
@@ -52,6 +61,9 @@ public class EventAdapterBuilder {
 
     public static void resetDefaultAdapterClass() {
         defaultAdapterClass = DEFAULT_ADAPTER_CLASS;
+    }
+
+    private EventAdapterBuilder() {
     }
 
 }

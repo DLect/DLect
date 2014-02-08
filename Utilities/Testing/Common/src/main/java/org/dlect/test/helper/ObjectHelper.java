@@ -26,7 +26,9 @@ public class ObjectHelper {
             Field[] declaredFields = clz.getDeclaredFields();
             for (Field f : declaredFields) {
                 // only restore static non-final fields.
-                if (Modifier.isStatic(f.getModifiers()) && !Modifier.isFinal(f.getModifiers())) {
+                // Also ignore the `$jacoco` object that is injected.
+                if (Modifier.isStatic(f.getModifiers()) && !Modifier.isFinal(f.getModifiers())
+                        && !f.getName().contains("$")) {
                     fieldResetters.add(new ObjectConfig(f, null, getField(f, null)));
                 }
             }

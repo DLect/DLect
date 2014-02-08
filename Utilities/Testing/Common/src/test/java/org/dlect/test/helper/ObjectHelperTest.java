@@ -5,6 +5,7 @@
  */
 package org.dlect.test.helper;
 
+import java.io.IOException;
 import org.dlect.test.Resettable;
 import org.dlect.test.helper.testClasses.MultipleStaticAndNonStatic;
 import org.dlect.test.helper.testClasses.PrivateStatic;
@@ -80,7 +81,7 @@ public class ObjectHelperTest {
     public void testStoreStaticStateOf_PrivateStaticField() throws Exception {
         String field = PrivateStatic.getField();
 
-        Resettable r = ObjectHelper.storeStaticStateOf(SingleStatic.class, StaticFinal.class);
+        Resettable r = ObjectHelper.storeStaticStateOf(PrivateStatic.class);
 
         assertEquals("Method changed variable field1", field, PrivateStatic.getField());
 
@@ -98,7 +99,7 @@ public class ObjectHelperTest {
      */
     @Test
     public void testStoreStaticStateOf_NoResetStaticFinalField() throws Exception {
-        String finalF = StaticFinal.finalField;
+        IOException finalF = StaticFinal.finalField;
         String nonFinalF = StaticFinal.nonFinalField;
 
         Resettable r = ObjectHelper.storeStaticStateOf(StaticFinal.class);
@@ -111,8 +112,8 @@ public class ObjectHelperTest {
 
         r.reset();
 
-        assertEquals("Method reset a static final field.", finalF, StaticFinal.finalField);
-        assertNotEquals("Method failed to reset a non-final field", nonFinalF, StaticFinal.nonFinalField);
+        assertNotEquals("Method reset a static final field.", finalF, StaticFinal.finalField);
+        assertEquals("Method failed to reset a non-final field", nonFinalF, StaticFinal.nonFinalField);
     }
 
     /**

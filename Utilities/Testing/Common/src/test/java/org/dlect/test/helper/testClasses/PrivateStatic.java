@@ -11,7 +11,7 @@ package org.dlect.test.helper.testClasses;
  */
 public class PrivateStatic {
 
-    private static String field;
+    private static String field = "Hello World";
 
     public static String getField() {
         return field;

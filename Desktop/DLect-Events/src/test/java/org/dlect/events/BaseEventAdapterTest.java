@@ -65,11 +65,7 @@ public class BaseEventAdapterTest {
 
     /**
      * Test of addListener method, of class BaseEventAdapter.
-     *
-     * @throws RuntimeException Must throw a runtime exception for a null adapter. Can be either NullPointer or
-     *                          IllegalArgument.
      */
-    @Test(expected = RuntimeException.class)
     public void testAddListener_ExistingListener() {
         EventListener l = new TestEventListener();
 
@@ -84,11 +80,7 @@ public class BaseEventAdapterTest {
 
     /**
      * Test of addListener method, of class BaseEventAdapter.
-     *
-     * @throws RuntimeException Must throw a runtime exception for a null adapter. Can be either NullPointer or
-     *                          IllegalArgument.
      */
-    @Test(expected = RuntimeException.class)
     public void testAddListener_NonExistingAllListener() {
         EventListener l = new TestEventListener();
 
@@ -104,11 +96,7 @@ public class BaseEventAdapterTest {
 
     /**
      * Test of addListener method, of class BaseEventAdapter.
-     *
-     * @throws RuntimeException Must throw a runtime exception for a null adapter. Can be either NullPointer or
-     *                          IllegalArgument.
      */
-    @Test(expected = RuntimeException.class)
     public void testAddListener_AddExistingFilterListenerNowAll() {
         EventListener l = new TestEventListener();
 

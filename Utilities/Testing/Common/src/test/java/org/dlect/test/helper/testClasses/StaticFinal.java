@@ -5,6 +5,7 @@
  */
 package org.dlect.test.helper.testClasses;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -16,7 +17,10 @@ import static org.dlect.test.helper.ObjectHelper.setField;
  */
 public class StaticFinal {
 
-    public static final String finalField = "Final Field";
+    /**
+     * This is not an in-lineable type; so the compile/JIT doesn't inline the string thus invalidating the test.
+     */
+    public static final IOException finalField = new IOException("Final Field");
 
     public static String nonFinalField = "Non-final field";
 
@@ -28,7 +32,8 @@ public class StaticFinal {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         setField(modifiersField, ff, modifiers & ~Modifier.FINAL);
         try {
-            setField(ff, null, "Final Field - " + System.nanoTime());
+            ff.set(null, new IOException("Final Field - " + System.nanoTime()));
+            System.out.println(finalField);
         } finally {
             setField(modifiersField, ff, modifiers);
         }
