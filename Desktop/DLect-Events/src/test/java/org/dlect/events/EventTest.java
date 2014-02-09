@@ -6,6 +6,7 @@
 package org.dlect.events;
 
 import com.google.common.testing.EqualsTester;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
