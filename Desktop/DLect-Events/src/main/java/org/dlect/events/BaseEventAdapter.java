@@ -39,7 +39,7 @@ public class BaseEventAdapter implements EventAdapter {
     @Override
     public boolean addListener(@Nonnull EventListener listener, Class<?>... listensTo) {
         if (listener == null) {
-            throw new IllegalArgumentException("Null listener given to listen to " + Arrays.toString(listensTo));
+            throw new NullPointerException("Null listener given to listen to " + Arrays.toString(listensTo));
         }
         synchronized (anyClassListeners) {
             if (anyClassListeners.contains(listener)) {
@@ -82,16 +82,19 @@ public class BaseEventAdapter implements EventAdapter {
             parent = parent.getParentAdapter();
         }
     }
-
+/**
+ * {@inheritDoc }
+ * @param e 
+ */
     @Override
     public void fireEvent(@Nonnull Event e) {
         if (e == null) {
-            throw new IllegalArgumentException("Event is null!");
+            throw new NullPointerException("Event is null!");
         }
         Set<EventListener> listeners = Sets.newHashSet();
         synchronized (anyClassListeners) {
             listeners.addAll(anyClassListeners);
-            listeners.addAll(specificClassEventListeners.get(e.getSource().getClass()));
+            listeners.addAll(specificClassEventListeners.get(e.getSourceClass()));
         }
         /*
          * Taken a copy of the listeners; don't care if anyone changes them; plus doing this outside the synchronised
@@ -100,7 +103,7 @@ public class BaseEventAdapter implements EventAdapter {
         for (EventListener el : listeners) {
             el.processEvent(e);
         }
-        
+
         if (parentAdapter != null) {
             parentAdapter.fireEvent(e);
         }

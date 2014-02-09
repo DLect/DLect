@@ -52,10 +52,9 @@ public class BaseEventAdapterTest {
     /**
      * Test of addListener method, of class BaseEventAdapter.
      *
-     * @throws RuntimeException Must throw a runtime exception for a null adapter. Can be either NullPointer or
-     *                          IllegalArgument.
+     * @throws NullPointerException Must throw a NPE for a null adapter.
      */
-    @Test(expected = RuntimeException.class)
+    @Test(expected = NullPointerException.class)
     public void testAddListener_NullListener() {
         // Using method to avoid warnings about null listeners.
         EventListener l = getNullListener();
@@ -222,7 +221,7 @@ public class BaseEventAdapterTest {
     /**
      * Test of fireEvent method, of class BaseEventAdapter.
      */
-    @Test(expected = RuntimeException.class)
+    @Test(expected = NullPointerException.class)
     public void testFireEvent_NullEvent() {
         nonMockedTestObject.fireEvent(getNullEvent());
     }
@@ -232,11 +231,11 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_EmptyListeners() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
 
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
         verifyNoMoreInteractions(e);
     }
 
@@ -245,14 +244,14 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_AllListener() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
         EventListener l = mock(EventListener.class);
 
         nonMockedAcl.add(l);
 
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
 
         verify(l).processEvent(e);
 
@@ -264,14 +263,14 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_ClassListenerEqual() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
         EventListener l = mock(EventListener.class);
 
         nonMockedScel.put(String.class, l);
 
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
 
         verify(l).processEvent(e);
 
@@ -283,14 +282,14 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_ClassListenerNotEqual() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
         EventListener l = mock(EventListener.class);
 
         nonMockedScel.put(Integer.class, l);
 
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
 
         verifyNoMoreInteractions(e, l);
     }
@@ -300,7 +299,7 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_ListenerInBothFiredOnce() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
         EventListener l = mock(EventListener.class);
 
         nonMockedScel.put(String.class, l);
@@ -308,7 +307,7 @@ public class BaseEventAdapterTest {
 
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
 
         verify(l).processEvent(e);
 
@@ -320,7 +319,7 @@ public class BaseEventAdapterTest {
      */
     @Test
     public void testFireEvent_FiresParent() {
-        Event e = getMockEvent("Source");
+        Event e = getMockEvent(String.class);
 
         BaseEventAdapter e2 = mock(BaseEventAdapter.class);
 
@@ -330,7 +329,7 @@ public class BaseEventAdapterTest {
         
         nonMockedTestObject.fireEvent(e);
 
-        verify(e).getSource();
+        verify(e).getSourceClass();
         
         verifyNoMoreInteractions(e);
         
@@ -480,10 +479,10 @@ public class BaseEventAdapterTest {
         return null;
     }
 
-    private <T> Event getMockEvent(Object source) {
+    private <T> Event getMockEvent(Class<? extends Object> source) {
         Event e = mock(Event.class);
 
-        when(e.getSource()).thenReturn(source);
+        doReturn(source).when(e).getSourceClass();
 
         return e;
     }
