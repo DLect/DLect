@@ -80,8 +80,12 @@ public interface EventAdapter {
      * <p />
      * Implementers should respect the filtering given for event listeners added using
      * {@link #addListener(org.dlect.events.EventListener, java.lang.Class...) }. The implementer should also fire the
-     * event to the parent after firing to all event listeners. Implementers should not copy the event as the event
-     * itself is immutable.
+     * event to the parent using this method after firing to all of this adapter's event listeners. Implementers should
+     * not copy the event as the event itself is immutable.
+     *
+     * A cycle check should not be required as it is a requirement for implementers to perform this check when their
+     * parent is set. This also means that classes should not store the event internally as the event will never pass
+     * through this method again.
      *
      * @param e
      */
