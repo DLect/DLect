@@ -60,6 +60,12 @@ gradle.allprojects {
             configureJava(task);
         }
 
+        tasks.withType( Javadoc.class ).all { task ->
+            task.doFirst({
+                    println ""
+                })
+        }
+        
         test {
             ignoreFailures = true
         }
