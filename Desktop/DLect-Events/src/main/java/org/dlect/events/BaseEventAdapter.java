@@ -84,7 +84,10 @@ public class BaseEventAdapter implements EventAdapter {
     }
 
     @Override
-    public void fireEvent(Event e) {
+    public void fireEvent(@Nonnull Event e) {
+        if (e == null) {
+            throw new IllegalArgumentException("Event is null!");
+        }
         Set<EventListener> listeners = Sets.newHashSet();
         synchronized (anyClassListeners) {
             listeners.addAll(anyClassListeners);
@@ -96,6 +99,10 @@ public class BaseEventAdapter implements EventAdapter {
          */
         for (EventListener el : listeners) {
             el.processEvent(e);
+        }
+        
+        if (parentAdapter != null) {
+            parentAdapter.fireEvent(e);
         }
     }
 
