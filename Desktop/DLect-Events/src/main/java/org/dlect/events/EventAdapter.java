@@ -85,6 +85,6 @@ public interface EventAdapter {
      *
      * @param e
      */
-    public void fireEvent(Event e);
+    public void fireEvent(@Nonnull Event e);
 
 }
