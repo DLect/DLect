@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  */
 public class Listenable<T extends Listenable<T>>{
     
-    private EventAdapter e = EventAdapterBuilder.getNewAdapter();
+    private final EventAdapter e = EventAdapterBuilder.getNewAdapter();
     
     
     public boolean addListener(@Nonnull EventListener l, Class<?>... listeningClasses) {
