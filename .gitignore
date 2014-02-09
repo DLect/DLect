@@ -1,6 +1,7 @@
 build
 .gradle
 .nb-gradle
+.nb-gradle-settings
 target
 gradle-app.settings
 
