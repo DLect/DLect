@@ -11,7 +11,6 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 import org.dlect.events.testListener.TestEventListener;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -223,9 +222,119 @@ public class BaseEventAdapterTest {
     /**
      * Test of fireEvent method, of class BaseEventAdapter.
      */
-    @Ignore
+    @Test(expected = RuntimeException.class)
+    public void testFireEvent_NullEvent() {
+        nonMockedTestObject.fireEvent(getNullEvent());
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
     @Test
-    public void testFireEvent() {
+    public void testFireEvent_EmptyListeners() {
+        Event e = getMockEvent("Source");
+
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+        verifyNoMoreInteractions(e);
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testFireEvent_AllListener() {
+        Event e = getMockEvent("Source");
+        EventListener l = mock(EventListener.class);
+
+        nonMockedAcl.add(l);
+
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+
+        verify(l).processEvent(e);
+
+        verifyNoMoreInteractions(e, l);
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testFireEvent_ClassListenerEqual() {
+        Event e = getMockEvent("Source");
+        EventListener l = mock(EventListener.class);
+
+        nonMockedScel.put(String.class, l);
+
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+
+        verify(l).processEvent(e);
+
+        verifyNoMoreInteractions(e, l);
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testFireEvent_ClassListenerNotEqual() {
+        Event e = getMockEvent("Source");
+        EventListener l = mock(EventListener.class);
+
+        nonMockedScel.put(Integer.class, l);
+
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+
+        verifyNoMoreInteractions(e, l);
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testFireEvent_ListenerInBothFiredOnce() {
+        Event e = getMockEvent("Source");
+        EventListener l = mock(EventListener.class);
+
+        nonMockedScel.put(String.class, l);
+        nonMockedAcl.add(l);
+
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+
+        verify(l).processEvent(e);
+
+        verifyNoMoreInteractions(e, l);
+    }
+
+    /**
+     * Test of fireEvent method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testFireEvent_FiresParent() {
+        Event e = getMockEvent("Source");
+
+        BaseEventAdapter e2 = mock(BaseEventAdapter.class);
+
+        when(e2.getParentAdapter()).thenReturn(null);
+        
+        nonMockedTestObject.setParentAdapter(e2);
+        
+        nonMockedTestObject.fireEvent(e);
+
+        verify(e).getSource();
+        
+        verifyNoMoreInteractions(e);
+        
+        verify(e2).fireEvent(e);
     }
 
     /**
@@ -288,12 +397,95 @@ public class BaseEventAdapterTest {
     /**
      * Test of removeListener method, of class BaseEventAdapter.
      */
-    @Ignore
     @Test
-    public void testRemoveListener() {
+    public void testRemoveListener_ExistingNonEqual() {
+        EventListener l = mock(EventListener.class);
+        EventListener otherListener = mock(EventListener.class);
+        nonMockedScel.put(Object.class, otherListener);
+        nonMockedScel.put(Object.class, l);
+
+        boolean result = nonMockedTestObject.removeListener(l);
+
+        assertTrue(result);
+
+        assertEquals(1, nonMockedScel.size());
+        assertTrue(nonMockedScel.containsEntry(Object.class, otherListener));
+        assertTrue(nonMockedAcl.isEmpty());
+
+        verifyNoMoreInteractions(l, otherListener);
+    }
+
+    /**
+     * Test of removeListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testRemoveListener_NonExisting() {
+        EventListener l = mock(EventListener.class);
+        EventListener otherListener = mock(EventListener.class);
+        nonMockedScel.put(Object.class, otherListener);
+
+        boolean result = nonMockedTestObject.removeListener(l);
+
+        assertFalse(result);
+
+        assertEquals(1, nonMockedScel.size());
+        assertTrue(nonMockedScel.containsEntry(Object.class, otherListener));
+        assertTrue(nonMockedAcl.isEmpty());
+
+        verifyNoMoreInteractions(l, otherListener);
+    }
+
+    /**
+     * Test of removeListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testRemoveListener_AddedInBoth() {
+        EventListener l = mock(EventListener.class);
+        nonMockedAcl.add(l);
+        nonMockedScel.put(Object.class, l);
+
+        boolean result = nonMockedTestObject.removeListener(l);
+
+        assertTrue(result);
+
+        assertTrue(nonMockedScel.isEmpty());
+        assertTrue(nonMockedAcl.isEmpty());
+
+        verifyNoMoreInteractions(l);
+    }
+
+    /**
+     * Test of removeListener method, of class BaseEventAdapter.
+     */
+    @Test
+    public void testRemoveListener_AllEventListener() {
+        EventListener l = mock(EventListener.class);
+        nonMockedAcl.add(l);
+
+        boolean result = nonMockedTestObject.removeListener(l);
+
+        assertTrue(result);
+
+        assertTrue(nonMockedScel.isEmpty());
+        assertTrue(nonMockedAcl.isEmpty());
+
+        verifyNoMoreInteractions(l);
     }
 
     private EventListener getNullListener() {
         return null;
     }
+
+    private Event getNullEvent() {
+        return null;
+    }
+
+    private <T> Event getMockEvent(Object source) {
+        Event e = mock(Event.class);
+
+        when(e.getSource()).thenReturn(source);
+
+        return e;
+    }
+
 }
