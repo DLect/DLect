@@ -39,7 +39,7 @@ public class BaseEventAdapter implements EventAdapter {
     @Override
     public boolean addListener(@Nonnull EventListener listener, Class<?>... listensTo) {
         if (listener == null) {
-            throw new NullPointerException("Null listener given to listen to " + Arrays.toString(listensTo));
+            throw new IllegalArgumentException("Null listener given to listen to " + Arrays.toString(listensTo));
         }
         synchronized (anyClassListeners) {
             if (anyClassListeners.contains(listener)) {
@@ -89,7 +89,7 @@ public class BaseEventAdapter implements EventAdapter {
     @Override
     public void fireEvent(@Nonnull Event e) {
         if (e == null) {
-            throw new NullPointerException("Event is null!");
+            throw new IllegalArgumentException("Event is null!");
         }
         Set<EventListener> listeners = Sets.newHashSet();
         synchronized (anyClassListeners) {
