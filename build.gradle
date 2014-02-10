@@ -6,7 +6,7 @@ subprojects {
     //apply from: file('maven.gradle')
     apply from: rootProject.file('common.gradle')
 }
-/*
+
 task javadoc(type: Javadoc) { 
      source subprojects.collect {project -> 
 project.sourceSets.main.allJava } 
@@ -14,7 +14,7 @@ project.sourceSets.main.allJava }
      // Might need a classpath 
      classpath = files(subprojects.collect {project -> 
 project.sourceSets.main.compileClasspath}) 
-} */
+}/*
 task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the projects.') {
     title = 'All modules'
     destinationDir = new File(project.buildDir, 'merged-javadoc')
@@ -26,7 +26,7 @@ task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the pro
     classpath.from {
         subprojects*.configurations*.compile*.copyRecursive({ !(it instanceof ProjectDependency); })*.resolve()
     }
-}
+}*/
 
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
     gradleVersion = '1.10'
