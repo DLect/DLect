@@ -6,7 +6,10 @@
 
 package org.dlect.events;
 
+import org.dlect.events.collections.EventFiringList;
+import java.util.List;
 import javax.annotation.Nonnull;
+import org.dlect.events.collections.CollectionEventHelper;
 
 /**
  *
@@ -17,6 +20,9 @@ public class Listenable<T extends Listenable<T>>{
     
     private final EventAdapter e = EventAdapterBuilder.getNewAdapter();
     
+    protected EventAdapter getAdapter() {
+        return e;
+    }
     
     public boolean addListener(@Nonnull EventListener l, Class<?>... listeningClasses) {
         return e.addListener(l, listeningClasses);
@@ -29,7 +35,23 @@ public class Listenable<T extends Listenable<T>>{
     
     
     protected void addChild(Listenable<?>... listenables) {
-        // TODO
+        for (Listenable<?> l : listenables) {
+            l.getAdapter().setParentAdapter(this.getAdapter());
+        }
     }
     
+    protected <E> List<E> wrapList(List<E> list, EventID listID) {
+        return new EventFiringList<>(list, new CollectionEventHelper<E>(listID, this, getAdapter()));
+    }
+    
+    protected <E extends Listenable<E>> List<E> wrapListenableList(List<E> list, EventID listID) {
+        throw new UnsupportedOperationException();
+        //return new ListenableListWrapper<E>(list);
+    }
+    
+    protected void fireEvent(Event e) {
+        getAdapter().fireEvent(e);
+    }
+    
+   
 }
