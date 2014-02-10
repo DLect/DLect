@@ -52,9 +52,9 @@ public class BaseEventAdapterTest {
     /**
      * Test of addListener method, of class BaseEventAdapter.
      *
-     * @throws NullPointerException Must throw a NPE for a null adapter.
+     * @throws IllegalArgumentException Must throw a IAE for a null adapter.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddListener_NullListener() {
         // Using method to avoid warnings about null listeners.
         EventListener l = getNullListener();
@@ -221,7 +221,7 @@ public class BaseEventAdapterTest {
     /**
      * Test of fireEvent method, of class BaseEventAdapter.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testFireEvent_NullEvent() {
         nonMockedTestObject.fireEvent(getNullEvent());
     }

@@ -47,12 +47,12 @@ public class EventTest {
         ).testEquals();
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullSource() {
         Event e = new Event(getNullTestObject(), TestEventIDs.ID, 0, 1);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullEventID() {
         Event e = new Event(new TestObject(), getNullEventID(), 0, 1);
     }
