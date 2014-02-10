@@ -8,40 +8,35 @@ subprojects {
 }
 
 task javadoc(type: Javadoc) { 
-    source subprojects.collect {project -> 
-        if(project.hasProperty("sourceSets")) {
-            project.sourceSets.main.allJava
-        }
-    } 
+    title = 'DLect'
     destinationDir = new File(buildDir, 'javadoc') 
-    // Might need a classpath 
-    classpath = files(subprojects.collect {project -> 
+    
+    // Note: The closures below are executed lazily.
+    source {
+        subprojects.collect {project -> 
             if(project.hasProperty("sourceSets")) {
-                project.sourceSets.main.compileClasspath
-            }
-        }) 
-}/*
-task mergedJavadoc(type: Javadoc, description: 'Creates Javadoc from all the projects.') {
-title = 'All modules'
-destinationDir = new File(project.buildDir, 'merged-javadoc')
-
-// Note: The closures below are executed lazily.
-source {
-subprojects*.sourceSets*.main*.allSource
+                project.sourceSets.main.allJava
+            } else []
+        } 
+    }
+    classpath.from {
+        files(subprojects.collect {project -> 
+                if(project.hasProperty("sourceSets")) {
+                    project.sourceSets.main.compileClasspath
+                } else []
+            }) 
+    }
+    // Might need a classpath 
 }
-classpath.from {
-subprojects*.configurations*.compile*.copyRecursive({ !(it instanceof ProjectDependency); })*.resolve()
-}
-}*/
 
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
-gradleVersion = '1.10'
+    gradleVersion = '1.10'
 }
 
 apply from: rootProject.file('config-project.gradle')
 apply from: rootProject.file('config-maven.gradle')
 if(hasProperty("sonar")) {
-apply from: rootProject.file('config-sonar.gradle')
+    apply from: rootProject.file('config-sonar.gradle')
 }
 apply from: rootProject.file('deps.gradle')
 apply from: rootProject.file('deps-desktop.gradle')
