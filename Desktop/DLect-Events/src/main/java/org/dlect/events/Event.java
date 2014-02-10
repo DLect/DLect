@@ -21,10 +21,10 @@ public class Event {
 
     public Event(@Nonnull Object source, @Nonnull EventID eventID, Object before, Object after) {
         if (source == null) {
-            throw new NullPointerException("Trying to fire an event with a null source");
+            throw new IllegalArgumentException("Trying to fire an event with a null source");
         }
         if (eventID == null) {
-            throw new NullPointerException("Trying to fire an event with a null eventID");
+            throw new IllegalArgumentException("Trying to fire an event with a null eventID");
         }
         if (!eventID.getAppliedClass().isAssignableFrom(source.getClass())) {
             // If the event ID represents a supertype of or equal to source class; then good. Otherwise error.
@@ -39,30 +39,27 @@ public class Event {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.source);
-        hash = 97 * hash + Objects.hashCode(this.eventID);
-        hash = 97 * hash + Objects.hashCode(this.before);
-        hash = 97 * hash + Objects.hashCode(this.after);
-        return hash;
+        return Objects.hash(this.getSource(),
+                            this.getEventID(),
+                            this.getBefore(),
+                            this.getAfter());
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Event)) {
+        if (obj instanceof Event) {
+            final Event other = (Event) obj;
+            return equalsImpl(other);
+        } else {
             return false;
         }
-        final Event other = (Event) obj;
-        if (!Objects.equals(this.getSource(), other.getSource())) {
-            return false;
-        }
-        if (!Objects.equals(this.getEventID(), other.getEventID())) {
-            return false;
-        }
-        if (!Objects.equals(this.getBefore(), other.getBefore())) {
-            return false;
-        }
-        return Objects.equals(this.getAfter(), other.getAfter());
+    }
+
+    protected <T extends Event> boolean equalsImpl(T other) {
+        return Objects.equals(this.getSource(), other.getSource())
+               && Objects.equals(this.getEventID(), other.getEventID())
+               && Objects.equals(this.getBefore(), other.getBefore())
+               && Objects.equals(this.getAfter(), other.getAfter());
     }
 
     public Class<?> getSourceClass() {
