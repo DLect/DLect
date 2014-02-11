@@ -5,7 +5,7 @@
  */
 package org.dlect.events;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  *
  */
 public class ListEvent extends Event {
-
+    
     private final ListEventType listEventType;
 
     /**
@@ -48,19 +48,17 @@ public class ListEvent extends Event {
     public ListEventType getListEventType() {
         return listEventType;
     }
-
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.listEventType);
-        return hash;
+        return Objects.hashCode(super.hashCode(), this.getListEventType());
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ListEvent) {
             ListEvent other = (ListEvent) obj;
-
+            
             return super.equalsImpl(other) && this.getListEventType() == other.getListEventType();
         } else {
             return false;
@@ -114,5 +112,5 @@ public class ListEvent extends Event {
                                             @Nullable Object original, @Nullable Object replacement) {
         return new ListEvent(source, eid, ListEventType.REPLACED, original, replacement);
     }
-
+    
 }
