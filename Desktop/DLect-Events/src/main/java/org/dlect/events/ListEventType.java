@@ -6,8 +6,9 @@
 package org.dlect.events;
 
 /**
- *
- * @author lee
+ * The type of list event fired through {@link ListEvent}
+ * 
+ * @see ListEvent
  */
 public enum ListEventType {
 
