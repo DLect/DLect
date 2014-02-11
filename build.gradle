@@ -27,6 +27,9 @@ task javadoc(type: Javadoc) {
             }) 
     }
     // Might need a classpath 
+    doFirst {
+        println ""
+    }
 }
 
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
