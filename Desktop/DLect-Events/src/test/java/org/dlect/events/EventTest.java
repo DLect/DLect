@@ -6,6 +6,7 @@
 package org.dlect.events;
 
 import com.google.common.testing.EqualsTester;
+import org.dlect.events.TestObject.TestObjecEventID;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -27,29 +28,24 @@ public class EventTest {
         TestObject o2 = new TestObject();
 
         new EqualsTester().addEqualityGroup(
-                new Event(o1, TestEventIDs.ID, 1, 2),
-                new Event(o1, TestEventIDs.ID, 1, 2)
+                new Event(o1, TestObjecEventID.ID, 1, 2),
+                new Event(o1, TestObjecEventID.ID, 1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestEventIDs.ID, 3, 2),
-                new Event(o1, TestEventIDs.ID, 3, 2)
+                new Event(o2, TestObjecEventID.ID, 1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestEventIDs.NAME, "Hello", "World"),
-                new Event(o1, TestEventIDs.NAME, "Hello", "World")
+                new Event(o1, TestObjecEventID.NAME,  1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestEventIDs.NAME, "Hello", "World 2"),
-                new Event(o1, TestEventIDs.NAME, "Hello", "World 2")
+                new Event(o1, TestObjecEventID.ID, 5, 2)
         ).addEqualityGroup(
-                new Event(o1, TestEventIDs.SUPPORTED_NUMBERS, 1, 2),
-                new Event(o1, TestEventIDs.SUPPORTED_NUMBERS, 1, 2)
+                new Event(o1, TestObjecEventID.ID, 1, 3)
         ).addEqualityGroup(
-                new Event(o2, TestEventIDs.ID, 1, 2),
-                new Event(o2, TestEventIDs.ID, 1, 2)
+                new Event(o2, TestObjecEventID.SUPPORTED_NUMBERS, 10, 20)
         ).testEquals();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullSource() {
-        Event e = new Event(getNullTestObject(), TestEventIDs.ID, 0, 1);
+        Event e = new Event(getNullTestObject(), TestObjecEventID.ID, 0, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -59,7 +55,7 @@ public class EventTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_EventIDAndObjectDiffer() {
-        Event e = new Event(new Object(), TestEventIDs.ID, 0, 1);
+        Event e = new Event(new Object(), TestObjecEventID.ID, 0, 1);
     }
 
     @Test
@@ -71,20 +67,20 @@ public class EventTest {
                 return "Hello World; I'm a sub-class";
             }
 
-        }, TestEventIDs.ID, 0, 1);
+        }, TestObjecEventID.ID, 0, 1);
     }
 
     public void testConstructor_IgnoresSameBeforeAndAfter() {
-        Event e = new Event(new TestObject(), TestEventIDs.ID, 0, 0);
+        Event e = new Event(new TestObject(), TestObjecEventID.ID, 0, 0);
         assertEquals(e.getBefore(), e.getAfter());
     }
 
     public void testConstructor_IgnoresNullBeforeAndAfter() {
-        Event e = new Event(new TestObject(), TestEventIDs.ID, null, 0);
+        Event e = new Event(new TestObject(), TestObjecEventID.ID, null, 0);
         assertEquals(null, e.getBefore());
         assertEquals(0, e.getAfter());
 
-        e = new Event(new TestObject(), TestEventIDs.ID, 0, null);
+        e = new Event(new TestObject(), TestObjecEventID.ID, 0, null);
         assertEquals(0, e.getBefore());
         assertEquals(null, e.getAfter());
 
@@ -96,7 +92,7 @@ public class EventTest {
     @Test
     public void testGetSource() {
         TestObject source = new TestObject();
-        Event e = new Event(source, TestEventIDs.ID, 10, 20);
+        Event e = new Event(source, TestObjecEventID.ID, 10, 20);
 
         assertSame(source, e.getSource());
     }
@@ -131,35 +127,6 @@ public class EventTest {
 
     private EventID getNullEventID() {
         return null;
-    }
-
-    private static class TestObject {
-
-        public TestObject() {
-        }
-
-    }
-
-    private static enum TestEventIDs implements EventID {
-
-        ID,
-        NAME,
-        SUPPORTED_NUMBERS;
-
-        @Override
-        public Class<?> getAppliedClass() {
-            return TestObject.class;
-        }
-
-        @Override
-        public String getName() {
-            return name();
-        }
-
-        @Override
-        public boolean isUniqueId() {
-            return this == ID;
-        }
     }
 
 }
