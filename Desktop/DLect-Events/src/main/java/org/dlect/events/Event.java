@@ -30,7 +30,6 @@ public class Event {
             // If the event ID represents a supertype of or equal to source class; then good. Otherwise error.
             throw new IllegalArgumentException("Source(" + source.getClass() + ") is not a sub-type of the class that the event ID(" + eventID.getAppliedClass() + ") applies to.");
         }
-        // TODO consider adding check that getSource().getClass() == getEventID().getAppliedClass()
         this.source = source;
         this.eventID = eventID;
         this.before = before;
@@ -63,7 +62,6 @@ public class Event {
     }
 
     public Class<?> getSourceClass() {
-        // TODO decide between getSource().getClass() and getEventID().getAppliedClass()
         return eventID.getAppliedClass();
     }
 

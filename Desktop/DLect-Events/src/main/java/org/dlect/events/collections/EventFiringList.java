@@ -32,11 +32,12 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     @Override
     public boolean add(E element) {
-        boolean a = super.add(element);
-        if (a == true) {
+        if (super.add(element)) {
             helper.fireAdd(element);
+            return true;
+        } else {
+            return false;
         }
-        return a;
     }
 
     @Override
