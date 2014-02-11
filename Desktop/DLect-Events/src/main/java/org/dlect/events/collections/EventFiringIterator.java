@@ -15,9 +15,11 @@ import java.util.Iterator;
 public class EventFiringIterator<E> extends ForwardingIterator<E> {
 
     private final Iterator<E> delegate;
-    private final CollectionEventHelper helper;
+    private final CollectionEventHelper<E> helper;
 
-    public EventFiringIterator(Iterator<E> delegate, CollectionEventHelper helper) {
+    private E next;
+
+    public EventFiringIterator(Iterator<E> delegate, CollectionEventHelper<E> helper) {
         this.delegate = delegate;
         this.helper = helper;
     }
@@ -28,10 +30,16 @@ public class EventFiringIterator<E> extends ForwardingIterator<E> {
     }
 
     @Override
-    public void remove() {
-        super.remove(); //To change body of generated methods, choose Tools | Templates.
-        helper.fireRemove(delegate);
+    public E next() {
+        next = super.next();
+        return next;
     }
 
-    
+    @Override
+    public void remove() {
+        super.remove();
+        // If remove does not error, then next must have been called.
+        helper.fireRemove(next);
+    }
+
 }
