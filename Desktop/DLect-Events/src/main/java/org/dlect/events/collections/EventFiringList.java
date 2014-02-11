@@ -52,22 +52,22 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> elements) {
-        return super.standardAddAll(index, elements); //To change body of generated methods, choose Tools | Templates.
+        return super.standardAddAll(index, elements);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return this.standardIterator(); // TODO use the EventFiringIterator or EventFiringListIterator.
+        return new EventFiringIterator<>(super.iterator(), helper);
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        return super.standardListIterator(); // TODO use the EventFiringListIterator
+        return listIterator(0);
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return super.standardListIterator(index); // TODO use the EventFiringListIterator
+        return new EventFiringListIterator<>(super.listIterator(index), helper);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        return super.standardRemoveAll(collection); //To change body of generated methods, choose Tools | Templates.
+        return super.standardRemoveAll(collection);
     }
 
     @Override
@@ -92,8 +92,10 @@ public class EventFiringList<E> extends ForwardingList<E> {
     public boolean remove(Object object) {
         int idx = this.indexOf(object);
         if (idx < 0) {
-            return false; // Cannot be found.
+            // Cannot be found.
+            return false;
         } else {
+            // Handles event firing safely.
             remove(idx);
             return true;
         }
