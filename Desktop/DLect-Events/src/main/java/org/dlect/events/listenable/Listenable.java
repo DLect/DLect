@@ -4,11 +4,16 @@
  * and open the template in the editor.
  */
 
-package org.dlect.events;
+package org.dlect.events.listenable;
 
 import org.dlect.events.collections.EventFiringList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import org.dlect.events.Event;
+import org.dlect.events.EventAdapter;
+import org.dlect.events.EventAdapterBuilder;
+import org.dlect.events.EventID;
+import org.dlect.events.EventListener;
 import org.dlect.events.collections.CollectionEventHelper;
 
 /**
