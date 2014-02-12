@@ -8,10 +8,6 @@ package org.dlect.events.collections;
 import com.google.common.collect.ForwardingIterator;
 import java.util.Iterator;
 
-/**
- *
- * @author lee
- */
 public class EventFiringIterator<E> extends ForwardingIterator<E> {
 
     private final Iterator<E> delegate;
