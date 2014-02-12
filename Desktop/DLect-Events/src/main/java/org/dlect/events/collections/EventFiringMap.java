@@ -5,7 +5,9 @@
  */
 package org.dlect.events.collections;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ForwardingMap;
+import com.google.common.collect.ForwardingMapEntry;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import java.util.Collection;
@@ -35,17 +37,28 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return new EventFiringMapEntrySet<>(super.entrySet(), helper);
+        // TODO verify that changing entrys in this fires events.
+        return new StandardEntrySet() {
+
+            @Override
+            public Iterator<Entry<K, V>> iterator() {
+                return new EventFiringIterator<>(
+                        Iterators.transform(delegate().entrySet().iterator(),
+                                            new EventFiringEntryTransform<>(helper)),
+                        helper);
+            }
+
+        };
     }
 
     @Override
     public Set<K> keySet() {
-        return new EventFiringMapKeySet<>(super.entrySet(), helper);
+        return new StandardKeySet();
     }
 
     @Override
     public Collection<V> values() {
-        return new EventFiringMapValueSet<>(this);
+        return new StandardValues();
     }
 
     @Override
@@ -70,17 +83,42 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
         return super.standardRemove(key);
     }
 
-    private static class EventFiringMapEntrySet<K, V> extends EventFiringSet<Entry<K, V>> {
+    private static class EventFiringEntryTransform<K, V> implements Function<Entry<K, V>, Entry<K, V>> {
 
-        public EventFiringMapEntrySet(Set<Entry<K, V>> delegate, CollectionEventHelper<Entry<K, V>> helper) {
-            super(delegate, helper);
+        private final CollectionEventHelper<Entry<K, V>> helper;
+
+        public EventFiringEntryTransform(CollectionEventHelper<Entry<K, V>> helper) {
+            this.helper = helper;
         }
 
         @Override
-        public Iterator<Entry<K, V>> iterator() {
-            return Iterators.transform(super.iterator(), new EventFiringEntryFunction<>(getHelper()));
+        public Entry<K, V> apply(final Entry<K, V> input) {
+            return new EventFiringEntry<>(input, helper);
         }
 
+    }
+
+    private static class EventFiringEntry<K, V> extends ForwardingMapEntry<K, V> {
+
+        private final CollectionEventHelper<Entry<K, V>> helper;
+        private final Entry<K, V> input;
+
+        public EventFiringEntry(Entry<K, V> input, CollectionEventHelper<Entry<K, V>> helper) {
+            this.input = input;
+            this.helper = helper;
+        }
+
+        @Override
+        protected Entry<K, V> delegate() {
+            return input;
+        }
+
+        @Override
+        public V setValue(V value) {
+            V old = super.setValue(value);
+            helper.fireReplace(Maps.immutableEntry(getKey(), old), Maps.immutableEntry(getKey(), value));
+            return old;
+        }
     }
 
 }
