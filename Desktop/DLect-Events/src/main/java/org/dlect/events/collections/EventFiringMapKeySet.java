@@ -81,7 +81,26 @@ public class EventFiringMapKeySet<K, V> implements Set<K> {
     }
 
     protected Iterator<K> safeIterator() {
-        return Iterators.transform(delegate.iterator(), entryToKeyFunction);
+        return new Iterator<K>() {
+
+            private final Iterator<Entry<K, V>> delg = delegate.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return delg.hasNext();
+            }
+
+            @Override
+            public K next() {
+                return delg.next().getKey();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Do not use `safeIterator` if you need to remove objects from the iterator.");
+            }
+
+        };
     }
 
     @Override
