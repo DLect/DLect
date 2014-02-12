@@ -63,22 +63,22 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     @Override
     public ListIterator<E> listIterator() {
-        return listIterator(0);
+        return super.standardListIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return new EventFiringListIterator<>(super.listIterator(index), helper);
+        return super.standardListIterator(index);
     }
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        return super.standardRetainAll(collection);
+        return this.standardRetainAll(collection);
     }
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        return super.standardRemoveAll(collection);
+        return this.standardRemoveAll(collection);
     }
 
     @Override
@@ -107,6 +107,13 @@ public class EventFiringList<E> extends ForwardingList<E> {
         E old = super.set(index, element);
         helper.fireReplace(old, element);
         return old;
+    }
+
+    @Override
+    public void clear() {
+        while (!this.isEmpty()) {
+            remove(0);
+        }
     }
 
 }
