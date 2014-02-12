@@ -47,7 +47,11 @@ public class EventFiringMapKeySet<K, V> implements Set<K> {
 
     @Override
     public void clear() {
-        delegate.clear();
+        for (Iterator<Entry<K, V>> it = delegate.iterator(); it.hasNext();) {
+            Entry<K, V> entry = it.next();
+            it.remove();
+            helper.fireRemove(entry);
+        }
     }
 
     @Override
