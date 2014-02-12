@@ -11,10 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- *
- * @author lee
- */
 public class EventFiringList<E> extends ForwardingList<E> {
 
     private final List<E> delegate;
@@ -23,6 +19,10 @@ public class EventFiringList<E> extends ForwardingList<E> {
     public EventFiringList(List<E> delegate, CollectionEventHelper<E> helper) {
         this.delegate = delegate;
         this.helper = helper;
+    }
+
+    protected CollectionEventHelper<E> getHelper() {
+        return helper;
     }
 
     @Override
@@ -83,23 +83,14 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     @Override
     public E remove(int index) {
-        E o = get(index);
-        super.remove(index);
+        E o = super.remove(index);
         helper.fireRemove(o);
         return o;
     }
 
     @Override
     public boolean remove(Object object) {
-        int idx = this.indexOf(object);
-        if (idx < 0) {
-            // Cannot be found.
-            return false;
-        } else {
-            // Handles event firing safely.
-            remove(idx);
-            return true;
-        }
+        return this.standardRemove(object);
     }
 
     @Override
