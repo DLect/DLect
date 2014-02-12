@@ -107,4 +107,9 @@ public class EventFiringList<E> extends ForwardingList<E> {
         }
     }
 
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return new EventFiringList<>(super.subList(fromIndex, toIndex), helper);
+    }
+
 }
