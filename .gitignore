@@ -1,7 +1,7 @@
 build
 .gradle
 .nb-gradle
-.nb-gradle-properties
+.nb-gradle-properties   
 target
 gradle-app.settings
 

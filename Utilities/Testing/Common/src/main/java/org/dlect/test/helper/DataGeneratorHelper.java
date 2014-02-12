@@ -7,6 +7,7 @@ package org.dlect.test.helper;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,6 +21,14 @@ public class DataGeneratorHelper {
 
     public static List<String> fillList(int min, int max) {
         List<String> list = Lists.newArrayList();
+        for (int i = min; i < max; i++) {
+            list.add("Object No. " + i);
+        }
+        return list;
+    }
+
+    public static Set<String> fillSet(int min, int max) {
+        Set<String> list = Sets.newHashSet();
         for (int i = min; i < max; i++) {
             list.add("Object No. " + i);
         }
