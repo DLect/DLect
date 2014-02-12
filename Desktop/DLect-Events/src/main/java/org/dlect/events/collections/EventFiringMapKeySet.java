@@ -6,18 +6,33 @@
 package org.dlect.events.collections;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import static com.google.common.base.Predicates.*;
+
 public class EventFiringMapKeySet<K, V> implements Set<K> {
 
-    private final EventFiringMap<K, V> map;
+    private final CollectionEventHelper<Entry<K, V>> helper;
 
-    public EventFiringMapKeySet(EventFiringMap<K, V> map) {
-        this.map = map;
+    private final Set<Entry<K, V>> delegate;
+
+    private final Function<Entry<K, V>, K> entryToKeyFunction = new Function<Entry<K, V>, K>() {
+        @Override
+        public K apply(Entry<K, V> input) {
+            return input.getKey();
+        }
+    };
+
+    public EventFiringMapKeySet(Set<Entry<K, V>> delegate, CollectionEventHelper<Entry<K, V>> helper) {
+        this.delegate = delegate;
+        this.helper = helper;
     }
 
     @Override
@@ -32,53 +47,55 @@ public class EventFiringMapKeySet<K, V> implements Set<K> {
 
     @Override
     public void clear() {
-        map.clear();
+        delegate.clear();
     }
 
     @Override
     public boolean contains(Object o) {
-        return map.containsKey(o);
+        return Iterators.any(this.safeIterator(), equalTo(o));
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        for (Object o : c) {
-            if (!this.contains(o)) {
-                return false;
-            }
-        }
-        return true;
+        // If all elements of `c` are in the key set.
+        return Iterators.all(c.iterator(), inThis());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Predicate<Object> inThis() {
+        return (Predicate<Object>) in(this);
     }
 
     @Override
     public boolean isEmpty() {
-        return map.isEmpty();
+        return delegate.isEmpty();
     }
 
     @Override
     public Iterator<K> iterator() {
-        return Iterators.transform(map.entrySet().iterator(), new Function<Entry<K, V>, K>() {
-            @Override
-            public K apply(Entry<K, V> input) {
-                return input.getKey();
-            }
-        });
+        return Iterators.transform(new EventFiringIterator<>(delegate.iterator(), helper), entryToKeyFunction);
+    }
+
+    protected Iterator<K> safeIterator() {
+        return Iterators.transform(delegate.iterator(), entryToKeyFunction);
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean contains = map.containsKey(o);
-        map.remove(o);
-        return contains;
+        for (Iterator<Entry<K, V>> it = delegate.iterator(); it.hasNext();) {
+            Entry<K, V> entry = it.next();
+            if (Objects.equal(entry.getKey(), o)) {
+                it.remove();
+                helper.fireRemove(entry);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        boolean changed = false;
-        for (Object o : c) {
-            changed |= this.remove(o);
-        }
-        return changed;
+        return Iterators.removeAll(this.iterator(), c);
     }
 
     @Override
@@ -88,17 +105,17 @@ public class EventFiringMapKeySet<K, V> implements Set<K> {
 
     @Override
     public int size() {
-        return map.size();
+        return delegate.size();
     }
 
     @Override
     public Object[] toArray() {
-        return map.delegate().keySet().toArray();
+        return Iterators.toArray(this.safeIterator(), Object.class);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return map.delegate().keySet().toArray(a);
+        return Lists.newArrayList(this.safeIterator()).toArray(a);
     }
 
 }

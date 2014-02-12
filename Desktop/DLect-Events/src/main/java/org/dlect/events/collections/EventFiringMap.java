@@ -40,7 +40,7 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
 
     @Override
     public Set<K> keySet() {
-        return new EventFiringMapKeySet<>(this);
+        return new EventFiringMapKeySet<>(super.entrySet(), helper);
     }
 
     @Override
