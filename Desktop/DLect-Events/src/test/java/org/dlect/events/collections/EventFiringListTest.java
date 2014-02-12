@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -21,6 +20,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
+import static org.dlect.test.helper.DataGeneratorHelper.fillList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -73,6 +73,12 @@ public class EventFiringListTest {
         assertSame(delegate, testMockedListObject.delegate());
     }
 
+    @Test
+    public void testGetHelper() {
+        assertSame(helper, testObject.getHelper());
+        assertSame(helper, testMockedListObject.getHelper());
+    }
+
     /**
      * Test of add method, of class EventFiringList.
      */
@@ -91,6 +97,7 @@ public class EventFiringListTest {
         assertTrue(add);
 
         verify(helper).fireAdd(o);
+        verifyNoMoreInteractions(helper);
 
         List<Object> toAdd = Lists.newArrayList(no1, no2, o);
         assertEquals(toAdd, testObject);
@@ -127,7 +134,9 @@ public class EventFiringListTest {
         Object o = new Object();
 
         testObject.add(1, o);
+
         verify(helper).fireAdd(o);
+        verifyNoMoreInteractions(helper);
 
         List<Object> toAdd = Lists.newArrayList(no1, o, no2);
 
@@ -141,17 +150,15 @@ public class EventFiringListTest {
     @Test
     public void testAddAll_Collection() {
         configureAnswer();
-        List<String> toAdd = Lists.newArrayList();
-
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
 
         testObject.addAll(toAdd);
 
         for (String o : toAdd) {
-            verify(helper).fireAdd(o);
+            inOrder.verify(helper).fireAdd(o);
         }
+        verifyNoMoreInteractions(helper);
+
         assertEquals(toAdd, testObject);
         assertEquals(toAdd, list);
     }
@@ -167,17 +174,14 @@ public class EventFiringListTest {
         list.add(no2);
 
         configureAnswer();
-        List<String> toAdd = Lists.newArrayList();
-
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
 
         testObject.addAll(1, toAdd);
 
         for (String o : toAdd) {
-            verify(helper).fireAdd(o);
+            inOrder.verify(helper).fireAdd(o);
         }
+        verifyNoMoreInteractions(helper);
 
         toAdd.add(0, no1);
         toAdd.add(no2);
@@ -190,10 +194,7 @@ public class EventFiringListTest {
      */
     @Test
     public void testIterator() {
-        List<String> toAdd = Lists.newArrayList();
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
         list.addAll(toAdd);
 
         configureAnswer();
@@ -215,6 +216,7 @@ public class EventFiringListTest {
         for (String s : toAdd) {
             inOrder.verify(helper).fireRemove(s);
         }
+        verifyNoMoreInteractions(helper);
     }
 
     /**
@@ -222,10 +224,7 @@ public class EventFiringListTest {
      */
     @Test
     public void testListIterator_0args() {
-        List<String> toAdd = Lists.newArrayList();
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
 
         list.addAll(toAdd);
 
@@ -255,6 +254,7 @@ public class EventFiringListTest {
             inOrder.verify(helper).fireRemove(s + "Objective");
             inOrder.verify(helper).fireAdd(s + "ReAdd");
         }
+        verifyNoMoreInteractions(helper);
     }
 
     /**
@@ -262,15 +262,13 @@ public class EventFiringListTest {
      */
     @Test
     public void testListIterator_int() {
-        List<String> toAdd = Lists.newArrayList();
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
 
         list.addAll(toAdd);
 
         // List is reversed as we are using previous rather than next.
         toAdd = Lists.reverse(toAdd);
+
         List<Object> toCheck = Lists.newArrayList();
 
         configureAnswer();
@@ -298,6 +296,7 @@ public class EventFiringListTest {
             inOrder.verify(helper).fireRemove(s + "Objective");
             inOrder.verify(helper).fireAdd(s + "ReAdd");
         }
+        verifyNoMoreInteractions(helper);
     }
 
     /**
@@ -305,17 +304,11 @@ public class EventFiringListTest {
      */
     @Test
     public void testRetainAll() {
-        List<String> toAdd = Lists.newArrayList();
-        for (int i = 0; i < 10; i++) {
-            toAdd.add("Object No. " + i);
-        }
+        List<String> toAdd = fillList(0, 10);
 
         list.addAll(toAdd);
 
-        List<String> toRetain = Lists.newArrayList();
-        for (int i = -1; i < 5; i++) {
-            toRetain.add("Object No. " + i);
-        }
+        List<String> toRetain = fillList(-1, 5);
 
         configureAnswer();
 
@@ -330,6 +323,7 @@ public class EventFiringListTest {
         for (String r : removed) {
             verify(helper).fireRemove(r);
         }
+        verifyNoMoreInteractions(helper);
 
         assertEquals(retained, testObject);
         assertEquals(retained, list);
@@ -338,37 +332,159 @@ public class EventFiringListTest {
     /**
      * Test of removeAll method, of class EventFiringList.
      */
-    @Ignore
     @Test
     public void testRemoveAll() {
-        // TODO Another complicated one.
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        List<String> toRemove = fillList(-1, 5);
+
+        configureAnswer();
+
+        testObject.removeAll(toRemove);
+
+        List<String> removed = Lists.newArrayList(toAdd);
+        removed.retainAll(toRemove);
+
+        List<String> retained = Lists.newArrayList(toAdd);
+        retained.removeAll(toRemove);
+
+        for (String r : removed) {
+            verify(helper).fireRemove(r);
+        }
+        verifyNoMoreInteractions(helper);
+
+        assertEquals(retained, testObject);
+        assertEquals(retained, list);
     }
 
     /**
      * Test of remove method, of class EventFiringList.
      */
-    @Ignore
     @Test
     public void testRemove_int() {
-        // TODO
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        List<Object> toCheck = Lists.newArrayList();
+
+        configureAnswer();
+
+        while (!list.isEmpty()) {
+            toCheck.add(testObject.remove(0));
+        }
+
+        for (Object s : toCheck) {
+            inOrder.verify(helper).fireRemove(s);
+        }
+        verifyNoMoreInteractions(helper);
     }
 
     /**
      * Test of remove method, of class EventFiringList.
      */
-    @Ignore
+    @Test
+    public void testRemove_int_Fail() {
+        when(delegate.remove(0)).thenThrow(IndexOutOfBoundsException.class);
+
+        try {
+            testMockedListObject.remove(0);
+            fail("No exception thrown.");
+        } catch (IndexOutOfBoundsException e) {
+            verify(delegate).remove(0);
+
+            verifyNoMoreInteractions(delegate);
+            verifyZeroInteractions(helper);
+        }
+    }
+
+    /**
+     * Test of remove method, of class EventFiringList.
+     */
     @Test
     public void testRemove_Object() {
-        // TODO
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        List<Object> toCheck = Lists.newArrayList();
+
+        configureAnswer();
+
+        for (String string : toAdd) {
+            testObject.remove(string);
+            toCheck.add(string);
+        }
+
+        for (Object s : toCheck) {
+            inOrder.verify(helper).fireRemove(s);
+        }
+        verifyNoMoreInteractions(helper);
+    }
+
+    /**
+     * Test of remove method, of class EventFiringList.
+     */
+    @Test
+    public void testRemove_Object_Fails() {
+        List<String> toAdd = fillList(0, 10);
+        List<String> toRemove = fillList(100, 110);
+
+        list.addAll(toAdd);
+
+        configureAnswer();
+
+        for (String string : toRemove) {
+            assertFalse(testObject.remove(string));
+        }
+
+        verifyZeroInteractions(helper);
     }
 
     /**
      * Test of set method, of class EventFiringList.
      */
-    @Ignore
     @Test
     public void testSet() {
-        // TODO
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        configureAnswer();
+
+        for (int i = 0; i < toAdd.size(); i++) {
+            String string = toAdd.get(i);
+            testObject.set(i, string + "Helloo");
+        }
+
+        for (String string : toAdd) {
+            inOrder.verify(helper).fireReplace(string, string + "Helloo");
+        }
+
+        verifyNoMoreInteractions(helper);
+    }
+
+    /**
+     * Test of set method, of class EventFiringList.
+     */
+    @Test
+    public void testClear() {
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        configureAnswer();
+
+        testObject.clear();
+
+        for (String string : toAdd) {
+            // Not in any specific order :(.
+            verify(helper).fireRemove(string);
+        }
+
+        verifyNoMoreInteractions(helper);
     }
 
     private class AnswerImpl implements Answer<Void> {
