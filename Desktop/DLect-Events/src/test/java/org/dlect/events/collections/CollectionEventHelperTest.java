@@ -37,6 +37,14 @@ public class CollectionEventHelperTest {
             return null;
         }
     };
+    private final Answer<Void> CHECK_LOCKED_THEN_THROW_EXCEPTION = new Answer<Void>() {
+
+        @Override
+        public Void answer(InvocationOnMock invocation) throws Throwable {
+            CHECK_LOCKED.answer(invocation);
+            throw new IllegalStateException();
+        }
+    };
 
     @Mock
     private Event event;
@@ -71,6 +79,21 @@ public class CollectionEventHelperTest {
         };
         source = new Object();
         testObject = new CollectionEventHelper<>(eventID, source, adapter);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor_NullEventID() {
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(null, source, adapter);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor_NullSource() {
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(eventID, null, adapter);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testConstructor_NullAdapter() {
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(eventID, source, null);
     }
 
     /**
@@ -133,6 +156,25 @@ public class CollectionEventHelperTest {
      * Test of fireAdd method, of class CollectionEventHelper.
      */
     @Test
+    public void testFireAdd_LocksAndUnlocksOnError() {
+        Object added = new Object();
+        ListEvent l = ListEvent.getAddEvent(source, eventID, added);
+
+        doAnswer(CHECK_LOCKED_THEN_THROW_EXCEPTION).when(adapter).fireEvent(l);
+        try {
+            testObject.fireAdd(added);
+            fail("No exception thrown");
+        } catch (IllegalStateException e) {
+            verify(adapter).fireEvent(l);
+
+            assertFalse("Object not unlocked", testObject.isLocked());
+        }
+    }
+
+    /**
+     * Test of fireAdd method, of class CollectionEventHelper.
+     */
+    @Test
     public void testFireAdd_LocksCorrectly() {
         Object added = new Object();
         ListEvent l = ListEvent.getAddEvent(source, eventID, added);
@@ -147,7 +189,7 @@ public class CollectionEventHelperTest {
     }
 
     /**
-     * Test of fireAdd method, of class CollectionEventHelper.
+     * Test of fireRemove method, of class CollectionEventHelper.
      */
     @Test
     public void testFireRemove_FiresToAdapter() {
@@ -157,6 +199,25 @@ public class CollectionEventHelperTest {
         testObject.fireRemove(removed);
 
         verify(adapter).fireEvent(l);
+    }
+
+    /**
+     * Test of fireRemove method, of class CollectionEventHelper.
+     */
+    @Test
+    public void testFireRemove_LocksAndUnlocksOnError() {
+        Object removed = new Object();
+        ListEvent l = ListEvent.getRemoveEvent(source, eventID, removed);
+
+        doAnswer(CHECK_LOCKED_THEN_THROW_EXCEPTION).when(adapter).fireEvent(l);
+        try {
+            testObject.fireRemove(removed);
+            fail("No exception thrown");
+        } catch (IllegalStateException e) {
+            verify(adapter).fireEvent(l);
+
+            assertFalse("Object not unlocked", testObject.isLocked());
+        }
     }
 
     /**
@@ -188,6 +249,26 @@ public class CollectionEventHelperTest {
         testObject.fireReplace(removed, added);
 
         verify(adapter).fireEvent(l);
+    }
+
+    /**
+     * Test of fireReplace method, of class CollectionEventHelper.
+     */
+    @Test
+    public void testFireReplace_LocksAndUnlocksOnError() {
+        Object removed = new Object();
+        Object added = new Object();
+        ListEvent l = ListEvent.getReplaceEvent(source, eventID, removed, added);
+
+        doAnswer(CHECK_LOCKED_THEN_THROW_EXCEPTION).when(adapter).fireEvent(l);
+        try {
+            testObject.fireReplace(removed, added);
+            fail("No exception thrown");
+        } catch (IllegalStateException e) {
+            verify(adapter).fireEvent(l);
+
+            assertFalse("Object not unlocked", testObject.isLocked());
+        }
     }
 
     /**
