@@ -46,7 +46,7 @@ public class Event {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && obj.getClass().equals(Event.class)) {
+        if (obj != null && obj.getClass().equals(this.getClass())) {
             final Event other = (Event) obj;
             return equalsImpl(other);
         } else {

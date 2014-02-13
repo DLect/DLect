@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  *
  */
 public class ListEvent extends Event {
-    
+
     private final ListEventType listEventType;
 
     /**
@@ -48,17 +48,19 @@ public class ListEvent extends Event {
     public ListEventType getListEventType() {
         return listEventType;
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hashCode(super.hashCode(), this.getListEventType());
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ListEvent) {
+        if (obj == null) {
+            return false;
+        } else if (Objects.equal(obj.getClass(), this.getClass())) {
             ListEvent other = (ListEvent) obj;
-            
+
             return super.equalsImpl(other) && this.getListEventType() == other.getListEventType();
         } else {
             return false;
@@ -112,5 +114,5 @@ public class ListEvent extends Event {
                                             @Nullable Object original, @Nullable Object replacement) {
         return new ListEvent(source, eid, ListEventType.REPLACED, original, replacement);
     }
-    
+
 }
