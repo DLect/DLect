@@ -61,9 +61,12 @@ gradle.allprojects {
     }
     ext.testing = {
         return ["junit:junit:4.11+", 
-                "org.mockito:mockito-all:1.9+",
-                "com.google.guava:guava-testlib:16.0"]
+                "org.mockito:mockito-all:1.9+"]
         + slf4jLogger()
+    }
+    
+    ext.guavaTesting = {
+        return "com.google.guava:guava-testlib:16.0"
     }
     
     
