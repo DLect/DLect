@@ -6,6 +6,7 @@
 package org.dlect.events;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * An adaptor that allows for events to be fired to listeners.
@@ -71,6 +72,7 @@ public interface EventAdapter {
      *
      * @return The parent adapter of {@code null} if none is defined.
      */
+    @Nullable
     public EventAdapter getParentAdapter();
 
     /**
