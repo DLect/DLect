@@ -39,7 +39,7 @@ public class CollectionEventHelper<T> {
      *
      * @throws IllegalArgumentException If any argument is null.
      */
-    public CollectionEventHelper(@Nonnull EventID eventID, @Nonnull Object source, @Nonnull EventAdapter adapter) {
+    public CollectionEventHelper(@Nonnull Object source, @Nonnull EventID eventID, @Nonnull EventAdapter adapter) {
         if (eventID == null) {
             throw new IllegalArgumentException("EventID is null");
         }
@@ -145,6 +145,10 @@ public class CollectionEventHelper<T> {
         } finally {
             endChange();
         }
+    }
+
+    protected EventAdapter getAdapter() {
+        return adapter;
     }
 
 }

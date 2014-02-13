@@ -78,22 +78,22 @@ public class CollectionEventHelperTest {
             }
         };
         source = new Object();
-        testObject = new CollectionEventHelper<>(eventID, source, adapter);
+        testObject = new CollectionEventHelper<>(source, eventID, adapter);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullEventID() {
-        CollectionEventHelper<Object> e = new CollectionEventHelper<>(null, source, adapter);
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(source, null, adapter);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullSource() {
-        CollectionEventHelper<Object> e = new CollectionEventHelper<>(eventID, null, adapter);
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(null, eventID, adapter);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullAdapter() {
-        CollectionEventHelper<Object> e = new CollectionEventHelper<>(eventID, source, null);
+        CollectionEventHelper<Object> e = new CollectionEventHelper<>(source, eventID, null);
     }
 
     /**
