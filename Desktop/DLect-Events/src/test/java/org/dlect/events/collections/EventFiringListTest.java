@@ -464,6 +464,23 @@ public class EventFiringListTest {
         verifyNoMoreInteractions(helper);
     }
 
+    @Test
+    public void testSublist() {
+        List<String> toAdd = fillList(0, 10);
+
+        list.addAll(toAdd);
+
+        configureAnswer();
+
+        List<Object> sublist = testObject.subList(0, 6);
+
+        assertTrue(sublist instanceof EventFiringList);
+
+        EventFiringList<Object> l = (EventFiringList<Object>) sublist;
+
+        assertEquals(l.delegate(), list.subList(0, 6));
+    }
+
     /**
      * Test of set method, of class EventFiringList.
      */
