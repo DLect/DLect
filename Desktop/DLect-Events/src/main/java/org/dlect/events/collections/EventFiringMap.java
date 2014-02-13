@@ -5,12 +5,10 @@
  */
 package org.dlect.events.collections;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.ForwardingIterator;
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingMapEntry;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.Iterator;
@@ -39,7 +37,6 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
     
     @Override
     public Set<Entry<K, V>> entrySet() {
-        // TODO verify that changing entrys in this fires events.
         return new StandardEntrySet() {
             
             @Override
@@ -65,7 +62,8 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
     public V put(K key, V value) {
         boolean replace = this.containsKey(key);
         V old = super.put(key, value);
-        if (replace && !Objects.equal(old, value)) { // Replacing and value has changed.
+        if (replace && !Objects.equal(old, value)) { 
+            // Replacing and value has changed.
             helper.fireReplace(imEntry(key, old), imEntry(key, value));
         } else if (!replace) {
             helper.fireAdd(imEntry(key, value));
@@ -138,11 +136,11 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
         }
     }
     
-    protected static <K0, V0> Entry<K0, V0> imEntry(K0 key, V0 value) {
+    protected static <K, V> Entry<K, V> imEntry(K key, V value) {
         return Maps.immutableEntry(key, value);
     }
     
-    protected static <K0, V0> Entry<K0, V0> imEntry(Entry<K0, V0> entry) {
+    protected static <K, V> Entry<K, V> imEntry(Entry<K, V> entry) {
         return Maps.immutableEntry(entry.getKey(), entry.getValue());
     }
     
