@@ -37,7 +37,7 @@ public class EventFiringIteratorTest {
      */
     @Test
     public void testDelegate() {
-        assertEquals(delegate, testMockIteratorObject.delegate());
+        assertSame(delegate, testMockIteratorObject.delegate());
     }
 
     /**

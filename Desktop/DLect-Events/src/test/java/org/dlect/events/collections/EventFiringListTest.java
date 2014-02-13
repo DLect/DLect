@@ -34,8 +34,6 @@ public class EventFiringListTest {
 
     private InOrder inOrder;
 
-    private Answer<Void> helperCheckingAnswer;
-
     @Mock
     private List<Object> delegate;
 
@@ -57,7 +55,7 @@ public class EventFiringListTest {
     }
 
     private void configureAnswer() {
-        helperCheckingAnswer = new AnswerImpl();
+        Answer<Void> helperCheckingAnswer = new AnswerImpl();
 
         doAnswer(helperCheckingAnswer).when(helper).fireAdd(any());
         doAnswer(helperCheckingAnswer).when(helper).fireRemove(any());
