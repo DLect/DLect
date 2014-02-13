@@ -14,19 +14,13 @@ import com.google.common.collect.testing.features.MapFeature;
 import com.google.common.collect.testing.features.SetFeature;
 import java.util.Map;
 import java.util.Map.Entry;
-import junit.framework.TestCase;
 import junit.framework.Test;
-import org.junit.Ignore;
+import junit.framework.TestCase;
 
 /**
  *
  * @author lee
  */
-/**
- * TODO move the GuavaTests into a seperate testing package to remove them from code coverage as they will artificially
- * it; whilst keeping them as tests that are run on Jenkins.
- */
-@Ignore
 public class EventFiringMapGuavaTest extends TestCase {
 
     public static Test suite() {
@@ -61,12 +55,8 @@ public class EventFiringMapGuavaTest extends TestCase {
                         MapFeature.SUPPORTS_REMOVE,
                         CollectionFeature.SUPPORTS_REMOVE,
                         CollectionFeature.SUPPORTS_ITERATOR_REMOVE,
-                        CollectionFeature.ALLOWS_NULL_VALUES,
                         CollectionFeature.ALLOWS_NULL_QUERIES,
                         CollectionFeature.FAILS_FAST_ON_CONCURRENT_MODIFICATION,
-                        CollectionFeature.GENERAL_PURPOSE,
-                        CollectionFeature.SUBSET_VIEW,
-                        SetFeature.GENERAL_PURPOSE,
                         CollectionSize.ANY
                 ).createTestSuite();
     }

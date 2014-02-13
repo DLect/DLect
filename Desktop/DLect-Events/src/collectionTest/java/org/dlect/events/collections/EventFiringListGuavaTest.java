@@ -15,13 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
 import junit.framework.Test;
-import org.junit.Ignore;
 
 /**
  *
  * @author lee
  */
-@Ignore
 public class EventFiringListGuavaTest extends TestCase {
 
     public static Test suite() {
