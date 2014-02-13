@@ -100,25 +100,84 @@ public class EventTest {
     /**
      * Test of getEventID method, of class Event.
      */
-    @Ignore
     @Test
     public void testGetEventID() {
+        TestObject source = new TestObject();
+        EventID eid = new EventID() {
+
+            @Override
+            public Class<?> getAppliedClass() {
+                return TestObject.class;
+            }
+
+            @Override
+            public String getName() {
+                return "Name";
+            }
+
+            @Override
+            public boolean isUniqueId() {
+                return false;
+            }
+        };
+        Event e = new Event(source, eid, 10, 20);
+
+        assertSame(eid, e.getEventID());
+    }
+    
+    /**
+     * Test of getEventID method, of class Event.
+     */
+    @Test
+    public void testGetSourceClass() {
+        TestObject source = new TestObject();
+        EventID eid = new EventID() {
+
+            @Override
+            public Class<?> getAppliedClass() {
+                return Object.class;
+            }
+
+            @Override
+            public String getName() {
+                return "Name";
+            }
+
+            @Override
+            public boolean isUniqueId() {
+                return false;
+            }
+        };
+        Event e = new Event(source, eid, 10, 20);
+        
+        // Must use eventID.getAppliedClass(); not source.getClass();
+        assertEquals(Object.class, e.getSourceClass());
     }
 
     /**
      * Test of getBefore method, of class Event.
      */
-    @Ignore
     @Test
     public void testGetBefore() {
+        TestObject source = new TestObject();
+        Object before = new Object();
+        Event e = new Event(source, TestObjecEventID.ID, before, 20);
+        
+        // Must use eventID.getAppliedClass(); not source.getClass();
+        assertSame(before, e.getBefore());
     }
 
     /**
      * Test of getAfter method, of class Event.
      */
-    @Ignore
     @Test
     public void testGetAfter() {
+        TestObject source = new TestObject();
+        Object after = new Object();
+        Event e = new Event(source, TestObjecEventID.ID, 10, after);
+        
+        // Must use eventID.getAppliedClass(); not source.getClass();
+        assertSame(after, e.getAfter());
     }
 
     private Object getNullTestObject() {
