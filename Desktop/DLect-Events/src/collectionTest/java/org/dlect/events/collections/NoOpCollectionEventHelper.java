@@ -17,7 +17,7 @@ import org.dlect.events.EventListener;
 class NoOpCollectionEventHelper<T> extends CollectionEventHelper<T> {
 
     public NoOpCollectionEventHelper() {
-        super(NoOpEventID.ID, new Object(), new NoOpAdapter());
+        super(new Object(), NoOpEventID.ID, new NoOpAdapter());
     }
 
     @Override
