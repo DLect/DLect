@@ -43,9 +43,18 @@ public class DataGeneratorHelper {
         return map;
     }
 
+    public static Map<String, String> fillMap(int min, int max, String keyPrefix, String valuePrefix) {
+        Map<String, String> map = Maps.newHashMap();
+        for (int i = min; i < max; i++) {
+            map.put(keyPrefix + "Key No. " + i, valuePrefix + "Value No. " + i);
+        }
+        return map;
+    }
+
     public static Set<Entry<String, String>> fillEntrySet(int min, int max) {
         return fillMap(min, max).entrySet();
     }
+
     public static Set<String> fillKeySet(int min, int max) {
         return fillMap(min, max).keySet();
     }
