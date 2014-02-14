@@ -34,17 +34,27 @@ public class Listenable<T extends Listenable<T>> {
     }
 
     public boolean addListener(@Nonnull EventListener l, Class<?>... listeningClasses) {
-        return e.addListener(l, listeningClasses);
+        return getAdapter().addListener(l, listeningClasses);
     }
 
     public boolean removeListener(EventListener l) {
-        return e.removeListener(l);
+        return getAdapter().removeListener(l);
     }
 
     protected void addChild(Listenable<?>... listenables) {
         for (Listenable<?> l : listenables) {
-            l.getAdapter().setParentAdapter(this.getAdapter());
+            EventAdapter adapter = l.getAdapter();
+            EventAdapter parent = adapter.getParentAdapter();
+            if (parent == null) {
+                adapter.setParentAdapter(this.getAdapter());
+            } else if (!same(parent, this.getAdapter())) {
+                throw new IllegalStateException("Listenable(" + l + ") already has a parent.");
+            }
         }
+    }
+
+    private boolean same(Object o1, Object o2) {
+        return o1 == o2;
     }
 
     protected <E> List<E> wrapList(List<E> list, EventID listID) {
