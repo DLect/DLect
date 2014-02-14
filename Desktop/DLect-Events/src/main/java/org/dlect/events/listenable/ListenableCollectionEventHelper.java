@@ -35,10 +35,13 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
         if (elmParentAdapt == null) {
             elmAdapt.setParentAdapter(this.getAdapter());
         } else {
-            throw new IllegalStateException("Trying to add an element(" + elm + ") whose parent adapter("
-                                            + elmParentAdapt + ") is not null. This means that another object has "
-                                            + "configured the element.");
+            throw new IllegalStateException(debugElmAndParent(elm, elmParentAdapt) + " is not null. This means that "
+                                            + "another object has configured the element.");
         }
+    }
+
+    private String debugElmAndParent(T elm, EventAdapter elmParentAdapt) {
+        return "Trying to add an element(" + elm + ") whose parent adapter(" + elmParentAdapt + ")";
     }
 
     protected void removeListenable(@Nullable T elm) {
@@ -51,11 +54,10 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
         }
         EventAdapter elmParentAdapt = elmAdapt.getParentAdapter();
 
-        if (Objects.equal(elmParentAdapt, this.getAdapter())) {
+        if (same(elmParentAdapt, this.getAdapter())) {
             elmAdapt.setParentAdapter(null);
         } else {
-            throw new IllegalStateException("Trying to remove an element(" + elm + ") whose parent adapter("
-                                            + elmParentAdapt + ") is different from the adapter(" + this.getAdapter()
+            throw new IllegalStateException(debugElmAndParent(elm, elmParentAdapt) + " is different from the adapter(" + this.getAdapter()
                                             + ") it should have been.");
         }
     }
@@ -77,6 +79,10 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
         addListenable(replacement);
         removeListenable(original);
         super.fireReplace(original, replacement);
+    }
+
+    private boolean same(Object a, Object b) {
+        return a == b;
     }
 
 }

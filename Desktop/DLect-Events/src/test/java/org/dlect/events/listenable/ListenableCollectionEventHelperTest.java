@@ -83,15 +83,107 @@ public class ListenableCollectionEventHelperTest {
         verify(oAdapter).getParentAdapter();
         verify(oAdapter).setParentAdapter(adapter);
 
+        verifyNoMoreInteractions(o, oAdapter);
+        verifyZeroInteractions(adapter);
+    }
+
+    /**
+     * Test of addListenable method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testAddListenable_NonNullParent() {
+        EventAdapter oParent = mock(EventAdapter.class);
+
+        EventAdapter oAdapter = mock(EventAdapter.class);
+        when(oAdapter.getParentAdapter()).thenReturn(oParent);
+
+        TestListenableObject o = mock(TestListenableObject.class);
+        when(o.getAdapter()).thenReturn(oAdapter);
+        try {
+            testObject.addListenable(o);
+            fail("No exception");
+        } catch (IllegalStateException e) {
+            verify(o).getAdapter();
+            verify(oAdapter).getParentAdapter();
+
+            verifyNoMoreInteractions(o, oAdapter, oParent);
+
+            verifyZeroInteractions(adapter);
+        }
+    }
+
+    /**
+     * Test of removeListenable method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testRemoveListenable_NullObject() {
+        testObject.removeListenable(null);
+
         verifyZeroInteractions(adapter);
     }
 
     /**
      * Test of removeListenable method, of class ListenableCollectionEventHelper.
      */
-    @Ignore
     @Test
-    public void testRemoveListenable() {
+    public void testRemoveListenable_NullEventAdapter() {
+        TestListenableObject o = mock(TestListenableObject.class);
+        when(o.getAdapter()).thenReturn(null);
+
+        try {
+            testObject.removeListenable(o);
+            fail("No exception");
+        } catch (IllegalStateException e) {
+            verify(o).getAdapter();
+        }
+
+        verifyZeroInteractions(adapter);
+    }
+
+    /**
+     * Test of addListenable method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testRemoveListenable_CorrectParent() {
+        EventAdapter oAdapter = mock(EventAdapter.class);
+        when(oAdapter.getParentAdapter()).thenReturn(adapter);
+
+        TestListenableObject o = mock(TestListenableObject.class);
+        when(o.getAdapter()).thenReturn(oAdapter);
+
+        testObject.removeListenable(o);
+
+        verify(o).getAdapter();
+        verify(oAdapter).getParentAdapter();
+        verify(oAdapter).setParentAdapter(null);
+
+        verifyNoMoreInteractions(o, oAdapter);
+        verifyZeroInteractions(adapter);
+    }
+
+    /**
+     * Test of addListenable method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testRemoveListenable_IncorrectParent() {
+        EventAdapter oParent = mock(EventAdapter.class);
+
+        EventAdapter oAdapter = mock(EventAdapter.class);
+        when(oAdapter.getParentAdapter()).thenReturn(oParent);
+
+        TestListenableObject o = mock(TestListenableObject.class);
+        when(o.getAdapter()).thenReturn(oAdapter);
+        try {
+            testObject.removeListenable(o);
+            fail("No exception");
+        } catch (IllegalStateException e) {
+            verify(o).getAdapter();
+            verify(oAdapter).getParentAdapter();
+
+            verifyNoMoreInteractions(o, oAdapter, oParent);
+
+            verifyZeroInteractions(adapter);
+        }
     }
 
     /**
@@ -100,6 +192,7 @@ public class ListenableCollectionEventHelperTest {
     @Ignore
     @Test
     public void testFireAdd() {
+        
     }
 
     /**
