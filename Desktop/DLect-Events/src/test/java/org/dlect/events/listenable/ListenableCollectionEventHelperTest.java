@@ -6,6 +6,7 @@
 package org.dlect.events.listenable;
 
 import org.dlect.events.EventAdapter;
+import org.dlect.events.ListEvent;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -27,15 +28,17 @@ public class ListenableCollectionEventHelperTest {
     @Mock
     private EventAdapter adapter;
 
-    private TestListenableObject orign;
+    private TestListenableObject source;
+
+    private TestListenableEventID eventID = TestListenableEventID.ID;
 
     private ListenableCollectionEventHelper<TestListenableObject> testObject;
 
     @Before
     public void before() {
-        orign = new TestListenableObject();
+        source = new TestListenableObject();
 
-        testObject = new ListenableCollectionEventHelper<>(orign, TestListenableEventID.ID, adapter);
+        testObject = new ListenableCollectionEventHelper<>(source, eventID, adapter);
     }
 
     /**
@@ -189,26 +192,135 @@ public class ListenableCollectionEventHelperTest {
     /**
      * Test of fireAdd method, of class ListenableCollectionEventHelper.
      */
-    @Ignore
     @Test
-    public void testFireAdd() {
-        
+    public void testFireAdd_NullObject() {
+        TestListenableObject eventObj = null;
+
+        testObject.fireAdd(eventObj);
+
+        verify(adapter).fireEvent(ListEvent.getAddEvent(source, eventID, eventObj));
+    }
+
+    /**
+     * Test of fireAdd method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testFireAdd_ListenableObject() {
+        EventAdapter oAdapter = mock(EventAdapter.class);
+        when(oAdapter.getParentAdapter()).thenReturn(null);
+
+        TestListenableObject eventObj = mock(TestListenableObject.class);
+        when(eventObj.getAdapter()).thenReturn(oAdapter);
+
+        testObject.fireAdd(eventObj);
+
+        verify(oAdapter).setParentAdapter(adapter);
+
+        verify(adapter).fireEvent(ListEvent.getAddEvent(source, eventID, eventObj));
     }
 
     /**
      * Test of fireRemove method, of class ListenableCollectionEventHelper.
      */
-    @Ignore
     @Test
-    public void testFireRemove() {
+    public void testFireRemove_Null() {
+        TestListenableObject eventObj = null;
+
+        testObject.fireRemove(eventObj);
+
+        verify(adapter).fireEvent(ListEvent.getRemoveEvent(source, eventID, eventObj));
+    }
+
+    /**
+     * Test of fireAdd method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testFireRemove_ListenableObject() {
+        EventAdapter oAdapter = mock(EventAdapter.class);
+        when(oAdapter.getParentAdapter()).thenReturn(adapter);
+
+        TestListenableObject eventObj = mock(TestListenableObject.class);
+        when(eventObj.getAdapter()).thenReturn(oAdapter);
+
+        testObject.fireRemove(eventObj);
+
+        verify(oAdapter).setParentAdapter(null);
+        verify(adapter).fireEvent(ListEvent.getRemoveEvent(source, eventID, eventObj));
     }
 
     /**
      * Test of fireReplace method, of class ListenableCollectionEventHelper.
      */
-    @Ignore
     @Test
-    public void testFireReplace() {
+    public void testFireReplace_Null() {
+        TestListenableObject original = null;
+        TestListenableObject added = null;
+
+        testObject.fireReplace(original, added);
+
+        verify(adapter).fireEvent(ListEvent.getReplaceEvent(source, eventID, original, added));
+    }
+
+    /**
+     * Test of fireReplace method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testFireReplace_AddedNotNull() {
+        EventAdapter addedAdapter = mock(EventAdapter.class);
+        when(addedAdapter.getParentAdapter()).thenReturn(null);
+
+        TestListenableObject added = mock(TestListenableObject.class);
+        when(added.getAdapter()).thenReturn(addedAdapter);
+
+        TestListenableObject original = null;
+
+        testObject.fireReplace(original, added);
+
+        verify(addedAdapter).setParentAdapter(adapter);
+        verify(adapter).fireEvent(ListEvent.getReplaceEvent(source, eventID, original, added));
+    }
+
+    /**
+     * Test of fireReplace method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testFireReplace_OriginalNotNull() {
+        EventAdapter originalAdapter = mock(EventAdapter.class);
+        when(originalAdapter.getParentAdapter()).thenReturn(adapter);
+
+        TestListenableObject original = mock(TestListenableObject.class);
+        when(original.getAdapter()).thenReturn(originalAdapter);
+
+        TestListenableObject added = null;
+
+        testObject.fireReplace(original, added);
+
+        verify(originalAdapter).setParentAdapter(null);
+        verify(adapter).fireEvent(ListEvent.getReplaceEvent(source, eventID, original, added));
+    }
+
+    /**
+     * Test of fireReplace method, of class ListenableCollectionEventHelper.
+     */
+    @Test
+    public void testFireReplace_BothNotNull() {
+        EventAdapter originalAdapter = mock(EventAdapter.class);
+        when(originalAdapter.getParentAdapter()).thenReturn(adapter);
+
+        TestListenableObject original = mock(TestListenableObject.class);
+        when(original.getAdapter()).thenReturn(originalAdapter);
+
+        EventAdapter addedAdapter = mock(EventAdapter.class);
+        when(addedAdapter.getParentAdapter()).thenReturn(null);
+
+        TestListenableObject added = mock(TestListenableObject.class);
+        when(added.getAdapter()).thenReturn(addedAdapter);
+
+        testObject.fireReplace(original, added);
+
+        verify(originalAdapter).setParentAdapter(null);
+        verify(addedAdapter).setParentAdapter(adapter);
+        verify(adapter).fireEvent(ListEvent.getReplaceEvent(source, eventID, original, added));
     }
 
 }

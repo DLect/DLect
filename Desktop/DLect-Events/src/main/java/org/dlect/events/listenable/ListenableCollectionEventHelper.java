@@ -5,7 +5,6 @@
  */
 package org.dlect.events.listenable;
 
-import com.google.common.base.Objects;
 import javax.annotation.Nullable;
 import org.dlect.events.EventAdapter;
 import org.dlect.events.EventID;
