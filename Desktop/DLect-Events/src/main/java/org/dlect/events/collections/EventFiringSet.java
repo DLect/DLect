@@ -15,6 +15,12 @@ public class EventFiringSet<E> extends ForwardingSet<E> {
     private final Set<E> delegate;
     private final CollectionEventHelper<E> helper;
 
+    /**
+     * Creates a new set with the ability to fire events through the given helper.
+     *
+     * @param delegate The base set to delegate method calls to.
+     * @param helper   The event helper to fire events through.
+     */
     public EventFiringSet(Set<E> delegate, CollectionEventHelper<E> helper) {
         this.delegate = delegate;
         this.helper = helper;

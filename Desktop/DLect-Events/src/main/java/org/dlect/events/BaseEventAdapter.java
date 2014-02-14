@@ -26,11 +26,23 @@ public class BaseEventAdapter implements EventAdapter {
     private final transient Set<EventListener> anyClassListeners;
     private final transient Multimap<Class<?>, EventListener> specificClassEventListeners;
 
+    /**
+     * Creates a new event adapter.
+     */
     public BaseEventAdapter() {
         this.anyClassListeners = Sets.newHashSet();
         this.specificClassEventListeners = HashMultimap.create();
     }
 
+    /**
+     * Creates a new event adapter using the lists provided. This method can be used to create a linked event adapter as
+     * the given collections are not copied or checked.
+     *
+     * @param anyClassListeners           The set to hold all the listeners who are listening to every event that passes
+     *                                    this adapter.
+     * @param specificClassEventListeners The multimap to hold the listeners who are listening to specific classes that
+     *                                    pass through this adapter.
+     */
     public BaseEventAdapter(Set<EventListener> anyClassListeners, Multimap<Class<?>, EventListener> specificClassEventListeners) {
         this.anyClassListeners = anyClassListeners;
         this.specificClassEventListeners = specificClassEventListeners;
@@ -82,10 +94,12 @@ public class BaseEventAdapter implements EventAdapter {
             parent = parent.getParentAdapter();
         }
     }
-/**
- * {@inheritDoc }
- * @param e 
- */
+
+    /**
+     * {@inheritDoc }
+     *
+     * @param e
+     */
     @Override
     public void fireEvent(@Nonnull Event e) {
         if (e == null) {

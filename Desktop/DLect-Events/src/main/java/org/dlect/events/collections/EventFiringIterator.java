@@ -15,6 +15,12 @@ public class EventFiringIterator<E> extends ForwardingIterator<E> {
 
     private E next;
 
+    /**
+     * Creates a new iterator with the ability to fire events through the given helper.
+     *
+     * @param delegate The base iterator to delegate method calls to.
+     * @param helper   The event helper to fire events through.
+     */
     public EventFiringIterator(Iterator<E> delegate, CollectionEventHelper<E> helper) {
         this.delegate = delegate;
         this.helper = helper;

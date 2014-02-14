@@ -12,7 +12,6 @@ package org.dlect.events;
  * {@link #getName() }. The {@link #isUniqueId() } is for applications to determine if they should update their internal
  * IDs from this event.
  *
- * @author lee
  */
 public interface EventID {
 
@@ -24,11 +23,19 @@ public interface EventID {
     public Class<?> getAppliedClass();
 
     /**
-     * An easy to read name
+     * A human readable name that describes this ID.
      *
-     * @return
+     * @return A human readable name for this ID.
      */
     public String getName();
 
+    /**
+     * Defines if an event fired with this ID represents a change in the objects unique identifier. In all IDs
+     * representing an event on the same type, there must be <b>at most</b> one ID that is unique(I.E. returns
+     * {@code true} from this method).
+     *
+     * @return {@code true} iff an event fired with this ID represents a change in the event's source's unique
+     *         identifier. Otherwise {@code false}. Only one EventID can return true(See above).
+     */
     public boolean isUniqueId();
 }

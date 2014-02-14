@@ -16,6 +16,12 @@ public class EventFiringList<E> extends ForwardingList<E> {
     private final List<E> delegate;
     private final CollectionEventHelper<E> helper;
 
+    /**
+     * Creates a new list with the ability to fire events through the given helper.
+     *
+     * @param delegate The base list to delegate method calls to.
+     * @param helper   The event helper to fire events through.
+     */
     public EventFiringList(List<E> delegate, CollectionEventHelper<E> helper) {
         this.delegate = delegate;
         this.helper = helper;

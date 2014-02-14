@@ -19,6 +19,18 @@ public class Event {
     private final Object before;
     private final Object after;
 
+    /**
+     * Creates a new event with the given source, eventID, before and after states.
+     *
+     * @param source  A non-null source that is assignable from the given {@code eventID}'s
+     *                {@link EventID#getAppliedClass()}.
+     * @param eventID A non-null eventID that must represent an event that is applied to a super-type of the given
+     *                {@code source}.
+     * @param before  The state before the change. This object is not checked for equality with {@code after}; or
+     *                null-ness. It is recommended that this object be immutable as no copy is made.
+     * @param after   The state after the change. This object is not checked for equality with {@code before}; or
+     *                null-ness. It is recommended that this object be immutable as no copy is made.
+     */
     public Event(@Nonnull Object source, @Nonnull EventID eventID, Object before, Object after) {
         if (source == null) {
             throw new IllegalArgumentException("Trying to fire an event with a null source");
@@ -102,7 +114,8 @@ public class Event {
     }
 
     /**
-     * The object before it was changed.This may be equal to {@link #getAfter() }; this class makes no assumptions on this.
+     * The object before it was changed.This may be equal to {@link #getAfter() }; this class makes no assumptions on
+     * this.
      *
      * @return The object before it was changed.
      */

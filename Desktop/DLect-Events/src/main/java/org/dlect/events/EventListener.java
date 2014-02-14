@@ -6,12 +6,12 @@
 
 package org.dlect.events;
 
-/**
- *
- * @author lee
- */
 public interface EventListener {
     
+    /**
+     * Processes the event given.
+     * @param e The even to process.
+     */
     public void processEvent(Event e);
     
 }
