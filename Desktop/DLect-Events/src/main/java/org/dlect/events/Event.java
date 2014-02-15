@@ -48,6 +48,15 @@ public class Event {
         this.after = after;
     }
 
+    public String debugVars() {
+        return "source=" + source + ", eventID=" + eventID + ", before=" + before + ", after=" + after;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" + debugVars() + '}';
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.getSource(),

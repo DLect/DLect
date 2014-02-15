@@ -115,4 +115,9 @@ public class ListEvent extends Event {
         return new ListEvent(source, eid, ListEventType.REPLACED, original, replacement);
     }
 
+    @Override
+    public String toString() {
+        return "ListEvent{" + super.debugVars() + ", listEventType=" + listEventType + '}';
+    }
+
 }
