@@ -6,7 +6,7 @@
 package org.dlect.events;
 
 import com.google.common.testing.EqualsTester;
-import org.dlect.events.TestObject.TestObjecEventID;
+import org.dlect.events.TestObject.TestObjectEventID;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -28,24 +28,24 @@ public class EventTest {
         TestObject o2 = new TestObject();
 
         new EqualsTester().addEqualityGroup(
-                new Event(o1, TestObjecEventID.ID, 1, 2),
-                new Event(o1, TestObjecEventID.ID, 1, 2)
+                new Event(o1, TestObjectEventID.ID, 1, 2),
+                new Event(o1, TestObjectEventID.ID, 1, 2)
         ).addEqualityGroup(
-                new Event(o2, TestObjecEventID.ID, 1, 2)
+                new Event(o2, TestObjectEventID.ID, 1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestObjecEventID.NAME,  1, 2)
+                new Event(o1, TestObjectEventID.NAME,  1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestObjecEventID.ID, 5, 2)
+                new Event(o1, TestObjectEventID.ID, 5, 2)
         ).addEqualityGroup(
-                new Event(o1, TestObjecEventID.ID, 1, 3)
+                new Event(o1, TestObjectEventID.ID, 1, 3)
         ).addEqualityGroup(
-                new Event(o2, TestObjecEventID.SUPPORTED_NUMBERS, 10, 20)
+                new Event(o2, TestObjectEventID.SUPPORTED_NUMBERS, 10, 20)
         ).testEquals();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_NullSource() {
-        Event e = new Event(getNullTestObject(), TestObjecEventID.ID, 0, 1);
+        Event e = new Event(getNullTestObject(), TestObjectEventID.ID, 0, 1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -55,7 +55,7 @@ public class EventTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstructor_EventIDAndObjectDiffer() {
-        Event e = new Event(new Object(), TestObjecEventID.ID, 0, 1);
+        Event e = new Event(new Object(), TestObjectEventID.ID, 0, 1);
     }
 
     @Test
@@ -67,20 +67,20 @@ public class EventTest {
                 return "Hello World; I'm a sub-class";
             }
 
-        }, TestObjecEventID.ID, 0, 1);
+        }, TestObjectEventID.ID, 0, 1);
     }
 
     public void testConstructor_IgnoresSameBeforeAndAfter() {
-        Event e = new Event(new TestObject(), TestObjecEventID.ID, 0, 0);
+        Event e = new Event(new TestObject(), TestObjectEventID.ID, 0, 0);
         assertEquals(e.getBefore(), e.getAfter());
     }
 
     public void testConstructor_IgnoresNullBeforeAndAfter() {
-        Event e = new Event(new TestObject(), TestObjecEventID.ID, null, 0);
+        Event e = new Event(new TestObject(), TestObjectEventID.ID, null, 0);
         assertEquals(null, e.getBefore());
         assertEquals(0, e.getAfter());
 
-        e = new Event(new TestObject(), TestObjecEventID.ID, 0, null);
+        e = new Event(new TestObject(), TestObjectEventID.ID, 0, null);
         assertEquals(0, e.getBefore());
         assertEquals(null, e.getAfter());
 
@@ -92,7 +92,7 @@ public class EventTest {
     @Test
     public void testGetSource() {
         TestObject source = new TestObject();
-        Event e = new Event(source, TestObjecEventID.ID, 10, 20);
+        Event e = new Event(source, TestObjectEventID.ID, 10, 20);
 
         assertSame(source, e.getSource());
     }
@@ -161,7 +161,7 @@ public class EventTest {
     public void testGetBefore() {
         TestObject source = new TestObject();
         Object before = new Object();
-        Event e = new Event(source, TestObjecEventID.ID, before, 20);
+        Event e = new Event(source, TestObjectEventID.ID, before, 20);
         
         // Must use eventID.getAppliedClass(); not source.getClass();
         assertSame(before, e.getBefore());
@@ -174,7 +174,7 @@ public class EventTest {
     public void testGetAfter() {
         TestObject source = new TestObject();
         Object after = new Object();
-        Event e = new Event(source, TestObjecEventID.ID, 10, after);
+        Event e = new Event(source, TestObjectEventID.ID, 10, after);
         
         // Must use eventID.getAppliedClass(); not source.getClass();
         assertSame(after, e.getAfter());

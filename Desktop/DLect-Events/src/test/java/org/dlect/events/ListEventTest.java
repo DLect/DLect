@@ -6,7 +6,7 @@
 package org.dlect.events;
 
 import com.google.common.testing.EqualsTester;
-import org.dlect.events.TestObject.TestObjecEventID;
+import org.dlect.events.TestObject.TestObjectEventID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -61,20 +61,20 @@ public class ListEventTest {
         TestObject o2 = new TestObject();
 
         new EqualsTester().addEqualityGroup(
-                new ListEvent(o1, TestObjecEventID.ID, ListEventType.REPLACED, 1, 2),
-                new ListEvent(o1, TestObjecEventID.ID, ListEventType.REPLACED, 1, 2)
+                new ListEvent(o1, TestObjectEventID.ID, ListEventType.REPLACED, 1, 2),
+                new ListEvent(o1, TestObjectEventID.ID, ListEventType.REPLACED, 1, 2)
         ).addEqualityGroup(
-                new ListEvent(o2, TestObjecEventID.ID, ListEventType.REPLACED, 1, 2)
+                new ListEvent(o2, TestObjectEventID.ID, ListEventType.REPLACED, 1, 2)
         ).addEqualityGroup(
-                new ListEvent(o1, TestObjecEventID.NAME, ListEventType.REPLACED, 1, 2)
+                new ListEvent(o1, TestObjectEventID.NAME, ListEventType.REPLACED, 1, 2)
         ).addEqualityGroup(
-                new ListEvent(o1, TestObjecEventID.ID, ListEventType.ADDED, 1, 2)
+                new ListEvent(o1, TestObjectEventID.ID, ListEventType.ADDED, 1, 2)
         ).addEqualityGroup(
-                new ListEvent(o1, TestObjecEventID.ID, ListEventType.REPLACED, 3, 2)
+                new ListEvent(o1, TestObjectEventID.ID, ListEventType.REPLACED, 3, 2)
         ).addEqualityGroup(
-                new ListEvent(o1, TestObjecEventID.ID, ListEventType.REPLACED, 1, 3)
+                new ListEvent(o1, TestObjectEventID.ID, ListEventType.REPLACED, 1, 3)
         ).addEqualityGroup(
-                new ListEvent(new TestObject(), TestObjecEventID.SUPPORTED_NUMBERS, ListEventType.REMOVED, 5, 12)
+                new ListEvent(new TestObject(), TestObjectEventID.SUPPORTED_NUMBERS, ListEventType.REMOVED, 5, 12)
         ).testEquals();
     }
 

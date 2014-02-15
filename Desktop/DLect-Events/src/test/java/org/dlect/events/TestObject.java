@@ -14,7 +14,7 @@ public class TestObject {
     public TestObject() {
     }
 
-    public static enum TestObjecEventID implements EventID {
+    public static enum TestObjectEventID implements EventID {
 
         ID,
         NAME,
