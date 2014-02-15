@@ -17,7 +17,7 @@ public enum TestListenableEventID implements EventID {
 
     @Override
     public Class<?> getAppliedClass() {
-        return TestListenableObject.class;
+        return Object.class;
     }
 
     @Override
