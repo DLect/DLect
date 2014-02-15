@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.dlect.test;
 
 import com.google.common.collect.Lists;
@@ -118,6 +117,28 @@ public class MarshalCapableTester {
             ByteArrayInputStream os = new ByteArrayInputStream(input.getBytes());
 
             return (T) unmarshaller.unmarshal(os);
+
+        } catch (JAXBException | ClassCastException ex) {
+            TestLogging.LOG.error("Error Caught On Unmarshal", ex);
+            fail("Error Caught On Unmarshal");
+            return null;
+        }
+    }
+
+    @SafeVarargs
+    @SuppressWarnings("unchecked")
+    public static <T> T testUnmarshalNonRootObject(String input, Class<T> type, Class<?>... otherClasses) {
+        Class<?>[] classes = Lists.asList(WrapperElement.class, type, otherClasses).toArray(new Class<?>[otherClasses.length + 2]);
+        try {
+            JAXBContext jc = JAXBContext.newInstance(classes);
+
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+
+            ByteArrayInputStream os = new ByteArrayInputStream(input.getBytes());
+
+            WrapperElement we = (WrapperElement) unmarshaller.unmarshal(os);
+
+            return (T) we.obj;
 
         } catch (JAXBException | ClassCastException ex) {
             TestLogging.LOG.error("Error Caught On Unmarshal", ex);

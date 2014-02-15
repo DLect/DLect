@@ -18,6 +18,7 @@
  */
 package org.dlect.logging;
 
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +27,14 @@ import org.slf4j.LoggerFactory;
  * @author lee
  */
 public class TestLogging {
-    
+
     public static final Logger LOG = LoggerFactory.getLogger(TestLogging.class);
+
+    static {
+        java.util.logging.Logger.getLogger(LOG.getName()).setLevel(Level.ALL);
+    }
 
     private TestLogging() {
     }
-    
-    
+
 }

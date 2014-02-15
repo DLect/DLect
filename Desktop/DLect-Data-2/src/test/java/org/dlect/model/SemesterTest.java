@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.model;
 
+import com.google.common.collect.Sets;
+import java.util.Iterator;
+import org.dlect.events.ListEvent;
+import org.dlect.logging.TestLogging;
+import org.dlect.model.Semester.SemesterEventID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.dlect.test.MarshalCapableTester.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  *
  * @author lee
  */
-
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
 public class SemesterTest {
@@ -30,13 +33,47 @@ public class SemesterTest {
     @InjectMocks
     private Object testObject;
 
-
-
     @Test
     public void testExamplar() throws Exception {
-        Object o = mock(Object.class);
-        assertNotNull(o);
-        fail();
+        //Object o = mock(Object.class);
+        //assertNotNull(o);
+        //fail();
+    }
+
+    @Test
+    public void testJaxB() {
+        Semester s = new Semester();
+        s.setSubject(Sets.newHashSet(new Subject(), new Subject()));
+        s.setNum(1020);
+        s.setLongName("Semester 1020 Long Name");
+        s.setCoursePostfixName("Sem 1020. Course Prefix");
+        assertEquals(2, s.getSubject().size());
+
+        String xml = testMarshalNonRootObject(s, Semester.class, Subject.class);
+
+        TestLogging.LOG.error(xml);
+
+        assertTrue(xml.contains("1020"));
+        assertTrue(xml.contains(s.getLongName()));
+        assertTrue(xml.contains(s.getCoursePostfixName()));
+
+        Semester loaded = testUnmarshalNonRootObject(xml, Semester.class, Subject.class);
+
+        assertEquals(s.getNum(), loaded.getNum());
+        assertEquals(s.getLongName(), loaded.getLongName());
+        assertEquals(s.getCoursePostfixName(), loaded.getCoursePostfixName());
+
+        assertEquals(s.getSubject().size(), loaded.getSubject().size());
+
+        RecordingEventListener rel = RecordingEventListener.addListener(loaded);
+
+        Iterator<Subject> sub = loaded.getSubject().iterator();
+
+        loaded.setSubject(Sets.<Subject>newHashSet());
+
+        rel.assertEvent(ListEvent.getRemoveEvent(loaded, SemesterEventID.SUBJECT, sub.next()));
+        rel.assertEvent(ListEvent.getRemoveEvent(loaded, SemesterEventID.SUBJECT, sub.next()));
+        rel.noMoreEvents();
     }
 
     /**
