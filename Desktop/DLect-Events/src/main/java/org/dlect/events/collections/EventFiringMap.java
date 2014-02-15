@@ -36,6 +36,10 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
         return delegate;
     }
 
+    protected CollectionEventHelper<Entry<K, V>> getHelper() {
+        return helper;
+    }
+
     @Override
     public void clear() {
         super.standardClear();
@@ -92,7 +96,7 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
         private final CollectionEventHelper<Entry<K, V>> helper;
         private final Entry<K, V> input;
 
-        protected  EventFiringEntry(Entry<K, V> input, CollectionEventHelper<Entry<K, V>> helper) {
+        protected EventFiringEntry(Entry<K, V> input, CollectionEventHelper<Entry<K, V>> helper) {
             this.input = input;
             this.helper = helper;
         }
@@ -119,7 +123,7 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
 
         private Entry<K, V> current;
 
-        protected  EventFiringEntrySetIterator(Iterator<Entry<K, V>> delegate, CollectionEventHelper<Entry<K, V>> helper) {
+        protected EventFiringEntrySetIterator(Iterator<Entry<K, V>> delegate, CollectionEventHelper<Entry<K, V>> helper) {
             this.delegate = delegate;
             this.helper = helper;
         }
