@@ -28,8 +28,9 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
      * Sets the given object's parent adapter to
      *
      * @param elm
+     * @param parent
      */
-    protected void addListenable(@Nullable T elm) {
+    protected static void addListenable(@Nullable Listenable<?> elm, EventAdapter parent) {
         if (elm == null) {
             return;
         }
@@ -40,22 +41,22 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
         EventAdapter elmParentAdapt = elmAdapt.getParentAdapter();
 
         if (elmParentAdapt == null) {
-            elmAdapt.setParentAdapter(this.getAdapter());
+            elmAdapt.setParentAdapter(parent);
         } else {
             throw new IllegalStateException(debugElmAndParent(elm, elmParentAdapt) + " is not null. This means that "
                                             + "another object has configured the element.");
         }
     }
 
-    private String debugElmAndParent(T elm, EventAdapter elmParentAdapt) {
+    private static String debugElmAndParent(Listenable<?> elm, EventAdapter elmParentAdapt) {
         return "Trying to add an element(" + elm + ") whose parent adapter(" + elmParentAdapt + ")";
     }
 
-    private String debugNullAdapter(T elm) {
+    private static String debugNullAdapter(Listenable<?> elm) {
         return "Element " + elm + " has a null event adapter.";
     }
 
-    protected void removeListenable(@Nullable T elm) {
+    protected static void removeListenable(@Nullable Listenable<?> elm, EventAdapter parent) {
         if (elm == null) {
             return;
         }
@@ -65,35 +66,31 @@ public class ListenableCollectionEventHelper<T extends Listenable<T>> extends Co
         }
         EventAdapter elmParentAdapt = elmAdapt.getParentAdapter();
 
-        if (same(elmParentAdapt, this.getAdapter())) {
+        if (elmParentAdapt == parent) {
             elmAdapt.setParentAdapter(null);
         } else {
-            throw new IllegalStateException(debugElmAndParent(elm, elmParentAdapt) + " is different from the adapter(" + this.getAdapter()
+            throw new IllegalStateException(debugElmAndParent(elm, elmParentAdapt) + " is different from the adapter(" + parent
                                             + ") it should have been.");
         }
     }
 
     @Override
     public void fireAdd(T addedElement) {
-        addListenable(addedElement);
+        addListenable(addedElement, this.getAdapter());
         super.fireAdd(addedElement);
     }
 
     @Override
     public void fireRemove(T removedElement) {
-        removeListenable(removedElement);
+        removeListenable(removedElement, this.getAdapter());
         super.fireRemove(removedElement);
     }
 
     @Override
     public void fireReplace(T original, T replacement) {
-        addListenable(replacement);
-        removeListenable(original);
+        addListenable(replacement, this.getAdapter());
+        removeListenable(original, this.getAdapter());
         super.fireReplace(original, replacement);
-    }
-
-    private boolean same(Object a, Object b) {
-        return a == b;
     }
 
 }
