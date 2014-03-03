@@ -45,7 +45,7 @@ gradle.allprojects {
         }
         
         jacocoTestReport {
-            group = "reporting"
+            //group = "reporting"
             description = "Generate Jacoco coverage reports after running tests."
             reports {
                 xml.enabled true

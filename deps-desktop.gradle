@@ -4,11 +4,11 @@ gradle.allprojects {
         def data() {
             return proj(':Desktop:DLect-Data-2')
         }
-        def testing() {
-            return proj(":Desktop:DLectTestUtil")
-        }
         def events() {
             return proj(":Desktop:DLect-Events")
+        }
+        def testing() {
+            return proj(":Desktop:DLectTestUtil")
         }
         def commonUI() {
             return proj(":Desktop:DLect-Common-UI")
@@ -19,9 +19,23 @@ gradle.allprojects {
         def updater() {
             return proj(":Desktop:DLectUpdater")
         }
+        def helpers() {
+            return proj(":Desktop:DLect-Helpers")
+        }
+        def media() {
+            return proj(":Desktop:DLect-Media")
+        }
         def oldData() {
             deprecated("oldData")
             return proj(":Desktop:DLectData")
+        }
+        def ui = new Object() {
+            def base() {
+                return proj(":Desktop:DLect-UI-Base")
+            }
+            def common() {
+                return proj(":Desktop:DLect-UI-Common")
+            }
         }
     }
     
