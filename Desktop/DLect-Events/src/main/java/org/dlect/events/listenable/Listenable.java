@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import org.dlect.events.Event;
 import org.dlect.events.EventAdapter;
@@ -30,13 +32,16 @@ import org.dlect.events.collections.EventFiringMap;
 import org.dlect.events.collections.EventFiringSet;
 import org.dlect.events.collections.EventFiringSortedSet;
 
-
 /**
  *
  * @author lee
  * @param <T> The class that this class should use.
  */
 public class Listenable<T extends Listenable<T>> {
+
+    protected <S extends Comparable> Ordering<S> ordering() {
+        return Ordering.natural().nullsLast();
+    }
 
     private final EventAdapter e = EventAdapterBuilder.getNewAdapter();
 
@@ -53,88 +58,67 @@ public class Listenable<T extends Listenable<T>> {
     }
 
     protected void addChild(Listenable<?>... listenables) {
+        EventAdapter thisAdapter = this.getAdapter();
         for (Listenable<?> l : listenables) {
             EventAdapter adapter = l.getAdapter();
             EventAdapter parent = adapter.getParentAdapter();
             if (parent == null) {
-                adapter.setParentAdapter(this.getAdapter());
-            } else if (!same(parent, this.getAdapter())) {
+                adapter.setParentAdapter(thisAdapter);
+            } else if (parent != this.getAdapter()) {
                 throw new IllegalStateException("Listenable(" + l + ") already has a parent.");
             }
         }
     }
 
-    private boolean same(Object o1, Object o2) {
-        return o1 == o2;
-    }
-
-    protected <E> List<E> wrapList(List<E> list, EventID listID) {
-        return new EventFiringList<>(list, new CollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E> List<E> newWrappedList(EventID eventID) {
-        return wrapList(Lists.<E>newArrayList(), eventID);
-    }
-
-    protected <E extends Listenable<E>> List<E> wrapListenableList(List<E> list, EventID listID) {
-        return new EventFiringList<>(list, new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E extends Listenable<E>> List<E> newWrappedListenableList(EventID eventID) {
-        return wrapListenableList(Lists.<E>newArrayList(), eventID);
-    }
-
-    protected <E> Set<E> wrapSet(Set<E> set, EventID listID) {
-        return new EventFiringSet<>(set, new CollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E> Set<E> newWrappedSet(EventID listID) {
-        return wrapSet(Sets.<E>newHashSet(), listID);
-    }
-
-    protected <E extends Listenable<E>> Set<E> wrapListenableSet(Set<E> list, EventID listID) {
-        return new EventFiringSet<>(list, new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E extends Listenable<E>> Set<E> newWrappedListenableSet(EventID listID) {
-        return wrapListenableSet(Sets.<E>newHashSet(), listID);
-    }
-
-    protected <E extends Comparable<E>> SortedSet<E> wrapSortedSet(SortedSet<E> set, EventID listID) {
-        return new EventFiringSortedSet<>(set, new CollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E extends Comparable<E>> SortedSet<E> newWrappedSortedSet(EventID listID) {
-        return wrapSortedSet(Sets.<E>newTreeSet(), listID);
-    }
-
-    protected <E extends Listenable<E> & Comparable<E>> SortedSet<E> wrapListenableSortedSet(SortedSet<E> list, EventID listID) {
-        return new EventFiringSortedSet<>(list, new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
-    }
-
-    protected <E extends Listenable<E> & Comparable<E>> SortedSet<E> newWrappedListenableSortedSet(EventID listID) {
-        return wrapListenableSortedSet(Sets.<E>newTreeSet(), listID);
+    protected void fireEvent(Event e) {
+        getAdapter().fireEvent(e);
     }
 
     /**
-     * H.
+     * Fires an event that does not have values associated with it. For example to indicate that an item has completed
+     * processing.
      *
-     * Please note that there is not wrapListenableMap; as it would be unclear as to which component should be
-     * listenable.
-     *
-     * @param <K>
-     * @param <V>
-     * @param set
-     * @param listID
-     *
-     * @return
+     * @param e
      */
-    protected <K, V> Map<K, V> wrapMap(Map<K, V> set, EventID listID) {
-        return new EventFiringMap<>(set, new CollectionEventHelper<Entry<K, V>>(this, listID, getAdapter()));
+    protected void fireEvent(EventID e) {
+        getAdapter().fireEvent(new Event(this, e, null, null));
+    }
+
+    protected <T> EventBuilder<T> event(EventID eid) {
+        return new EventBuilder<>(this, eid, getAdapter());
+    }
+
+    //<editor-fold defaultstate="collapsed" desc=" COLLECTIONS HELPER METHODS ">
+    protected <E> List<E> newWrappedList(EventID eventID) {
+        return new EventFiringList<>(Lists.<E>newArrayList(), new CollectionEventHelper<E>(this, eventID, getAdapter()));
+    }
+
+    protected <E extends Listenable<E>> List<E> newWrappedListenableList(EventID eventID) {
+        return new EventFiringList<>(Lists.<E>newArrayList(), new ListenableCollectionEventHelper<E>(this, eventID, getAdapter()));
+    }
+
+    protected <E> Set<E> newWrappedSet(EventID listID) {
+        return new EventFiringSet<>(Sets.<E>newHashSet(), new CollectionEventHelper<E>(this, listID, getAdapter()));
+    }
+
+    protected <E extends Listenable<E>> Set<E> newWrappedListenableSet(EventID listID) {
+        return new EventFiringSet<>(Sets.<E>newHashSet(), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
+    }
+
+    protected <E extends Comparable<E>> SortedSet<E> newWrappedSortedSet(EventID listID) {
+        return new EventFiringSortedSet<>(Sets.<E>newTreeSet(), new CollectionEventHelper<E>(this, listID, getAdapter()));
+    }
+
+    protected <E extends Listenable<E> & Comparable<E>> SortedSet<E> newWrappedListenableSortedSet(EventID listID) {
+        return new EventFiringSortedSet<>(new TreeSet<E>(), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
     }
 
     protected <K, V> Map<K, V> newWrappedMap(EventID listID) {
-        return wrapMap(Maps.<K, V>newHashMap(), listID);
+        return new EventFiringMap<>(Maps.<K, V>newHashMap(), new CollectionEventHelper<Entry<K, V>>(this, listID, getAdapter()));
+    }
+
+    protected <K, V extends Listenable<V>> Map<K, V> newWrappedListenableValueMap(EventID listID) {
+        return new EventFiringMap<>(Maps.<K, V>newHashMap(), new MapValueListenableCollectionEventHelper<K, V>(this, listID, getAdapter()));
     }
 
     protected <T> void setSet(Set<T> eventFiringCollection, Collection<T> toSetTo) {
@@ -144,7 +128,7 @@ public class Listenable<T extends Listenable<T>> {
         }
         // Remove all that are not in toSetTo
         eventFiringCollection.retainAll(toSetTo);
-        // Add a the remaining ones to it.sk
+        // Add a the remaining ones to it.
         eventFiringCollection.addAll(toSetTo);
 
     }
@@ -156,7 +140,7 @@ public class Listenable<T extends Listenable<T>> {
         }
         // Remove all the keys that are not in toSetTo
         eventFiringCollection.keySet().retainAll(toSetTo.keySet());
-        // Add a the remaining ones to it.sk
+        // Add a the remaining ones to it.
         eventFiringCollection.putAll(toSetTo);
     }
 
@@ -176,13 +160,9 @@ public class Listenable<T extends Listenable<T>> {
     protected <T> ImmutableList<T> copyOf(List<T> map) {
         return ImmutableList.copyOf(map);
     }
-    
+
     protected <T> ImmutableSortedSet<T> copyOf(SortedSet<T> set) {
         return ImmutableSortedSet.copyOf(set);
     }
-
-    protected void fireEvent(Event e) {
-        getAdapter().fireEvent(e);
-    }
-
+//</editor-fold>
 }
