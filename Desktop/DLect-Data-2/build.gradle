@@ -1,8 +1,8 @@
 applyJava();
 
 dependencies {
-    compile desktop.events()
+    compile         desktop.events()
     
-    testCompile    projectTestingCommon()
-    testCompile    projectTestingJaxB()
+    testCompile     projectTestingCommon()
+    testCompile     projectTestingJaxB()
 }

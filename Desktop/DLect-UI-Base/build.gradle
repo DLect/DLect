@@ -1,0 +1,12 @@
+applyJava();
+
+dependencies {
+    compile         desktop.data()
+    compile         desktop.helpers()
+    compile         desktop.media()
+    compile         proj(":Desktop:DLect-Providers-Base")
+    compile         commonsIO()
+    
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}

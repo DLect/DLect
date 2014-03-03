@@ -1,0 +1,14 @@
+applyJava();
+
+dependencies {    
+    compile         proj(":Desktop:DLect-UI-Base")
+    compile         commonsIO()
+    compile         swinglabs.jxlayer()
+    compile         swinglabs.swingx.painters()
+    compile         swinglabs.swingx.layout()
+    compile         swinglabs.swingx.core()
+    compile         jhlabsFilters()
+    
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}

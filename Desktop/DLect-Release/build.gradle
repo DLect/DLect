@@ -16,10 +16,10 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
 }
 
-task includeUpdater(type: Copy) {
-    from configurations.rawJar.iterator().next()
-    into "$buildDir/libs"
-    rename {_ -> "updater.jar"}
-}
-processResources.dependsOn(includeUpdater)
+//task includeUpdater(type: Copy) {
+//    from configurations.rawJar.iterator().next()
+//    into "$buildDir/libs"
+//    rename {_ -> "updater.jar"}
+//}
+//processResources.dependsOn(includeUpdater)
 

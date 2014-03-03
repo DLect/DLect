@@ -1,0 +1,11 @@
+applyJava();
+
+dependencies {    
+    compile         mp4parser()
+    compile         jaudiotagger()
+    compile         desktop.data()
+    compile         commonsIO()
+    
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}
