@@ -42,7 +42,8 @@ public interface EventAdapter {
     public boolean addListener(@Nonnull EventListener l, Class<?>... listeningClasses);
 
     /**
-     * Removes the event listener from this adaptor.
+     * Removes the event listener from this adaptor. This method may be safely called from
+     * {@link EventListener#processEvent(org.dlect.events.Event) } without exception.
      *
      * <p />
      * Calling this method guarantees that any events fired after this method completes will not notify the given event

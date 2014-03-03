@@ -5,8 +5,11 @@
  */
 package org.dlect.events;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import static org.dlect.helper.Conditions.checkNonNull;
 
 /**
  *
@@ -14,9 +17,13 @@ import javax.annotation.Nonnull;
  */
 public class Event {
 
+    @Nonnull
     private final Object source;
+    @Nonnull
     private final EventID eventID;
+    @Nullable
     private final Object before;
+    @Nullable
     private final Object after;
 
     /**
@@ -31,13 +38,9 @@ public class Event {
      * @param after   The state after the change. This object is not checked for equality with {@code before}; or
      *                null-ness. It is recommended that this object be immutable as no copy is made.
      */
-    public Event(@Nonnull Object source, @Nonnull EventID eventID, Object before, Object after) {
-        if (source == null) {
-            throw new IllegalArgumentException("Trying to fire an event with a null source");
-        }
-        if (eventID == null) {
-            throw new IllegalArgumentException("Trying to fire an event with a null eventID");
-        }
+    public Event(@Nonnull Object source, @Nonnull EventID eventID, @Nullable Object before, @Nullable Object after) {
+        checkNonNull(source, "Source");
+        checkNonNull(eventID, "Event ID");
         if (!eventID.getAppliedClass().isAssignableFrom(source.getClass())) {
             // If the event ID represents a supertype of or equal to source class; then good. Otherwise error.
             throw new IllegalArgumentException("Source(" + source.getClass() + ") is not a sub-type of the class that the event ID(" + eventID.getAppliedClass() + ") applies to.");
@@ -59,10 +62,10 @@ public class Event {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getSource(),
-                            this.getEventID(),
-                            this.getBefore(),
-                            this.getAfter());
+        return Objects.hashCode(this.getSource(),
+                                this.getEventID(),
+                                this.getBefore(),
+                                this.getAfter());
     }
 
     @Override
@@ -88,10 +91,10 @@ public class Event {
      * @return {@code true} if this event has the same event data as {@code other}. Otherwise {@code false}
      */
     protected final boolean equalsImpl(Event other) {
-        return Objects.equals(this.getSource(), other.getSource())
-               && Objects.equals(this.getEventID(), other.getEventID())
-               && Objects.equals(this.getBefore(), other.getBefore())
-               && Objects.equals(this.getAfter(), other.getAfter());
+        return Objects.equal(this.getSource(), other.getSource())
+               && Objects.equal(this.getEventID(), other.getEventID())
+               && Objects.equal(this.getBefore(), other.getBefore())
+               && Objects.equal(this.getAfter(), other.getAfter());
     }
 
     /**
@@ -99,6 +102,7 @@ public class Event {
      *
      * @return The source class that this event represents.
      */
+    @Nonnull
     public Class<?> getSourceClass() {
         return eventID.getAppliedClass();
     }
@@ -109,6 +113,7 @@ public class Event {
      *
      * @return The source of the object.
      */
+    @Nonnull
     public Object getSource() {
         return source;
     }
@@ -118,6 +123,7 @@ public class Event {
      *
      * @return The ID of event.
      */
+    @Nonnull
     public EventID getEventID() {
         return eventID;
     }
@@ -128,6 +134,7 @@ public class Event {
      *
      * @return The object before it was changed.
      */
+    @Nullable
     public Object getBefore() {
         return before;
     }
@@ -137,6 +144,7 @@ public class Event {
      *
      * @return The object after the change.
      */
+    @Nullable
     public Object getAfter() {
         return after;
     }
