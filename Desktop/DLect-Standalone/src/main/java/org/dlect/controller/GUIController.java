@@ -14,13 +14,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.lee.echo360.control.controllers;
+package org.dlect.controller;
 
 import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.lee.echo360.ui.MainFrame;
-import org.lee.echo360.util.ExceptionReporter;
+import org.dlect.controller.MainController;
+import org.dlect.events.Event;
+import org.dlect.events.EventListener;
+import org.dlect.ui.MainFrame;
 
 /**
  *
@@ -28,8 +30,7 @@ import org.lee.echo360.util.ExceptionReporter;
  */
 public class GUIController extends MainController {
 
-    private static DebuggingTimingListener debuggingTimingListener;
-
+//    private static DebuggingTimingListener debuggingTimingListener;
     public static void main(String[] args) throws IOException {
         long t = System.currentTimeMillis();
         doStartup(t, args);
@@ -38,28 +39,34 @@ public class GUIController extends MainController {
     public static void doStartup(long t, String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            ExceptionReporter.reportException(ex);
-        } catch (InstantiationException ex) {
-            ExceptionReporter.reportException(ex);
-        } catch (IllegalAccessException ex) {
-            ExceptionReporter.reportException(ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            ExceptionReporter.reportException(ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            // TODO UILogger.LOG.error("Failed to set LaF to system default.", ex);
         }
         System.out.println(t);
         GUIController mc = new GUIController();
-        debuggingTimingListener = new DebuggingTimingListener(t);
-        mc.addControllerListener(debuggingTimingListener);
+        mc.addListener(new DebuggingEventListener());
+        mc.init();
+        
+        System.out.println(mc.getDatabaseHandler().getDatabase());
+        
+//        debuggingTimingListener = new DebuggingTimingListener(t);
+//        mc.addControllerListener(debuggingTimingListener);
         StartupController c = mc.getStartupController();
         c.startup(t);
     }
-    private final StartupController startupController;
-    private final MainFrame mainFrame;
+    private StartupController startupController;
+    private MainFrame mainFrame;
 
     public GUIController() {
+        super();
+    }
+
+    @Override
+    public void init() {
+        super.init();
         this.mainFrame = StartupController.initMainFrame(this);
         this.startupController = new StartupController(this);
+        this.mainFrame.setLoginLocked(false);
     }
 
     public MainFrame getMainFrame() {
@@ -72,5 +79,14 @@ public class GUIController extends MainController {
 
     public void closeApplication() {
         System.exit(0);
+    }
+    
+    private static final class DebuggingEventListener implements EventListener {
+
+        @Override
+        public void processEvent(Event e) {
+            System.out.println(e);
+        }
+        
     }
 }

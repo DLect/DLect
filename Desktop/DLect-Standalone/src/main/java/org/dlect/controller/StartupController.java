@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.control.controllers;
+package org.dlect.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,15 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Date;
-import org.lee.echo360.control.ControllerAction;
-import org.lee.echo360.control.update.UpdateController;
-import org.lee.echo360.control.update.VersionInformation;
-import org.lee.echo360.model.ActionResult;
-import org.lee.echo360.model.Blackboard;
-import org.lee.echo360.providers.BlackboardProviders;
-import org.lee.echo360.ui.MainFrame;
-import org.lee.echo360.util.ExceptionReporter;
-import org.lee.echo360.util.URLUtil;
+import org.dlect.ui.MainFrame;
 
 /**
  *
@@ -40,15 +32,15 @@ public class StartupController {
     }
 
     private void initStdInputOutputRedirect() {
-        try {
-            FileOutputStream output = new FileOutputStream(new File(ctl.getPropertiesController().getParentFolder(), "output.txt"));
-            System.setErr(new RedirectingPrintStream(output, System.err, "Err:"));
-            System.setOut(new RedirectingPrintStream(output, System.out, "Out:"));
-        } catch (FileNotFoundException ex) {
-            ExceptionReporter.reportException(ex);
-        } catch (IOException ex) {
-            ExceptionReporter.reportException(ex);
-        }
+//        try {
+//            FileOutputStream output = new FileOutputStream(new File(ctl.getPropertiesController().getParentFolder(), "output.txt"));
+//            System.setErr(new RedirectingPrintStream(output, System.err, "Err:"));
+//            System.setOut(new RedirectingPrintStream(output, System.out, "Out:"));
+//        } catch (FileNotFoundException ex) {
+//            ExceptionReporter.reportException(ex);
+//        } catch (IOException ex) {
+//            ExceptionReporter.reportException(ex);
+//        }
 
     }
     private final GUIController ctl;
@@ -58,23 +50,23 @@ public class StartupController {
     }
 
     protected void startup(long t) {
-        ctl.start(ControllerAction.STARTUP);
-        PropertiesSavingController.loadProperties(ctl);
-        long t2 = openTime;
-        initStdInputOutputRedirect();
-        PropertiesController propCtl = ctl.getPropertiesController();
-        Blackboard b = propCtl.getBlackboard();
-        try {
-            if (b == null) {
-                propCtl.initBlackboard();
-                b = propCtl.getBlackboard();
-            }
-            BlackboardProviders.getProviders();
-        } finally {
-            ctl.finished(ControllerAction.STARTUP, ActionResult.SUCCEDED);
-            URLUtil.goTo(VersionInformation.getRunRegistrationURL(ctl.getUUID(), b.getBlackboardID(), t2 - t));
-            UpdateController.doUpdates(ctl.getApplicationPropertiesController().getUpdateStyle());
-        }
+//        ctl.start(ControllerAction.STARTUP);
+//        PropertiesSavingController.loadProperties(ctl);
+//        long t2 = openTime;
+//        initStdInputOutputRedirect();
+//        PropertiesController propCtl = ctl.getPropertiesController();
+//        Blackboard b = propCtl.getBlackboard();
+//        try {
+//            if (b == null) {
+//                propCtl.initBlackboard();
+//                b = propCtl.getBlackboard();
+//            }
+//            BlackboardProviders.getProviders();
+//        } finally {
+//            ctl.finished(ControllerAction.STARTUP, ActionResult.SUCCEDED);
+//            URLUtil.goTo(VersionInformation.getRunRegistrationURL(ctl.getUUID(), b.getBlackboardID(), t2 - t));
+//            UpdateController.doUpdates(ctl.getApplicationPropertiesController().getUpdateStyle());
+//        }
     }
 
     private static class RedirectingPrintStream extends PrintStream {
