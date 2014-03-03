@@ -26,7 +26,6 @@ import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Semester;
 import org.dlect.model.Subject;
-import org.dlect.processing.helper.ThreadUtil;
 import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.prefs.PreferencesDialog;
 import org.dlect.ui.prefs.PreferencesDialogImpl;
@@ -44,6 +43,7 @@ import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.*;
  */
 public class CoursesScreen extends javax.swing.JPanel implements
         EventListener {
+
     private static final long serialVersionUID = 1L;
 
     private final SortedSet<Subject> allSubjects;
@@ -173,12 +173,12 @@ public class CoursesScreen extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void downloadAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadAllButtonActionPerformed
-        ThreadUtil.runExecution(new Runnable() {
-            @Override
-            public void run() {
-                //controller.getDownloadController().downloadAllSelected(new ArrayList<Subject>(shownSubjects.keySet()));
-            }
-        });
+//    TODO    ThreadUtil.runExecution(new Runnable() {
+//            @Override
+//            public void run() {
+//                //controller.getDownloadController().downloadAllSelected(new ArrayList<Subject>(shownSubjects.keySet()));
+//            }
+//        });
     }//GEN-LAST:event_downloadAllButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
