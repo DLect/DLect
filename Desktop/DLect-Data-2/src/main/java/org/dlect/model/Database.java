@@ -15,11 +15,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.dlect.events.EventID;
-import org.dlect.events.listenable.Listenable;
+import org.dlect.model.helper.XmlListenable;
 
 @XmlRootElement(name = "dlect")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Database extends Listenable<Database> {
+public class Database extends XmlListenable<Database> {
 
     @XmlElementWrapper(name = "semesters")
     @XmlElement(name = "semester")
@@ -70,7 +70,13 @@ public class Database extends Listenable<Database> {
         setMap(this.settings, settings);
     }
 
-    private static enum DatabaseEventID implements EventID {
+    @Override
+    public String toString() {
+        return "Database{" + "semesters=" + semesters + ", settings=" + settings + '}';
+    }
+
+
+    public  static enum DatabaseEventID implements EventID {
 
         SEMESTER,
         SETTING;

@@ -6,21 +6,21 @@
 package org.dlect.model;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import org.dlect.events.EventID;
-import org.dlect.events.listenable.Listenable;
+import org.dlect.events.listenable.EventBuilder;
+import org.dlect.model.helper.XmlListenable;
 
 /**
  *
  * @author lee
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Semester extends Listenable<Semester> {
+public class Semester extends XmlListenable<Semester> {
 
     @XmlElement(name = "number")
     private int num;
@@ -36,7 +36,7 @@ public class Semester extends Listenable<Semester> {
     private final Set<Subject> subject;
 
     public Semester() {
-        subject = wrapListenableSet(Sets.<Subject>newHashSet(), SemesterEventID.SUBJECT);
+        subject = newWrappedListenableSortedSet(SemesterEventID.SUBJECT);
     }
 
     public int getNum() {
@@ -44,7 +44,9 @@ public class Semester extends Listenable<Semester> {
     }
 
     public void setNum(int num) {
+        EventBuilder<Integer> b = event(SemesterEventID.NUMBER).before(getNum());
         this.num = num;
+        b.after(getNum()).fire();
     }
 
     public String getLongName() {
@@ -52,7 +54,9 @@ public class Semester extends Listenable<Semester> {
     }
 
     public void setLongName(String longName) {
+        EventBuilder<String> b = event(SemesterEventID.NUMBER).before(getLongName());
         this.longName = longName;
+        b.after(getLongName()).fire();
     }
 
     public String getCoursePostfixName() {
@@ -60,7 +64,9 @@ public class Semester extends Listenable<Semester> {
     }
 
     public void setCoursePostfixName(String coursePostfixName) {
+        EventBuilder<String> b = event(SemesterEventID.NUMBER).before(getCoursePostfixName());
         this.coursePostfixName = coursePostfixName;
+        b.after(getCoursePostfixName()).fire();
     }
 
     /**
@@ -80,10 +86,12 @@ public class Semester extends Listenable<Semester> {
      * @param subject The set of subjects to copy and store in this semester.
      */
     public void setSubject(Set<Subject> subject) {
-        this.subject.clear();
-        if (subject != null) {
-            this.subject.addAll(subject);
-        }
+        setSet(this.subject, subject);
+    }
+
+    @Override
+    public String toString() {
+        return "Semester{" + "num=" + num + ", longName=" + longName + ", coursePostfixName=" + coursePostfixName + ", subject=" + subject + '}';
     }
 
     /**

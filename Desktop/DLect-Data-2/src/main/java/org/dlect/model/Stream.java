@@ -5,17 +5,87 @@
  */
 package org.dlect.model;
 
-import org.dlect.events.listenable.Listenable;
+import com.google.common.base.Objects;
+import org.dlect.events.EventID;
+import org.dlect.events.listenable.EventBuilder;
+import org.dlect.model.helper.XmlListenable;
 
 /**
  *
  * @author lee
  */
-public class Stream extends Listenable<Stream> implements Comparable<Stream> {
+public class Stream extends XmlListenable<Stream> implements Comparable<Stream> {
+
+    private String name;
+    private long number;
+
+    public Stream() {
+    }
 
     @Override
     public int compareTo(Stream o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o == null) {
+            return 1;
+        }
+        return Long.compare(this.getNumber(), o.getNumber());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        EventBuilder<String> b = event(StreamEventID.NAME).before(getName());
+        this.name = name;
+        b.after(getName()).fire();
+    }
+
+    public long getNumber() {
+        return number;
+    }
+
+    public void setNumber(long number) {
+        EventBuilder<Long> b = event(StreamEventID.NUMBER).before(getNumber());
+        this.number = number;
+        b.after(getNumber()).fire();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(number);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Stream other = (Stream) obj;
+        return this.getNumber() == other.getNumber();
+    }
+
+    public static enum StreamEventID implements EventID {
+
+        NAME, NUMBER;
+
+        @Override
+        public Class<?> getAppliedClass() {
+            return Stream.class;
+        }
+
+        @Override
+        public String getName() {
+            return name();
+        }
+
+        @Override
+        public boolean isUniqueId() {
+            return this == NUMBER;
+        }
+
     }
 
 }
