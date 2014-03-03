@@ -5,28 +5,16 @@
  */
 package org.dlect.events.listenable;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.dlect.events.Event;
 import org.dlect.events.EventAdapter;
 import org.dlect.events.EventAdapterBuilder;
 import org.dlect.events.EventListener;
-import org.dlect.events.ListEvent;
-import org.dlect.events.collections.CollectionEventHelper;
-import org.dlect.events.collections.EventFiringList;
-import org.dlect.events.collections.EventFiringMap;
-import org.dlect.events.collections.EventFiringSet;
 import org.dlect.test.Resettable;
 import org.dlect.test.helper.ObjectHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.dlect.events.collections.EventCollectionTestHelper.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -56,7 +44,7 @@ public class ListenableTest {
         assertSame(listenableAdapter, MockForwardingTestEventAdapter.getCurrent());
 
         mockAdapter = MockForwardingTestEventAdapter.getCurrent().getMock();
-        
+
         creatorReset.reset();
     }
 
@@ -196,113 +184,113 @@ public class ListenableTest {
 
         verifyZeroInteractions(mockAdapter);
     }
-
-    /**
-     * Test of wrapList method, of class Listenable.
-     */
-    @Test
-    public void testWrapList() {
-        List<String> original = Lists.newArrayList();
-        List<String> l = testObject.wrapList(original, TestListenableEventID.ID);
-
-        assertTrue(l instanceof EventFiringList);
-
-        verifyEventFiringList((EventFiringList<String>) l, original, listenableAdapter);
-
-        l.add("Hello");
-
-        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, "Hello"));
-    }
-
-    /**
-     * Test of wrapListenableList method, of class Listenable.
-     */
-    @Test
-    public void testWrapListenableList() {
-        List<Listenable> original = Lists.newArrayList();
-        List<Listenable> l = testObject.wrapListenableList(original, TestListenableEventID.ID);
-
-        Listenable mock = new Listenable();
-
-        assertTrue(l instanceof EventFiringList);
-
-        CollectionEventHelper<Listenable> ceh = verifyEventFiringList((EventFiringList<Listenable>) l, original, listenableAdapter);
-
-        assertTrue(ceh instanceof ListenableCollectionEventHelper);
-
-        l.add(mock);
-
-        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, mock));
-
-        assertNotNull(mock.getAdapter().getParentAdapter());
-    }
-
-    /**
-     * Test of wrapSet method, of class Listenable.
-     */
-    @Test
-    public void testWrapSet() {
-        Set<String> original = Sets.newHashSet();
-        Set<String> l = testObject.wrapSet(original, TestListenableEventID.ID);
-
-        assertTrue(l instanceof EventFiringSet);
-
-        verifyEventFiringSet((EventFiringSet<String>) l, original, listenableAdapter);
-
-        l.add("Hello");
-
-        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, "Hello"));
-    }
-
-    /**
-     * Test of wrapListenableSet method, of class Listenable.
-     */
-    @Test
-    public void testWrapListenableSet() {
-        Listenable mock = new Listenable();
-
-        Set<Listenable> original = Sets.newHashSet();
-        Set<Listenable> l = testObject.wrapListenableSet(original, TestListenableEventID.ID);
-
-        assertTrue(l instanceof EventFiringSet);
-
-        CollectionEventHelper<Listenable> ceh = verifyEventFiringSet((EventFiringSet<Listenable>) l, original, listenableAdapter);
-
-        assertTrue(ceh instanceof ListenableCollectionEventHelper);
-
-        l.add(mock);
-
-        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, mock));
-
-        assertNotNull(mock.getAdapter().getParentAdapter());
-    }
-
-    /**
-     * Test of wrapMap method, of class Listenable.
-     */
-    @Test
-    public void testWrapMap() {
-        Map<String, String> original = Maps.newHashMap();
-        Map<String, String> l = testObject.wrapMap(original, TestListenableEventID.ID);
-
-        assertTrue(l instanceof EventFiringMap);
-
-        verifyEventFiringMap((EventFiringMap<String, String>) l, original, listenableAdapter);
-
-        l.put("Hello", "World");
-
-        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, Maps.immutableEntry("Hello", "World")));
-    }
+//
+//    /**
+//     * Test of wrapList method, of class Listenable.
+//     */
+//    @Test
+//    public void testWrapList() {
+//        List<String> original = Lists.newArrayList();
+//        List<String> l = testObject.wrapList(original, TestListenableEventID.ID);
+//
+//        assertTrue(l instanceof EventFiringList);
+//
+//        verifyEventFiringList((EventFiringList<String>) l, original, listenableAdapter);
+//
+//        l.add("Hello");
+//
+//        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, "Hello"));
+//    }
+//
+//    /**
+//     * Test of wrapListenableList method, of class Listenable.
+//     */
+//    @Test
+//    public void testWrapListenableList() {
+//        List<Listenable> original = Lists.newArrayList();
+//        List<Listenable> l = testObject.wrapListenableList(original, TestListenableEventID.ID);
+//
+//        Listenable mock = new Listenable();
+//
+//        assertTrue(l instanceof EventFiringList);
+//
+//        CollectionEventHelper<Listenable> ceh = verifyEventFiringList((EventFiringList<Listenable>) l, original, listenableAdapter);
+//
+//        assertTrue(ceh instanceof ListenableCollectionEventHelper);
+//
+//        l.add(mock);
+//
+//        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, mock));
+//
+//        assertNotNull(mock.getAdapter().getParentAdapter());
+//    }
+//
+//    /**
+//     * Test of wrapSet method, of class Listenable.
+//     */
+//    @Test
+//    public void testWrapSet() {
+//        Set<String> original = Sets.newHashSet();
+//        Set<String> l = testObject.wrapSet(original, TestListenableEventID.ID);
+//
+//        assertTrue(l instanceof EventFiringSet);
+//
+//        verifyEventFiringSet((EventFiringSet<String>) l, original, listenableAdapter);
+//
+//        l.add("Hello");
+//
+//        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, "Hello"));
+//    }
+//
+//    /**
+//     * Test of wrapListenableSet method, of class Listenable.
+//     */
+//    @Test
+//    public void testWrapListenableSet() {
+//        Listenable mock = new Listenable();
+//
+//        Set<Listenable> original = Sets.newHashSet();
+//        Set<Listenable> l = testObject.wrapListenableSet(original, TestListenableEventID.ID);
+//
+//        assertTrue(l instanceof EventFiringSet);
+//
+//        CollectionEventHelper<Listenable> ceh = verifyEventFiringSet((EventFiringSet<Listenable>) l, original, listenableAdapter);
+//
+//        assertTrue(ceh instanceof ListenableCollectionEventHelper);
+//
+//        l.add(mock);
+//
+//        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, mock));
+//
+//        assertNotNull(mock.getAdapter().getParentAdapter());
+//    }
+//
+//    /**
+//     * Test of wrapMap method, of class Listenable.
+//     */
+//    @Test
+//    public void testWrapMap() {
+//        Map<String, String> original = Maps.newHashMap();
+//        Map<String, String> l = testObject.wrapMap(original, TestListenableEventID.ID);
+//
+//        assertTrue(l instanceof EventFiringMap);
+//
+//        verifyEventFiringMap((EventFiringMap<String, String>) l, original, listenableAdapter);
+//
+//        l.put("Hello", "World");
+//
+//        verify(mockAdapter).fireEvent(ListEvent.getAddEvent(testObject, TestListenableEventID.ID, Maps.immutableEntry("Hello", "World")));
+//    }
 
     /**
      * Test of fireEvent method, of class Listenable.
      */
     @Test
     public void testFireEvent_Null() {
+        Event e = null;
+        testObject.fireEvent(e);
 
-        testObject.fireEvent(null);
-
-        verify(mockAdapter).fireEvent(null);
+        verify(mockAdapter).fireEvent(e);
     }
 
     /**
