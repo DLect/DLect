@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package org.dlect.provider.impl.test;
+package org.dlect.provider.impl.au.uniQld;
 
 import org.dlect.provider.loader.ProviderDetail;
 import org.dlect.provider.loader.ProviderDetailBuilder;
@@ -13,11 +12,11 @@ import org.dlect.provider.loader.ProviderDetailBuilder;
  *
  * @author lee
  */
-public class TestProviderDetailBuilder implements ProviderDetailBuilder {
+public class UQProviderDetailBuilder implements ProviderDetailBuilder {
 
     @Override
     public ProviderDetail getProviderDetail() {
-        return new ProviderDetail("Test Provider", "TEST", TestProvider.class);
+        return new ProviderDetail("University of Queensland", "BBM921", UQProvider.class);
     }
-    
+
 }
