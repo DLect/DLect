@@ -1,7 +1,7 @@
 package org.lee.echo360;
 
 import java.io.IOException;
-import org.lee.echo360.control.controllers.GUIController;
+import org.dlect.controller.GUIController;
 
 /*
  * To change this template, choose Tools | Templates

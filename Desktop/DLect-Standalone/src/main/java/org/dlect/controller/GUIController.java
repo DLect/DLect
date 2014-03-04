@@ -19,7 +19,6 @@ package org.dlect.controller;
 import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.dlect.controller.MainController;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.ui.MainFrame;

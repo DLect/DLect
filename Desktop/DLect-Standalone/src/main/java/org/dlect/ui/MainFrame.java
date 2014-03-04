@@ -7,6 +7,7 @@ package org.dlect.ui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JComponent;
+import org.dlect.controller.GUIController;
 import org.dlect.controller.event.ControllerEvent;
 import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
@@ -17,12 +18,10 @@ import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
 import org.dlect.exception.DLectExceptionCause;
-import org.dlect.ui.CoursesScreen;
 import org.dlect.ui.decorator.BusyPainterUI;
-import org.dlect.ui.heler.LayerUIUtil;
+import org.dlect.ui.helper.LayerUIUtil;
 import org.dlect.ui.login.LoginPanel;
 import org.jdesktop.jxlayer.JXLayer;
-import org.dlect.controller.GUIController;
 
 /**
  *
@@ -173,112 +172,6 @@ public class MainFrame extends javax.swing.JFrame implements EventListener, Erro
         return loginPanel;
     }
 
-//
-//    @Override
-//    public void start(final ControllerAction action) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                switch (action) {
-//                    case STARTUP:
-//                        setLoginVisible(true);
-//                        setLoginLocked(true);
-//                        setCoursesLocked(true);
-//                        break;
-//                    case LOGIN:
-//                        final PropertiesController pc = controller.getPropertiesController();
-//                        loginPanel.setUsername(pc.getBlackboard().getUsername());
-//                        loginPanel.setPassword(pc.getBlackboard().getPassword());
-//                        loginPanel.setProvider(pc.getProvider());
-//                        setLoginVisible(true);
-//                        setLoginLocked(true);
-//                        setCoursesLocked(true);
-//                        break;
-//                    case COURSES:
-//                        setLoginVisible(false);
-//                        setLoginLocked(false);
-//                        setCoursesLocked(true);
-//                        break;
-//                    case LECTURES:
-//                        setLoginVisible(false);
-//                        setLoginLocked(false);
-//                        setCoursesLocked(false);
-//                        break;
-//                    default:
-//                }
-//            }
-//        });
-//    }
-//
-//    private int length(String nullableString) {
-//        return (nullableString == null ? 0 : nullableString.length());
-//    }
-//
-//    @Override
-//    public void finished(final ControllerAction action, final ActionResult r) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                PropertiesController c = controller.getPropertiesController();
-//                final Blackboard b = c.getBlackboard();
-//                switch (action) {
-//                    case STARTUP:
-//                        setLoginVisible(true);
-//                        setLoginLocked(false);
-//                        setCoursesLocked(true);
-//                        if (c.getBlackboard() != null) {
-//                            loginPanel.setUsername(b.getUsername());
-//                            loginPanel.setPassword(b.getPassword());
-//                        }
-//                        if (c.getProvider() != null) {
-//                            loginPanel.setProvider(c.getProvider());
-//                            if (length(b.getUsername()) * length(b.getPassword()) > 0) {
-//                                setLoginLocked(true);
-//                                loginPanel.doLogin();
-//                            }
-//                        }
-//                        break;
-//                    case LOGIN:
-//                        setCoursesLocked(true);
-//                        if (r == ActionResult.SUCCEDED) {
-//                            setLoginVisible(false);
-//                            repaint();
-//                        } else {
-//                            setLoginVisible(true);
-//                        }
-//                        setLoginLocked(false);
-//                        break;
-//                    case COURSES:
-//                        setLoginVisible(false);
-//                        setLoginLocked(false);
-//                        setCoursesLocked(false);
-//                        break;
-//                    case LECTURES:
-//                        setLoginVisible(false);
-//                        setLoginLocked(false);
-//                        setCoursesLocked(false);
-//                        break;
-//                    default:
-//                }
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void error(Throwable thrwbl) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (URLUtil.isOffline()) {
-//                    loginPanel.showErrorBox(ActionResult.NOT_CONNECTED);
-//                } else {
-//                    loginPanel.showErrorBox(ActionResult.FAILED);
-//                }
-//                setLoginVisible(true);
-//                setLoginLocked(false);
-//            }
-//        });
-//    }
     public void initLoginPanel() {
         // TODO init login panel's username/password/provider.
 
@@ -292,9 +185,11 @@ public class MainFrame extends javax.swing.JFrame implements EventListener, Erro
                 case LOGIN:
                     processLogin(ce.getAfter());
                     break;
-                case LECTURE:
-                    break;
                 case SUBJECT:
+                    processSubject(ce.getAfter());
+                    break;
+                case LECTURE:
+                    processLecture(ce.getAfter());
                     break;
             }
 
@@ -302,20 +197,42 @@ public class MainFrame extends javax.swing.JFrame implements EventListener, Erro
     }
 
     protected void processLogin(ControllerState state) {
-        setLoginVisible(true);
         switch (state) {
             case STARTED:
+                setLoginVisible(true);
                 setLoginLocked(true);
                 setCoursesLocked(true);
                 break;
             case COMPLETED:
                 setLoginVisible(false);
+                setCoursesLocked(true);
+                // TODO move this call into subject panel.
                 new SubjectWorker(this, controller).execute();
-
+                break;
             case FAILED:
+                setLoginVisible(true);
                 setCoursesLocked(true);
                 setLoginLocked(false);
+                break;
         }
+    }
+
+    protected void processSubject(ControllerState state) {
+        setLoginVisible(false);
+        switch (state) {
+            case FAILED:
+            case STARTED:
+                setCoursesLocked(true);
+                break;
+            case COMPLETED:
+                setCoursesLocked(false);
+                break;
+        }
+    }
+
+    protected void processLecture(ControllerState state) {
+        setLoginVisible(false);
+        setCoursesLocked(false);
     }
 
     @Override
