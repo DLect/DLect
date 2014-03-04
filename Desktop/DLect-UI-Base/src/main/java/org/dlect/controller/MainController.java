@@ -9,7 +9,7 @@ import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
-import org.dlect.controller.helper.subject.SubjectDisplayHelper;
+import org.dlect.controller.helper.subject.SubjectDisplaySettingHandler;
 import org.dlect.controller.provider.ProviderHelper;
 import org.dlect.events.listenable.Listenable;
 
@@ -27,7 +27,7 @@ public class MainController extends Listenable<MainController> implements Initil
     private LectureController lectureController;
     private ControllerStateHelper controllerStateHelper;
     private SubjectDataHelper subjectDataHelper;
-    private SubjectDisplayHelper subjectDisplayHelper;
+    private SubjectDisplaySettingHandler subjectDisplayHelper;
 
     public MainController() {
         this.uuid = Double.doubleToRawLongBits(System.currentTimeMillis() * Math.random());
@@ -74,7 +74,7 @@ public class MainController extends Listenable<MainController> implements Initil
         return subjectDataHelper;
     }
 
-    public SubjectDisplayHelper getSubjectDisplayHelper() {
+    public SubjectDisplaySettingHandler getSubjectDisplayHelper() {
         return subjectDisplayHelper;
     }
 
