@@ -6,16 +6,10 @@
 package org.dlect.controller.helper;
 
 import com.google.common.base.Optional;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
-import org.dlect.controller.LectureController;
-import org.dlect.controller.LoginController;
 import org.dlect.controller.MainController;
-import org.dlect.controller.SubjectController;
 import org.dlect.controller.download.event.DownloadEvent;
 import org.dlect.controller.download.event.DownloadParameter;
 import org.dlect.controller.download.event.DownloadStatus;
@@ -23,7 +17,6 @@ import org.dlect.controller.event.ControllerEvent;
 import org.dlect.controller.event.ControllerListenable;
 import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
-import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.events.Event;
 import org.dlect.events.EventID;
 import org.dlect.events.EventListener;
@@ -43,7 +36,7 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
 
     public ControllerStateHelper(MainController mc) {
         // TODO add Download Controller to this list.
-        mc.addListener(this, LoginController.class, SubjectController.class, LectureController.class);
+        mc.addListener(this, Controller.class);
     }
 
     @Override
