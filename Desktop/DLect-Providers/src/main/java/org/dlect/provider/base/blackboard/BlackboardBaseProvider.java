@@ -5,8 +5,6 @@
  */
 package org.dlect.provider.base.blackboard;
 
-import org.dlect.provider.base.blackboard.lecture.BlackboardLectureProvider;
-import org.dlect.provider.base.blackboard.subject.BlackboardSubjectProvider;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
@@ -16,11 +14,14 @@ import org.dlect.provider.Provider;
 import org.dlect.provider.SubjectProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
 import org.dlect.provider.base.blackboard.helper.BlackboardHttpClientImpl;
+import org.dlect.provider.base.blackboard.helper.BlackboardProviderDetails;
 import org.dlect.provider.base.blackboard.helper.BlackboardProviderInitiliser;
 import org.dlect.provider.base.blackboard.helper.BlackboardProviderInitiliserImpl;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParserImpl;
+import org.dlect.provider.base.blackboard.lecture.BlackboardLectureProvider;
 import org.dlect.provider.base.blackboard.login.BlackboardSslFormLoginProvider;
+import org.dlect.provider.base.blackboard.subject.BlackboardSubjectProvider;
 
 /**
  *

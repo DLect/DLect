@@ -18,6 +18,7 @@ public interface BlackboardSubjectCustomiser {
     /**
      *
      * @param name
+     * @param bbid
      *
      * @return The name of the course, or an absent optional to ignore this subject
      */

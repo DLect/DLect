@@ -29,8 +29,6 @@ import org.dlect.provider.LoginProvider;
 import org.dlect.provider.Provider;
 import org.dlect.provider.SubjectProvider;
 
-import static java.util.concurrent.TimeUnit.DAYS;
-
 /**
  *
  * @author lee

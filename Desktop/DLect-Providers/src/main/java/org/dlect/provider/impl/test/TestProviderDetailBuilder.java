@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.provider.impl.test;
 
 import org.dlect.provider.loader.ProviderDetail;
@@ -19,5 +18,5 @@ public class TestProviderDetailBuilder implements ProviderDetailBuilder {
     public ProviderDetail getProviderDetail() {
         return new ProviderDetail("Test Provider", "TEST", TestProvider.class);
     }
-    
+
 }
