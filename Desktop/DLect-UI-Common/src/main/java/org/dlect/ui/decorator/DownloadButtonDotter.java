@@ -16,9 +16,8 @@
  */
 package org.dlect.ui.decorator;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,17 +31,9 @@ import javax.swing.Timer;
 public class DownloadButtonDotter implements ActionListener {
 
     private Timer timer = null;
-    private static final LoadingCache<Integer, String> dotPostfixString = CacheBuilder.newBuilder().build(new CacheLoader<Integer, String>() {
-        @Override
-        public String load(Integer key) throws Exception {
-            StringBuilder d = new StringBuilder(key * 2);
-            for (int i = 0; i < key; i++) {
-                d.append('.');
-            }
-            return d.toString();
-        }
-    });
+    private static final ImmutableList<String> dotPostfixString = ImmutableList.of("", ".", "..", "...");
     private final JButton b;
+    private Dimension ps;
 
     public DownloadButtonDotter(JButton b) {
         this.b = b;
@@ -85,8 +76,10 @@ public class DownloadButtonDotter implements ActionListener {
     public void update(String buttonDefault) {
         name = buttonDefault;
         b.setPreferredSize(null);
-        b.setText(name + dotPostfixString.apply(3));
-        Dimension ps = b.getPreferredSize();
+        b.setText(name + dotPostfixString.get(3));
+
+        ps = b.getPreferredSize();
+        System.out.println(ps);
         b.setPreferredSize(ps);
         b.setText(name);
     }
@@ -94,7 +87,18 @@ public class DownloadButtonDotter implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         dots = (dots % 3) + 1;
-        b.setText(name + dotPostfixString.apply(dots));
+        b.setText(name + dotPostfixString.get(dots));
+        b.validate();
+        if (!Objects.equal(ps, b.getSize())) {
+            System.out.println("SIZE CHANGED:");
+            System.out.println("\tO:" + ps);
+            System.out.println("\tN:" + b.getPreferredSize());
+            if (ps != null) {
+                if (ps.width < b.getSize().width) {
+                    ps = b.getPreferredSize();
+                }
+            }
+        }
     }
 
     public void reset() {
