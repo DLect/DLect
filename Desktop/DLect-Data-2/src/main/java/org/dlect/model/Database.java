@@ -7,6 +7,7 @@ package org.dlect.model;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -38,7 +39,7 @@ public class Database extends XmlListenable<Database> {
         return copyOf(semesters);
     }
 
-    public void setSemesters(Set<Semester> semesters) {
+    public void setSemesters(Collection<Semester> semesters) {
         setSet(this.semesters, semesters);
     }
 
@@ -75,8 +76,7 @@ public class Database extends XmlListenable<Database> {
         return "Database{" + "semesters=" + semesters + ", settings=" + settings + '}';
     }
 
-
-    public  static enum DatabaseEventID implements EventID {
+    public static enum DatabaseEventID implements EventID {
 
         SEMESTER,
         SETTING;
