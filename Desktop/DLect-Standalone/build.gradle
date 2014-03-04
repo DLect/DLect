@@ -1,7 +1,7 @@
 applyJava()
 
 apply plugin:'application'
-mainClassName="org.lee.echo360.control.controllers.GUIController"
+mainClassName="org.dlect.controller.GUIController"
 
 
 dependencies {
