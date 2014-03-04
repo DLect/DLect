@@ -39,7 +39,8 @@ public class WrappedProviderLectureHelper {
     }
 
     private static void copyTo(LectureDownload ld, ImmutableLectureDownload ild) {
-        //TODO
+        ld.setDownloadExtension(ild.getDownloadExtension());
+        ld.setDownloadURL(ild.getDownloadURL());
     }
 
     public static void mergeSubjectData(Subject s, ImmutableSubjectData data) {
