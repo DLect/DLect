@@ -84,4 +84,16 @@ public class ImmutableSemester {
         return new ImmutableSemester(s.getNum(), s.getLongName(), s.getCoursePostfixName(), subjects);
     }
 
+    public void copyTo(Semester s) {
+        s.setNum(this.getNum());
+        s.setLongName(this.getLongName());
+        s.setCoursePostfixName(this.getCoursePostfixName());
+    }
+
+    public Semester copyToNew() {
+        Semester s = new Semester();
+        copyTo(s);
+        return s;
+    }
+
 }

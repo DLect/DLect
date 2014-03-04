@@ -53,6 +53,17 @@ public class ImmutableSubject implements Comparable<ImmutableSubject> {
         return c_name;
     }
 
+    public void copyTo(Subject s) {
+        s.setId(this.getId());
+        s.setName(this.getName());
+    }
+
+    public Subject copyToNew() {
+        Subject s = new Subject();
+        copyTo(s);
+        return s;
+    }
+
     public String getId() {
         return bbid;
     }
