@@ -20,7 +20,7 @@ import org.dlect.model.helper.XmlListenable;
  * @author lee
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Semester extends XmlListenable<Semester> {
+public class Semester extends XmlListenable<Semester> implements Comparable<Semester> {
 
     @XmlElement(name = "number")
     private int num;
@@ -37,6 +37,14 @@ public class Semester extends XmlListenable<Semester> {
 
     public Semester() {
         subject = newWrappedListenableSortedSet(SemesterEventID.SUBJECT);
+    }
+
+    @Override
+    public int compareTo(Semester o) {
+        if (o == null) {
+            return -1;
+        }
+        return Integer.compare(this.getNum(), o.getNum());
     }
 
     public int getNum() {

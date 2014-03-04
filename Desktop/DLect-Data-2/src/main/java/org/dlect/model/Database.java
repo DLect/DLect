@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,14 +25,14 @@ public class Database extends XmlListenable<Database> {
 
     @XmlElementWrapper(name = "semesters")
     @XmlElement(name = "semester")
-    private Set<Semester> semesters;
+    private final SortedSet<Semester> semesters;
 
     @XmlElementWrapper(name = "settings")
     @XmlElement(name = "setting")
-    private Map<String, String> settings;
+    private final Map<String, String> settings;
 
     public Database() {
-        this.semesters = newWrappedListenableSet(DatabaseEventID.SEMESTER);
+        this.semesters = newWrappedListenableSortedSet(DatabaseEventID.SEMESTER);
         this.settings = newWrappedMap(DatabaseEventID.SETTING);
     }
 
