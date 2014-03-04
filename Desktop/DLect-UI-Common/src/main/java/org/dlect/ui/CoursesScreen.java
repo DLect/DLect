@@ -22,6 +22,7 @@ import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
 import org.dlect.model.Database;
+import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Semester;
@@ -52,6 +53,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
     private final MainController controller;
     private final DownloadButtonDotter dbd;
     private PreferencesDialog prefsDialog;
+    private final SubjectDisplayUpdater displayUpdater;
 
     /**
      * Creates new form CoursesScreen
@@ -68,9 +70,10 @@ public class CoursesScreen extends javax.swing.JPanel implements
         defaultCourseConstraints.anchor = GridBagConstraints.NORTH;
         shownSubjects = new TreeMap<>();
         allSubjects = new TreeSet<>();
+        displayUpdater = new SubjectDisplayUpdater();
         dbd = new DownloadButtonDotter(downloadAllButton);
         dbd.start();
-        Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class, Controller.class);
+        Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class, Controller.class, ControllerStateHelper.class);
     }
 
     public void addAllSubjects(final Collection<Subject> itt) {
@@ -95,7 +98,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
 
         bottomPanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        preferencesButton = new javax.swing.JButton();
         downloadAllButton = new javax.swing.JButton();
         coursesScrollPane = new javax.swing.JScrollPane();
         scrollPanelContainer = new javax.swing.JPanel();
@@ -113,19 +116,19 @@ public class CoursesScreen extends javax.swing.JPanel implements
         gridBagConstraints.weightx = 1.0;
         bottomPanel.add(jSeparator1, gridBagConstraints);
 
-        jButton1.setMnemonic('p');
-        jButton1.setText("Preferences");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        preferencesButton.setMnemonic('p');
+        preferencesButton.setText("Preferences");
+        preferencesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                preferencesButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        bottomPanel.add(jButton1, gridBagConstraints);
+        bottomPanel.add(preferencesButton, gridBagConstraints);
 
-        downloadAllButton.setText("Download All");
+        downloadAllButton.setText("Please Wait");
         downloadAllButton.setEnabled(false);
         downloadAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,21 +184,21 @@ public class CoursesScreen extends javax.swing.JPanel implements
 //        });
     }//GEN-LAST:event_downloadAllButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void preferencesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preferencesButtonActionPerformed
         if (prefsDialog == null) {
             prefsDialog = new PreferencesDialogImpl(SwingUtilities.getWindowAncestor(this), controller);
             prefsDialog.setLocationRelativeTo(this);
         }
         prefsDialog.setLocationByPlatform(true);
         prefsDialog.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_preferencesButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel courseContainer;
     private javax.swing.JScrollPane coursesScrollPane;
     private javax.swing.JButton downloadAllButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton preferencesButton;
     private javax.swing.JPanel scrollPanelContainer;
     // End of variables declaration//GEN-END:variables
 
@@ -237,6 +240,12 @@ public class CoursesScreen extends javax.swing.JPanel implements
 
     private void updateButtonState() {
         ControllerStateHelper csh = controller.getControllerStateHelper();
+
+        if (!csh.hasCompleted(ControllerType.SUBJECT)) {
+            dbd.updateAndStart("Please Wait");
+            return;
+        }
+
         Set<Subject> shown = ImmutableSet.copyOf(shownSubjects.keySet());
         for (Subject subject : shown) {
             if (csh.isDownloading(subject)) {
@@ -247,6 +256,14 @@ public class CoursesScreen extends javax.swing.JPanel implements
                 dbd.updateAndStart("Loading Data");
                 return;
             }
+        }
+
+        if (shown.isEmpty()) {
+            dbd.stop();
+            downloadAllButton.setText("No Subjects Shown.");
+            downloadAllButton.setEnabled(false);
+            downloadAllButton.setPreferredSize(null);
+            return;
         }
 
         int notDownloaded = 0;
@@ -271,15 +288,18 @@ public class CoursesScreen extends javax.swing.JPanel implements
                 dbd.stop();
                 downloadAllButton.setText("All Downloaded");
                 downloadAllButton.setEnabled(false);
+                downloadAllButton.setPreferredSize(null);
                 break;
             case NONE_SELECTED:
                 dbd.stop();
                 downloadAllButton.setText("None Selected");
                 downloadAllButton.setEnabled(false);
+                downloadAllButton.setPreferredSize(null);
                 break;
             default:
                 dbd.stop();
                 downloadAllButton.setText("Download All");
+                downloadAllButton.setPreferredSize(null);
         }
     }
 
@@ -312,9 +332,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
              */
             updateCoursePanelPositions();
         }
-        if (true /*
-                 * Subject's displayed status changes
-                 */) {
+        if (e.getEventID().equals(DatabaseEventID.SETTING)) {
             updateCoursePanelPositions();
         }
 

@@ -37,13 +37,13 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="preferencesButton">
           <Properties>
             <Property name="mnemonic" type="int" value="112"/>
             <Property name="text" type="java.lang.String" value="Preferences"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="preferencesButtonActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -53,7 +53,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="downloadAllButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Download All"/>
+            <Property name="text" type="java.lang.String" value="Please Wait"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
