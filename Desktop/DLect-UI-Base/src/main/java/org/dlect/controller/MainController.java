@@ -42,7 +42,7 @@ public class MainController extends Listenable<MainController> implements Initil
         this.lectureController = new LectureController(this);
         this.controllerStateHelper = new ControllerStateHelper(this);
 
-        this.addChild(databaseHandler, loginController, subjectController, lectureController);
+        this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper);
         Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper);
     }
 
