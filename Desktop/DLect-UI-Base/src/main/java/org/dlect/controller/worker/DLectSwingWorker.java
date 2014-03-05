@@ -17,14 +17,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author lee
  */
-public abstract class DLectSwingWorker extends SwingWorker<DLectException, Object> {
+public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Object> {
 
     private final ErrorDisplayable displayable;
     private final MainController controller;
     private final ControllerType type;
-    private final Object parameter;
+    private final T parameter;
 
-    public DLectSwingWorker(ErrorDisplayable displayable, MainController controller, ControllerType type, Object parameter) {
+    public DLectSwingWorker(ErrorDisplayable displayable, MainController controller, ControllerType type, T parameter) {
         this.displayable = displayable;
         this.controller = controller;
         this.type = type;
@@ -36,6 +36,10 @@ public abstract class DLectSwingWorker extends SwingWorker<DLectException, Objec
         this.controller = controller;
         this.type = type;
         this.parameter = null;
+    }
+    
+    public T getParameter() {
+        return parameter;
     }
 
     protected abstract void doAction() throws DLectException;

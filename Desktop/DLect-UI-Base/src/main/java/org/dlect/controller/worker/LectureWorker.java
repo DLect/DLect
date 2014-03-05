@@ -8,20 +8,21 @@ package org.dlect.controller.worker;
 import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.exception.DLectException;
+import org.dlect.model.Subject;
 
 /**
  *
  * @author lee
  */
-public class LoginWorker extends DLectSwingWorker<Void> {
+public class LectureWorker extends DLectSwingWorker<Subject> {
 
-    public LoginWorker(ErrorDisplayable displayable, MainController controller) {
-        super(displayable, controller, ControllerType.LOGIN);
+    public LectureWorker(ErrorDisplayable displayable, MainController controller, Subject subject) {
+        super(displayable, controller, ControllerType.LECTURE, subject);
     }
 
     @Override
     protected void doAction() throws DLectException {
-        getController().getLoginController().doLogin();
+        getController().getLectureController().getLectures(getParameter());
     }
 
 }

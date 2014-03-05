@@ -13,7 +13,7 @@ import org.dlect.exception.DLectException;
  *
  * @author lee
  */
-public class SubjectWorker extends DLectSwingWorker {
+public class SubjectWorker extends DLectSwingWorker<Void> {
 
     public SubjectWorker(ErrorDisplayable displayable, MainController controller) {
         super(displayable, controller, ControllerType.SUBJECT);
