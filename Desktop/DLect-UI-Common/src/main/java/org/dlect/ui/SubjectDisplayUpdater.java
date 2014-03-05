@@ -5,9 +5,11 @@
  */
 package org.dlect.ui;
 
+import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerEvent;
 import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
+import org.dlect.controller.helper.Controller;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.model.Database;
@@ -21,7 +23,7 @@ public class SubjectDisplayUpdater implements EventListener {
     private final Database d;
     private SubjectDisplayUpdateHandler sduh = null;
 
-    public SubjectDisplayUpdater(Database d) {
+    protected SubjectDisplayUpdater(Database d) {
         this.d = d;
     }
 
@@ -37,12 +39,41 @@ public class SubjectDisplayUpdater implements EventListener {
                         sduh = new UpdatingSubjectDisplayUpdateHandler(d);
                     }
                 } else {
-                    // TODO remove this as a listener iff Succeded
-                    // TODO remove the listener added above. 
-                    // If Failed - 
+                    if (sduh != null) {
+                        sduh.updateSubjects();
+                    } else {
+                        // TODO error message - should never happen unless added whilst subjects is running.
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * All instances of this class are equal. This returns true iff the object is the same type as this class.
+     *
+     * @param o {@inheritDoc }
+     *
+     * @return {@inheritDoc }
+     */
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof SubjectDisplayUpdater;
+    }
+
+    /**
+     * All instances of this class are equal, so all hash codes are the same.
+     *
+     * @return A pre-defined hash code.
+     */
+    @Override
+    public int hashCode() {
+        return 1029456435;
+    }
+
+    public static void registerOn(MainController mc) {
+        SubjectDisplayUpdater sdu = new SubjectDisplayUpdater(mc.getDatabaseHandler().getDatabase());
+        mc.addListener(sdu, Controller.class);
     }
 
 }

@@ -20,7 +20,9 @@ public class EmptySubjectDisplayUpdateHandler extends SubjectDisplayUpdateHandle
 
     @Override
     public void updateSubjects() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO update subjects.
+    
+    
     }
     
 }
