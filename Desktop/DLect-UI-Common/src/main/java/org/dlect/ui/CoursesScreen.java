@@ -12,15 +12,20 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.SwingUtilities;
 import org.dlect.controller.MainController;
+import org.dlect.controller.event.ControllerEvent;
+import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Controller;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.ControllerStateHelper.ControllerStateHelperEventID;
 import org.dlect.controller.helper.SubjectDataHelper.DownloadState;
 import org.dlect.controller.helper.subject.SubjectInformation;
+import org.dlect.controller.worker.ErrorDisplayable;
+import org.dlect.controller.worker.SubjectWorker;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
+import org.dlect.exception.DLectExceptionCause;
 import org.dlect.model.Database;
 import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.Lecture;
@@ -30,6 +35,7 @@ import org.dlect.model.Subject;
 import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.prefs.PreferencesDialog;
 import org.dlect.ui.prefs.PreferencesDialogImpl;
+import org.dlect.ui.subject.MultiSubjectDisplayPanel;
 
 import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.*;
 
@@ -43,18 +49,14 @@ import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.*;
  * @author lee
  */
 public class CoursesScreen extends javax.swing.JPanel implements
-        EventListener {
+        EventListener, ErrorDisplayable {
 
     private static final long serialVersionUID = 1L;
 
-    private final SortedSet<Subject> allSubjects;
-    private final SortedMap<Subject, CoursePane> shownSubjects;
-    private final GridBagConstraints defaultCourseConstraints;
     private final MainController controller;
     private final DownloadButtonDotter dbd;
     private PreferencesDialog prefsDialog;
-    private final SubjectDisplayUpdater displayUpdater;
-
+private final MultiSubjectDisplayPanel msdp;
     /**
      * Creates new form CoursesScreen
      *
@@ -63,27 +65,11 @@ public class CoursesScreen extends javax.swing.JPanel implements
     public CoursesScreen(MainController controller) {
         this.controller = controller;
         initComponents();
-        defaultCourseConstraints = new GridBagConstraints();
-        defaultCourseConstraints.gridx = 0;
-        defaultCourseConstraints.weightx = 1;
-        defaultCourseConstraints.fill = GridBagConstraints.HORIZONTAL;
-        defaultCourseConstraints.anchor = GridBagConstraints.NORTH;
-        shownSubjects = new TreeMap<>();
-        allSubjects = new TreeSet<>();
-        displayUpdater = new SubjectDisplayUpdater();
         dbd = new DownloadButtonDotter(downloadAllButton);
         dbd.start();
+        this.msdp = new MultiSubjectDisplayPanel(controller);
+        this.courseContainer.add(msdp);
         Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class, Controller.class, ControllerStateHelper.class);
-    }
-
-    public void addAllSubjects(final Collection<Subject> itt) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                allSubjects.addAll(itt);
-                updateCoursePanelPositions();
-            }
-        });
     }
 
     /**
@@ -151,17 +137,9 @@ public class CoursesScreen extends javax.swing.JPanel implements
         coursesScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         scrollPanelContainer.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        scrollPanelContainer.setLayout(new java.awt.GridBagLayout());
 
-        courseContainer.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        scrollPanelContainer.add(courseContainer, gridBagConstraints);
+        courseContainer.setLayout(new java.awt.CardLayout());
+        scrollPanelContainer.add(courseContainer);
 
         coursesScrollPane.setViewportView(scrollPanelContainer);
 
@@ -202,43 +180,8 @@ public class CoursesScreen extends javax.swing.JPanel implements
     private javax.swing.JPanel scrollPanelContainer;
     // End of variables declaration//GEN-END:variables
 
-    private void updateCoursePanelPositions() {
-        // TODO improve this method to react to events better.
-        GridBagConstraints tC = (GridBagConstraints) defaultCourseConstraints.clone();
-        tC.gridy = 0;
-        for (Subject subject : allSubjects) {
-            if (controller.getSubjectDisplayHelper().isSubjectDisplayed(subject)) {
-                CoursePane pane = shownSubjects.get(subject);
-                if (pane == null) {
-                    pane = new CoursePane(controller);
-                    pane.setSubject(subject);
-                    shownSubjects.put(subject, pane);
-                }
-                courseContainer.remove(pane);
-                courseContainer.add(pane, tC);
-                tC.gridy++;
-            } else {
-                if (shownSubjects.containsKey(subject)) {
-                    courseContainer.remove(shownSubjects.remove(subject));
-                }
-            }
-        }
-
-        // Remove all subjects that don't exist anymore.
-        for (Iterator<Map.Entry<Subject, CoursePane>> it = shownSubjects.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<Subject, CoursePane> es = it.next();
-            if (!allSubjects.contains(es.getKey())) {
-                courseContainer.remove(es.getValue());
-                it.remove();
-            }
-        }
-        courseContainer.validate();
-        courseContainer.invalidate();
-        coursesScrollPane.invalidate();
-        coursesScrollPane.validate();
-    }
-
     private void updateButtonState() {
+        // TODO update this method to be better reactive.
         ControllerStateHelper csh = controller.getControllerStateHelper();
 
         if (!csh.hasCompleted(ControllerType.SUBJECT)) {
@@ -246,7 +189,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
             return;
         }
 
-        Set<Subject> shown = ImmutableSet.copyOf(shownSubjects.keySet());
+        Set<Subject> shown = ImmutableSet.copyOf(msdp.getShownSubjects());
         for (Subject subject : shown) {
             if (csh.isDownloading(subject)) {
                 dbd.updateAndStart("Downloading");
@@ -303,39 +246,27 @@ public class CoursesScreen extends javax.swing.JPanel implements
         }
     }
 
-//    @Override
-//    public void finished(final ControllerAction action, final ActionResult ar) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                PropertiesController c = controller.getPropertiesController();
-//     TODO           final Blackboard b = c.getBlackboard();
-//                switch (action) {
-//                    case COURSES:
-//                        allSubjects.clear();
-//                        addAllSubjects(b.getSubjects());
-//                        break;
-//                }
-//                updateButtonState();
-//            }
-//        });
-//    }
     @Override
     public void processEvent(Event e) {
         if (e.getEventID().equals(ControllerStateHelperEventID.DOWNLOAD)) {
             updateButtonState(); // TODO update this.
-        }
-        if (e.getEventID().equals(ControllerStateHelperEventID.CONTROLLER)) {
+        } else if (e.getEventID().equals(ControllerStateHelperEventID.CONTROLLER)) {
             updateButtonState();
-            /*
-             * Update subject listing.
-             */
-            updateCoursePanelPositions();
-        }
-        if (e.getEventID().equals(DatabaseEventID.SETTING)) {
-            updateCoursePanelPositions();
         }
 
+        if (e instanceof ControllerEvent) {
+            ControllerEvent ce = (ControllerEvent) e;
+            if (ce.getEventID() == ControllerType.LOGIN
+                && ce.getAfter() == ControllerState.COMPLETED) {
+                new SubjectWorker(this, controller).execute();
+            }
+        }
+    }
+
+    @Override
+    public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
+        // show try again button if type==Subject && get==NO_CONN.
+        // TODO - show error box.
     }
 
 }
