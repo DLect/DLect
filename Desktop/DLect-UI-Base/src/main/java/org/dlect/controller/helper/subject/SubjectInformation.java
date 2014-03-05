@@ -35,10 +35,11 @@ public class SubjectInformation {
     private boolean lecturesInit = false;
 
     public void setSubject(Subject subject) {
-        if (subject != this.subject) {
+        if (subject == this.subject) {
             return;
         }
         this.subject = subject;
+        clear();
     }
 
     public void clear() {
