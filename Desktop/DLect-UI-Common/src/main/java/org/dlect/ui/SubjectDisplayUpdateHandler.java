@@ -46,4 +46,10 @@ public abstract class SubjectDisplayUpdateHandler {
         return true;
     }
 
+    protected void setSemesterEnabled(Semester semester, boolean enabled) {
+        for (Subject s : semester.getSubject()) {
+            getDisplayHelper().setSubjectDisplayed(s, enabled);
+        }
+    }
+
 }
