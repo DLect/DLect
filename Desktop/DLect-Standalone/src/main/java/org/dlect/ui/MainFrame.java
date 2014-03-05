@@ -30,7 +30,7 @@ import org.jdesktop.jxlayer.JXLayer;
  *
  * @author lee
  */
-public class MainFrame extends javax.swing.JFrame implements EventListener, ErrorDisplayable {
+public class MainFrame extends javax.swing.JFrame implements EventListener {
 
     private JXLayer<JComponent> loginPanelLayer;
     private BusyPainterUI loginBusyUI;
@@ -206,8 +206,6 @@ public class MainFrame extends javax.swing.JFrame implements EventListener, Erro
             case COMPLETED:
                 setLoginVisible(false);
                 setCoursesLocked(true);
-                // TODO move this call into subject panel.
-                new SubjectWorker(this, controller).execute();
                 break;
             case FAILED:
                 setLoginVisible(true);
@@ -235,8 +233,4 @@ public class MainFrame extends javax.swing.JFrame implements EventListener, Erro
         setCoursesLocked(false);
     }
 
-    @Override
-    public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
-
-    }
 }
