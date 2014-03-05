@@ -6,9 +6,9 @@
 package org.dlect.controller.helper.subject;
 
 import org.dlect.controller.MainController;
+import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
-import org.dlect.events.listenable.Listenable;
 import org.dlect.model.Database;
 import org.dlect.model.Subject;
 import org.dlect.model.Subject.SubjectEventID;
@@ -17,18 +17,20 @@ import org.dlect.model.Subject.SubjectEventID;
  *
  * @author lee
  */
-public class SubjectDisplaySettingHandler extends Listenable<SubjectDisplaySettingHandler> implements EventListener {
+public class SubjectDisplaySettingHandler implements EventListener, Initilisable {
 
     private final MainController mc;
-
-    private final SubjectDisplaySettingHelper helper;
+    private SubjectDisplaySettingHelper helper;
 
     public SubjectDisplaySettingHandler(MainController mc) {
         this.mc = mc;
-        helper = new SubjectDisplaySettingHelper(mc.getDatabaseHandler().getDatabase());
-        mc.getDatabaseHandler().addListener(this, Database.class, Subject.class);
+        mc.addListener(this, Database.class, Subject.class);
     }
-    private static final String KEY_PREFIX = "SUBJECT_DISPLAYED_BBID::";
+
+    @Override
+    public void init() {
+        helper = new SubjectDisplaySettingHelper(mc.getDatabaseHandler().getDatabase());
+    }
 
     public boolean isSubjectDisplayed(Subject s) {
         return helper.isSubjectDisplayed(s);
@@ -40,6 +42,9 @@ public class SubjectDisplaySettingHandler extends Listenable<SubjectDisplaySetti
 
     @Override
     public void processEvent(Event e) {
+        if (helper == null) {
+            return;
+        }
         if (e.getEventID().equals(SubjectEventID.ID)) {
             String before = (String) e.getBefore();
             String after = (String) e.getAfter();
