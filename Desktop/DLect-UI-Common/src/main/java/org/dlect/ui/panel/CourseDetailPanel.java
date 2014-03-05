@@ -149,6 +149,9 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     @Override
     public void processEvent(Event e) {
+        if (subject == null) {
+            return;
+        }
         SubjectInformation i = controller.getSubjectDataHelper().getSubjectInformation(e);
         if (EventIdListings.DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
             updateDownloadButton(i);
@@ -162,6 +165,9 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
     }
 
     public void refresh() {
+        if (subject == null) {
+            return;
+        }
         SubjectInformation i = new SubjectInformation();
         i.setSubject(subject);
         i.itterateOverLectures();
