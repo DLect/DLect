@@ -6,10 +6,9 @@
 package org.dlect.model;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -36,7 +35,7 @@ public class Database extends XmlListenable<Database> {
         this.settings = newWrappedMap(DatabaseEventID.SETTING);
     }
 
-    public ImmutableSet<Semester> getSemesters() {
+    public ImmutableSortedSet<Semester> getSemesters() {
         return copyOf(semesters);
     }
 
