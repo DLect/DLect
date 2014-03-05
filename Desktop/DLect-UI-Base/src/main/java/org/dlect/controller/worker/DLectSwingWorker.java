@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author lee
+ * @param <T>
  */
 public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Object> {
 
@@ -37,7 +38,7 @@ public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Ob
         this.type = type;
         this.parameter = null;
     }
-    
+
     public T getParameter() {
         return parameter;
     }
@@ -54,7 +55,7 @@ public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Ob
             thrown = new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
         }
         if (thrown != null) {
-            LoggerFactory.getLogger(DLectSwingWorker.class).error("DLect error occured whilst logging in or retrieving the result.", thrown);
+            LoggerFactory.getLogger(DLectSwingWorker.class).error("DLect error occured whilst attempting " + type + (parameter != null ? " with parameter: " + parameter : ""), thrown);
             displayable.showErrorBox(type, parameter, thrown.getCauseCode());
         }
     }
