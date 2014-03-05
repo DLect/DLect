@@ -7,6 +7,7 @@
 package org.dlect.ui;
 
 import org.dlect.model.Database;
+import org.dlect.model.Semester;
 
 /**
  *
@@ -20,9 +21,10 @@ public class EmptySubjectDisplayUpdateHandler extends SubjectDisplayUpdateHandle
 
     @Override
     public void updateSubjects() {
-        // TODO update subjects.
-    
-    
+        // Last semeseter is the most recent.
+        Semester newest = getDatabase().getSemesters().last();
+        System.out.println("Updating: " + newest);
+        setSemesterEnabled(newest, true);    
     }
     
 }
