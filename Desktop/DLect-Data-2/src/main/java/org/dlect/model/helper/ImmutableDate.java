@@ -15,7 +15,9 @@ import java.util.Date;
 public class ImmutableDate extends Date {
 
     public static ImmutableDate of(Date d) {
-        if (d instanceof ImmutableDate) {
+        if (d == null) {
+            return null;
+        } else if (d instanceof ImmutableDate) {
             return (ImmutableDate) d;
         } else {
             return new ImmutableDate(d.getTime());
