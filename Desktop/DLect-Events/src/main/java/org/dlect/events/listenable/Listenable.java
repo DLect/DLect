@@ -14,12 +14,12 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import org.dlect.events.Event;
 import org.dlect.events.EventAdapter;
@@ -90,79 +90,93 @@ public class Listenable<T extends Listenable<T>> {
 
     //<editor-fold defaultstate="collapsed" desc=" COLLECTIONS HELPER METHODS ">
     protected <E> List<E> newWrappedList(EventID eventID) {
-        return new EventFiringList<>(Lists.<E>newArrayList(), new CollectionEventHelper<E>(this, eventID, getAdapter()));
+        return new EventFiringList<>(Collections.synchronizedList(Lists.<E>newArrayList()), new CollectionEventHelper<E>(this, eventID, getAdapter()));
     }
 
     protected <E extends Listenable<E>> List<E> newWrappedListenableList(EventID eventID) {
-        return new EventFiringList<>(Lists.<E>newArrayList(), new ListenableCollectionEventHelper<E>(this, eventID, getAdapter()));
+        return new EventFiringList<>(Collections.synchronizedList(Lists.<E>newArrayList()), new ListenableCollectionEventHelper<E>(this, eventID, getAdapter()));
     }
 
     protected <E> Set<E> newWrappedSet(EventID listID) {
-        return new EventFiringSet<>(Sets.<E>newHashSet(), new CollectionEventHelper<E>(this, listID, getAdapter()));
+        return new EventFiringSet<>(Collections.synchronizedSet(Sets.<E>newHashSet()), new CollectionEventHelper<E>(this, listID, getAdapter()));
     }
 
     protected <E extends Listenable<E>> Set<E> newWrappedListenableSet(EventID listID) {
-        return new EventFiringSet<>(Sets.<E>newHashSet(), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
+        return new EventFiringSet<>(Collections.synchronizedSet(Sets.<E>newHashSet()), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
     }
 
     protected <E extends Comparable<E>> SortedSet<E> newWrappedSortedSet(EventID listID) {
-        return new EventFiringSortedSet<>(Sets.<E>newTreeSet(), new CollectionEventHelper<E>(this, listID, getAdapter()));
+        return new EventFiringSortedSet<>(Collections.synchronizedSortedSet(Sets.<E>newTreeSet()), new CollectionEventHelper<E>(this, listID, getAdapter()));
     }
 
     protected <E extends Listenable<E> & Comparable<E>> SortedSet<E> newWrappedListenableSortedSet(EventID listID) {
-        return new EventFiringSortedSet<>(new TreeSet<E>(), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
+        return new EventFiringSortedSet<>(Collections.synchronizedSortedSet(Sets.<E>newTreeSet()), new ListenableCollectionEventHelper<E>(this, listID, getAdapter()));
     }
 
     protected <K, V> Map<K, V> newWrappedMap(EventID listID) {
-        return new EventFiringMap<>(Maps.<K, V>newHashMap(), new CollectionEventHelper<Entry<K, V>>(this, listID, getAdapter()));
+        return new EventFiringMap<>(Collections.synchronizedMap(Maps.<K, V>newHashMap()), new CollectionEventHelper<Entry<K, V>>(this, listID, getAdapter()));
     }
 
     protected <K, V extends Listenable<V>> Map<K, V> newWrappedListenableValueMap(EventID listID) {
-        return new EventFiringMap<>(Maps.<K, V>newHashMap(), new MapValueListenableCollectionEventHelper<K, V>(this, listID, getAdapter()));
+        return new EventFiringMap<>(Collections.synchronizedMap(Maps.<K, V>newHashMap()), new MapValueListenableCollectionEventHelper<K, V>(this, listID, getAdapter()));
     }
 
     protected <T> void setSet(Set<T> eventFiringCollection, Collection<T> toSetTo) {
-        if (toSetTo == null) {
-            eventFiringCollection.clear();
-            return;
+        synchronized (eventFiringCollection) {
+            if (toSetTo == null) {
+                eventFiringCollection.clear();
+                return;
+            }
+            // Remove all that are not in toSetTo
+            eventFiringCollection.retainAll(toSetTo);
+            // Add a the remaining ones to it.
+            eventFiringCollection.addAll(toSetTo);
         }
-        // Remove all that are not in toSetTo
-        eventFiringCollection.retainAll(toSetTo);
-        // Add a the remaining ones to it.
-        eventFiringCollection.addAll(toSetTo);
 
     }
 
     protected <K, V> void setMap(Map<K, V> eventFiringCollection, Map<K, V> toSetTo) {
-        if (toSetTo == null) {
-            eventFiringCollection.clear();
-            return;
+        synchronized (eventFiringCollection) {
+            if (toSetTo == null) {
+                eventFiringCollection.clear();
+                return;
+            }
+            // Remove all the keys that are not in toSetTo
+            eventFiringCollection.keySet().retainAll(toSetTo.keySet());
+            // Add a the remaining ones to it.
+            eventFiringCollection.putAll(toSetTo);
         }
-        // Remove all the keys that are not in toSetTo
-        eventFiringCollection.keySet().retainAll(toSetTo.keySet());
-        // Add a the remaining ones to it.
-        eventFiringCollection.putAll(toSetTo);
     }
 
     protected <T> void setList(List<T> eventFiringCollection, Collection<T> toSetTo) {
-        eventFiringCollection.clear();
-        eventFiringCollection.addAll(toSetTo);
+        synchronized (eventFiringCollection) {
+            eventFiringCollection.clear();
+            eventFiringCollection.addAll(toSetTo);
+        }
     }
 
     protected <T> ImmutableSet<T> copyOf(Set<T> set) {
-        return ImmutableSet.copyOf(set);
+        synchronized (set) {
+            return ImmutableSet.copyOf(set);
+        }
     }
 
     protected <K, V> ImmutableMap<K, V> copyOf(Map<K, V> map) {
-        return ImmutableMap.copyOf(map);
+        synchronized (map) {
+            return ImmutableMap.copyOf(map);
+        }
     }
 
     protected <T> ImmutableList<T> copyOf(List<T> map) {
-        return ImmutableList.copyOf(map);
+        synchronized (map) {
+            return ImmutableList.copyOf(map);
+        }
     }
 
     protected <T> ImmutableSortedSet<T> copyOf(SortedSet<T> set) {
-        return ImmutableSortedSet.copyOf(set);
+        synchronized (set) {
+            return ImmutableSortedSet.copyOf(set);
+        }
     }
 //</editor-fold>
 }
