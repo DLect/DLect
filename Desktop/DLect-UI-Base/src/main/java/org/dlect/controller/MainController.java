@@ -42,9 +42,10 @@ public class MainController extends Listenable<MainController> implements Initil
         this.lectureController = new LectureController(this);
         this.controllerStateHelper = new ControllerStateHelper(this);
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
+        this.subjectDataHelper = new SubjectDataHelper(this);
 
-        this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper);
-        Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper, subjectDisplayHelper);
+        this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper, subjectDataHelper);
+        Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
     }
 
     public DatabaseHandler getDatabaseHandler() {
