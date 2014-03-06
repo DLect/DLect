@@ -6,16 +6,19 @@
 package org.dlect.ui.subject;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import javax.swing.JPanel;
 import org.dlect.controller.MainController;
+import org.dlect.controller.helper.subject.SubjectDisplaySettingHandler;
 import org.dlect.controller.helper.subject.SubjectListingHandler;
 import org.dlect.events.Event;
 import org.dlect.events.EventID;
@@ -36,12 +39,12 @@ import org.dlect.ui.SubjectDisplayUpdater;
  * @author lee
  */
 public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
-    
+
     private static final ImmutableSet<EventID> SUBJECT_REMOVE_EVENT_ID = ImmutableSet
             .<EventID>builder().add(DatabaseEventID.SEMESTER, SemesterEventID.SUBJECT).build();
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private final SubjectListingHandler listingHandler;
     private final SortedSet<Subject> shownSubjects;
     private final Map<Subject, CoursePane> subjectPanes;
@@ -60,7 +63,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         this.setLayout(new GridBagLayout());
         Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class);
     }
-    
+
     private GridBagConstraints getDefaultContraints() {
         GridBagConstraints dcs = new GridBagConstraints();
         dcs.gridx = 0;
@@ -69,11 +72,19 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         dcs.anchor = GridBagConstraints.NORTH;
         return dcs;
     }
-    
+
     public Set<Subject> getShownSubjects() {
-        return ImmutableSet.copyOf(shownSubjects);
+        List<Subject> subjects = Lists.newArrayList();
+        for (Semester semester : controller.getDatabaseHandler().getDatabase().getSemesters()) {
+            for (Subject subject : semester.getSubject()) {
+                if (controller.getSubjectDisplayHelper().isSubjectDisplayed(subject)) {
+                    subjects.add(subject);
+                }
+            }
+        }
+        return ImmutableSet.copyOf(subjects);
     }
-    
+
     @Override
     public void processEvent(Event e) {
         if (e.getSourceClass().equals(Database.class) || e.getEventID().equals(SemesterEventID.SUBJECT)) {
@@ -86,16 +97,19 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
             }
         }
     }
-    
+
     protected void updateCoursePanelPositions() {
         // TODO(Later) improve this method to react to events better.
         GridBagConstraints tC = getDefaultContraints();
         tC.gridy = 0;
         SortedSet<Semester> semsesters = controller.getDatabaseHandler().getDatabase().getSemesters();
+        SubjectDisplaySettingHandler sdh = controller.getSubjectDisplayHelper();
+        //this.removeAll();
         for (Semester semester : semsesters) {
             for (Subject subject : semester.getSubject()) {
                 CoursePane pane = subjectPanes.get(subject);
-                if (controller.getSubjectDisplayHelper().isSubjectDisplayed(subject)) {
+                if (sdh.isSubjectDisplayed(subject)) {
+                    shownSubjects.add(subject);
                     if (pane == null) {
                         pane = new CoursePane(controller);
                         pane.setSubject(subject);
@@ -103,6 +117,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
                     }
                     this.remove(pane);
                     this.add(pane, tC);
+                    System.out.println("Adding " + subject);
                     tC.gridy++;
                     pane.loadLectures();
                 } else {
@@ -114,10 +129,10 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         }
         this.validate();
     }
-    
+
     protected void updateForRemoved() {
         Set<Subject> allSubjects = listingHandler.getAllSubjects();
-        
+
         for (Entry<Subject, CoursePane> entry : subjectPanes.entrySet()) {
             Subject subject = entry.getKey();
             CoursePane coursePane = entry.getValue();
@@ -127,5 +142,5 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
             }
         }
     }
-    
+
 }
