@@ -8,11 +8,7 @@ package org.dlect.provider.impl.test;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import java.util.Collection;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.dlect.exception.DLectException;
@@ -23,7 +19,7 @@ import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.model.formatter.DownloadType;
-import org.dlect.provider.ImmutableSubjectData;
+import org.dlect.provider.DownloadProvider;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.LoginProvider;
 import org.dlect.provider.Provider;
@@ -33,16 +29,17 @@ import org.dlect.provider.SubjectProvider;
  *
  * @author lee
  */
-public class TestProvider implements Provider, LoginProvider, SubjectProvider, LectureProvider {
+public class TestProvider implements Provider, LoginProvider, SubjectProvider {
 
     private static final ImmutableList<ImmutableSubject> EMPTY_SUBJECT_LIST = ImmutableList.of();
     private static final ImmutableList<ImmutableLecture> EMPTY_LECTURE_LIST = ImmutableList.of();
     private static final ImmutableList<ImmutableStream> EMPTY_STREAM_LIST = ImmutableList.of();
     private static final ImmutableMap<DownloadType, ImmutableLectureDownload> EMPTY_LECTURE_DOWNLOAD_MAP = ImmutableMap.of();
 
-    private static final long JANUARY_1 = 0;
-    private static final long SINGLE_DAY = TimeUnit.DAYS.toMillis(1);
 
+    private TestLectureProvider tlp;
+    private TestDownloadProvider tdp;
+    
     @Override
     public void doLogin(String username, String password) throws DLectException {
         try {
@@ -61,30 +58,7 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider, L
 
     @Override
     public LectureProvider getLectureProvider() {
-        return this;
-    }
-
-    @Override
-    public ImmutableSubjectData getLecturesIn(ImmutableSubject s) throws DLectException {
-        Multimap<ImmutableLecture, ImmutableStream> lectureStreamMapping = HashMultimap.create();
-        Collection<ImmutableLecture> lectures = Lists.newArrayList();
-        Collection<ImmutableStream> streams = Lists.newArrayList();
-        final ImmutableStream stream = new ImmutableStream("S" + s.getId(), 1);
-
-        streams.add(stream);
-
-        for (int i = 0; i < 10; i++) {
-            Date d = new Date(JANUARY_1 + (i * SINGLE_DAY));
-
-//            Map<DownloadType, ImmutableDownloadType> dt
-            final ImmutableLecture lec = new ImmutableLecture("C" + s.getId() + "-" + i, d, false, streams, EMPTY_LECTURE_DOWNLOAD_MAP);
-
-            lectureStreamMapping.put(lec, stream);
-            lectures.add(lec);
-        }
-
-        ImmutableSubjectData d = new ImmutableSubjectData(lectureStreamMapping, lectures, streams);
-        return d;
+        return tlp;
     }
 
     @Override
@@ -98,7 +72,18 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider, L
     }
 
     @Override
+    public DownloadProvider getDownloadProvider() {
+        return tdp;
+    }
+    
+
+    @Override
     public Multimap<ImmutableSemester, ImmutableSubject> getSubjects() throws DLectException {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TestProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ImmutableSemester s1 = new ImmutableSemester(1, "Semester 1", "Sem 1", EMPTY_SUBJECT_LIST);
         ImmutableSemester s2 = new ImmutableSemester(2, "Semester 2", "Sem 2", EMPTY_SUBJECT_LIST);
 
@@ -117,7 +102,7 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider, L
 
     @Override
     public void init() throws DLectException {
-        // No Op.
+        tlp  = new TestLectureProvider();
     }
 
 }
