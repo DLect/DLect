@@ -5,6 +5,7 @@
  */
 package org.dlect.provider;
 
+import org.dlect.provider.objects.ImmutableSubjectData;
 import org.dlect.exception.DLectException;
 import org.dlect.immutable.model.ImmutableSubject;
 

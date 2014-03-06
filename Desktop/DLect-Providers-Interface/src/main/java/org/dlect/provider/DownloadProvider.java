@@ -5,22 +5,16 @@
  */
 package org.dlect.provider;
 
+import java.io.InputStream;
 import org.dlect.exception.DLectException;
+import org.dlect.immutable.model.ImmutableLectureDownload;
 
 /**
  *
  * @author lee
  */
-public interface Provider {
+public interface DownloadProvider {
 
-    public void init() throws DLectException;
+    public InputStream getDownloadSreamFor(ImmutableLectureDownload lectureDownload) throws DLectException;
 
-    public LoginProvider getLoginProvider();
-
-    public SubjectProvider getSubjectProvider();
-
-    public LectureProvider getLectureProvider();
-
-    public DownloadProvider getDownloadProvider();
-    
 }
