@@ -22,8 +22,8 @@ import org.dlect.model.LectureDownload;
 import org.dlect.model.Stream;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
-import org.dlect.provider.ImmutableSubjectData;
 import org.dlect.provider.WrappedProvider;
+import org.dlect.provider.objects.ImmutableSubjectData;
 
 /**
  *
@@ -52,6 +52,7 @@ public class WrappedProviderLectureHelper {
 
         Map<Lecture, Lecture> lectureMapping = creatingMapping(s.getLectures());
 
+        Set<Lecture> newLectures = Sets.newHashSet();
         for (ImmutableLecture il : lectures) {
             Lecture lecToConfig = copyToNew(il);
 
@@ -68,7 +69,10 @@ public class WrappedProviderLectureHelper {
             lecStreams.addAll(getLectureStreams(lsMapping.get(il), streams));
 
             lecToConfig.setStreams(lecStreams);
+            newLectures.add(lecToConfig);
         }
+
+        s.setLectures(newLectures);
     }
 
     private static Map<DownloadType, LectureDownload> getLectureDownloads(Lecture lecToConfig, ImmutableLecture il) {
