@@ -84,7 +84,7 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
      * @return An immutable copy of the subjects in this semester.
      */
     public ImmutableSet<Subject> getSubject() {
-        return ImmutableSet.copyOf(subject);
+        return copyOf(subject);
     }
 
     /**
@@ -99,7 +99,7 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
 
     @Override
     public String toString() {
-        return "Semester{" + "num=" + num + ", longName=" + longName + ", coursePostfixName=" + coursePostfixName + ", subject=" + subject + '}';
+        return "Semester{" + "num=" + getNum() + ", longName=" + getLongName() + ", coursePostfixName=" + getCoursePostfixName() + ", subject=" + getSubject() + '}';
     }
 
     /**
