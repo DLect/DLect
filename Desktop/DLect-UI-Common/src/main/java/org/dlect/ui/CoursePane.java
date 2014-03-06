@@ -1,11 +1,6 @@
 package org.dlect.ui;
 
 import org.dlect.controller.MainController;
-import org.dlect.controller.event.ControllerType;
-import org.dlect.controller.worker.ErrorDisplayable;
-import org.dlect.events.Event;
-import org.dlect.events.EventListener;
-import org.dlect.exception.DLectExceptionCause;
 import org.dlect.model.Subject;
 import org.dlect.ui.layout.AnimatedHideLayoutManager;
 import org.dlect.ui.panel.CourseDetailPanel;
@@ -15,11 +10,11 @@ import org.dlect.ui.panel.CourseHeader;
  *
  * @author lee
  */
-public class CoursePane extends javax.swing.JLayeredPane implements EventListener, ErrorDisplayable {
+public class CoursePane extends javax.swing.JLayeredPane {
 
     private static final long serialVersionUID = 1L;
 
-    private Subject course;
+    private Subject subject;
     private final MainController controller;
 
     /**
@@ -45,9 +40,9 @@ public class CoursePane extends javax.swing.JLayeredPane implements EventListene
     }
 
     public void setSubject(Subject c) {
-        this.course = c;
-        courseDetailPanel1.setSubject(course);
-        courseHeader1.setSubject(course);
+        this.subject = c;
+        courseDetailPanel1.setSubject(subject);
+        courseHeader1.setSubject(subject);
     }
 
     private void initComponents() {
@@ -59,30 +54,22 @@ public class CoursePane extends javax.swing.JLayeredPane implements EventListene
         courseHeader1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lm.animateToggle();
+                animateToggle();
             }
         });
 
         this.setLayout(lm);
+        this.add(courseHeader1);
+        this.add(courseDetailPanel1);
     }
 
     // Variables declaration - do not modify
     private AnimatedHideLayoutManager lm;
     private CourseDetailPanel courseDetailPanel1;
     private CourseHeader courseHeader1;
+
     // End of variables declaration
-
     public void loadLectures() {
-        // TODO run load lecture if required.
-    }
-
-    @Override
-    public void processEvent(Event e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        courseDetailPanel1.loadLectures();
     }
 }

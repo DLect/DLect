@@ -1,15 +1,7 @@
 package org.dlect.ui;
 
 import com.google.common.collect.ImmutableSet;
-import java.awt.GridBagConstraints;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import javax.swing.SwingUtilities;
 import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerEvent;
@@ -27,7 +19,6 @@ import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.model.Database;
-import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Semester;
@@ -56,7 +47,8 @@ public class CoursesScreen extends javax.swing.JPanel implements
     private final MainController controller;
     private final DownloadButtonDotter dbd;
     private PreferencesDialog prefsDialog;
-private final MultiSubjectDisplayPanel msdp;
+    private final MultiSubjectDisplayPanel msdp;
+
     /**
      * Creates new form CoursesScreen
      *
@@ -64,11 +56,10 @@ private final MultiSubjectDisplayPanel msdp;
      */
     public CoursesScreen(MainController controller) {
         this.controller = controller;
+        this.msdp = new MultiSubjectDisplayPanel(controller);
         initComponents();
         dbd = new DownloadButtonDotter(downloadAllButton);
         dbd.start();
-        this.msdp = new MultiSubjectDisplayPanel(controller);
-        this.courseContainer.add(msdp);
         Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class, Controller.class, ControllerStateHelper.class);
     }
 
@@ -87,8 +78,8 @@ private final MultiSubjectDisplayPanel msdp;
         preferencesButton = new javax.swing.JButton();
         downloadAllButton = new javax.swing.JButton();
         coursesScrollPane = new javax.swing.JScrollPane();
-        scrollPanelContainer = new javax.swing.JPanel();
-        courseContainer = new javax.swing.JPanel();
+        javax.swing.JPanel scrollContainerPanel = new javax.swing.JPanel();
+        javax.swing.JPanel subjectDisplayPanel = msdp;
 
         setMinimumSize(new java.awt.Dimension(400, 300));
         setLayout(new java.awt.GridBagLayout());
@@ -136,12 +127,17 @@ private final MultiSubjectDisplayPanel msdp;
 
         coursesScrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-        scrollPanelContainer.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        scrollContainerPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        scrollContainerPanel.add(subjectDisplayPanel, gridBagConstraints);
 
-        courseContainer.setLayout(new java.awt.CardLayout());
-        scrollPanelContainer.add(courseContainer);
-
-        coursesScrollPane.setViewportView(scrollPanelContainer);
+        coursesScrollPane.setViewportView(scrollContainerPanel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -172,12 +168,10 @@ private final MultiSubjectDisplayPanel msdp;
     }//GEN-LAST:event_preferencesButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPanel;
-    private javax.swing.JPanel courseContainer;
     private javax.swing.JScrollPane coursesScrollPane;
     private javax.swing.JButton downloadAllButton;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton preferencesButton;
-    private javax.swing.JPanel scrollPanelContainer;
     // End of variables declaration//GEN-END:variables
 
     private void updateButtonState() {
