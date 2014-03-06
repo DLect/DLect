@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.ui;
 
 import org.dlect.model.Database;
@@ -22,9 +21,13 @@ public class EmptySubjectDisplayUpdateHandler extends SubjectDisplayUpdateHandle
     @Override
     public void updateSubjects() {
         // Last semeseter is the most recent.
+        if (getDatabase().getSemesters().isEmpty()) {
+            // Nothing to update so don't try.
+            return;
+        }
         Semester newest = getDatabase().getSemesters().last();
         System.out.println("Updating: " + newest);
-        setSemesterEnabled(newest, true);    
+        setSemesterEnabled(newest, true);
     }
-    
+
 }
