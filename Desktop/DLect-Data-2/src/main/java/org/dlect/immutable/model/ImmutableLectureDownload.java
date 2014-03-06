@@ -26,6 +26,12 @@ public class ImmutableLectureDownload {
         this.downloaded = downloaded;
         this.downloadEnabled = downloadEnabled;
     }
+    public ImmutableLectureDownload(URI downloadURL, String downloadExtension) {
+        this.downloadURL = downloadURL;
+        this.downloadExtension = downloadExtension;
+        this.downloaded = false;
+        this.downloadEnabled = false;
+    }
     
     public URI getDownloadURL() {
         return downloadURL;
@@ -58,6 +64,11 @@ public class ImmutableLectureDownload {
         }
         final ImmutableLectureDownload other = (ImmutableLectureDownload) obj;
         return Objects.equals(this.getDownloadURL(), other.getDownloadURL());
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableLectureDownload{" + "downloadURL=" + downloadURL + ", downloadExtension=" + downloadExtension + ", downloaded=" + downloaded + ", downloadEnabled=" + downloadEnabled + '}';
     }
     
     public static ImmutableLectureDownload from(LectureDownload value) {

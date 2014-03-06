@@ -8,6 +8,7 @@ package org.dlect.immutable.model;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Date;
@@ -63,7 +64,27 @@ public class ImmutableLecture implements Comparable<ImmutableLecture> {
 
     @Override
     public int compareTo(ImmutableLecture o) {
-        return -1; // TODO
+        if (o == null) {
+            // I am always greater than a null value.
+            return 1;
+        }
+        int c_cid = Ordering.natural().nullsLast().compare(this.getContentID(), o.getContentID());
+        int c_time = Ordering.natural().nullsLast().compare(this.getTime(), o.getTime());
+        if (c_cid == 0) {
+            // Equals consitent.
+            return 0;
+        } else if (c_time == 0) {
+            // Names are equal but BBIDs are not; use them to keep equals consitency.
+            return c_cid;
+        } else {
+            // Names and BBIDs not equal so use the name to get a nice sort.
+            return c_time;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ImmutableLecture{" + "contentID=" + contentID + ", time=" + time + ", enabled=" + enabled + ", streams=" + streams + ", lectureDownloads=" + lectureDownloads + '}';
     }
 
     public static ImmutableLecture from(Lecture lecture) {
@@ -78,7 +99,7 @@ public class ImmutableLecture implements Comparable<ImmutableLecture> {
         }
 
         return new ImmutableLecture(lecture.getContentID(), lecture.getTime(), lecture.isEnabled(), stream, ldMap);
-    
+
     }
 
 }
