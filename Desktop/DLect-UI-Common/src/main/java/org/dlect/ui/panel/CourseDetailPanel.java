@@ -25,9 +25,12 @@ import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.subject.SubjectInformation;
+import org.dlect.controller.worker.ErrorDisplayable;
+import org.dlect.controller.worker.LectureWorker;
 import org.dlect.event.util.EventIdListings;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.exception.DLectExceptionCause;
 import org.dlect.helper.SubjectHelper;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
@@ -46,7 +49,7 @@ import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.NONE_S
  *
  * @author lee
  */
-public final class CourseDetailPanel extends javax.swing.JPanel implements EventListener {
+public final class CourseDetailPanel extends javax.swing.JPanel implements EventListener, ErrorDisplayable {
 
     private static final long serialVersionUID = 1L;
 
@@ -60,6 +63,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
     private JCheckBox selectAllCheckbox;
     private final MainController controller;
     private final DownloadButtonDotter dbd;
+    private LectureWorker worker;
 
     public CourseDetailPanel(MainController controller) {
         this.controller = controller;
@@ -78,11 +82,11 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
             return;
         }
         if (subject != null) {
-            subject.removeListener(CourseDetailPanel.this);
+            subject.removeListener(this);
         }
         subject = course;
 
-        course.addListener(CourseDetailPanel.this, Subject.class, Lecture.class, LectureDownload.class, Stream.class);
+        course.addListener(this, Subject.class, Lecture.class, LectureDownload.class, Stream.class);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -223,6 +227,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         for (final DownloadType dt : DownloadType.values()) {
             final JCheckBox c = new JCheckBox();
             c.setSelected(si.isDownloadTypeEnabled(dt));
+            // TODO change case. \/
             c.setText(dt.toString()); // TODO i18n
             c.addActionListener(new ActionListener() {
 
@@ -299,4 +304,21 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         check.setText(stream.getName());
         check.setSelected(si.isStreamEnabled(stream));
     }
+
+    public void loadLectures() {
+        if (worker == null) {
+            doLoadLecture();
+        }
+    }
+
+    public void doLoadLecture() {
+        worker = new LectureWorker(this, controller, subject);
+        worker.execute();
+    }
+
+    @Override
+    public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

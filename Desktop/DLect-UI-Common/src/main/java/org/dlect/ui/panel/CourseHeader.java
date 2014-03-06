@@ -16,6 +16,7 @@ import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Subject;
 import org.dlect.model.Subject.SubjectEventID;
+import org.dlect.ui.decorator.ArrowBorder;
 
 import static org.dlect.event.util.EventIdListings.DOWNLOAD_UPDATE_EVENT_IDS;
 
@@ -24,12 +25,12 @@ import static org.dlect.event.util.EventIdListings.DOWNLOAD_UPDATE_EVENT_IDS;
  * @author lee
  */
 public class CourseHeader extends javax.swing.JPanel implements EventListener {
-    
+
     private static final Color COMPLETED_PROGRESS_COLOR = new Color(0x7295E6);
     private static final Color ALL_COMPLETED_PROGRESS_COLOR = new Color(0x68ED68);
     private static final Color DOWNLOADING_PROGRESS_COLOR = new Color(0xF9CA6D);
     private static final long serialVersionUID = 1L;
-    
+
     private Subject subject;
     private double progress = 0;
     private double dlInProgress = 0;
@@ -42,11 +43,10 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
      */
     public CourseHeader(MainController ctl) {
         initComponents();
-        //puw = new ProgressUpdateWorker(this);
         this.ctl = ctl;
         ctl.getControllerStateHelper().addListener(this, ControllerStateHelper.class);
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -87,6 +87,7 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
         courseNameLabel = new javax.swing.JLabel();
         lectureCountLabel = new javax.swing.JLabel();
 
+        setBorder(new ArrowBorder());
         setMaximumSize(new java.awt.Dimension(2147483647, 28));
         setMinimumSize(new java.awt.Dimension(38, 28));
         setPreferredSize(new java.awt.Dimension(38, 28));
@@ -125,34 +126,35 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
         if (this.subject != null) {
             this.subject.removeListener(this);
         }
-        
+
         this.subject = subject;
         this.subject.addListener(this, Subject.class, Lecture.class, LectureDownload.class);
-        
+
         refresh();
     }
-    
+
     @Override
     public void processEvent(Event e) {
-        if (e.getEventID().equals(SubjectEventID.NAME)) {
+        if (e.getEventID().equals(SubjectEventID.NAME) || e.getEventID().equals(SubjectEventID.LECTURE)) {
             updateDescriptions();
         } else if (DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
             updateNums(ctl.getSubjectDataHelper().getSubjectInformation(e));
         }
     }
-    
+
     public void refresh() {
         updateNums(new SubjectInformation());
+        updateDescriptions();
     }
-    
+
     private void updateNums(SubjectInformation i) {
         i.setSubject(subject);
         updateDescriptions();
-        
+
         int downloadsInProgress = ctl.getControllerStateHelper().getDownloadingIn(subject).size();
         int numberDownloaded = i.getDownloadedCount();
         int totalDownloads = i.getDownloadsSelected();
-        
+
         if (totalDownloads > 0) {
             progress = ((double) numberDownloaded) / totalDownloads;
             dlInProgress = ((double) downloadsInProgress) / totalDownloads;
@@ -161,7 +163,7 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
             dlInProgress = 0;
         }
     }
-    
+
     private void updateDescriptions() {
         final int numLectures = subject.getLectures().size();
         if (numLectures > 0) {
@@ -171,5 +173,5 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
         }
         courseNameLabel.setText(subject.getName());
     }
-    
+
 }
