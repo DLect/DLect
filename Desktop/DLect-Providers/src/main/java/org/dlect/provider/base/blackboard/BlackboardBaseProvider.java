@@ -8,6 +8,7 @@ package org.dlect.provider.base.blackboard;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
+import org.dlect.provider.DownloadProvider;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.LoginProvider;
 import org.dlect.provider.Provider;
@@ -38,6 +39,7 @@ public class BlackboardBaseProvider implements Provider {
     private LoginProvider loginProvider = null;
     private SubjectProvider subjectProvider = null;
     private LectureProvider lectureProvider = null;
+    private DownloadProvider downloadProvider = null;
 
     public BlackboardBaseProvider(int providerCode, BlackboardSubjectCustomiser subjectCustomiser, BlackboardLectureCustomiser lectureCustomiser) {
         this(subjectCustomiser, lectureCustomiser, new BlackboardProviderInitiliserImpl(providerCode),
@@ -54,6 +56,11 @@ public class BlackboardBaseProvider implements Provider {
         this.providerInitiliser = providerInitiliser;
         this.httpClient = httpClient;
         this.xmlParser = xmlParser;
+    }
+
+    @Override
+    public DownloadProvider getDownloadProvider() {
+        return downloadProvider;
     }
 
     @Override
@@ -83,7 +90,7 @@ public class BlackboardBaseProvider implements Provider {
 
         subjectProvider = new BlackboardSubjectProvider(u.getBaseUrl(), subjectCustomiser, httpClient, xmlParser);
         lectureProvider = new BlackboardLectureProvider(u.getBaseUrl(), lectureCustomiser, httpClient, xmlParser);
-
+        // TODO init DownlaodProvider
     }
 
 }

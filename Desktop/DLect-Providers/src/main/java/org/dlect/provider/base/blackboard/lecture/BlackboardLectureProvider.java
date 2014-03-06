@@ -32,7 +32,7 @@ import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.logging.ProviderLogger;
 import org.dlect.model.formatter.DownloadType;
-import org.dlect.provider.ImmutableSubjectData;
+import org.dlect.provider.objects.ImmutableSubjectData;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.base.blackboard.BlackboardLectureCustomiser;
 import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
