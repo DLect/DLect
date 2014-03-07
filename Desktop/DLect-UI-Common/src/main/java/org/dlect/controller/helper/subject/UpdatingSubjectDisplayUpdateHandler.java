@@ -5,8 +5,8 @@
  */
 package org.dlect.controller.helper.subject;
 
-import com.google.common.collect.ImmutableSortedSet.Builder;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.ImmutableSortedSet.Builder;
 import java.util.SortedSet;
 import org.dlect.model.Database;
 import org.dlect.model.Semester;

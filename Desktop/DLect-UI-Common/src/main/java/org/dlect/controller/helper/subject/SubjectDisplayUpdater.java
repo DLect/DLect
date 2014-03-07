@@ -24,7 +24,6 @@ public class SubjectDisplayUpdater implements EventListener {
     private SubjectDisplayUpdateHandler sduh = null;
 
     protected SubjectDisplayUpdater(Database d) {
-        // TODO implement this for LectureWorker.
         this.d = d;
     }
 

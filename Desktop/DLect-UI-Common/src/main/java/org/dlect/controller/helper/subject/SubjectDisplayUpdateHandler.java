@@ -5,7 +5,6 @@
  */
 package org.dlect.controller.helper.subject;
 
-import org.dlect.controller.helper.subject.SubjectDisplaySettingHelper;
 import org.dlect.model.Database;
 import org.dlect.model.Semester;
 import org.dlect.model.Subject;
