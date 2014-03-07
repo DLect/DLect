@@ -32,7 +32,7 @@ import org.dlect.model.Semester;
 import org.dlect.model.Semester.SemesterEventID;
 import org.dlect.model.Subject;
 import org.dlect.ui.CoursePane;
-import org.dlect.ui.SubjectDisplayUpdater;
+import org.dlect.controller.helper.subject.SubjectDisplayUpdater;
 
 /**
  *
