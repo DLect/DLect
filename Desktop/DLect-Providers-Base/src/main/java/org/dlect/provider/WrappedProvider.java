@@ -10,9 +10,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Multimap;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -108,12 +105,11 @@ public class WrappedProvider {
     public void doDownload(Subject s, Lecture l, LectureDownload ld) throws DLectException {
         // TODO ensure that subject, lecture and lecture download exist in the database.
 
-        File outputTo = fc.getFileForDownload(s, l, ld);
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
         OutputStream os;
         try {
-            os = new BufferedOutputStream(new FileOutputStream(outputTo));
-        } catch (FileNotFoundException ex) {
+            os = new BufferedOutputStream(fc.getStreamForDownload(s, l, ld));
+        } catch (IOException ex) {
             throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, "The file was not found. "
                                                                               + "This is a problem with "
                                                                               + "getFileForDownload(" + s
