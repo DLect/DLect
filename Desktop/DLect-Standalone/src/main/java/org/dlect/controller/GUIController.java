@@ -29,7 +29,6 @@ import org.dlect.ui.MainFrame;
  */
 public class GUIController extends MainController {
 
-//    private static DebuggingTimingListener debuggingTimingListener;
     public static void main(String[] args) throws IOException {
         long t = System.currentTimeMillis();
         doStartup(t, args);
@@ -39,17 +38,15 @@ public class GUIController extends MainController {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            // TODO UILogger.LOG.error("Failed to set LaF to system default.", ex);
+            // Never happens.
         }
         System.out.println(t);
         GUIController mc = new GUIController();
         mc.addListener(new DebuggingEventListener());
         mc.init();
-        
+
         System.out.println(mc.getDatabaseHandler().getDatabase());
-        
-//        debuggingTimingListener = new DebuggingTimingListener(t);
-//        mc.addControllerListener(debuggingTimingListener);
+
         StartupController c = mc.getStartupController();
         c.startup(t);
     }
@@ -79,13 +76,13 @@ public class GUIController extends MainController {
     public void closeApplication() {
         System.exit(0);
     }
-    
+
     private static final class DebuggingEventListener implements EventListener {
 
         @Override
         public void processEvent(Event e) {
             System.out.println(e);
         }
-        
+
     }
 }
