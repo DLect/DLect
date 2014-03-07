@@ -8,12 +8,13 @@ package org.dlect.controller.provider;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
-import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.MainController;
 import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.data.DatabaseHandler.DatabaseHandlerEventID;
+import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.logging.ProviderLogger;
 import org.dlect.model.Database;
 import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.helper.CommonSettingNames;
@@ -30,9 +31,9 @@ public class ProviderHelper implements EventListener, Initilisable {
     private final MainController mc;
     private final ProviderLoader pl;
     private WrappedProvider provider;
+    private ProviderDetail providerDetail;
 
     public ProviderHelper(MainController mc) {
-        // TODO add checks for username change.
         this.mc = mc;
         this.pl = new ProviderLoader();
         this.mc.addListener(this, Database.class, DatabaseHandler.class);
@@ -45,12 +46,14 @@ public class ProviderHelper implements EventListener, Initilisable {
 
     @Override
     public void processEvent(Event e) {
+        // TODO add checks for username change.
         if (e.getEventID().equals(DatabaseHandlerEventID.DATABASE_LOADED)) {
             updateProvider();
         } else if (e.getEventID().equals(DatabaseEventID.SETTING)) {
-            if (e.getAfter() instanceof Entry) {
-                Entry<?, ?> newSetting = (Entry<?, ?>) e.getAfter();
-                if (newSetting.getKey().equals(CommonSettingNames.PROVIDER_CODE)) {
+            Object after = e.getAfter();
+            if (after instanceof Entry) {
+                Entry<?, ?> newSetting = (Entry<?, ?>) after;
+                if (CommonSettingNames.PROVIDER_CODE.equals(newSetting.getKey())) {
                     updateProvider();
                 }
             }
@@ -70,6 +73,7 @@ public class ProviderHelper implements EventListener, Initilisable {
         }
         String providerCode = db.getSetting(CommonSettingNames.PROVIDER_CODE);
         if (providerCode == null || providerCode.isEmpty()) {
+            // No code, so don't try.
             provider = null;
             return;
         }
@@ -81,21 +85,29 @@ public class ProviderHelper implements EventListener, Initilisable {
                 break;
             }
         }
+        providerDetail = pd;
         if (pd == null) {
             provider = null;
             return;
         }
 
         try {
-            provider = this.pl.loadProvider(pd, db);
+            provider = this.pl.loadProvider(pd, db, null);
         } catch (ExecutionException ex) {
-            // TODO log
+            ProviderLogger.LOGGER.error("Failed to load provider for detail:" + pd, ex);
             provider = null;
         }
     }
 
     public WrappedProvider getProvider() {
         return provider;
+    }
+
+    public ProviderDetail getProviderDetail() {
+        if (provider == null) {
+            return null;
+        }
+        return providerDetail;
     }
 
 }
