@@ -63,7 +63,7 @@ public class ProviderLoader {
             return wp;
         } catch (InstantiationException | IllegalAccessException ex) {
             LOGGER.error("Failed to create new provider of class " + pd.getProviderClass(), ex);
-            throw new ExecutionException("Provider breached contract. Exception thrown on init", ex);
+            throw new ExecutionException("Provider breached contract. Exception thrown on construction", ex);
         }
     }
 
