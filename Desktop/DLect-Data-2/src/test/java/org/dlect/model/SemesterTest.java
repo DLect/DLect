@@ -28,11 +28,11 @@ public class SemesterTest {
     @Test
     public void testJaxB() {
         Semester s = new Semester();
-        s.setSubject(Sets.newHashSet(new Subject(), new Subject()));
+        s.setSubjects(Sets.newHashSet(new Subject(), new Subject()));
         s.setNum(1020);
         s.setLongName("Semester 1020 Long Name");
         s.setCoursePostfixName("Sem 1020. Course Prefix");
-        assertEquals(2, s.getSubject().size());
+        assertEquals(2, s.getSubjects().size());
 
         String xml = testMarshalNonRootObject(s, Semester.class, Subject.class);
 
@@ -48,13 +48,13 @@ public class SemesterTest {
         assertEquals(s.getLongName(), loaded.getLongName());
         assertEquals(s.getCoursePostfixName(), loaded.getCoursePostfixName());
 
-        assertEquals(s.getSubject().size(), loaded.getSubject().size());
+        assertEquals(s.getSubjects().size(), loaded.getSubjects().size());
 
         RecordingEventListener rel = RecordingEventListener.addListener(loaded);
 
-        Iterator<Subject> sub = loaded.getSubject().iterator();
+        Iterator<Subject> sub = loaded.getSubjects().iterator();
 
-        loaded.setSubject(Sets.<Subject>newHashSet());
+        loaded.setSubjects(Sets.<Subject>newHashSet());
 
         rel.assertEvent(ListEvent.getRemoveEvent(loaded, SemesterEventID.SUBJECT, sub.next()));
         rel.assertEvent(ListEvent.getRemoveEvent(loaded, SemesterEventID.SUBJECT, sub.next()));

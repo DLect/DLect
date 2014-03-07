@@ -47,7 +47,7 @@ public class DatabaseLoaderTest {
         assertEquals(1, s.getNum());
         assertEquals("Semester 1", s.getLongName());
         assertEquals("Sem 1", s.getCoursePostfixName());
-        assertEquals(0, s.getSubject().size());
+        assertEquals(0, s.getSubjects().size());
     }
 
     /**

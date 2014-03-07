@@ -33,10 +33,10 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
 
     @XmlElementWrapper(name = "subjects")
     @XmlElement(name = "subject")
-    private final Set<Subject> subject;
+    private final Set<Subject> subjects;
 
     public Semester() {
-        subject = newWrappedListenableSortedSet(SemesterEventID.SUBJECT);
+        subjects = newWrappedListenableSortedSet(SemesterEventID.SUBJECT);
     }
 
     @Override
@@ -83,23 +83,23 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
      *
      * @return An immutable copy of the subjects in this semester.
      */
-    public ImmutableSet<Subject> getSubject() {
-        return copyOf(subject);
+    public ImmutableSet<Subject> getSubjects() {
+        return copyOf(subjects);
     }
 
     /**
      * Store only these subjects in this semester objects. This function will fire remove events for every object
      * currently in the set; then will fire add events for every object in the given set.
      *
-     * @param subject The set of subjects to copy and store in this semester.
+     * @param subjects The set of subjects to copy and store in this semester.
      */
-    public void setSubject(Set<Subject> subject) {
-        setSet(this.subject, subject);
+    public void setSubjects(Set<Subject> subjects) {
+        setSet(this.subjects, subjects);
     }
 
     @Override
     public String toString() {
-        return "Semester{" + "num=" + getNum() + ", longName=" + getLongName() + ", coursePostfixName=" + getCoursePostfixName() + ", subject=" + getSubject() + '}';
+        return "Semester{" + "num=" + getNum() + ", longName=" + getLongName() + ", coursePostfixName=" + getCoursePostfixName() + ", subject=" + getSubjects() + '}';
     }
 
     /**

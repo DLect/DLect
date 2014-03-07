@@ -77,7 +77,7 @@ public class ImmutableSemester {
 
     public static ImmutableSemester from(Semester s) {
         Set<ImmutableSubject> subjects = Sets.newHashSet();
-        for (Subject subject : s.getSubject()) {
+        for (Subject subject : s.getSubjects()) {
             subjects.add(ImmutableSubject.from(subject));
         }
 

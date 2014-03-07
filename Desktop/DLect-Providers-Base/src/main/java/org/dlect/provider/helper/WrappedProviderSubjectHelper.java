@@ -52,7 +52,7 @@ public class WrappedProviderSubjectHelper {
     }
 
     private static void insertSubjectsIntoSemester(Semester sem, Collection<ImmutableSubject> imSub) {
-        Map<Subject, Subject> subMap = creatingMapping(sem.getSubject());
+        Map<Subject, Subject> subMap = creatingMapping(sem.getSubjects());
         Set<Subject> subjects = Sets.newHashSet();
         for (ImmutableSubject is : imSub) {
             Subject s = is.copyToNew();
@@ -67,7 +67,7 @@ public class WrappedProviderSubjectHelper {
                 WrappedProviderLectureHelper.mergeSubjectData(existing, new ImmutableSubjectData(EMPTY_LECTURE_STREAM_MAP, is.getLectures(), is.getStreams()));
             }
         }
-        sem.setSubject(subjects);
+        sem.setSubjects(subjects);
     }
 
 }

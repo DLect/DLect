@@ -76,7 +76,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
     public Set<Subject> getShownSubjects() {
         List<Subject> subjects = Lists.newArrayList();
         for (Semester semester : controller.getDatabaseHandler().getDatabase().getSemesters()) {
-            for (Subject subject : semester.getSubject()) {
+            for (Subject subject : semester.getSubjects()) {
                 if (controller.getSubjectDisplayHelper().isSubjectDisplayed(subject)) {
                     subjects.add(subject);
                 }
@@ -106,7 +106,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         SubjectDisplaySettingHandler sdh = controller.getSubjectDisplayHelper();
         //this.removeAll();
         for (Semester semester : semsesters) {
-            for (Subject subject : semester.getSubject()) {
+            for (Subject subject : semester.getSubjects()) {
                 CoursePane pane = subjectPanes.get(subject);
                 if (sdh.isSubjectDisplayed(subject)) {
                     shownSubjects.add(subject);

@@ -30,7 +30,7 @@ public class SubjectListingHandler implements EventListener {
 
     public SubjectListingHandler(Database d) {
         for (Semester sem : d.getSemesters()) {
-            addAll(sem.getSubject());
+            addAll(sem.getSubjects());
         }
 
         d.addListener(this, Database.class, Semester.class, Subject.class);
@@ -50,10 +50,10 @@ public class SubjectListingHandler implements EventListener {
             Semester before = (Semester) e.getBefore();
             Semester after = (Semester) e.getAfter();
             if (before != null) {
-                subjects.values().removeAll(before.getSubject());
+                subjects.values().removeAll(before.getSubjects());
             }
             if (after != null) {
-                addAll(after.getSubject());
+                addAll(after.getSubjects());
             }
         } else if (e.getEventID().equals(SemesterEventID.SUBJECT)) {
             Subject before = (Subject) e.getBefore();

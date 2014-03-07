@@ -35,10 +35,10 @@ public abstract class SubjectDisplayUpdateHandler {
     public abstract void updateSubjects();
 
     protected boolean isSemesterEnabled(Semester semester) {
-        if (semester.getSubject().isEmpty()) {
+        if (semester.getSubjects().isEmpty()) {
             return false;
         }
-        for (Subject s : semester.getSubject()) {
+        for (Subject s : semester.getSubjects()) {
             if (!getDisplayHelper().isSubjectDisplayed(s)) {
                 return false;
             }
@@ -47,7 +47,7 @@ public abstract class SubjectDisplayUpdateHandler {
     }
 
     protected void setSemesterEnabled(Semester semester, boolean enabled) {
-        for (Subject s : semester.getSubject()) {
+        for (Subject s : semester.getSubjects()) {
             getDisplayHelper().setSubjectDisplayed(s, enabled);
         }
     }
