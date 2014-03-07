@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.ui;
+package org.dlect.controller.helper.subject;
 
 import org.dlect.model.Database;
 import org.dlect.model.Semester;

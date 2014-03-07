@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.ui;
+package org.dlect.controller.helper.subject;
 
 import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerEvent;
@@ -24,6 +24,7 @@ public class SubjectDisplayUpdater implements EventListener {
     private SubjectDisplayUpdateHandler sduh = null;
 
     protected SubjectDisplayUpdater(Database d) {
+        // TODO implement this for LectureWorker.
         this.d = d;
     }
 
@@ -41,8 +42,6 @@ public class SubjectDisplayUpdater implements EventListener {
                 } else {
                     if (sduh != null) {
                         sduh.updateSubjects();
-                    } else {
-                        // TODO error message - should never happen unless added whilst subjects is running.
                     }
                 }
             }
