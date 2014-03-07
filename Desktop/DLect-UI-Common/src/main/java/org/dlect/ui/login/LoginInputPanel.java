@@ -169,11 +169,19 @@ public class LoginInputPanel extends javax.swing.JPanel {
     }
 
     public void setUsername(String username) {
-        usernameField.setText(username);
+        if (username == null) {
+            usernameField.setText("");
+        } else {
+            usernameField.setText(username);
+        }
     }
 
     public void setPassword(String password) {
-        passwordField.setText(password);
+        if (password == null) {
+            passwordField.setText("");
+        } else {
+            passwordField.setText(password);
+        }
     }
 
     public void setProvider(ProviderDetail provider) {
