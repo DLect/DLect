@@ -70,9 +70,24 @@ public class WrappedProvider {
         lp.doLogin(usr.get(), pwd.get());
     }
 
+    private void ensureExists(Subject s, Lecture l, LectureDownload ld) {
+        if (!s.getLectures().contains(l)) {
+            throw new IllegalArgumentException("The lecture is not contained in the subject");
+        }
+        if (!l.getLectureDownloads().containsValue(ld)) {
+            throw new IllegalArgumentException("The download is not contained in the lecture");
+        }
+        for (Semester semester : d.getSemesters()) {
+            if (semester.getSubjects().contains(s)) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException("The subject is not contained in the database.");
+    }
+
     protected boolean findSubject(Subject s) {
         for (Semester semester : d.getSemesters()) {
-            for (Subject subject : semester.getSubject()) {
+            for (Subject subject : semester.getSubjects()) {
                 if (Objects.equal(s, subject)) {
                     return true;
                 }
@@ -103,7 +118,7 @@ public class WrappedProvider {
     }
 
     public void doDownload(Subject s, Lecture l, LectureDownload ld) throws DLectException {
-        // TODO ensure that subject, lecture and lecture download exist in the database.
+        ensureExists(s, l, ld);
 
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
         OutputStream os;
