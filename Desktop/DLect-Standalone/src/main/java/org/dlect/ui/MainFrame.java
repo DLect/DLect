@@ -10,14 +10,10 @@ import javax.swing.JComponent;
 import org.dlect.controller.GUIController;
 import org.dlect.controller.event.ControllerEvent;
 import org.dlect.controller.event.ControllerState;
-import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Controller;
-import org.dlect.controller.worker.ErrorDisplayable;
-import org.dlect.controller.worker.SubjectWorker;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
-import org.dlect.exception.DLectExceptionCause;
 import org.dlect.ui.decorator.BusyPainterUI;
 import org.dlect.ui.helper.LayerUIUtil;
 import org.dlect.ui.login.LoginPanel;
@@ -115,6 +111,7 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
             c.weighty = 1;
             panel.add(loginPanelLayer, c);
             panel.setLayer(loginPanelLayer, 100);
+            initLoginPanel();
         }
     }
 
@@ -173,8 +170,9 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
     }
 
     public void initLoginPanel() {
-        // TODO init login panel's username/password/provider.
-
+        loginPanel.setProvider(controller.getLoginController().getSelectedProviderDetail());
+        loginPanel.setUsername(controller.getLoginController().getUsername());
+        loginPanel.setPassword(controller.getLoginController().getPassword());
     }
 
     @Override
