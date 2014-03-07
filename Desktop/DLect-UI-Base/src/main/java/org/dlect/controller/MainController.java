@@ -4,20 +4,21 @@
  */
 package org.dlect.controller;
 
-import org.dlect.controller.helper.SubjectDataHelper;
 import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
+import org.dlect.controller.helper.SubjectDataHelper;
 import org.dlect.controller.helper.subject.SubjectDisplaySettingHandler;
 import org.dlect.controller.provider.ProviderHelper;
 import org.dlect.events.listenable.Listenable;
+import org.dlect.file.FileController;
 
 /**
  *
  * @author lee
  */
-public class MainController extends Listenable<MainController> implements Initilisable {
+public abstract class MainController extends Listenable<MainController> implements Initilisable {
 
     private final long uuid;
     private DatabaseHandler databaseHandler;
@@ -32,6 +33,8 @@ public class MainController extends Listenable<MainController> implements Initil
     public MainController() {
         this.uuid = Double.doubleToRawLongBits(System.currentTimeMillis() * Math.random());
     }
+
+    public abstract FileController getFileController();
 
     @Override
     public void init() {
