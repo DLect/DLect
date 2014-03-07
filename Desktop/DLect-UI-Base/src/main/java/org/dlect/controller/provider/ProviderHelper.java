@@ -92,7 +92,7 @@ public class ProviderHelper implements EventListener, Initilisable {
         }
 
         try {
-            provider = this.pl.loadProvider(pd, db, null);
+            provider = this.pl.loadProvider(pd, db, mc.getFileController());
         } catch (ExecutionException ex) {
             ProviderLogger.LOGGER.error("Failed to load provider for detail:" + pd, ex);
             provider = null;
