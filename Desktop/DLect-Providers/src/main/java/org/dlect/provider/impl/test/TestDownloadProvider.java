@@ -18,7 +18,7 @@ import org.dlect.provider.DownloadProvider;
 public class TestDownloadProvider implements DownloadProvider {
 
     @Override
-    public InputStream getDownloadSreamFor(ImmutableLectureDownload lectureDownload) throws DLectException {
+    public InputStream getDownloadStreamFor(ImmutableLectureDownload lectureDownload) throws DLectException {
 
         return new ByteArrayInputStream(lectureDownload.toString().getBytes());
     }

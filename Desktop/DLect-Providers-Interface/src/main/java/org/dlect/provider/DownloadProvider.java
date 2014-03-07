@@ -15,6 +15,6 @@ import org.dlect.immutable.model.ImmutableLectureDownload;
  */
 public interface DownloadProvider {
 
-    public InputStream getDownloadSreamFor(ImmutableLectureDownload lectureDownload) throws DLectException;
+    public InputStream getDownloadStreamFor(ImmutableLectureDownload lectureDownload) throws DLectException;
 
 }
