@@ -4,6 +4,7 @@
  */
 package org.dlect.controller;
 
+import javax.annotation.Nullable;
 import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.event.ControllerListenable;
 import org.dlect.controller.event.ControllerState;
@@ -11,8 +12,10 @@ import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.EventID;
 import org.dlect.exception.DLectException;
-import org.dlect.model.helper.CommonSettingNames;
 import org.dlect.provider.loader.ProviderDetail;
+
+import static org.dlect.helper.Conditions.checkNonNull;
+import static org.dlect.model.helper.CommonSettingNames.*;
 
 /**
  *
@@ -27,20 +30,14 @@ public class LoginController extends ControllerListenable<LoginController> imple
     }
 
     public void configureLoginCredentials(ProviderDetail provider, String username, String password) {
-        if (provider == null) {
-            throw new IllegalArgumentException("Null provider.");
-        }
-        if (username == null) {
-            throw new IllegalArgumentException("Null username.");
-        }
-        if (password == null) {
-            throw new IllegalArgumentException("Null password.");
-        }
+        checkNonNull(provider, "Provider");
+        checkNonNull(username, "Username");
+        checkNonNull(password, "Password");
         DatabaseHandler db = ctl.getDatabaseHandler();
 
-        db.addEncryptedSetting(CommonSettingNames.USERNAME, username);
-        db.addEncryptedSetting(CommonSettingNames.PASSWORD, password);
-        db.addSetting(CommonSettingNames.PROVIDER_CODE, provider.getCode());
+        db.addEncryptedSetting(USERNAME, username);
+        db.addEncryptedSetting(PASSWORD, password);
+        db.addSetting(PROVIDER_CODE, provider.getCode());
     }
 
     public void doLogin() throws DLectException {
@@ -56,6 +53,21 @@ public class LoginController extends ControllerListenable<LoginController> imple
                 event(ControllerType.LOGIN).state(ControllerState.FAILED).fire();
             }
         }
+    }
+
+    @Nullable
+    public ProviderDetail getSelectedProviderDetail() {
+        return ctl.getProviderHelper().getProviderDetail();
+    }
+
+    @Nullable
+    public String getUsername() {
+        return ctl.getDatabaseHandler().getEncryptedSetting(USERNAME).orNull();
+    }
+
+    @Nullable
+    public String getPassword() {
+        return ctl.getDatabaseHandler().getEncryptedSetting(PASSWORD).orNull();
     }
 
     @Override
