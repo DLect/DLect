@@ -10,6 +10,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Multimap;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -106,6 +107,9 @@ public class WrappedProvider {
 
         ImmutableSubject is = ImmutableSubject.from(s);
         LectureProvider lp = p.getLectureProvider();
+        if (lp == null) {
+            throw new DLectException(DLectExceptionCause.PROVIDER_CONTRACT, "The provider(" + p + ") failed to return a valid LectureProvider");
+        }
         ImmutableSubjectData data = lp.getLecturesIn(is);
 
         WrappedProviderLectureHelper.mergeSubjectData(s, data);
@@ -123,9 +127,9 @@ public class WrappedProvider {
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
         OutputStream os;
         try {
-            os = new BufferedOutputStream(fc.getStreamForDownload(s, l, ld));
+            os = new BufferedOutputStream(new FileOutputStream(fc.getStreamForDownload(s, l, ld)));
         } catch (IOException ex) {
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, "The file was not found. "
+            throw new DLectException(DLectExceptionCause.DISK_ERROR, "The file was not found. "
                                                                               + "This is a problem with "
                                                                               + "getFileForDownload(" + s
                                                                               + ", " + l + ", " + ld + ")", ex);
@@ -146,7 +150,7 @@ public class WrappedProvider {
             try {
                 os.write(load, 0, lastRead);
             } catch (IOException ex) {
-                throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT);
+                throw new DLectException(DLectExceptionCause.DISK_ERROR);
             }
         } while (lastRead >= 0);
     }
