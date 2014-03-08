@@ -227,8 +227,8 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         for (final DownloadType dt : DownloadType.values()) {
             final JCheckBox c = new JCheckBox();
             c.setSelected(si.isDownloadTypeEnabled(dt));
-            // TODO change case. \/
-            c.setText(dt.toString()); // TODO i18n
+            // TODO(Later) change case. \/
+            c.setText(dt.toString()); // TODO(Later) i18n
             c.addActionListener(new ActionListener() {
 
                 @Override

@@ -30,7 +30,7 @@ import org.dlect.model.helper.ImmutableDate;
 public class BlackboardXmlDateTypeAdapter extends XmlAdapter<String, ImmutableDate> {
 
     /**
-     * TODO check that this applies to universities in GMT+0.
+     * TODO(Later) check that this applies to universities in GMT+0.
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX";
 

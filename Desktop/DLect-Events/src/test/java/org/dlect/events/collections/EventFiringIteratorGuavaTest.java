@@ -15,7 +15,7 @@ import org.junit.Ignore;
 @Ignore
 public class EventFiringIteratorGuavaTest {
 
-    // TODO wait for guava to implement a IteratorTestSuite.
+    // TODO(Later) wait for guava to implement a IteratorTestSuite.
     public static TestSuite suite() {
         return null;
     }

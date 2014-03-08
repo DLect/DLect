@@ -46,7 +46,7 @@ public class ProviderHelper implements EventListener, Initilisable {
 
     @Override
     public void processEvent(Event e) {
-        // TODO add checks for username change.
+        // TODO(Later) add checks for username change.
         if (e.getEventID().equals(DatabaseHandlerEventID.DATABASE_LOADED)) {
             updateProvider();
         } else if (e.getEventID().equals(DatabaseEventID.SETTING)) {
