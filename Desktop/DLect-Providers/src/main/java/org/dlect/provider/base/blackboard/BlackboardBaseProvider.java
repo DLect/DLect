@@ -85,7 +85,7 @@ public class BlackboardBaseProvider implements Provider {
             loginProvider = new BlackboardSslFormLoginProvider(u, httpClient, xmlParser);
         } else {
             ProviderLogger.LOGGER.error("Failed to load provider. DLect does not support the login type.");
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, "The current implementation does not support the provider with the following details: " + u);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_PROVIDER_STATE, "The current implementation does not support the provider with the following details: " + u);
         }
 
         subjectProvider = new BlackboardSubjectProvider(u.getBaseUrl(), subjectCustomiser, httpClient, xmlParser);

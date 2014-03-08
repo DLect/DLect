@@ -39,10 +39,10 @@ public class BlackboardXmlParserImpl implements BlackboardXmlParser {
             if (base.isInstance(um)) {
                 return base.cast(um);
             }
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, "Unmarshalled into invalid object: " + um);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, "Unmarshalled into invalid object: " + um);
         } catch (JAXBException ex) {
             ProviderLogger.LOGGER.error("Failed to unmarshal login responce.", ex);
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         }
     }
 

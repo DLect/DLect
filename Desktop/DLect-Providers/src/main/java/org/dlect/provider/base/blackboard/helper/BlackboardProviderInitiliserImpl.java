@@ -50,13 +50,13 @@ public class BlackboardProviderInitiliserImpl implements BlackboardProviderIniti
             bpd = (BlackboardProviderXmlDetails) um;
         } catch (JAXBException ex) {
             ProviderLogger.LOGGER.error("Problem loading data from xml. ::" + xml.replace('\n', ' '), ex);
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         }
         try {
             return new BlackboardProviderDetails(new URI(bpd.getB2Url()), bpd.isHttpAuth(), bpd.isSslLogin());
         } catch (URISyntaxException ex) {
             ProviderLogger.LOGGER.error("Problem converting url: " + bpd.getB2Url(), ex);
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_PROVIDER_STATE, ex);
         }
     }
 
