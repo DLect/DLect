@@ -19,8 +19,10 @@ package org.dlect.controller;
 import java.io.IOException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.dlect.controller.file.JarFolderFileController;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.file.FileController;
 import org.dlect.ui.MainFrame;
 
 /**
@@ -28,6 +30,10 @@ import org.dlect.ui.MainFrame;
  * @author lee
  */
 public class GUIController extends MainController {
+
+    private StartupController startupController;
+    private MainFrame mainFrame;
+    private final FileController fileController;
 
     public static void main(String[] args) throws IOException {
         long t = System.currentTimeMillis();
@@ -50,11 +56,16 @@ public class GUIController extends MainController {
         StartupController c = mc.getStartupController();
         c.startup(t);
     }
-    private StartupController startupController;
-    private MainFrame mainFrame;
 
     public GUIController() {
+        // TODO save frequently
         super();
+        fileController = new JarFolderFileController();
+    }
+
+    @Override
+    public FileController getFileController() {
+        return fileController;
     }
 
     @Override
