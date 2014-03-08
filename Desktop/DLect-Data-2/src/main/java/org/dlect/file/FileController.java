@@ -5,8 +5,8 @@
  */
 package org.dlect.file;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Subject;
@@ -17,6 +17,6 @@ import org.dlect.model.Subject;
  */
 public interface FileController {
 
-    public OutputStream getStreamForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException;
+    public File getStreamForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException;
 
 }
