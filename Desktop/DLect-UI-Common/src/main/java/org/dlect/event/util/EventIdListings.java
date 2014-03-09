@@ -37,7 +37,7 @@ public class EventIdListings {
     public static final ImmutableSet<EventID> LECTURE_STREAM_UPDATE_EVENT_IDS = ImmutableSet
             .<EventID>builder()
             .add(StreamEventID.NAME)
-            .add(LectureEventID.STREAM)
+            .add(LectureEventID.STREAM, LectureEventID.ENABLED)
             .add(SubjectEventID.LECTURE, SubjectEventID.STREAM)
             .add(ControllerStateHelperEventID.DOWNLOAD)
             .build();
