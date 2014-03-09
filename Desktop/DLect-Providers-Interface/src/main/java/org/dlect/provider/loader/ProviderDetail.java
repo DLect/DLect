@@ -5,6 +5,7 @@
  */
 package org.dlect.provider.loader;
 
+import com.google.common.base.Objects;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import org.dlect.provider.Provider;
@@ -48,7 +49,29 @@ public final class ProviderDetail {
         return providerClass;
     }
 
-    protected static void validateProviderClass(Class<? extends Provider> providerClass) {
+    @Override
+    public String toString() {
+        return "ProviderDetail{" + "name=" + name + ", code=" + code + ", providerClass=" + providerClass + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.code);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ProviderDetail other = (ProviderDetail) obj;
+        return Objects.equal(other.getCode(), this.getCode());
+    }
+
+    public static void validateProviderClass(Class<? extends Provider> providerClass) {
         int cModifiers = providerClass.getModifiers();
         if (Modifier.isAbstract(cModifiers)) {
             throw new IllegalArgumentException("Attempting to make an abstract class a provider.");
@@ -61,10 +84,7 @@ public final class ProviderDetail {
         }
         try {
             Constructor<? extends Provider> constructor = providerClass.getConstructor();
-            int modifiers = constructor.getModifiers();
-            if (Modifier.isAbstract(modifiers)) {
-
-            }
+            // TODO(Later) check that construction works.
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException("Failed to find constructor with no arguments", e);
         }
