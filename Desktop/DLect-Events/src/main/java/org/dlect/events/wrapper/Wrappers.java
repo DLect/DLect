@@ -16,12 +16,20 @@ import org.dlect.events.listenable.ListenableEventAdapterWrapper;
  */
 public class Wrappers {
 
-    public static  void addSwingListenerTo(EventListener el, Listenable<?> l, Class<?>... on) {
+    public static void addSwingListenerTo(EventListener el, Listenable<?> l, Class<?>... on) {
         addSwingListenerTo(el, new ListenableEventAdapterWrapper(l), on);
     }
 
-    public static  void addSwingListenerTo(EventListener el, EventAdapter a, Class<?>... on) {
-        a.addListener(new SwingEventListenerWrapper(a, el), on);
+    public static void addSwingListenerTo(EventListener el, EventAdapter ea, Class<?>... on) {
+        ea.addListener(new SwingEventListenerWrapper(ea, el), on);
+    }
+
+    public static void removeSwingListenerFrom(EventListener el, Listenable<?> l) {
+        removeSwingListenerFrom(el, new ListenableEventAdapterWrapper(l));
+    }
+
+    public static void removeSwingListenerFrom(EventListener el, EventAdapter ea) {
+        // TODO Implement removing a swing listener.
     }
 
 }
