@@ -19,10 +19,10 @@ import org.slf4j.Logger;
  * @author lee
  */
 public class FileDebuggingHelper {
-    
+
     private FileDebuggingHelper() {
     }
-    
+
     public static void debugFileToLogger(File f, Logger l) {
         try {
             debugReaderToLogger(new FileReader(f), f.getName(), l);
@@ -30,12 +30,14 @@ public class FileDebuggingHelper {
             l.error("Failed to load file " + f, ex);
         }
     }
-    
+
     public static void debugStringToLogger(String fileContent, String name, Logger l) {
         debugReaderToLogger(new StringReader(fileContent), name, l);
     }
-    
+
     public static void debugReaderToLogger(Reader r, String name, Logger l) {
+        l.error("FILE STARTS: {}", name);
+        l.error("------------------------------------------------");
         String format = name + "| Ln {}: {}";
         int lineNo = 0;
         try (BufferedReader br = new BufferedReader(r)) {
@@ -47,10 +49,15 @@ public class FileDebuggingHelper {
         } catch (IOException ex) {
             l.error("IOException thrown at line " + lineNo, ex);
         }
+        if(lineNo == 0) {
+            l.error("<<FILE EMPTY>>");
+        }
+        l.error("------------------------------------------------");
+        l.error("FILE ENDS {}", name);
     }
-    
+
     public static void debugFolderToLogger(File folder, Logger l) {
-        
+
     }
-    
+
 }

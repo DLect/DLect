@@ -7,6 +7,7 @@ package org.dlect.ui.prefs.subject;
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +15,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -50,13 +50,15 @@ public class AdvancedLecturePanel extends SubjectPreferencesPanel implements Eve
     private final Subject s;
     private final MainController c;
     private JLabel jLabel1;
-    private Map<DownloadType, JLabel> tableHeadings = new EnumMap<DownloadType, JLabel>(DownloadType.class);
+    private final Map<DownloadType, JLabel> tableHeadings = Maps.newEnumMap(DownloadType.class);
     private final Table<Lecture, DownloadType, DownloadInputs> checkBoxMapping = HashBasedTable.create();
     private final String dateFormat = "yyyy/MM/dd HH:mm";
     private Font boldFont, standardFont;
 
     /**
      * Creates new form AdvancedLecturePanel
+     * @param s
+     * @param c
      */
     public AdvancedLecturePanel(Subject s, MainController c) {
         super(s, c);
@@ -180,7 +182,7 @@ public class AdvancedLecturePanel extends SubjectPreferencesPanel implements Eve
         //enabledCheck.addActionListener(a);
         //dlButton.addActionListener(a);
         
-        // TODO /\
+        // TODO Add listeners to download button and enabled checkbox.
     }
 
     public void downloadStarting(Subject s, Lecture l, DownloadType t) {

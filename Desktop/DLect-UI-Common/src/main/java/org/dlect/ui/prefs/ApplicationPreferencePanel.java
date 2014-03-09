@@ -4,18 +4,9 @@
  */
 package org.dlect.ui.prefs;
 
-import java.io.File;
-import java.io.IOException;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.dlect.controller.MainController;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
-import org.dlect.update.UpdateStyle;
-import org.dlect.ui.SwingWorkerProgressDialog;
 
 /**
  *

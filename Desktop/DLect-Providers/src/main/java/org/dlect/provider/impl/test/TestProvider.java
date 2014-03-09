@@ -36,10 +36,9 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider {
     private static final ImmutableList<ImmutableStream> EMPTY_STREAM_LIST = ImmutableList.of();
     private static final ImmutableMap<DownloadType, ImmutableLectureDownload> EMPTY_LECTURE_DOWNLOAD_MAP = ImmutableMap.of();
 
-
     private TestLectureProvider tlp;
     private TestDownloadProvider tdp;
-    
+
     @Override
     public void doLogin(String username, String password) throws DLectException {
         try {
@@ -75,7 +74,6 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider {
     public DownloadProvider getDownloadProvider() {
         return tdp;
     }
-    
 
     @Override
     public Multimap<ImmutableSemester, ImmutableSubject> getSubjects() throws DLectException {
@@ -102,7 +100,7 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider {
 
     @Override
     public void init() throws DLectException {
-        tlp  = new TestLectureProvider();
+        tlp = new TestLectureProvider();
     }
 
 }
