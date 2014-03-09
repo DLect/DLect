@@ -18,9 +18,11 @@ import org.dlect.encryption.DatabaseDecryptionHandler;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.file.FileController;
+import org.dlect.helper.Conditions;
 import org.dlect.immutable.model.ImmutableLectureDownload;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableSubject;
+import org.dlect.logging.ProviderLogger;
 import org.dlect.model.Database;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
@@ -101,9 +103,7 @@ public class WrappedProvider {
     }
 
     public void getLecturesIn(Subject s) throws DLectException {
-        if (s == null) {
-            throw new IllegalArgumentException("Subject cannot be null");
-        }
+        Conditions.checkNonNull(s, "Subject");
         if (!findSubject(s)) {
             throw new IllegalArgumentException("Subject is not in the configured database");
         }
@@ -125,37 +125,47 @@ public class WrappedProvider {
     }
 
     public void doDownload(Subject s, Lecture l, LectureDownload ld) throws DLectException {
+        // TODO consider moving this into another class so that items can listen to progress events.
         ensureExists(s, l, ld);
 
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
-        OutputStream os;
+        OutputStream os = null;
         try {
             os = new BufferedOutputStream(new FileOutputStream(fc.getStreamForDownload(s, l, ld)));
         } catch (IOException ex) {
+            try {
+                is.close();
+            } catch (IOException ex1) {
+                ProviderLogger.LOGGER.error("Error closing input stream for download.", ex1);
+            }
             throw new DLectException(DLectExceptionCause.DISK_ERROR, "The file was not found. "
                                                                      + "This is a problem with "
                                                                      + "getFileForDownload(" + s
                                                                      + ", " + l + ", " + ld + ")", ex);
         }
-        byte[] load = new byte[8192];
-        int lastRead;
-        int totalRead = 0;
-        do {
-            try {
-                lastRead = is.read(load);
-            } catch (IOException e) {
-                throw new DLectException(DLectExceptionCause.NO_CONNECTION, "Failed to read from download stream.", e);
-            }
-            if (lastRead < 0) {
-                break;
-            }
-            totalRead += lastRead;
-            try {
-                os.write(load, 0, lastRead);
-            } catch (IOException ex) {
-                throw new DLectException(DLectExceptionCause.DISK_ERROR);
-            }
-        } while (lastRead >= 0);
+        try (InputStream iss = is; OutputStream oss = os) {
+            byte[] load = new byte[8192];
+            int lastRead;
+            int totalRead = 0;
+            do {
+                try {
+                    lastRead = iss.read(load);
+                } catch (IOException e) {
+                    throw new DLectException(DLectExceptionCause.NO_CONNECTION, "Failed to read from download stream.", e);
+                }
+                if (lastRead < 0) {
+                    break;
+                }
+                totalRead += lastRead;
+                try {
+                    oss.write(load, 0, lastRead);
+                } catch (IOException ex) {
+                    throw new DLectException(DLectExceptionCause.DISK_ERROR);
+                }
+            } while (lastRead >= 0);
+        } catch (IOException ex) {
+            ProviderLogger.LOGGER.error("Error closing stream for download.", ex);
+        }
     }
 
     public synchronized void doInit() throws DLectException {
