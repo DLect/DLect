@@ -17,7 +17,7 @@ public abstract class AboutDialog extends javax.swing.JDialog {
      */
     public AboutDialog() {
         initComponents();
-        // TODO scale icon.
+        // TODO(Later) scale icon.
     }
 
     @Override

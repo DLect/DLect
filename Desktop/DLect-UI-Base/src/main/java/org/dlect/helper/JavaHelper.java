@@ -25,6 +25,7 @@ public class JavaHelper {
     }
     
     public static String getJavaExecutable() {
+        // TODO find java exe
         return null;
     }
 

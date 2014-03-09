@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- *
+ * TODO(Later) replace all references of SimpleDateFormat with this implementation and remove the synchronisation.
  * @see SimpleDateFormat
  * @author lee
  */

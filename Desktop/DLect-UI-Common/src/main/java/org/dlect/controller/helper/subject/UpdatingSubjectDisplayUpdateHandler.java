@@ -40,10 +40,8 @@ public class UpdatingSubjectDisplayUpdateHandler extends SubjectDisplayUpdateHan
     @Override
     public void updateSubjects() {
         for (Semester s : getDatabase().getSemesters()) {
-            
+            // TODO write the Subject display update handler
         }
-        
-        
         
     }
 
