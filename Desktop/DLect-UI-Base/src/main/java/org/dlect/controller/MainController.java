@@ -5,6 +5,7 @@
 package org.dlect.controller;
 
 import org.dlect.controller.data.DatabaseHandler;
+import org.dlect.controller.data.DatabaseSavingHandler;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
@@ -29,6 +30,7 @@ public abstract class MainController extends Listenable<MainController> implemen
     private ControllerStateHelper controllerStateHelper;
     private SubjectDataHelper subjectDataHelper;
     private SubjectDisplaySettingHandler subjectDisplayHelper;
+    private DatabaseSavingHandler databaseSavingHandler;
 
     public MainController() {
         this.uuid = Double.doubleToRawLongBits(System.currentTimeMillis() * Math.random());
@@ -46,6 +48,7 @@ public abstract class MainController extends Listenable<MainController> implemen
         this.controllerStateHelper = new ControllerStateHelper(this);
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
         this.subjectDataHelper = new SubjectDataHelper(this);
+        this.databaseSavingHandler = new DatabaseSavingHandler(this);
 
         this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper, subjectDataHelper);
         Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);

@@ -54,8 +54,6 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
         decryptionHandler = new DatabaseDecryptionHandler(database);
         encryptionHandler = new DatabaseEncryptionHandler(database);
 
-        
-        
         addChild(database);
         event(DatabaseHandlerEventID.DATABASE_LOADED).before(null).after(database).fire();
     }
@@ -80,10 +78,8 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
             }
         } else {
             if (!dataFile.getParentFile().exists()) {
-                // Only ever 1 directory required; unless you are doing something funky with the jar.
-                dataFile.getParentFile().mkdir();
+                dataFile.getParentFile().mkdirs();
             }
-            // TODO save database now; then return it.
             return backupLoadDatabase(dataFile);
         }
 
