@@ -6,6 +6,7 @@
 
 package org.dlect.controller.download.event;
 
+import org.dlect.controller.helper.Controller;
 import org.dlect.events.EventID;
 
 /**
@@ -17,7 +18,7 @@ public enum DownloadStatus implements EventID{
 
     @Override
     public Class<?> getAppliedClass() {
-        return Object.class;
+        return Controller.class;
     }
 
     @Override
