@@ -11,6 +11,7 @@ import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -18,12 +19,13 @@ import org.slf4j.LoggerFactory;
  * @author lee
  * @param <T>
  */
-public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Object> {
+public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Void> {
 
     private final ErrorDisplayable displayable;
     private final MainController controller;
     private final ControllerType type;
     private final T parameter;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DLectSwingWorker.class);
 
     public DLectSwingWorker(ErrorDisplayable displayable, MainController controller, ControllerType type, T parameter) {
         this.displayable = displayable;
@@ -47,15 +49,14 @@ public abstract class DLectSwingWorker<T> extends SwingWorker<DLectException, Ob
 
     @Override
     protected final void done() {
-        // TODO show error message if exception thrown
         DLectException thrown;
         try {
             thrown = this.get();
         } catch (ExecutionException | InterruptedException ex) {
-            thrown = new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            thrown = new DLectException(DLectExceptionCause.PROVIDER_CONTRACT, ex);
         }
         if (thrown != null) {
-            LoggerFactory.getLogger(DLectSwingWorker.class).error("DLect error occured whilst attempting " + type + (parameter != null ? " with parameter: " + parameter : ""), thrown);
+            LOGGER.error("DLect error occured whilst attempting " + type + (parameter != null ? " with parameter: " + parameter : ""), thrown);
             displayable.showErrorBox(type, parameter, thrown.getCauseCode());
         }
     }
