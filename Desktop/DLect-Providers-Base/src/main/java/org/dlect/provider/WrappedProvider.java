@@ -47,6 +47,7 @@ public class WrappedProvider {
     private final DatabaseDecryptionHandler deh;
     private final FileController fc;
     private final Provider p;
+    private boolean hasInit = false;
 
     public WrappedProvider(Provider p, Database d, FileController fc) {
         checkNonNull(p, "Provider");
@@ -65,6 +66,8 @@ public class WrappedProvider {
         if (!usr.isPresent() || !pwd.isPresent()) {
             throw new DLectException(DLectExceptionCause.BAD_CREDENTIALS);
         }
+
+        doInit();
 
         LoginProvider lp = p.getLoginProvider();
 
@@ -130,9 +133,9 @@ public class WrappedProvider {
             os = new BufferedOutputStream(new FileOutputStream(fc.getStreamForDownload(s, l, ld)));
         } catch (IOException ex) {
             throw new DLectException(DLectExceptionCause.DISK_ERROR, "The file was not found. "
-                                                                              + "This is a problem with "
-                                                                              + "getFileForDownload(" + s
-                                                                              + ", " + l + ", " + ld + ")", ex);
+                                                                     + "This is a problem with "
+                                                                     + "getFileForDownload(" + s
+                                                                     + ", " + l + ", " + ld + ")", ex);
         }
         byte[] load = new byte[8192];
         int lastRead;
@@ -153,6 +156,13 @@ public class WrappedProvider {
                 throw new DLectException(DLectExceptionCause.DISK_ERROR);
             }
         } while (lastRead >= 0);
+    }
+
+    public synchronized void doInit() throws DLectException {
+        if (!hasInit) {
+            p.init();
+            hasInit = true;
+        }
     }
 
 }
