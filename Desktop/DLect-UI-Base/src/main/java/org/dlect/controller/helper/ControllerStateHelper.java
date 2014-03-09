@@ -35,7 +35,6 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
     private final Table<Subject, Lecture, DownloadType> currentDownloads = HashBasedTable.create(10, 40);
 
     public ControllerStateHelper(MainController mc) {
-        // TODO add Download Controller to this list.
         mc.addListener(this, Controller.class);
     }
 
