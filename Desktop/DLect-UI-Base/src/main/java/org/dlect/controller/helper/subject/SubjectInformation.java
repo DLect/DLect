@@ -57,10 +57,10 @@ public class SubjectInformation {
         int ldSel = 0;
         int dlCount = 0;
         int notDlCount = 0;
-        HashMultiset<Stream> slc = HashMultiset.create(subject.getStreams().size());
-        HashMultiset<Stream> selc = HashMultiset.create(subject.getStreams().size());
-        HashMultiset<DownloadType> dtc = HashMultiset.create(DownloadType.values().length);
-        HashMultiset<DownloadType> edtc = HashMultiset.create(DownloadType.values().length);
+        Multiset<Stream> slc = HashMultiset.create(subject.getStreams().size());
+        Multiset<Stream> selc = HashMultiset.create(subject.getStreams().size());
+        Multiset<DownloadType> downloadsType = HashMultiset.create(DownloadType.values().length);
+        Multiset<DownloadType> enabledDownloadTypes = HashMultiset.create(DownloadType.values().length);
         for (Lecture l : subject.getLectures()) {
             slc.addAll(l.getStreams());
             if (l.isEnabled()) {
@@ -68,10 +68,12 @@ public class SubjectInformation {
             }
             for (Entry<DownloadType, LectureDownload> e : l.getLectureDownloads().entrySet()) {
                 LectureDownload ld = e.getValue();
-                dtc.add(e.getKey());
+                downloadsType.add(e.getKey());
+                if (ld.isDownloaded() || ld.isDownloadEnabled()) {
+                    enabledDownloadTypes.add(e.getKey());
+                }
                 if (LectureHelper.isLectureDownloadEnabled(l, ld)) {
                     ldSel++;
-                    edtc.add(e.getKey());
                     if (ld.isDownloaded()) {
                         dlCount++;
                     } else {
@@ -85,8 +87,8 @@ public class SubjectInformation {
         notDownloadedCount = notDlCount;
         streamLectureCount = ImmutableMultiset.copyOf(slc);
         streamEnabledLectureCount = ImmutableMultiset.copyOf(selc);
-        downloadTypeCount = ImmutableMultiset.copyOf(dtc);
-        enabledDownloadTypeCount = ImmutableMultiset.copyOf(edtc);
+        downloadTypeCount = ImmutableMultiset.copyOf(downloadsType);
+        enabledDownloadTypeCount = ImmutableMultiset.copyOf(enabledDownloadTypes);
         lecturesInit = true;
     }
 
@@ -105,26 +107,29 @@ public class SubjectInformation {
         return notDownloadedCount;
     }
 
-    public Multiset<Stream> getStreamLectureCount() {
+    public ImmutableMultiset<Stream> getStreamLectureCount() {
         itterateOverLectures();
         return ImmutableMultiset.copyOf(streamLectureCount);
     }
 
-    public Multiset<Stream> getStreamEnabledLectureCount() {
+    public ImmutableMultiset<Stream> getStreamEnabledLectureCount() {
         itterateOverLectures();
         return ImmutableMultiset.copyOf(streamEnabledLectureCount);
     }
 
     public boolean isStreamEnabled(Stream s) {
-        return getStreamLectureCount().count(s) == getStreamEnabledLectureCount().count(s);
+        final int slcC = getStreamLectureCount().count(s);
+        final int selcC = getStreamEnabledLectureCount().count(s);
+        System.out.println(slcC + " --> " + selcC);
+        return slcC == selcC;
     }
 
-    public Multiset<DownloadType> getDownloadTypeCount() {
+    public ImmutableMultiset<DownloadType> getDownloadTypeCount() {
         itterateOverLectures();
         return ImmutableMultiset.copyOf(downloadTypeCount);
     }
 
-    public Multiset<DownloadType> getEnabledDownloadTypeCount() {
+    public ImmutableMultiset<DownloadType> getEnabledDownloadTypeCount() {
         itterateOverLectures();
         return ImmutableMultiset.copyOf(enabledDownloadTypeCount);
     }
@@ -141,10 +146,10 @@ public class SubjectInformation {
     }
 
     public static DownloadState getDownloadedStatusFromCounts(int notDlCount, int dlSelected) {
-        if (notDlCount == 0) {
-            return DownloadState.ALL_DOWNLOADED;
-        } else if (dlSelected == 0) {
+        if (dlSelected == 0) {
             return DownloadState.NONE_SELECTED;
+        } else if (notDlCount == 0) {
+            return DownloadState.ALL_DOWNLOADED;
         } else {
             return DownloadState.NOT_ALL_DOWNLOADED;
         }
