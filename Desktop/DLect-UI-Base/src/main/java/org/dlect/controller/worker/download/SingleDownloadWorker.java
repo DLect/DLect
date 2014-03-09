@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.controller.worker;
+package org.dlect.controller.worker.download;
 
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
