@@ -7,6 +7,7 @@ package org.dlect.controller.event;
 
 import javax.annotation.Nonnull;
 import org.dlect.events.Event;
+import org.dlect.helper.Conditions;
 
 /**
  *
@@ -20,9 +21,7 @@ public class ControllerEvent extends Event {
 
     public ControllerEvent(@Nonnull Object source, @Nonnull ControllerType eventID, Object parameter, @Nonnull ControllerState state) {
         super(source, eventID, null, state);
-        if (state == null) {
-            throw new IllegalArgumentException("Null Controller State.");
-        }
+        Conditions.checkNonNull(state, "Controller State");
         this.parameter = parameter;
 
         this.state = state;
@@ -30,6 +29,7 @@ public class ControllerEvent extends Event {
     }
 
     @Override
+    @Nonnull
     public ControllerState getAfter() {
         return state;
     }
