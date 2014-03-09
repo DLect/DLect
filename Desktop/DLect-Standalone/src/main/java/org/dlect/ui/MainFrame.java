@@ -173,6 +173,7 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
         loginPanel.setProvider(controller.getLoginController().getSelectedProviderDetail());
         loginPanel.setUsername(controller.getLoginController().getUsername());
         loginPanel.setPassword(controller.getLoginController().getPassword());
+        loginPanel.doLogin();
     }
 
     @Override

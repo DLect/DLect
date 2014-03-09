@@ -185,10 +185,12 @@ public class LoginInputPanel extends javax.swing.JPanel {
     }
 
     public void setProvider(ProviderDetail provider) {
+        System.out.println("Set PRovider: " + provider);
         if (provider == null) {
             institutionCombo.setSelectedIndex(0);
         } else {
             int idx = model.getProviderIndex(provider);
+        System.out.println("Set PRovider Index: " + idx);
             institutionCombo.setSelectedIndex(idx);
         }
     }
@@ -240,6 +242,10 @@ public class LoginInputPanel extends javax.swing.JPanel {
             final String user = usernameField.getText();
             final String pass = String.valueOf(passwordField.getPassword());
 
+            if(user.length() == 0 || pass.length() == 0) {
+                return false; // Incomplete information.
+            }
+            
             lc.configureLoginCredentials(selectedProvider, user, pass);
 
             return true;

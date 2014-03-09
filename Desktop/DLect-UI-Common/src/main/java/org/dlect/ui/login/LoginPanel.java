@@ -192,9 +192,9 @@ public abstract class LoginPanel extends javax.swing.JPanel implements EventList
         loginInputPanel.setProvider(provider);
     }
 
-    protected void doLogin() {
-        setAllEnabled(false);
+    public void doLogin() {
         if (loginInputPanel.saveCredentialsTo(controller.getLoginController())) {
+            setAllEnabled(false);
             new LoginWorker(this, controller).execute();
         }
     }
@@ -247,29 +247,5 @@ public abstract class LoginPanel extends javax.swing.JPanel implements EventList
                 break;
         }
         JOptionPane.showMessageDialog(LoginPanel.this, content, title, JOptionPane.ERROR_MESSAGE);
-    }
-
-    private Object contentFor(DLectExceptionCause r) {
-        switch (r) {
-            case NO_CONNECTION:
-                return "No internet connection detected.";
-            case BAD_CREDENTIALS:
-                return new JLabel("<html>The provider has rejected your credentials<br>Please ensure they are correct and try again.");
-            case INVALID_DATA_FORMAT:
-                return "An unkown error occured with the provider.";
-        }
-        return r.toString();
-    }
-
-    private String titleFor(DLectExceptionCause r) {
-        switch (r) {
-            case NO_CONNECTION:
-                return "No Internet Connection";
-            case BAD_CREDENTIALS:
-                return "Invalid Credentials";
-            case INVALID_DATA_FORMAT:
-                return "Unknown Error";
-        }
-        return r.toString();
     }
 }
