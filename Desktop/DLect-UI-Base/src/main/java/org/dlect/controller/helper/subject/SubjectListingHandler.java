@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.logging.ControllerLogger;
 import org.dlect.model.Database;
 import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.Semester;
@@ -79,7 +80,12 @@ public class SubjectListingHandler implements EventListener {
 
     private void add(Subject s) {
         // TODO warn if id not unique.
-        this.subjects.put(s.getId(), s);
+        Subject put = this.subjects.put(s.getId(), s);
+        if(put != null && !s.equals(put)) {
+            ControllerLogger.LOGGER.warn("Subject has identical ID as another.");
+            ControllerLogger.LOGGER.warn("Old Subject: {}", put);
+            ControllerLogger.LOGGER.warn("New Subject: {}", s);
+        }
     }
 
     private void move(Subject source) {
