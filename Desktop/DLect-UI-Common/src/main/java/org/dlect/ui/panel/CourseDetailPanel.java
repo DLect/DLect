@@ -30,6 +30,7 @@ import org.dlect.controller.worker.LectureWorker;
 import org.dlect.event.util.EventIdListings;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.events.wrapper.Wrappers;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.helper.SubjectHelper;
 import org.dlect.model.Lecture;
@@ -37,8 +38,8 @@ import org.dlect.model.LectureDownload;
 import org.dlect.model.Stream;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
-import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.LeftRightCheck;
+import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.layout.TableConstraints;
 import org.dlect.ui.layout.TableLayout;
 
@@ -72,7 +73,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
         dbd = new DownloadButtonDotter(downloadButton);
 
-        this.controller.getControllerStateHelper().addListener(this, ControllerStateHelper.class);
+        Wrappers.addSwingListenerTo(this, this.controller.getControllerStateHelper(), ControllerStateHelper.class);
 
         refresh();
     }
@@ -82,11 +83,11 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
             return;
         }
         if (subject != null) {
-            subject.removeListener(this);
+            Wrappers.removeSwingListenerFrom(this, subject);
         }
         subject = course;
 
-        course.addListener(this, Subject.class, Lecture.class, LectureDownload.class, Stream.class);
+        Wrappers.addSwingListenerTo(this, subject, Subject.class, Lecture.class, LectureDownload.class, Stream.class);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -191,6 +192,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
             dbd.stop();
             downloadButton.setText("None Detected");
             downloadButton.setEnabled(false);
+            this.validate();
         } else {
             si.setSubject(subject);
             switch (si.getDownloadedStatus()) {
@@ -208,6 +210,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
                     dbd.stop();
                     downloadButton.setText("Download");
             }
+            this.validate();
         }
     }
 
@@ -244,9 +247,9 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     private void updateLectureStreams(SubjectInformation si) {
         si.setSubject(subject);
-        Set<Stream> s = new HashSet<>(subject.getStreams());
-        s.removeAll(lectureStreams.keySet());
-        if (s.isEmpty()) {
+        Set<Stream> changedStreams = new HashSet<>(subject.getStreams());
+        changedStreams.removeAll(lectureStreams.keySet());
+        if (changedStreams.isEmpty()) {
             for (Map.Entry<Stream, LeftRightCheck> entry : lectureStreams.entrySet()) {
                 Stream stream = entry.getKey();
                 LeftRightCheck leftRightCheck = entry.getValue();
@@ -298,7 +301,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     private void updateExistingLectureStreams(final Stream stream, LeftRightCheck check, SubjectInformation si) {
         int streamCount = si.getStreamLectureCount().count(stream);
-
+        
         String lectureCount = String.format("%d Lecture%s", streamCount, (streamCount == 1 ? "" : "s"));
         check.setRightText(lectureCount);
         check.setText(stream.getName());
