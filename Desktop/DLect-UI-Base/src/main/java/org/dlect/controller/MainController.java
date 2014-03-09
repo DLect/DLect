@@ -6,6 +6,7 @@ package org.dlect.controller;
 
 import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.data.DatabaseSavingHandler;
+import org.dlect.controller.download.DownloadController;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
@@ -22,11 +23,14 @@ import org.dlect.file.FileController;
 public abstract class MainController extends Listenable<MainController> implements Initilisable {
 
     private final long uuid;
-    private DatabaseHandler databaseHandler;
-    private ProviderHelper providerHelper;
+
     private LoginController loginController;
     private SubjectController subjectController;
     private LectureController lectureController;
+    private DownloadController downloadController;
+
+    private DatabaseHandler databaseHandler;
+    private ProviderHelper providerHelper;
     private ControllerStateHelper controllerStateHelper;
     private SubjectDataHelper subjectDataHelper;
     private SubjectDisplaySettingHandler subjectDisplayHelper;
@@ -42,19 +46,25 @@ public abstract class MainController extends Listenable<MainController> implemen
     public void init() {
         this.databaseHandler = new DatabaseHandler();
         this.providerHelper = new ProviderHelper(this);
+
         this.loginController = new LoginController(this);
         this.subjectController = new SubjectController(this);
         this.lectureController = new LectureController(this);
+        this.downloadController = new DownloadController(this);
+
         this.controllerStateHelper = new ControllerStateHelper(this);
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
         this.subjectDataHelper = new SubjectDataHelper(this);
         this.databaseSavingHandler = new DatabaseSavingHandler(this);
-
         this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper, subjectDataHelper);
         Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
     }
 
-    public DatabaseHandler getDatabaseHandler() {
+    public DownloadController getDownloadController() {
+        return downloadController;
+    }
+
+        public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
 
