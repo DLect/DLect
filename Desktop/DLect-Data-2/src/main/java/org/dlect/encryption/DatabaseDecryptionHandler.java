@@ -45,7 +45,7 @@ public class DatabaseDecryptionHandler {
             byte[] decoded = dc.doFinal(BytesToString.decode(encVal.get()));
 
             return Optional.of(new String(decoded, Charsets.UTF_8));
-        } catch (GeneralSecurityException ex) {
+        } catch (GeneralSecurityException | NumberFormatException ex) {
             EncryptionLogger.LOGGER.error("Failed to decrypt value for key " + settingKey, ex);
             return Optional.absent();
         }
