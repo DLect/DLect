@@ -72,7 +72,7 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
     }
 
     public void setContentID(String contentID) {
-        EventBuilder<String> b = event(LectureEventID.TIME).before(getContentID());
+        EventBuilder<String> b = event(LectureEventID.CONTENT_ID).before(getContentID());
         this.contentID = contentID;
         b.after(getContentID()).fire();
     }
@@ -100,7 +100,7 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
     }
 
     public void setEnabled(boolean enabled) {
-        EventBuilder<Boolean> b = event(LectureEventID.TIME).before(isEnabled());
+        EventBuilder<Boolean> b = event(LectureEventID.ENABLED).before(isEnabled());
         this.enabled = enabled;
         b.after(isEnabled()).fire();
     }
