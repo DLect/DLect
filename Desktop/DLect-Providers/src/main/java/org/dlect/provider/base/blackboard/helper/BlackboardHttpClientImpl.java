@@ -20,6 +20,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.dlect.provider.base.blackboard.helper.httpclient.EntityInputStream;
 
 public class BlackboardHttpClientImpl implements BlackboardHttpClient {
 
@@ -27,26 +28,11 @@ public class BlackboardHttpClientImpl implements BlackboardHttpClient {
 
     @Override
     public InputStream doGet(URI uri) throws IOException {
-        // TODO Fully consume & close responce:
-        /*
-         * EntityUtils.consume(entity1);
-         * } finally {
-         * response1.close();
-         * }
-         */
-        return client.execute(new HttpGet(uri)).getEntity().getContent();
+        return new EntityInputStream(client.execute(new HttpGet(uri)).getEntity());
     }
 
     @Override
     public InputStream doPost(URI uri, Map<String, String> credentials) throws IOException {
-        // TODO Fully consume & close responce:
-        /*
-         * EntityUtils.consume(entity1);
-         * } finally {
-         * response1.close();
-         * }
-         */
-
         HttpPost p = new HttpPost(uri);
 
         List< NameValuePair> list = Lists.newArrayList();
@@ -58,7 +44,7 @@ public class BlackboardHttpClientImpl implements BlackboardHttpClient {
         }
 
         p.setEntity(new UrlEncodedFormEntity(list, Charsets.UTF_8));
-        return client.execute(p).getEntity().getContent();
+        return new EntityInputStream(client.execute(p).getEntity());
     }
 
 }
