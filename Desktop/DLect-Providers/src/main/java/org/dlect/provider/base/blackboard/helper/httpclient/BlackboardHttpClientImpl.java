@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.helper;
+package org.dlect.provider.base.blackboard.helper.httpclient;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
