@@ -79,7 +79,6 @@ public class SubjectListingHandler implements EventListener {
     }
 
     private void add(Subject s) {
-        // TODO warn if id not unique.
         Subject put = this.subjects.put(s.getId(), s);
         if(put != null && !s.equals(put)) {
             ControllerLogger.LOGGER.warn("Subject has identical ID as another.");

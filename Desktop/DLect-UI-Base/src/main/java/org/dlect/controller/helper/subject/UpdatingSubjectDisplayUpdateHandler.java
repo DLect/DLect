@@ -39,10 +39,19 @@ public class UpdatingSubjectDisplayUpdateHandler extends SubjectDisplayUpdateHan
 
     @Override
     public void updateSubjects() {
-        for (Semester s : getDatabase().getSemesters()) {
-            // TODO write the Subject display update handler
+                ImmutableSortedSet<Semester> semesters = getDatabase().getSemesters();
+        if (semesters.isEmpty()) {
+            return;
         }
-        
+        Semester last = semesters.last();
+        if (last.getNum() > mostRecentSemesterCode) {
+            setSemesterEnabled(last, true);
+        }
+        for (Semester s : semesters) {
+            if (enabledSemesters.contains(s)) {
+                setSemesterEnabled(s, true);
+            }
+        }
     }
 
 }
