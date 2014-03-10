@@ -37,11 +37,12 @@ public class UpdatingLectureStateUpdateHandler extends LectureStateUpdateHandler
 //        }
 //        this.enabledSemesters = builder.build();
 //        this.mostRecentSemesterCode = sem;
-        throw new UnsupportedOperationException("Not supported yet.");
+//        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void updateLecturesImpl() {
+        // TODO implement updating the subject's lectures.
 //        for (Semester s : getSubject().getSemesters()) {
 //            // TODO
 //        }

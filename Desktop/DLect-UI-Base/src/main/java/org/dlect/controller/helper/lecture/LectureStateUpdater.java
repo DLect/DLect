@@ -29,7 +29,6 @@ public class LectureStateUpdater implements EventListener {
     private final Map<Subject, LectureStateUpdateHandler> lectureHandlers = Maps.newHashMap();
 
     protected LectureStateUpdater(Database d) {
-        // TODO implement this for LectureWorker.
         this.d = d;
     }
 
