@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.helper;
+package org.dlect.provider.base.blackboard.helper.provider;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
@@ -18,8 +18,9 @@ import javax.xml.bind.JAXBException;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardProviderXmlDetails;
 
-import static org.dlect.provider.base.blackboard.helper.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
 
 public class BlackboardProviderInitiliserImpl implements BlackboardProviderInitiliser {
 
