@@ -32,7 +32,7 @@ def configureJava(task) {
 
 
 gradle.allprojects {
-    ext.applyJava = {
+    ext.applyJava = {mainClass ->
         apply plugin: 'java'
         apply plugin: 'jacoco'
         
@@ -42,6 +42,17 @@ gradle.allprojects {
             provided    findbugs()
             
             testCompile testing()
+        }
+        if(mainClass) {
+            apply plugin:'application'
+
+            task debug(dependsOn: classes, type: JavaExec) {
+                debug = true
+                classpath += tasks.run.classpath
+            }
+            tasks.withType(JavaExec.class).all {task ->
+                task.main = mainClass
+            }
         }
         
         jacocoTestReport {
@@ -65,7 +76,6 @@ gradle.allprojects {
                     println ""
                 })
         }
-        
         test {
             ignoreFailures = true
         }
