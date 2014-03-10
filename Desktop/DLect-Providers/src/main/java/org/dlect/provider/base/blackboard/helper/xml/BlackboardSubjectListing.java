@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.subject;
+package org.dlect.provider.base.blackboard.helper.xml;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,11 +24,11 @@ public class BlackboardSubjectListing {
 
     @XmlElementWrapper(name = "courses")
     @XmlElement(name = "course")
-    private Set<BlackboardSubject> courses;
+    private final Set<BlackboardSubject> courses = Sets.newHashSet();
 
     @XmlElementWrapper(name = "orgs")
     @XmlElement(name = "org")
-    private Set<BlackboardSubject> orgs;
+    private final Set<BlackboardSubject> orgs = Sets.newHashSet();
 
     public Set<BlackboardSubject> getCourses() {
         return ImmutableSet.copyOf(courses);

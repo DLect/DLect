@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.lecture;
+package org.dlect.provider.base.blackboard.helper.xml;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
@@ -16,24 +18,24 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  */
 public class BlackboardSubjectMapItem {
 
-    @XmlElement(name = "contentid")
+    @XmlAttribute(name = "contentid")
     private String contentId;
 
-    @XmlElement(name = "name")
+    @XmlAttribute(name = "name")
     private String name;
 
-    @XmlElement(name = "viewurl")
+    @XmlAttribute(name = "viewurl")
     private String viewUrl;
 
-    @XmlElement(name = "linktype")
+    @XmlAttribute(name = "linktype")
     private String linkType;
 
-    @XmlElement(name = "isAvail")
+    @XmlAttribute(name = "isAvail")
     private boolean availiable;
 
     @XmlElementWrapper(name = "children")
     @XmlElement(name = "map-item")
-    private List<BlackboardSubjectMapItem> children;
+    private final List<BlackboardSubjectMapItem> children = Lists.newArrayList();
 
     public String getContentId() {
         return contentId;
@@ -58,5 +60,12 @@ public class BlackboardSubjectMapItem {
     public ImmutableList<BlackboardSubjectMapItem> getChildren() {
         return ImmutableList.copyOf(children);
     }
+
+    @Override
+    public String toString() {
+        return "BlackboardSubjectMapItem{" + "contentId=" + contentId + ", name=" + name + ", viewUrl=" + viewUrl + ", linkType=" + linkType + ", availiable=" + availiable + ", children=" + children + '}';
+    }
+
+    
 
 }

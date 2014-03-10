@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.subject;
+package org.dlect.provider.base.blackboard.helper.xml;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.dlect.model.helper.ImmutableDate;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlDateTypeAdapter;
@@ -16,16 +16,16 @@ import org.dlect.provider.base.blackboard.helper.BlackboardXmlDateTypeAdapter;
  */
 public class BlackboardSubject {
 
-    @XmlElement(name = "bbid")
+    @XmlAttribute(name = "bbid")
     private String bbid;
 
-    @XmlElement(name = "name")
+    @XmlAttribute(name = "name")
     private String name;
 
-    @XmlElement(name = "courseid")
+    @XmlAttribute(name = "courseid")
     private String courseId;
 
-    @XmlElement(name = "enrollmentdate")
+    @XmlAttribute(name = "enrollmentdate")
     @XmlJavaTypeAdapter(BlackboardXmlDateTypeAdapter.class)
     private ImmutableDate enrollmentDate;
 
