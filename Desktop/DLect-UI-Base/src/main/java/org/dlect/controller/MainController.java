@@ -11,10 +11,14 @@ import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
 import org.dlect.controller.helper.SubjectDataHelper;
+import org.dlect.controller.helper.lecture.LectureDownloadStateUpdater;
+import org.dlect.controller.helper.lecture.LectureStateUpdater;
 import org.dlect.controller.helper.subject.SubjectDisplaySettingHandler;
+import org.dlect.controller.helper.subject.SubjectDisplayUpdater;
 import org.dlect.controller.provider.ProviderHelper;
 import org.dlect.events.listenable.Listenable;
 import org.dlect.file.FileController;
+import org.dlect.logging.ControllerLogger;
 
 /**
  *
@@ -55,16 +59,24 @@ public abstract class MainController extends Listenable<MainController> implemen
         this.controllerStateHelper = new ControllerStateHelper(this);
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
         this.subjectDataHelper = new SubjectDataHelper(this);
-        this.databaseSavingHandler = new DatabaseSavingHandler(this);
-        this.addChild(databaseHandler, loginController, subjectController, lectureController, controllerStateHelper, subjectDataHelper);
-        Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
+        this.addChild(databaseHandler, loginController, subjectController, lectureController, downloadController, controllerStateHelper, subjectDataHelper);
+        Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, downloadController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
+
+        ControllerLogger.LOGGER.error("Hello World 1");
+
+        DatabaseSavingHandler.registerOn(this);
+        LectureStateUpdater.registerOn(this);
+        LectureDownloadStateUpdater.registerOn(this);
+        SubjectDisplayUpdater.registerOn(this);
+        
+        ControllerLogger.LOGGER.error("Hello World 2");
     }
 
     public DownloadController getDownloadController() {
         return downloadController;
     }
 
-        public DatabaseHandler getDatabaseHandler() {
+    public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
 

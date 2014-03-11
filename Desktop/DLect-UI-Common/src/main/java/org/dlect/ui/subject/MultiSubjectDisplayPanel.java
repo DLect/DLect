@@ -32,7 +32,6 @@ import org.dlect.model.Semester;
 import org.dlect.model.Semester.SemesterEventID;
 import org.dlect.model.Subject;
 import org.dlect.ui.CoursePane;
-import org.dlect.controller.helper.subject.SubjectDisplayUpdater;
 
 /**
  *
@@ -59,7 +58,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         this.shownSubjects = Sets.newTreeSet();
         this.subjectPanes = Maps.newHashMap();
         this.listingHandler = new SubjectListingHandler(controller.getDatabaseHandler().getDatabase());
-        SubjectDisplayUpdater.registerOn(controller);
+        
         this.setLayout(new GridBagLayout());
         Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class);
     }
@@ -138,7 +137,6 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
             CoursePane coursePane = entry.getValue();
             if (!allSubjects.contains(subject)) {
                 this.remove(coursePane);
-                // TODO consider removing this entry from map as all insertations are well behaved.
             }
         }
     }
