@@ -17,6 +17,6 @@ import org.dlect.model.Subject;
  */
 public interface FileController {
 
-    public File getStreamForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException;
+    public File getFileForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException;
 
 }
