@@ -67,6 +67,12 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
         return this.getNumber() == other.getNumber();
     }
 
+    @Override
+    public String toString() {
+        return "Stream{" + "name=" + name + ", number=" + number + '}';
+    }
+    
+
     public static enum StreamEventID implements EventID {
 
         NAME, NUMBER;

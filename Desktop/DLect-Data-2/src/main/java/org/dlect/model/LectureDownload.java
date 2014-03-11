@@ -6,6 +6,7 @@
 package org.dlect.model;
 
 import java.net.URI;
+import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import org.dlect.events.EventID;
 import org.dlect.events.listenable.EventBuilder;
@@ -74,6 +75,33 @@ public class LectureDownload extends XmlListenable<LectureDownload> {
         EventBuilder<Boolean> evt = event(LectureDownloadEventID.DOWNLOAD_ENABLED).before(this.downloadEnabled);
         this.downloadEnabled = downloadEnabled;
         evt.after(this.downloadEnabled).fire();
+    }
+
+    @Override
+    public String toString() {
+        return "LectureDownload{" + "downloadURL=" + downloadURL + ", downloadExtension=" + downloadExtension + ", downloaded=" + downloaded + ", downloadEnabled=" + downloadEnabled + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.downloadURL);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LectureDownload other = (LectureDownload) obj;
+        if (!Objects.equals(this.downloadURL, other.downloadURL)) {
+            return false;
+        }
+        return true;
     }
 
     public static enum LectureDownloadEventID implements EventID {

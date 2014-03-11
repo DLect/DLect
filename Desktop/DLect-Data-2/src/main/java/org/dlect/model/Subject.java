@@ -151,6 +151,12 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         this.playlistFormat.setFormats(format);
     }
 
+    @Override
+    public String toString() {
+        return "Subject{" + "id=" + id + ", name=" + name + ", tagFormat=" + tagFormat + ", playlistFormat=" + playlistFormat + ", lectures=" + lectures + ", streams=" + streams + '}';
+    }
+
+    
     public static enum SubjectEventID implements EventID {
 
         ID, NAME, LECTURE, STREAM;

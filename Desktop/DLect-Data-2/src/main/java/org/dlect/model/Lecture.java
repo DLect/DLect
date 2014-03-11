@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -112,6 +113,34 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
     public void setLectureDownloads(Map<DownloadType, LectureDownload> lectureDownloads) {
         setMap(this.lectureDownloads, lectureDownloads);
     }
+
+    @Override
+    public String toString() {
+        return "Lecture{" + "contentID=" + contentID + ", time=" + time + ", enabled=" + enabled + ", streams=" + streams + ", lectureDownloads=" + lectureDownloads + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.contentID);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lecture other = (Lecture) obj;
+        if (!Objects.equals(this.contentID, other.contentID)) {
+            return false;
+        }
+        return true;
+    }
+    
 
     public static enum LectureEventID implements EventID {
 
