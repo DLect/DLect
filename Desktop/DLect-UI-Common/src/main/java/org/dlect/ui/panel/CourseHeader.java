@@ -12,6 +12,7 @@ import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.events.wrapper.Wrappers;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Subject;
@@ -44,7 +45,7 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
     public CourseHeader(MainController ctl) {
         initComponents();
         this.ctl = ctl;
-        ctl.getControllerStateHelper().addListener(this, ControllerStateHelper.class);
+        Wrappers.addSwingListenerTo(this, ctl, ControllerStateHelper.class);
     }
 
     @Override
@@ -112,6 +113,7 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         add(lectureCountLabel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -128,16 +130,20 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
         }
 
         this.subject = subject;
-        this.subject.addListener(this, Subject.class, Lecture.class, LectureDownload.class);
+        Wrappers.addSwingListenerTo(this, subject, Subject.class, Lecture.class, LectureDownload.class);
 
         refresh();
     }
 
     @Override
     public void processEvent(Event e) {
+        if (subject == null) {
+            return;
+        }
         if (e.getEventID().equals(SubjectEventID.NAME) || e.getEventID().equals(SubjectEventID.LECTURE)) {
             updateDescriptions();
-        } else if (DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
+        }
+        if (DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
             updateNums(ctl.getSubjectDataHelper().getSubjectInformation(e));
         }
     }
@@ -148,6 +154,9 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
     }
 
     private void updateNums(SubjectInformation i) {
+        if (subject == null) {
+            return;
+        }
         i.setSubject(subject);
         updateDescriptions();
 
@@ -162,6 +171,7 @@ public class CourseHeader extends javax.swing.JPanel implements EventListener {
             progress = -1;
             dlInProgress = 0;
         }
+        repaint();
     }
 
     private void updateDescriptions() {
