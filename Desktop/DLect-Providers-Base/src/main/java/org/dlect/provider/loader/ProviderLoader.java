@@ -14,7 +14,7 @@ import org.dlect.helper.Conditions;
 import org.dlect.model.Database;
 import org.dlect.provider.Provider;
 import org.dlect.provider.WrappedProvider;
-import org.dlect.provider.impl.test.TestProvider;
+import org.dlect.provider.impl.au.uniQld.UQProviderDetailBuilder;
 import org.dlect.provider.impl.test.TestProviderDetailBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +27,12 @@ public class ProviderLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderLoader.class);
 
+    @SuppressWarnings("unchecked")
     public static final List<Class<? extends ProviderDetailBuilder>> PROVIDERS = ImmutableList
             .<Class<? extends ProviderDetailBuilder>>builder()
             .add(
-                    TestProviderDetailBuilder.class
+                    TestProviderDetailBuilder.class,
+                    UQProviderDetailBuilder.class
             ).build();
 
     public List<ProviderDetail> getProviders() {
