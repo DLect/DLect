@@ -6,9 +6,14 @@
 package org.dlect.controller.helper;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Predicates;
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Table;
+import java.util.Collections;
 import org.dlect.controller.MainController;
 import org.dlect.controller.download.event.DownloadEvent;
 import org.dlect.controller.download.event.DownloadParameter;
@@ -32,7 +37,7 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
 
     private final Table<ControllerType, Optional<Subject>, ControllerState> currentControllerActions = HashBasedTable.create(5, 50);
 
-    private final Table<Subject, Lecture, DownloadType> currentDownloads = HashBasedTable.create(10, 40);
+    private final Multimap<Lecture, DownloadType> currentDownloads = HashMultimap.create(100, 2);
 
     public ControllerStateHelper(MainController mc) {
         mc.addListener(this, Controller.class);
@@ -52,12 +57,20 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
         return s == ControllerState.COMPLETED;
     }
 
-    public ImmutableMap<Lecture, DownloadType> getDownloadingIn(Subject sub) {
-        return ImmutableMap.copyOf(currentDownloads.row(sub));
+    public ImmutableMultimap<Lecture, DownloadType> getDownloadingIn(Subject sub) {
+        return ImmutableMultimap.copyOf(Multimaps.filterKeys(currentDownloads, Predicates.in(sub.getLectures())));
     }
 
     public boolean isDownloading(Subject sub) {
-        return !currentDownloads.row(sub).isEmpty();
+        return !Collections.disjoint(sub.getLectures(), currentDownloads.keySet());
+    }
+
+    public boolean isDownloading(Lecture l) {
+        return currentDownloads.containsKey(l);
+    }
+
+    public boolean isDownloading(Lecture l, DownloadType lt) {
+        return currentDownloads.containsEntry(l, lt);
     }
 
     @Override
@@ -89,11 +102,11 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
             switch (eid) {
                 case STARTING:
                 case PROGRESS:
-                    currentDownloads.put(s, l, dt);
+                    currentDownloads.put(l, dt);
                     break;
                 case COMPLETED:
                 case FAILED:
-                    currentDownloads.remove(de, l);
+                    currentDownloads.remove(l, dt);
                     break;
             }
             fireEvent(ControllerStateHelperEventID.DOWNLOAD);
@@ -112,11 +125,6 @@ public class ControllerStateHelper extends ControllerListenable<ControllerStateH
         @Override
         public String getName() {
             return name();
-        }
-
-        @Override
-        public boolean isUniqueId() {
-            return false;
         }
 
     }
