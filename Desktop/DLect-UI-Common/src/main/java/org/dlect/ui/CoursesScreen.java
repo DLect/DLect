@@ -14,6 +14,9 @@ import org.dlect.controller.helper.SubjectDataHelper.DownloadState;
 import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.controller.worker.ErrorDisplayable;
 import org.dlect.controller.worker.SubjectWorker;
+import org.dlect.controller.worker.download.DownloadErrorDisplayable;
+import org.dlect.controller.worker.download.DownloadWorkerHelper;
+import org.dlect.event.util.EventIdListings;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
@@ -23,6 +26,7 @@ import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;
 import org.dlect.model.Semester;
 import org.dlect.model.Subject;
+import org.dlect.model.formatter.DownloadType;
 import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.prefs.PreferencesDialog;
 import org.dlect.ui.prefs.PreferencesDialogImpl;
@@ -40,7 +44,7 @@ import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.*;
  * @author lee
  */
 public class CoursesScreen extends javax.swing.JPanel implements
-        EventListener, ErrorDisplayable {
+        EventListener, ErrorDisplayable, DownloadErrorDisplayable {
 
     private static final long serialVersionUID = 1L;
 
@@ -150,12 +154,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void downloadAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadAllButtonActionPerformed
-//    TODO    ThreadUtil.runExecution(new Runnable() {
-//            @Override
-//            public void run() {
-//                //controller.getDownloadController().downloadAllSelected(new ArrayList<Subject>(shownSubjects.keySet()));
-//            }
-//        });
+        DownloadWorkerHelper.downloadAllSelectedIn(this, controller, msdp.getShownSubjects());
     }//GEN-LAST:event_downloadAllButtonActionPerformed
 
     private void preferencesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preferencesButtonActionPerformed
@@ -175,7 +174,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
     // End of variables declaration//GEN-END:variables
 
     private void updateButtonState() {
-        // TODO update this method to be better reactive.
+        // TODO(Later) update this method to react to events better.
         ControllerStateHelper csh = controller.getControllerStateHelper();
 
         if (!csh.hasCompleted(ControllerType.SUBJECT)) {
@@ -209,7 +208,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
         for (Subject subject : shown) {
             SubjectInformation i = new SubjectInformation();
             i.setSubject(subject);
-            // TODO simplify this by storing the information and invalidating it as events come in.
+            // TODO(Later) simplify this by storing the information and invalidating it as events come in.
             selected += i.getDownloadsSelected();
             notDownloaded += i.getNotDownloadedCount();
             if (SubjectInformation.getDownloadedStatusFromCounts(notDownloaded, selected) == NOT_ALL_DOWNLOADED) {
@@ -242,7 +241,9 @@ public class CoursesScreen extends javax.swing.JPanel implements
 
     @Override
     public void processEvent(Event e) {
-        if (e.getEventID().equals(ControllerStateHelperEventID.DOWNLOAD)) {
+        if (EventIdListings.DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
+            updateButtonState();
+        } else if (e.getEventID().equals(ControllerStateHelperEventID.DOWNLOAD)) {
             updateButtonState(); // TODO update this.
         } else if (e.getEventID().equals(ControllerStateHelperEventID.CONTROLLER)) {
             updateButtonState();
@@ -259,8 +260,14 @@ public class CoursesScreen extends javax.swing.JPanel implements
 
     @Override
     public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
-        // show try again button if type==Subject && get==NO_CONN.
+        // TODO(Later) show try again button if type==Subject && get==NO_CONN.
         // TODO - show error box.
+    }
+
+    @Override
+    public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
+        // TODO show error box for download problems.
+        //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
