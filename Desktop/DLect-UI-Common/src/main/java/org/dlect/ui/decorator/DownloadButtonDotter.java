@@ -16,6 +16,7 @@
  */
 package org.dlect.ui.decorator;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -33,12 +34,13 @@ public class DownloadButtonDotter implements ActionListener {
     private static final ImmutableList<String> dotPostfixString = ImmutableList.of("", ".", "..", "...");
     private final JButton b;
 
-    public DownloadButtonDotter(JButton b) {
-        this.b = b;
-        name = b.getText();
-    }
     private String name;
     private int dots = 1;
+
+    public DownloadButtonDotter(JButton b) {
+        this.b = b;
+        this.name = b.getText();
+    }
 
     @Deprecated
     public void updateAndStart() {
@@ -69,16 +71,29 @@ public class DownloadButtonDotter implements ActionListener {
     }
 
     public void update() {
-        update(b.getText());
+        updatePreferedSize(name + dotPostfixString.get(3));
+        b.setText(name);
+    }
+
+    public void updateAndStop(String text) {
+        if (!Objects.equal(name, text)) {
+            name = text;
+            reset();
+        }
+    }
+
+    public void updatePreferedSize(String s) {
+        b.setPreferredSize(null);
+        b.setText(s);
+
+        b.setPreferredSize(b.getPreferredSize());
     }
 
     public void update(String buttonDefault) {
-        name = buttonDefault;
-        b.setPreferredSize(null);
-        b.setText(name + dotPostfixString.get(3));
-
-        b.setPreferredSize(b.getPreferredSize());
-        b.setText(name);
+        if (!Objects.equal(name, buttonDefault)) {
+            name = buttonDefault;
+            update();
+        }
     }
 
     @Override
@@ -88,10 +103,7 @@ public class DownloadButtonDotter implements ActionListener {
     }
 
     public void reset() {
-        b.setPreferredSize(null);
-        b.setText(name);
-        Dimension ps = b.getPreferredSize();
-        b.setPreferredSize(ps);
+        updatePreferedSize(name);
         dots = 1;
     }
 }
