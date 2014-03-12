@@ -5,9 +5,10 @@
  */
 package org.dlect.provider;
 
-import org.dlect.provider.objects.ImmutableSubjectData;
 import org.dlect.exception.DLectException;
+import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableSubject;
+import org.dlect.provider.objects.ImmutableSubjectData;
 
 /**
  *
@@ -15,6 +16,6 @@ import org.dlect.immutable.model.ImmutableSubject;
  */
 public interface LectureProvider {
 
-    public ImmutableSubjectData getLecturesIn(ImmutableSubject s) throws DLectException;
+    public ImmutableSubjectData getLecturesIn(ImmutableSemester sem, ImmutableSubject s) throws DLectException;
 
 }

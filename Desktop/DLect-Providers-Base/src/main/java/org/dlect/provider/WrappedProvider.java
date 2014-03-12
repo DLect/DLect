@@ -7,6 +7,7 @@ package org.dlect.provider;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,7 +45,7 @@ import static org.dlect.model.helper.CommonSettingNames.*;
 public class WrappedProvider {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(WrappedProvider.class);
-
+    private static final ImmutableSet<ImmutableSubject> EMPTY_SUBJECTS = ImmutableSet.of();
     private final Database d;
     private final DatabaseDecryptionHandler deh;
     private final FileController fc;
@@ -91,29 +92,31 @@ public class WrappedProvider {
         throw new IllegalArgumentException("The subject is not contained in the database.");
     }
 
-    protected boolean findSubject(Subject s) {
+    protected Semester findSubject(Subject s) {
         for (Semester semester : d.getSemesters()) {
             for (Subject subject : semester.getSubjects()) {
                 if (Objects.equal(s, subject)) {
-                    return true;
+                    return semester;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public void getLecturesIn(Subject s) throws DLectException {
         Conditions.checkNonNull(s, "Subject");
-        if (!findSubject(s)) {
+        Semester sem = findSubject(s);
+        if (sem == null) {
             throw new IllegalArgumentException("Subject is not in the configured database");
         }
 
         ImmutableSubject is = ImmutableSubject.from(s);
+        ImmutableSemester imSem = new ImmutableSemester(sem.getNum(), sem.getLongName(), sem.getCoursePostfixName(), EMPTY_SUBJECTS);
         LectureProvider lp = p.getLectureProvider();
         if (lp == null) {
             throw new DLectException(DLectExceptionCause.PROVIDER_CONTRACT, "The provider(" + p + ") failed to return a valid LectureProvider");
         }
-        ImmutableSubjectData data = lp.getLecturesIn(is);
+        ImmutableSubjectData data = lp.getLecturesIn(imSem, is);
 
         WrappedProviderLectureHelper.mergeSubjectData(s, data);
     }
@@ -131,7 +134,7 @@ public class WrappedProvider {
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
         OutputStream os = null;
         try {
-            os = new BufferedOutputStream(new FileOutputStream(fc.getStreamForDownload(s, l, ld)));
+            os = new BufferedOutputStream(new FileOutputStream(fc.getFileForDownload(s, l, ld)));
         } catch (IOException ex) {
             try {
                 is.close();
