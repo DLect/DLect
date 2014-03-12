@@ -5,9 +5,14 @@
  */
 package org.dlect.controller.helper.lecture;
 
-import java.util.SortedSet;
-import org.dlect.model.Semester;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.ImmutableSortedSet.Builder;
+import org.dlect.model.Stream;
 import org.dlect.model.Subject;
+import org.dlect.model.formatter.DownloadType;
+
+import static com.google.common.collect.ImmutableList.builder;
 
 /**
  *
@@ -15,8 +20,8 @@ import org.dlect.model.Subject;
  */
 public class UpdatingLectureStateUpdateHandler extends LectureStateUpdateHandler {
 
-    private SortedSet<Semester> enabledSemesters;
-    private int mostRecentSemesterCode;
+    private ImmutableSortedSet<Stream> enabledStreams;
+    private ImmutableSet<DownloadType> enabledDownloadTypes;
 
     public UpdatingLectureStateUpdateHandler(Subject d) {
         super(d);
@@ -24,29 +29,34 @@ public class UpdatingLectureStateUpdateHandler extends LectureStateUpdateHandler
 
     @Override
     protected void initImpl() {
-//        Builder<Semester> builder = ImmutableSortedSet.naturalOrder();
-//        int sem = Integer.MIN_VALUE;
-//
-//        for (Semester semester : d.getSemesters()) {
-//            if (semester.getNum() > sem) {
-//                sem = semester.getNum();
-//            }
-//            if (isSemesterEnabled(semester)) {
-//                builder.add(semester);
-//            }
-//        }
-//        this.enabledSemesters = builder.build();
-//        this.mostRecentSemesterCode = sem;
-//        throw new UnsupportedOperationException("Not supported yet.");
+        Builder<Stream> streamsBuilder = ImmutableSortedSet.naturalOrder();
+        Builder<DownloadType> dlTypeBuilder = ImmutableSortedSet.naturalOrder();
+
+        for (Stream stream : getSubject().getStreams()) {
+            if (isStreamEnabled(stream)) {
+                streamsBuilder.add(stream);
+            }
+        }
+        for (DownloadType dt : DownloadType.values()) {
+            if (isDownloadTypeEnabled(dt)) {
+                dlTypeBuilder.add(dt);
+            }
+        }
+
+        this.enabledStreams = streamsBuilder.build();
+        this.enabledDownloadTypes = dlTypeBuilder.build();
     }
 
     @Override
     public void updateLecturesImpl() {
-        // TODO implement updating the subject's lectures.
-//        for (Semester s : getSubject().getSemesters()) {
-//            // TODO
-//        }
-
+        for (Stream stream : getSubject().getStreams()) {
+            if (enabledStreams.contains(stream)) {
+                setStreamEnabled(stream, true);
+            }
+        }
+        for (DownloadType dt : enabledDownloadTypes) {
+            setDownloadTypeEnabled(dt, true);
+        }
     }
 
 }

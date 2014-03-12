@@ -17,11 +17,15 @@ import org.dlect.model.formatter.DownloadType;
  */
 public abstract class LectureStateUpdateHandler {
 
-    private final Subject subject;
+    private Subject subject;
     private SubjectInformation subjectInformation;
 
     public LectureStateUpdateHandler(Subject subject) {
         this.subject = subject;
+    }
+
+    public void setSubject(Subject s) {
+        this.subject = s;
     }
 
     public Subject getSubject() {

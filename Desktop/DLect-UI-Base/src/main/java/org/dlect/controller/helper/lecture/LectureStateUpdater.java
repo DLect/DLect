@@ -16,7 +16,6 @@ import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.model.Database;
 import org.dlect.model.Semester;
-import org.dlect.model.Semester.SemesterEventID;
 import org.dlect.model.Subject;
 
 /**
@@ -46,24 +45,19 @@ public class LectureStateUpdater implements EventListener {
                 for (Semester sem : d.getSemesters()) {
                     for (Subject subject : sem.getSubjects()) {
                         LectureStateUpdateHandler get = lectureHandlers.get(subject);
+
                         if (get == null) {
                             get = new EmptyLectureStateUpdateHandler(subject);
                             get.init();
+                        } else {
+                            // Subject that it was configured on may not be the same object as the current one.
+                            get.setSubject(subject);
                         }
+
+                        System.out.println("Updating for " + subject.getId() + ": " + get.getClass());
                         get.updateLectures();
                     }
                 }
-            }
-        } else if (e.getEventID().equals(SemesterEventID.SUBJECT)) {
-            Subject before = (Subject) e.getBefore();
-            Subject after = (Subject) e.getAfter();
-            if (before != null) {
-                lectureHandlers.remove(before);
-            }
-            if (after != null) {
-                LectureStateUpdateHandler lsuh = new EmptyLectureStateUpdateHandler(after);
-                lsuh.init();
-                lectureHandlers.put(after, lsuh);
             }
         }
     }
