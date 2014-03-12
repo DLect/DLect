@@ -32,6 +32,7 @@ import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.immutable.model.ImmutableLecture;
 import org.dlect.immutable.model.ImmutableLectureDownload;
+import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.logging.ProviderLogger;
@@ -112,7 +113,7 @@ public class BlackboardLectureProvider implements LectureProvider {
     }
 
     @Override
-    public ImmutableSubjectData getLecturesIn(ImmutableSubject s) throws DLectException {
+    public ImmutableSubjectData getLecturesIn(ImmutableSemester sem, ImmutableSubject s) throws DLectException {
         String subjectContentLocation = "courseMap?v=1&language=en_GB&ver=" + DLECT_IDENTIFIER + "&course_id=" + s.getId();
 
         try (InputStream contentStream = httpClient.doGet(new URL(baseUrl.toURL(), subjectContentLocation).toURI())) {
@@ -123,7 +124,7 @@ public class BlackboardLectureProvider implements LectureProvider {
             List<String> exploredPages = Lists.newArrayList();
 
             Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
-            streams.addAll(lectureCustomiser.getLectureStreamsFor(s));
+            streams.addAll(lectureCustomiser.getLectureStreamsFor(sem, s));
             Set<ImmutableLecture> lectures = Sets.newHashSet(s.getLectures());
             Multimap<ImmutableLecture, ImmutableStream> lectureStreams = fillMultimap(lectures);
 
@@ -134,7 +135,7 @@ public class BlackboardLectureProvider implements LectureProvider {
                     if (!exploredPages.contains(normal.toString())) {
                         BlackboardLectureRecordingPage page = lecturePageParser.getPageFor(normal);
 
-                        processPage(page, lectures, lectureStreams, s);
+                        processPage(page, lectures, lectureStreams, sem, s);
                     }
                 }
             }
@@ -143,13 +144,14 @@ public class BlackboardLectureProvider implements LectureProvider {
         } catch (IOException ex) {
             throw new DLectException(DLectExceptionCause.NO_CONNECTION, ex);
         } catch (URISyntaxException ex) {
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         }
     }
 
     protected void processPage(BlackboardLectureRecordingPage page,
                                Set<ImmutableLecture> lectures,
                                Multimap<ImmutableLecture, ImmutableStream> lectureStreams,
+                               ImmutableSemester semester,
                                ImmutableSubject subject) throws DLectException {
         for (BlackboardLectureRecordingItem blri : page.getItems()) {
             try {
@@ -158,7 +160,7 @@ public class BlackboardLectureProvider implements LectureProvider {
 
                 if (opDate.isPresent()) {
                     Date d = opDate.get();
-                    Collection<ImmutableStream> streams = lectureCustomiser.getLectureStream(blri.getUrl(), blri.getTitle(), d, subject);
+                    Collection<ImmutableStream> streams = lectureCustomiser.getLectureStream(blri.getUrl(), blri.getTitle(), d, semester, subject);
 
                     Map<DownloadType, ImmutableLectureDownload> downloads = getDownloadType(blri.getUrl());
 
@@ -169,7 +171,7 @@ public class BlackboardLectureProvider implements LectureProvider {
                 }
             } catch (IOException ex) {
                 ProviderLogger.LOGGER.error("Failed to process page item " + blri, ex);
-                throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+                throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
             }
         }
     }
