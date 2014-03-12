@@ -5,6 +5,8 @@
  */
 package org.dlect.provider.base.blackboard.lecture;
 
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingItem;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
@@ -21,7 +23,7 @@ import java.util.regex.Pattern;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 
 public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser {
 
@@ -46,10 +48,10 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
                 items.add(parseItem(normal.toURL(), contentId, itemHtml));
             }
 
-            return new BlackboardLectureRecordingPage(null);
+            return new BlackboardLectureRecordingPage(items);
         } catch (MalformedURLException ex) {
             ProviderLogger.LOGGER.error("Failed to get URL: " + normal, ex);
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         } catch (IOException ex) {
             ProviderLogger.LOGGER.error("Failed to load page from uri: " + normal, ex);
             throw new DLectException(DLectExceptionCause.NO_CONNECTION, ex);
@@ -59,12 +61,12 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
     public BlackboardLectureRecordingItem parseItem(URL base, String contentId, String itemHtml) throws DLectException {
         Matcher m = LECTURE_RECORDING_INFORMATION.matcher(itemHtml);
         if (!m.find()) {
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE);
         } else {
             try {
                 String title = m.group(1);
                 String captureDate = m.group(2);
-                String urlBase = m.group(2);
+                String urlBase = m.group(3);
 
                 URI url = new URL(base, urlBase).toURI();
                 return new BlackboardLectureRecordingItem(contentId, title, captureDate, url);

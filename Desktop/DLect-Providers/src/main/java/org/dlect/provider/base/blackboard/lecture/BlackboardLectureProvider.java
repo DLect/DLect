@@ -5,6 +5,10 @@
  */
 package org.dlect.provider.base.blackboard.lecture;
 
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectMapItem;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingItem;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectContentListing;
 import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
@@ -35,10 +39,10 @@ import org.dlect.model.formatter.DownloadType;
 import org.dlect.provider.objects.ImmutableSubjectData;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.base.blackboard.BlackboardLectureCustomiser;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 
-import static org.dlect.provider.base.blackboard.helper.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
 
 /**
  *

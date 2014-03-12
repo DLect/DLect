@@ -23,10 +23,12 @@ import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.SubjectProvider;
 import org.dlect.provider.base.blackboard.BlackboardSubjectCustomiser;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubject;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectListing;
 
-import static org.dlect.provider.base.blackboard.helper.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
 
 /**
  *

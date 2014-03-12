@@ -11,8 +11,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
-import org.dlect.provider.base.blackboard.helper.BlackboardProviderDetails;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderDetails;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 
 /**

@@ -5,6 +5,7 @@
  */
 package org.dlect.provider.base.blackboard.login;
 
+import org.dlect.provider.base.blackboard.helper.xml.LoginResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import org.dlect.exception.DLectException;

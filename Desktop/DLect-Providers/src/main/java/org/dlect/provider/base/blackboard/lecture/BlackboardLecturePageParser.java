@@ -5,9 +5,10 @@
  */
 package org.dlect.provider.base.blackboard.lecture;
 
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
 import java.net.URI;
 import org.dlect.exception.DLectException;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 
 /**
  *

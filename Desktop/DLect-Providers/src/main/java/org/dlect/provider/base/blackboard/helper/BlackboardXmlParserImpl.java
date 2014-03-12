@@ -11,9 +11,9 @@ import javax.xml.bind.JAXBException;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
-import org.dlect.provider.base.blackboard.lecture.BlackboardSubjectContentListing;
-import org.dlect.provider.base.blackboard.login.LoginResponse;
-import org.dlect.provider.base.blackboard.subject.BlackboardSubjectListing;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectContentListing;
+import org.dlect.provider.base.blackboard.helper.xml.LoginResponse;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectListing;
 
 public class BlackboardXmlParserImpl implements BlackboardXmlParser {
 

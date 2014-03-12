@@ -7,9 +7,9 @@ package org.dlect.provider.base.blackboard.helper;
 
 import java.io.InputStream;
 import org.dlect.exception.DLectException;
-import org.dlect.provider.base.blackboard.lecture.BlackboardSubjectContentListing;
-import org.dlect.provider.base.blackboard.login.LoginResponse;
-import org.dlect.provider.base.blackboard.subject.BlackboardSubjectListing;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectContentListing;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectListing;
+import org.dlect.provider.base.blackboard.helper.xml.LoginResponse;
 
 /**
  *
