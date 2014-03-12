@@ -13,13 +13,16 @@ import org.dlect.provider.LectureProvider;
 import org.dlect.provider.LoginProvider;
 import org.dlect.provider.Provider;
 import org.dlect.provider.SubjectProvider;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClient;
-import org.dlect.provider.base.blackboard.helper.BlackboardHttpClientImpl;
-import org.dlect.provider.base.blackboard.helper.BlackboardProviderDetails;
-import org.dlect.provider.base.blackboard.helper.BlackboardProviderInitiliser;
-import org.dlect.provider.base.blackboard.helper.BlackboardProviderInitiliserImpl;
+import org.dlect.provider.base.blackboard.download.BlackboardDownloadProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParserImpl;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClientImpl;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderDetails;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInformation;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInitiliser;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInitiliserImpl;
+import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInitiliserWithBackupImpl;
 import org.dlect.provider.base.blackboard.lecture.BlackboardLectureProvider;
 import org.dlect.provider.base.blackboard.login.BlackboardSslFormLoginProvider;
 import org.dlect.provider.base.blackboard.subject.BlackboardSubjectProvider;
@@ -43,6 +46,11 @@ public class BlackboardBaseProvider implements Provider {
 
     public BlackboardBaseProvider(int providerCode, BlackboardSubjectCustomiser subjectCustomiser, BlackboardLectureCustomiser lectureCustomiser) {
         this(subjectCustomiser, lectureCustomiser, new BlackboardProviderInitiliserImpl(providerCode),
+             new BlackboardHttpClientImpl(), new BlackboardXmlParserImpl());
+    }
+
+    public BlackboardBaseProvider(BlackboardProviderInformation providerInformation, BlackboardSubjectCustomiser subjectCustomiser, BlackboardLectureCustomiser lectureCustomiser) {
+        this(subjectCustomiser, lectureCustomiser, new BlackboardProviderInitiliserWithBackupImpl(providerInformation),
              new BlackboardHttpClientImpl(), new BlackboardXmlParserImpl());
     }
 
@@ -90,7 +98,7 @@ public class BlackboardBaseProvider implements Provider {
 
         subjectProvider = new BlackboardSubjectProvider(u.getBaseUrl(), subjectCustomiser, httpClient, xmlParser);
         lectureProvider = new BlackboardLectureProvider(u.getBaseUrl(), lectureCustomiser, httpClient, xmlParser);
-        // TODO init DownlaodProvider
+        downloadProvider = new BlackboardDownloadProvider(httpClient);
     }
 
 }
