@@ -9,6 +9,7 @@ import com.google.common.base.Optional;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Date;
+import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 
@@ -20,7 +21,7 @@ public interface BlackboardLectureCustomiser {
 
     public Optional<Date> getLectureTime(URI u, String title, String captureDate);
 
-    public Collection<ImmutableStream> getLectureStreamsFor(ImmutableSubject s);
+    public Collection<ImmutableStream> getLectureStreamsFor(ImmutableSemester sem, ImmutableSubject s);
 
-    public Collection<ImmutableStream> getLectureStream(URI u, String title, Date lectureTime, ImmutableSubject s);
+    public Collection<ImmutableStream> getLectureStream(URI u, String title, Date lectureTime, ImmutableSemester sem, ImmutableSubject s);
 }
