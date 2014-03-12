@@ -5,6 +5,7 @@
  */
 package org.dlect.events.wrapper;
 
+import com.google.common.base.Objects;
 import org.dlect.events.Event;
 import org.dlect.events.EventAdapter;
 import org.dlect.events.EventListener;
@@ -49,6 +50,21 @@ public abstract class EventListenerWrapper implements EventListener {
 
     protected void removeSelfFromAdapter() {
         addedTo.removeListener(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof EventListenerWrapper) {
+            EventListenerWrapper other = (EventListenerWrapper) obj;
+            return Objects.equal(this.getWrappedListener(), other.getWrappedListener())
+                   && Objects.equal(this.addedTo, other.addedTo);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.addedTo, this.getWrappedListener());
     }
 
 }

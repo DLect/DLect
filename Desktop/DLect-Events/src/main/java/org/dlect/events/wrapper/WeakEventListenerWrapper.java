@@ -6,8 +6,8 @@
 package org.dlect.events.wrapper;
 
 import java.lang.ref.WeakReference;
-import org.dlect.events.EventListener;
 import org.dlect.events.EventAdapter;
+import org.dlect.events.EventListener;
 
 public class WeakEventListenerWrapper extends EventListenerWrapper {
     private final WeakReference<EventListener> listener;
