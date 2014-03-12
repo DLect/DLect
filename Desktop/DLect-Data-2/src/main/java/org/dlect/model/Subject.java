@@ -156,7 +156,6 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         return "Subject{" + "id=" + id + ", name=" + name + ", tagFormat=" + tagFormat + ", playlistFormat=" + playlistFormat + ", lectures=" + lectures + ", streams=" + streams + '}';
     }
 
-    
     public static enum SubjectEventID implements EventID {
 
         ID, NAME, LECTURE, STREAM;
@@ -169,11 +168,6 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         @Override
         public String getName() {
             return name();
-        }
-
-        @Override
-        public boolean isUniqueId() {
-            return this == ID;
         }
 
     }

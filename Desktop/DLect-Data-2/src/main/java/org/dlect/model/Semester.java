@@ -134,10 +134,6 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return this == NUMBER;
-        }
     }
 
 }

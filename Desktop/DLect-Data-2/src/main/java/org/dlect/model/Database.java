@@ -91,11 +91,6 @@ public class Database extends XmlListenable<Database> {
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 
 }

@@ -34,11 +34,11 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
     private Date time;
     @XmlElement(name = "enabled")
     private boolean enabled = false;
-    
+
     @XmlElementWrapper(name = "streams")
     @XmlElement(name = "stream")
     private final SortedSet<Stream> streams;
-    
+
     @XmlElementWrapper(name = "downloads")
     @XmlElement(name = "download")
     private final Map<DownloadType, LectureDownload> lectureDownloads;
@@ -140,7 +140,6 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
         }
         return true;
     }
-    
 
     public static enum LectureEventID implements EventID {
 
@@ -156,10 +155,6 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return this == CONTENT_ID;
-        }
     }
 
 }

@@ -87,10 +87,6 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return this == NUMBER;
-        }
 
     }
 

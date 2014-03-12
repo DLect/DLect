@@ -118,11 +118,6 @@ public class LectureDownload extends XmlListenable<LectureDownload> {
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return this == DOWNLOAD_URL;
-        }
-
     }
 
 }
