@@ -27,6 +27,8 @@ import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.controller.worker.ErrorDisplayable;
 import org.dlect.controller.worker.LectureWorker;
+import org.dlect.controller.worker.download.DownloadErrorDisplayable;
+import org.dlect.controller.worker.download.DownloadWorkerHelper;
 import org.dlect.event.util.EventIdListings;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
@@ -42,6 +44,7 @@ import org.dlect.ui.LeftRightCheck;
 import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.layout.TableConstraints;
 import org.dlect.ui.layout.TableLayout;
+import org.dlect.ui.prefs.subject.AdvancedSubjectPreferencesDialog;
 
 import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.ALL_DOWNLOADED;
 import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.NONE_SELECTED;
@@ -50,7 +53,7 @@ import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.NONE_S
  *
  * @author lee
  */
-public final class CourseDetailPanel extends javax.swing.JPanel implements EventListener, ErrorDisplayable {
+public final class CourseDetailPanel extends javax.swing.JPanel implements EventListener, ErrorDisplayable, DownloadErrorDisplayable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,13 +71,10 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     public CourseDetailPanel(MainController controller) {
         this.controller = controller;
-
         initComponents();
-
         dbd = new DownloadButtonDotter(downloadButton);
 
         Wrappers.addSwingListenerTo(this, this.controller.getControllerStateHelper(), ControllerStateHelper.class);
-
         refresh();
     }
 
@@ -135,7 +135,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         downloadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO download selected.
+                DownloadWorkerHelper.downloadAllSelectedIn(CourseDetailPanel.this, controller, subject);
             }
         });
         add(downloadButton, co);
@@ -144,8 +144,11 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         advancedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO show subject panel
-//                new AdvancedSubjectPreferencesDialog(SwingUtilities.windowForComponent(CourseDetailPanel.this), subject, controller).setVisible(true);
+                new AdvancedSubjectPreferencesDialog(
+                        SwingUtilities.windowForComponent(CourseDetailPanel.this),
+                        subject,
+                        controller
+                ).setVisible(true);
             }
         });
         co = TableConstraints.create(5, 1);
@@ -175,7 +178,6 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
         }
         SubjectInformation i = new SubjectInformation();
         i.setSubject(subject);
-        i.itterateOverLectures();
 
         updateDownloadButton(i);
         updateLectureStreams(i);
@@ -301,7 +303,7 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     private void updateExistingLectureStreams(final Stream stream, LeftRightCheck check, SubjectInformation si) {
         int streamCount = si.getStreamLectureCount().count(stream);
-        
+
         String lectureCount = String.format("%d Lecture%s", streamCount, (streamCount == 1 ? "" : "s"));
         check.setRightText(lectureCount);
         check.setText(stream.getName());
@@ -321,7 +323,13 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     @Override
     public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
+        // TODO show error box for lecture event.
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
+        // TODO show error box for download event
     }
 
 }
