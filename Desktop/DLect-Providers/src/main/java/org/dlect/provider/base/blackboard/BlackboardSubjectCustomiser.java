@@ -18,6 +18,7 @@ public interface BlackboardSubjectCustomiser {
     /**
      *
      * @param name
+     * @param courseId
      * @param bbid
      *
      * @return The name of the course, or an absent optional to ignore this subject
@@ -29,11 +30,11 @@ public interface BlackboardSubjectCustomiser {
      * @param name
      * @param courseId
      * @param bbid
-     * @param enrollmentdate
+     * @param enrollmentDate
      *
      * @return The semester number(arbitrary or otherwise) where a smaller
      *         semester number indicates a semester further in the past.
      */
-    public ImmutableSemester getSemesterFor(String name, String courseId, String bbid, Date enrollmentdate);
+    public ImmutableSemester getSemesterFor(String name, String courseId, String bbid, Date enrollmentDate);
 
 }
