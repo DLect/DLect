@@ -21,16 +21,12 @@ import org.jdesktop.swingx.painter.BusyPainter;
 public class BusyPainterUI extends LockableUI
         implements ActionListener {
 
-    private BusyPainter busyPainter;
-    private Timer timer;
+    private final BusyPainter busyPainter;
+    private final Timer timer;
     private int frameNumber;
     private boolean showSpinner = true;
 
     public BusyPainterUI() {
-        this(false);
-    }
-
-    public BusyPainterUI(boolean allowConfetti) {
         busyPainter = createBusyPainter();
         timer = new Timer(1000 / 15, this);
     }
@@ -47,7 +43,7 @@ public class BusyPainterUI extends LockableUI
     protected void paintLayer(Graphics2D g2, JXLayer<? extends JComponent> l) {
         super.paintLayer(g2, l);
         if (isLocked() && isSpinnerShown()) {
-            busyPainter.paint((Graphics2D) g2, l, l.getWidth(), l.getHeight());
+            busyPainter.paint(g2, l, l.getWidth(), l.getHeight());
         }
     }
 
@@ -101,7 +97,6 @@ public class BusyPainterUI extends LockableUI
     }
 
     public static BusyPainter createBusyPainter() {
-
         return createBusyPainter(new Dimension(100, 100));
     }
 
