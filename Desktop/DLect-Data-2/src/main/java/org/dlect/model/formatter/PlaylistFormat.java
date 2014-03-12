@@ -49,10 +49,5 @@ public class PlaylistFormat extends Formatable<PlaylistFormat> {
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 }

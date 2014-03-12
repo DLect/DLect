@@ -50,11 +50,6 @@ public class TagFormat extends Formatable<TagFormat> {
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 
 }
