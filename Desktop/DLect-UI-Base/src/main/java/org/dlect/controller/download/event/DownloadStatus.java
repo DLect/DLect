@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.controller.download.event;
 
 import org.dlect.controller.helper.Controller;
@@ -13,7 +12,8 @@ import org.dlect.events.EventID;
  *
  * @author lee
  */
-public enum DownloadStatus implements EventID{
+public enum DownloadStatus implements EventID {
+
     STARTING, PROGRESS, COMPLETED, FAILED;
 
     @Override
@@ -26,8 +26,4 @@ public enum DownloadStatus implements EventID{
         return name();
     }
 
-    @Override
-    public boolean isUniqueId() {
-        return false;
-    }
 }

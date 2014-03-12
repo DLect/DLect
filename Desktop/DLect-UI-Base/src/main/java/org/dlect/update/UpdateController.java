@@ -84,11 +84,6 @@ public class UpdateController extends Listenable<UpdateController> implements In
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 
 }

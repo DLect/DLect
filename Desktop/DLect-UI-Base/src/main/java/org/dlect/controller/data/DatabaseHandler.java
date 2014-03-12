@@ -172,11 +172,6 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 
 }

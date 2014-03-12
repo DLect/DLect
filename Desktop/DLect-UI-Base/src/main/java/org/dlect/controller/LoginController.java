@@ -89,11 +89,6 @@ public class LoginController extends ControllerListenable<LoginController> imple
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
-
     }
 
 }
