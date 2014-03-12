@@ -6,6 +6,7 @@
 package org.dlect.model;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
 import java.util.SortedSet;
 import javax.annotation.Nonnull;
@@ -109,7 +110,7 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         b.after(getName()).fire();
     }
 
-    public SortedSet<Lecture> getLectures() {
+    public ImmutableSortedSet<Lecture> getLectures() {
         return copyOf(lectures);
     }
 
@@ -121,7 +122,7 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         setSet(this.lectures, lectures);
     }
 
-    public SortedSet<Stream> getStreams() {
+    public ImmutableSortedSet<Stream> getStreams() {
         return copyOf(streams);
     }
 
