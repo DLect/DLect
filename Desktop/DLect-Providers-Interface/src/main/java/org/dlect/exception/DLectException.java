@@ -10,6 +10,7 @@ package org.dlect.exception;
  * @author lee
  */
 public class DLectException extends Exception {
+
     private static final long serialVersionUID = 1L;
 
     private final DLectExceptionCause causeCode;
@@ -33,6 +34,14 @@ public class DLectException extends Exception {
         this.causeCode = causeCode;
     }
 
+    public DLectException(DLectException cause) {
+        this(cause.getCauseCode(), cause.getCause());
+    }
+
+    public DLectException(String message, DLectException cause) {
+        this(cause.getCauseCode(), message, cause.getCause());
+    }
+
     public DLectExceptionCause getCauseCode() {
         return causeCode;
     }
@@ -43,7 +52,5 @@ public class DLectException extends Exception {
         String message = getLocalizedMessage();
         return (message != null) ? (s + " (" + causeCode + "): " + message) : s + " (" + causeCode + ")";
     }
-    
-    
 
 }
