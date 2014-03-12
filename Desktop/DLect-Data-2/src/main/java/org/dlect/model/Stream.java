@@ -6,6 +6,7 @@
 package org.dlect.model;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Ordering;
 import org.dlect.events.EventID;
 import org.dlect.events.listenable.EventBuilder;
 import org.dlect.model.helper.XmlListenable;
@@ -17,7 +18,6 @@ import org.dlect.model.helper.XmlListenable;
 public class Stream extends XmlListenable<Stream> implements Comparable<Stream> {
 
     private String name;
-    private long number;
 
     public Stream() {
     }
@@ -27,7 +27,7 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
         if (o == null) {
             return 1;
         }
-        return Long.compare(this.getNumber(), o.getNumber());
+        return Ordering.natural().nullsLast().compare(this.getName(), o.getName());
     }
 
     public String getName() {
@@ -40,19 +40,9 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
         b.after(getName()).fire();
     }
 
-    public long getNumber() {
-        return number;
-    }
-
-    public void setNumber(long number) {
-        EventBuilder<Long> b = event(StreamEventID.NUMBER).before(getNumber());
-        this.number = number;
-        b.after(getNumber()).fire();
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hashCode(number);
+        return Objects.hashCode(getName());
     }
 
     @Override
@@ -64,18 +54,17 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
             return false;
         }
         final Stream other = (Stream) obj;
-        return this.getNumber() == other.getNumber();
+        return this.getName().equalsIgnoreCase(other.getName());
     }
 
     @Override
     public String toString() {
-        return "Stream{" + "name=" + name + ", number=" + number + '}';
+        return "Stream{" + "name=" + getName() + '}';
     }
-    
 
     public static enum StreamEventID implements EventID {
 
-        NAME, NUMBER;
+        NAME;
 
         @Override
         public Class<?> getAppliedClass() {

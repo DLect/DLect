@@ -6,6 +6,7 @@
 package org.dlect.immutable.model;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Ordering;
 import org.dlect.model.Stream;
 
 /**
@@ -15,17 +16,14 @@ import org.dlect.model.Stream;
 public class ImmutableStream implements Comparable<ImmutableStream>, ImmutableModel<Stream> {
 
     private final String name;
-    private final long number;
 
-    public ImmutableStream(String name, long number) {
+    public ImmutableStream(String name) {
         this.name = name;
-        this.number = number;
     }
 
     @Override
     public void copyTo(Stream s) {
         s.setName(getName());
-        s.setNumber(getNumber());
     }
 
     @Override
@@ -39,21 +37,17 @@ public class ImmutableStream implements Comparable<ImmutableStream>, ImmutableMo
         return name;
     }
 
-    public long getNumber() {
-        return number;
-    }
-
     @Override
     public int compareTo(ImmutableStream o) {
         if (o == null) {
             return 1;
         }
-        return Long.compare(this.getNumber(), o.getNumber());
+        return Ordering.natural().nullsLast().compare(this.getName(), o.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.getNumber());
+        return Objects.hashCode(this.getName());
     }
 
     @Override
@@ -65,16 +59,16 @@ public class ImmutableStream implements Comparable<ImmutableStream>, ImmutableMo
             return false;
         }
         final ImmutableStream other = (ImmutableStream) obj;
-        return this.getNumber() == other.getNumber();
+        return Objects.equal(this.getName(), other.getName());
     }
 
     @Override
     public String toString() {
-        return "ImmutableStream{" + "name=" + name + ", number=" + number + '}';
+        return "ImmutableStream{" + "name=" + name + '}';
     }
 
     public static ImmutableStream from(Stream stream) {
-        return new ImmutableStream(stream.getName(), stream.getNumber());
+        return new ImmutableStream(stream.getName());
     }
 
 }
