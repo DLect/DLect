@@ -62,7 +62,12 @@ public class WrappingUtil {
     }
 
     public static JPanel wrap(JComponent entry, int anchor, int fill, Border b) {
-        JPanel p = new JPanel(new GridBagLayout());
+        JPanel p = new JPanel();
+        return wrap(p, entry, anchor, fill, b);
+    }
+
+    public  static JPanel wrap(JPanel p, JComponent entry, int anchor, int fill, Border b) {
+        p.setLayout(new GridBagLayout());
         p.setBorder(b);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = c.gridy = 0;
