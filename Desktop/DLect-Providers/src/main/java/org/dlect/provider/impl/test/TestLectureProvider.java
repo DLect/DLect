@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.provider.impl.test;
 
 import com.google.common.collect.HashMultimap;
@@ -18,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.dlect.exception.DLectException;
 import org.dlect.immutable.model.ImmutableLecture;
 import org.dlect.immutable.model.ImmutableLectureDownload;
+import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.model.formatter.DownloadType;
@@ -29,16 +29,17 @@ import org.dlect.provider.objects.ImmutableSubjectData;
  * @author lee
  */
 public class TestLectureProvider implements LectureProvider {
-    
+
     private static final long JANUARY_1 = 0;
     private static final long SINGLE_DAY = TimeUnit.DAYS.toMillis(1);
+
     @Override
-    public ImmutableSubjectData getLecturesIn(ImmutableSubject s) throws DLectException {
+    public ImmutableSubjectData getLecturesIn(ImmutableSemester sem, ImmutableSubject s) throws DLectException {
         Multimap<ImmutableLecture, ImmutableStream> lectureStreamMapping = HashMultimap.create();
         Collection<ImmutableLecture> lectures = Lists.newArrayList();
         Collection<ImmutableStream> streams = Lists.newArrayList();
         for (int streamNum = 0; streamNum < 3; streamNum++) {
-            final ImmutableStream stream = new ImmutableStream("S" + s.getId(), 1);
+            final ImmutableStream stream = new ImmutableStream("S" + s.getId());
 
             streams.add(stream);
 
