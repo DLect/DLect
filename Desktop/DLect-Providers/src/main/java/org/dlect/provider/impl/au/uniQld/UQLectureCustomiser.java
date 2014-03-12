@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
 import org.dlect.provider.base.blackboard.BlackboardLectureCustomiser;
@@ -38,9 +39,8 @@ public class UQLectureCustomiser implements BlackboardLectureCustomiser {
     }
 
     @Override
-    public Collection<ImmutableStream> getLectureStream(URI u, String title, Date lectureTime, ImmutableSubject s) {
-
-        Set<ImmutableStream> streams = helper.getStreamsFor(s.getName(), Integer.parseInt(s.getId()), lectureTime, null);
+    public Collection<ImmutableStream> getLectureStream(URI u, String title, Date lectureTime, ImmutableSemester sem, ImmutableSubject s) {
+        Set<ImmutableStream> streams = helper.getStreamsFor(s.getName(), sem.getNum(), lectureTime, null);
         Set<ImmutableStream> lectureStreams = Sets.newHashSet();
         for (ImmutableStream is : streams) {
             if (is.getName().startsWith("L")) {
@@ -51,8 +51,8 @@ public class UQLectureCustomiser implements BlackboardLectureCustomiser {
     }
 
     @Override
-    public Collection<ImmutableStream> getLectureStreamsFor(ImmutableSubject s) {
-        Set<ImmutableStream> streams = helper.getStreamsFor(s.getName(), Integer.parseInt(s.getId()));
+    public Collection<ImmutableStream> getLectureStreamsFor(ImmutableSemester sem, ImmutableSubject s) {
+        Set<ImmutableStream> streams = helper.getStreamsFor(s.getName(), sem.getNum());
         Set<ImmutableStream> lectureStreams = Sets.newHashSet();
         for (ImmutableStream is : streams) {
             if (is.getName().startsWith("L")) {
