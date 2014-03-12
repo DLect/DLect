@@ -1,7 +1,5 @@
-applyJava()
 
-apply plugin:'application'
-mainClassName="org.dlect.controller.GUIController"
+applyJava("org.dlect.controller.GUIController")
 
 
 dependencies {
