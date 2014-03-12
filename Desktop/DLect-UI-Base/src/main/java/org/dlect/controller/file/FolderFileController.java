@@ -36,7 +36,7 @@ public class FolderFileController implements FileController {
     }
 
     @Override
-    public File getStreamForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException {
+    public File getFileForDownload(Subject s, Lecture l, LectureDownload ld) throws IOException {
         String subjectFolderName = formatSubjectFolder(s);
         String lectureDate = formatLectureDate(l, ld);
 
@@ -52,7 +52,7 @@ public class FolderFileController implements FileController {
             throw new IOException("Subject folder does not represent a folder on disk.");
         }
 
-        File f = new File(subjectFolder, lectureDate);
+        File f = new File(subjectFolder, subjectFolderName + " ~ " + lectureDate + "." + ld.getDownloadExtension());
 
         return f;
     }
