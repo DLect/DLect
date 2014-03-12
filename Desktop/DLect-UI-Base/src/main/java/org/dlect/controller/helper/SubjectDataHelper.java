@@ -10,15 +10,12 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
 import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerListenable;
 import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
-import org.dlect.model.Lecture;
-import org.dlect.model.LectureDownload;
 import org.dlect.model.Stream;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
@@ -29,24 +26,24 @@ import org.dlect.model.formatter.DownloadType;
  */
 public class SubjectDataHelper extends ControllerListenable<SubjectDataHelper> implements EventListener {
 
-    private final Multiset<Subject> downloadedCount = HashMultiset.create(10);
-    private final Multiset<Stream> streamsLectureCount = HashMultiset.create(10);
-    private final Multiset<SubjectDownloadTypePair> subjectDownloadTypeCount = HashMultiset.create(10);
-
-    private final LoadingCache<Event, SubjectInformation> subjectInformationCache = CacheBuilder.newBuilder().maximumSize(10).build(new CacheLoader<Event, SubjectInformation>() {
-
-        @Override
-        public SubjectInformation load(Event key) throws Exception {
-            return new SubjectInformation();
-        }
-    });
+//    private final Multiset<Subject> downloadedCount = HashMultiset.create(10);
+//    private final Multiset<Stream> streamsLectureCount = HashMultiset.create(10);
+//    private final Multiset<SubjectDownloadTypePair> subjectDownloadTypeCount = HashMultiset.create(10);
+//
+//    private final LoadingCache<Event, SubjectInformation> subjectInformationCache = CacheBuilder.newBuilder().maximumSize(10).build(new CacheLoader<Event, SubjectInformation>() {
+//
+//        @Override
+//        public SubjectInformation load(Event key) throws Exception {
+//            return new SubjectInformation();
+//        }
+//    });
 
     public SubjectDataHelper(MainController mc) {
         //mc.addListener(this, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class);
     }
 
     public SubjectInformation getSubjectInformation(Event e) {
-        return subjectInformationCache.getUnchecked(e);
+        return new SubjectInformation();
     }
 
     @Override
