@@ -5,13 +5,11 @@
  */
 package org.dlect.encryption;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.SecureRandom;
-import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import org.dlect.model.Database;
@@ -26,12 +24,6 @@ public class DatabaseKeyHandler {
 
     private DatabaseKeyHandler(Key aesKey) {
         this.aesKey = aesKey;
-        try {
-            getDecryptingCipher();
-            getEncryptingCipher();
-        } catch (GeneralSecurityException ex) {
-            EncryptionLogger.LOGGER.error("INVALID KEY: " + aesKey, ex);
-        }
     }
 
     public Cipher getDecryptingCipher() throws GeneralSecurityException {

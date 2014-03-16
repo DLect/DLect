@@ -7,7 +7,6 @@ package org.dlect.encryption;
 
 import com.google.common.base.Charsets;
 import java.security.GeneralSecurityException;
-import javax.annotation.Nonnull;
 import javax.crypto.Cipher;
 import org.dlect.model.Database;
 
