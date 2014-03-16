@@ -25,7 +25,7 @@ import org.dlect.model.formatter.DownloadType;
  */
 @Deprecated
 public class PlaylistGenerator {
-// TODO FIX THIS CLASS COMPLETELY
+// TODO(Later) FIX THIS CLASS COMPLETELY
 
     public static boolean buildPlaylist(File playlistFile, DownloadType type, Map<File, MediaMetaData> lectureMetaDaya, Subject s) {
         BufferedWriter w = null;

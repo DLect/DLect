@@ -45,7 +45,7 @@ public class MediaTagEncoder {
             MediaMetaData a = new MediaMetaData(getName(s, l, dt), getAlbum(s, l, dt));
             
             
-            // TODO
+            // TODO(LAteR) implement tagging in MediaTagEncoder.
             
             
         }
