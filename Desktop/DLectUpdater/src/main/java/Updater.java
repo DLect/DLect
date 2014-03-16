@@ -23,10 +23,10 @@ public class Updater {
         if (args.length > 1) {
             for (int i = 1; i < args.length; i++) {
                 String a = args[i];
-                if (opt(a, 'a', 's', 'q')) {
+                if (a.matches("-[-]?[AaQqSs]")) {
                     silent = true;
-                } else if (opt(a, 'n', 'g')) {
-                    silent = false;
+                } else if (a.matches("-[-]?[MmGgVv]")) {
+                    silent = true;
                 }
             }
         }
@@ -46,14 +46,5 @@ public class Updater {
         } else {
             UpdaterWindow.start(location);
         }
-    }
-
-    private static boolean opt(String a, char... chars) {
-        for (char c : chars) {
-            if (a.charAt(1) == c || (a.charAt(1) == '-' && a.charAt(2) == c)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

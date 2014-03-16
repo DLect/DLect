@@ -25,7 +25,7 @@ public class UpdateImpl {
 
     public static final String UPDATE_DOWNLOAD_URL = "http://uqlectures.sourceforge.net/?h=dl";
     private static final int READ_SIZE = (int) 1e7;
-    private static final Set<Listener> listeners = new HashSet<Listener>();
+    private static final Set<Listener> listeners = new HashSet<>();
 
     public static void addListener(Listener l) {
         listeners.add(l);
@@ -49,7 +49,7 @@ public class UpdateImpl {
 
     public static File downloadUpdate() throws IOException {
         publish(Pair.of("Starting up", 0));
-        File tempFile = File.createTempFile("DLect Updater - ", ".jar");
+        File tempFile = File.createTempFile("DLect New Update", ".jar");
         InputStream nc = null;
         FileOutputStream fc = null;
         HttpURLConnection con = null;
