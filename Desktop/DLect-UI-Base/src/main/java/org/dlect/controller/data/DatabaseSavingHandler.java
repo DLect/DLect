@@ -44,7 +44,6 @@ public class DatabaseSavingHandler implements EventListener {
 
     public DatabaseSavingHandler(MainController mc) {
         this.mc = mc;
-        mc.addListener(this); // ALL THE EVENTS.
     }
 
     @Override
@@ -53,6 +52,11 @@ public class DatabaseSavingHandler implements EventListener {
             && mc.getDatabaseHandler().getDatabase() != null) {
             savingService.submit(SAVING_RUNNABLE);
         }
+    }
+
+    public static void registerOn(MainController mc) {
+        DatabaseSavingHandler sdu = new DatabaseSavingHandler(mc);
+        mc.addListener(sdu);
     }
 
 }
