@@ -33,7 +33,6 @@ import org.dlect.update.UpdateController;
  */
 public class GUIController extends MainController {
 
-    private StartupController startupController;
     private MainFrame mainFrame;
     private final FileController fileController;
     private UpdateController uc;
@@ -70,7 +69,6 @@ public class GUIController extends MainController {
     public void init() {
         super.init();
         this.mainFrame = StartupController.initMainFrame(this);
-        this.startupController = new StartupController(this);
         this.mainFrame.setLoginLocked(false);
         uc = new UpdateController(this);
         uc.init();
@@ -79,10 +77,6 @@ public class GUIController extends MainController {
 
     public MainFrame getMainFrame() {
         return mainFrame;
-    }
-
-    public StartupController getStartupController() {
-        return startupController;
     }
 
     public void closeApplication() {
