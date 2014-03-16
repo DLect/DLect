@@ -29,7 +29,7 @@ public class AdvancedPlaylistPreferencesPanel extends SubjectPreferencesPanel {
     private void initComponents() {
         AdvancedPlaylistSettingsPanel apsp = new AdvancedPlaylistSettingsPanel(s, ctl);
         JLabel warning = new JLabel();
-        
+
         this.setLayout(new GridBagLayout());
 
         warning.setText("<html><b>Warning: </b>Some of these features are experimental. <br>Please Use With Caution");
@@ -51,7 +51,7 @@ public class AdvancedPlaylistPreferencesPanel extends SubjectPreferencesPanel {
 
     @Override
     public void doPreShow() {
-        // TODO implement
+        // TODO(Later) implement playlist panel
     }
 
     @Override

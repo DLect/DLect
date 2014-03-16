@@ -174,7 +174,7 @@ public class AdvancedPlaylistSettingsPanel extends javax.swing.JPanel implements
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO
+        // TODO(Later) inplement playlist panel.
         if (!(e.getSource() instanceof JComboBox)) {
             return;
         }
