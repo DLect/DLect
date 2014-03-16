@@ -16,7 +16,6 @@ import org.dlect.events.Event;
 import org.dlect.events.EventID;
 import org.dlect.events.EventListener;
 import org.dlect.file.FileController;
-import org.dlect.logging.ControllerLogger;
 import org.dlect.logging.ProviderLogger;
 import org.dlect.model.Database;
 import org.dlect.model.Database.DatabaseEventID;
@@ -26,6 +25,7 @@ import org.dlect.model.LectureDownload;
 import org.dlect.model.LectureDownload.LectureDownloadEventID;
 import org.dlect.model.Semester;
 import org.dlect.model.Semester.SemesterEventID;
+import org.dlect.model.Stream;
 import org.dlect.model.Stream.StreamEventID;
 import org.dlect.model.Subject;
 import org.dlect.model.Subject.SubjectEventID;
@@ -73,6 +73,17 @@ public class LectureDownloadStateUpdater implements EventListener {
         }
     }
 
+    protected void updateState(Stream s) {
+        for (Semester sem : controller.getDatabaseHandler().getDatabase().getSemesters()) {
+            for (Subject sub : sem.getSubjects()) {
+                if (sub.getStreams().contains(s)) {
+                    updateState(ImmutableList.of(sub));
+                    return;
+                }
+            }
+        }
+    }
+
     protected void updateState(LectureDownload ld) {
         for (Semester sem : controller.getDatabaseHandler().getDatabase().getSemesters()) {
             for (Subject sub : sem.getSubjects()) {
@@ -110,7 +121,8 @@ public class LectureDownloadStateUpdater implements EventListener {
                 Subject s = (Subject) e.getSource();
                 updateState(ImmutableList.of(s));
             } else if (STREAM_EVENTS.contains(e.getEventID())) {
-                // TODO find subject and update itself. 
+                Stream s = (Stream) e.getSource();
+                updateState(s);
             } else if (LECTURE_EVENTS.contains(e.getEventID())) {
                 Lecture l = (Lecture) e.getSource();
                 updateState(l);
