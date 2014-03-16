@@ -4,13 +4,10 @@
  */
 package org.dlect.ui.login;
 
-import org.dlect.controller.worker.LoginWorker;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.dlect.controller.MainController;
@@ -19,11 +16,13 @@ import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Controller;
 import org.dlect.controller.worker.ErrorDisplayable;
+import org.dlect.controller.worker.LoginWorker;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.events.wrapper.Wrappers;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.provider.loader.ProviderDetail;
+import org.dlect.ui.helper.ControllerErrorBoxHelper;
 
 /**
  *
@@ -229,23 +228,6 @@ public abstract class LoginPanel extends javax.swing.JPanel implements EventList
             return;
             // We don't handle anything other than login events.
         }
-
-        String title = get.toString();
-        JLabel content = new JLabel(title);
-        switch (get) {
-            case NO_CONNECTION:
-                content = new JLabel("No internet connection detected.");
-                title = "No Internet Connection";
-                break;
-            case BAD_CREDENTIALS:
-                content = new JLabel("<html>The provider has rejected your credentials<br>Please ensure they are correct and try again.");
-                title = "Invalid Credentials";
-                break;
-            case INVALID_DATA_FORMAT:
-                content = new JLabel("An unkown error occured with the provider.");
-                title = "Unknown Error";
-                break;
-        }
-        JOptionPane.showMessageDialog(LoginPanel.this, content, title, JOptionPane.ERROR_MESSAGE);
+        ControllerErrorBoxHelper.showErrorBox(this, type, parameter, get);
     }
 }

@@ -42,6 +42,7 @@ import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
 import org.dlect.ui.LeftRightCheck;
 import org.dlect.ui.decorator.DownloadButtonDotter;
+import org.dlect.ui.helper.ControllerErrorBoxHelper;
 import org.dlect.ui.layout.TableConstraints;
 import org.dlect.ui.layout.TableLayout;
 import org.dlect.ui.subject.settings.AdvancedSubjectPreferencesDialog;
@@ -323,13 +324,13 @@ public final class CourseDetailPanel extends javax.swing.JPanel implements Event
 
     @Override
     public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
-        // TODO show error box for lecture event.
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO(Later) Show retry/try again .
+        ControllerErrorBoxHelper.showErrorBox(this, type, parameter, get);
     }
 
     @Override
     public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
-        // TODO show error box for download event
+        ControllerErrorBoxHelper.showDownloadError(this, subject, lecture, downloadType, failureCause);
     }
 
 }

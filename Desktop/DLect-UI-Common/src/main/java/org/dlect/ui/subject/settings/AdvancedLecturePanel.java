@@ -27,6 +27,7 @@ import org.dlect.model.Lecture;
 import org.dlect.model.Subject;
 import org.dlect.model.Subject.SubjectEventID;
 import org.dlect.model.formatter.DownloadType;
+import org.dlect.ui.helper.ControllerErrorBoxHelper;
 
 /**
  *
@@ -135,7 +136,7 @@ public class AdvancedLecturePanel extends SubjectPreferencesPanel implements Eve
 
     @Override
     public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
-        // TODO show error box.
+        ControllerErrorBoxHelper.showDownloadError(this, subject, lecture, downloadType, failureCause);
     }
 
     @Override

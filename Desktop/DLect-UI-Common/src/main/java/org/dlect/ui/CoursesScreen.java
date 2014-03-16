@@ -28,6 +28,7 @@ import org.dlect.model.Semester;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
 import org.dlect.ui.decorator.DownloadButtonDotter;
+import org.dlect.ui.helper.ControllerErrorBoxHelper;
 import org.dlect.ui.prefs.PreferencesDialog;
 import org.dlect.ui.prefs.PreferencesDialogImpl;
 import org.dlect.ui.subject.MultiSubjectDisplayPanel;
@@ -261,14 +262,12 @@ public class CoursesScreen extends javax.swing.JPanel implements
     @Override
     public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
         // TODO(Later) show try again button if type==Subject && get==NO_CONN.
-        // TODO - show error box.
-        // TODO write utility class to show these boxes in a consitent manner.
+        ControllerErrorBoxHelper.showErrorBox(this, type, parameter, get);
     }
 
     @Override
     public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
-        // TODO show error box for download problems.
-        //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ControllerErrorBoxHelper.showDownloadError(this, subject, lecture, downloadType, failureCause);
     }
 
 }
