@@ -8,7 +8,6 @@ package org.dlect.provider.impl.au.uniQld;
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import java.net.URI;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -19,6 +18,7 @@ import java.util.regex.Pattern;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
+import org.dlect.model.helper.ThreadLocalDateFormat;
 import org.dlect.provider.base.blackboard.BlackboardLectureCustomiser;
 import org.dlect.provider.impl.au.uniQld.rota.UQRotaHelper;
 
@@ -29,7 +29,7 @@ import org.dlect.provider.impl.au.uniQld.rota.UQRotaHelper;
 public class UQLectureCustomiser implements BlackboardLectureCustomiser {
 
     private static final TimeZone UQ_TIMEZONE = TimeZone.getTimeZone("GMT+10:00");
-    private static final DateFormat LECTOPIA_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final ThreadLocalDateFormat LECTOPIA_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd hh:mm:ss");
     private static final Pattern ROOM_NUMBER_FROM_LECTURE_TITLE = Pattern.compile("");
 
     private final UQRotaHelper helper;
@@ -43,9 +43,9 @@ public class UQLectureCustomiser implements BlackboardLectureCustomiser {
         Set<ImmutableStream> streams = helper.getStreamsFor(s.getName(), sem.getNum(), lectureTime, null);
         Set<ImmutableStream> lectureStreams = Sets.newHashSet();
         for (ImmutableStream is : streams) {
-            if (is.getName().startsWith("L")) {
-                lectureStreams.add(is);
-            }
+//            if (is.getName().startsWith("L")) {
+            lectureStreams.add(is);
+//            }
         }
         return lectureStreams;
     }
@@ -64,13 +64,10 @@ public class UQLectureCustomiser implements BlackboardLectureCustomiser {
 
     @Override
     public Optional<Date> getLectureTime(URI u, String title, String captureDate) {
-        synchronized (LECTOPIA_DATE_FORMAT) {
-            try {
-                // Not thread safe - sigh
-                return Optional.of(LECTOPIA_DATE_FORMAT.parse(captureDate));
-            } catch (ParseException ex) {
-                return Optional.absent();
-            }
+        try {
+            return Optional.of(LECTOPIA_DATE_FORMAT.parse(captureDate));
+        } catch (ParseException ex) {
+            return Optional.absent();
         }
     }
 

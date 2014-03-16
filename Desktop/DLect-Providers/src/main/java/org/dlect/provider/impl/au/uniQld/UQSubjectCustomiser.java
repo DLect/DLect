@@ -9,6 +9,7 @@ import com.google.common.base.Optional;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nullable;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.base.blackboard.BlackboardSubjectCustomiser;
