@@ -128,7 +128,7 @@ public class WrappedProvider {
     }
 
     public void doDownload(Subject s, Lecture l, LectureDownload ld) throws DLectException {
-        // TODO consider moving this into another class so that items can listen to progress events.
+        // TODO(Later) consider moving this into another class so that items can listen to progress events.
         ensureExists(s, l, ld);
 
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
