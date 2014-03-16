@@ -16,19 +16,19 @@ import org.dlect.ui.prefs.PreferencesDialog;
  */
 public class AdvancedSubjectPreferencesDialog extends PreferencesDialog {
 
-    private final Subject s;
-    private final MainController mc;
     private final PreferencePanel[] preferencesPanels;
 
     /**
      * Creates new form AdvancedSelectionDialog1
+     *
+     * @param parent
+     * @param s
+     * @param mc
      */
     public AdvancedSubjectPreferencesDialog(Window parent, Subject s, MainController mc) {
         super(parent, mc);
         this.setTitle("Advanced settings for " + s.getName());
-        this.s = s;
-        this.mc = mc;
-        preferencesPanels = new PreferencePanel[]{new AdvancedLecturePanel(s, mc), new AdvancedPlaylistPreferencesPanel(s, mc)};
+        preferencesPanels = new PreferencePanel[]{new AdvancedLecturePanel(s, mc)};
         this.setLocationRelativeTo(parent);
         removeCancelButton();
     }
