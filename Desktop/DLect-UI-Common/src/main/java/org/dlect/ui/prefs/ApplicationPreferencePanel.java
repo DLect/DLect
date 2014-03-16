@@ -4,18 +4,27 @@
  */
 package org.dlect.ui.prefs;
 
+import com.google.common.base.Optional;
 import org.dlect.controller.MainController;
+import org.dlect.controller.event.ControllerType;
+import org.dlect.controller.helper.ControllerStateHelper;
+import org.dlect.controller.provider.ProviderHelper;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.model.Database;
+import org.dlect.model.helper.CommonSettingNames;
+import org.dlect.provider.loader.ProviderDetail;
+import org.dlect.update.UpdateController;
+import org.dlect.update.UpdateStyle;
 
 /**
- *
- * @author lee
+ * TODO(Later) implement this class to support changing & deleting login data.
+ * TODO(Later) implement moving credentials.
  */
 public class ApplicationPreferencePanel extends PreferencePanel implements EventListener {
 
-    private static final String DEFAULT_PROVIDER_TEXT = "No Provider Selected";// TODO Localise
-    private static final String DEFAULT_USERNAME_TEXT = "Not Logged In";// TODO Localise
+    private static final String DEFAULT_PROVIDER_TEXT = "No Provider Selected";// TODO(Later) Localise
+    private static final String NOT_LOGGED_IN_TEXT = "Not Logged In";// TODO(Later) Localise
     private final MainController c;
 
     /**
@@ -26,9 +35,6 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         this.c = c;
         initComponents();
         initSettings();
-//        c.addControllerListener(this);
-        
-        // TODO this whole class
     }
 
     /**
@@ -42,81 +48,15 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        dataLocation = new javax.swing.JTextField();
-        moveDataButton = new javax.swing.JButton();
-        trayStatus = new javax.swing.JTextField();
-        trayInstallUninstallButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         updatesAutoInstall = new javax.swing.JRadioButton();
         updatesNotify = new javax.swing.JRadioButton();
-        changeCredButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         loginUserName = new javax.swing.JTextField();
         loginProv = new javax.swing.JTextField();
-        deleteLoginButton = new javax.swing.JButton();
+        updatesNoCheck = new javax.swing.JRadioButton();
 
         setLayout(new java.awt.GridBagLayout());
-
-        jLabel1.setText("Data Location:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 2);
-        add(jLabel1, gridBagConstraints);
-
-        jLabel2.setText("DLect Tray:");
-        jLabel2.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 2);
-        add(jLabel2, gridBagConstraints);
-
-        dataLocation.setEditable(false);
-        dataLocation.setText("/");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 20;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        add(dataLocation, gridBagConstraints);
-
-        moveDataButton.setText("Move Data");
-        moveDataButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moveDataButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 30;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(moveDataButton, gridBagConstraints);
-
-        trayStatus.setEditable(false);
-        trayStatus.setText("Not Installed");
-        trayStatus.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 40;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(trayStatus, gridBagConstraints);
-
-        trayInstallUninstallButton.setText("Install Tray");
-        trayInstallUninstallButton.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 50;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(trayInstallUninstallButton, gridBagConstraints);
 
         jLabel3.setText("Updates:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -136,8 +76,8 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 60;
         gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         add(updatesAutoInstall, gridBagConstraints);
 
         buttonGroup1.add(updatesNotify);
@@ -151,22 +91,9 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 70;
         gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(updatesNotify, gridBagConstraints);
-
-        changeCredButton.setText("Change Login");
-        changeCredButton.setEnabled(false);
-        changeCredButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeCredButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(changeCredButton, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        add(updatesNotify, gridBagConstraints);
 
         jLabel4.setText("Logged In As: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -176,12 +103,13 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         add(jLabel4, gridBagConstraints);
 
         loginUserName.setEditable(false);
-        loginUserName.setText(DEFAULT_USERNAME_TEXT);
+        loginUserName.setText(NOT_LOGGED_IN_TEXT);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         add(loginUserName, gridBagConstraints);
 
         loginProv.setEditable(false);
@@ -191,105 +119,48 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         add(loginProv, gridBagConstraints);
 
-        deleteLoginButton.setText("Delete Login");
-        deleteLoginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteLoginButtonActionPerformed(evt);
-            }
-        });
+        updatesNoCheck.setText("Don't check for updates");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 80;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(deleteLoginButton, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        add(updatesNoCheck, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void changeCredButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCredButtonActionPerformed
-        
-    }//GEN-LAST:event_changeCredButtonActionPerformed
-
-    private void moveDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDataButtonActionPerformed
-//        File f = c.getApplicationPropertiesController().getDataDirectory();
-//
-//        FileChooserDialog jfc = new FileChooserDialog(SwingUtilities.getWindowAncestor(this));
-//        jfc.setSelectedFile(f);
-//
-//        jfc.setVisible(true);
-//        if (!jfc.isCanceled()) {
-//
-//            File s = jfc.getSelectedDirectory();
-//            if (!FilenameUtils.equalsNormalizedOnSystem(f.getPath(), s.getPath())) {
-//                int ret = JOptionPane.showConfirmDialog(this, "Do you wish to move your recordings?", "Move Recordings", JOptionPane.YES_NO_CANCEL_OPTION);
-//                if (ret == JOptionPane.NO_OPTION) {
-//                    c.getApplicationPropertiesController().setDataDirectory(s);
-//                } else if (ret == JOptionPane.YES_OPTION) {
-//                    dataLocation.setText(s.getPath());
-//                    moveProperties(f, s, c);
-//                }
-//            }
-//            updateDataLocationDetails();
-//            PropertiesSavingController.saveProperties(c);
-//        }
-    }//GEN-LAST:event_moveDataButtonActionPerformed
 
     @Override
     public void processEvent(Event e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO implement listening to changes in Update style and login information.
     }
 
     private void updateSelectionChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSelectionChanged
-//        if (updatesNotify.isSelected()) {
-//            c.getApplicationPropertiesController().setUpdateStyle(UpdateStyle.USER_NOTIFIED);
-//        } else {
-//            c.getApplicationPropertiesController().setUpdateStyle(UpdateStyle.COMPLETELY_AUTOMATIC);
-//        }
-//        PropertiesSavingController.saveProperties(c);
+        Database d = c.getDatabaseHandler().getDatabase();
+        if (updatesNotify.isSelected()) {
+            UpdateController.addUpdateSetting(UpdateStyle.MANUAL, d);
+        } else if (updatesNoCheck.isSelected()) {
+            UpdateController.addUpdateSetting(UpdateStyle.NONE, d);
+        } else {
+            UpdateController.addUpdateSetting(UpdateStyle.AUTOMATIC, d);
+        }
     }//GEN-LAST:event_updateSelectionChanged
 
-    private void deleteLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteLoginButtonActionPerformed
-//        int scd = JOptionPane.showConfirmDialog(this, new JLabel("<html>Are you sure you wish to delete your login details?<br>DLect will quit after this operation is complete."), "Delete Credentails", JOptionPane.YES_NO_OPTION);
-//        if (scd == JOptionPane.YES_OPTION) {
-//            PropertiesSavingController.SAVE_LOAD_LOCK.lock();
-//            scd = JOptionPane.showConfirmDialog(this, new JLabel("<html>Your credentails have been deleted.<br>Do you wish to remove all data files made by DLect?<br>N.B. Your downloaded lecture recordings will <b>NOT</b> be deleted in this process."), "Remove Additional Data Files", JOptionPane.YES_NO_CANCEL_OPTION);
-//            if (scd == JOptionPane.YES_OPTION || scd == JOptionPane.NO_OPTION) {
-//                PropertiesController pc = c.getPropertiesController();
-//                PropertiesSavingController.getDataFile(pc).deleteOnExit();
-//                pc.setCredentials("", "");
-//                pc.setProviderClass(null);
-//                if (scd == JOptionPane.YES_OPTION) {
-//                    try {
-//                        FileUtils.deleteDirectory(PropertiesSavingController.prefFolder);
-//                    } catch (IOException ex) {
-//                        PropertiesSavingController.prefDataFile.deleteOnExit();
-//                    }
-//                }
-//                System.exit(0);
-//            }
-//        }
-    }//GEN-LAST:event_deleteLoginButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton changeCredButton;
-    private javax.swing.JTextField dataLocation;
-    private javax.swing.JButton deleteLoginButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField loginProv;
     private javax.swing.JTextField loginUserName;
-    private javax.swing.JButton moveDataButton;
-    private javax.swing.JButton trayInstallUninstallButton;
-    private javax.swing.JTextField trayStatus;
     private javax.swing.JRadioButton updatesAutoInstall;
+    private javax.swing.JRadioButton updatesNoCheck;
     private javax.swing.JRadioButton updatesNotify;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void doSave() {
-        // TODO save
     }
 
     @Override
@@ -323,65 +194,51 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
     }
 
     private void updateLoginDetails() {
-//        PropertiesController pc = c.getPropertiesController();
-//        if (pc.getBlackboard() == null) {
-//            loginUserName.setText(DEFAULT_USERNAME_TEXT);
-//        } else if (!c.hasCompleted(ControllerAction.LOGIN)) {
-//            loginUserName.setText("(" + DEFAULT_USERNAME_TEXT + ") " + pc.getBlackboard().getUsername());
-//        } else {
-//            loginUserName.setText(pc.getBlackboard().getUsername());
-//        }
-//        if (pc.getProvider() == null) {
-//            loginProv.setText(DEFAULT_PROVIDER_TEXT);
-//        } else {
-//            try {
-//                loginProv.setText(pc.getProvider().getProviderName());
-//            } catch (InvalidImplemetationException ex) {
-//                loginProv.setText(DEFAULT_PROVIDER_TEXT);
-//            }
-//        }
+        ControllerStateHelper csh = c.getControllerStateHelper();
+        ProviderHelper ph = c.getProviderHelper();
+
+        Optional<String> username = c.getDatabaseHandler().getEncryptedSetting(CommonSettingNames.USERNAME);
+        ProviderDetail pd = ph.getProviderDetail();
+
+        if (!username.isPresent()) {
+            loginUserName.setText(NOT_LOGGED_IN_TEXT);
+        } else if (!csh.hasCompleted(ControllerType.LOGIN)) {
+            loginUserName.setText("(" + NOT_LOGGED_IN_TEXT + ") " + username.get());
+        } else {
+            loginUserName.setText(username.get());
+        }
+        if (pd == null) {
+            loginProv.setText(DEFAULT_PROVIDER_TEXT);
+        } else {
+            loginProv.setText(pd.getName());
+        }
     }
 
     private void updateDataLocationDetails() {
-//        PropertiesController pc = c.getPropertiesController();
-//        File parentFolder = pc.getParentFolder().getAbsoluteFile();
-//        try {
-//            parentFolder = parentFolder.getCanonicalFile();
-//        } catch (IOException ex) {
-//            // No Op
-//        }
-//        dataLocation.setText(parentFolder.getPath());
+        // TODO(LAter) implement updateDataLocationDetails
     }
 
     private void updateTrayDetails() {
-        // TODO Implement.
+        // TODO(LAter) Implement updateTrayDetails
     }
 
     private void updateUpdateDetails() {
-//        UpdateStyle s = c.getApplicationPropertiesController().getUpdateStyle();
-//        switch (s) {
-//            case COMPLETELY_AUTOMATIC:
-//                updatesAutoInstall.setSelected(true);
-//                break;
-//            case USER_NOTIFIED:
-//                updatesNotify.setSelected(true);
-//                break;
-//        }
+        Database d = c.getDatabaseHandler().getDatabase();
+
+        UpdateStyle us = UpdateController.getUpdateSetting(d);
+        switch (us) {
+            case AUTOMATIC:
+                updatesAutoInstall.setSelected(true);
+                break;
+            case MANUAL:
+                updatesNotify.setSelected(true);
+                break;
+            case NONE:
+                updatesNoCheck.setSelected(true);
+                break;
+            default:
+                updatesAutoInstall.setSelected(true);
+                break;
+        }
     }
-
-//    @Override
-//    public void start(ControllerAction action) {
-//        updateSettings();
-//    }
-//
-//    @Override
-//    public void finished(ControllerAction action, ActionResult r) {
-//        updateSettings();
-//    }
-//
-//    @Override
-//    public void error(Throwable e) {
-//        updateSettings();
-//    }
-
 }
