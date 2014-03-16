@@ -102,7 +102,7 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
                 public void complete() {
                 }
             };
-            loginBusyUI = createBusyPainter(false);
+            loginBusyUI = createBusyPainter();
             loginPanelLayer = new JXLayer<>(loginPanel, loginBusyUI);
             GridBagConstraints c = new GridBagConstraints();
             c.gridx = 0;
@@ -115,8 +115,8 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
         }
     }
 
-    private BusyPainterUI createBusyPainter(boolean allowConfetti) {
-        BusyPainterUI painterUi = new BusyPainterUI(allowConfetti);
+    private BusyPainterUI createBusyPainter() {
+        BusyPainterUI painterUi = new BusyPainterUI();
         painterUi.setLockedEffects(LayerUIUtil.blur());
         return painterUi;
     }
@@ -130,7 +130,7 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
     private void addCoursePanel() {
         if (coursePanel == null) {
             courseScreen = new CoursesScreen(controller);
-            courseBusyUI = createBusyPainter(true);
+            courseBusyUI = createBusyPainter();
             coursePanel = new JXLayer<>(courseScreen, courseBusyUI);
             courseBusyUI.setLocked(true);
             GridBagConstraints c = new GridBagConstraints();
@@ -145,16 +145,19 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
     }
 
     public void setCoursesLocked(boolean b) {
+        courseBusyUI.setSpinnerShown(b);
         courseBusyUI.setLocked(b);
     }
 
     public void setLoginLocked(boolean b) {
+        loginBusyUI.setSpinnerShown(b);
         loginBusyUI.setLocked(b);
     }
 
     public void setLoginVisible(boolean visible) {
         if (visible) {
             panel.setLayer(loginPanelLayer, 100);
+            courseBusyUI.setSpinnerShown(false);
             courseBusyUI.setLocked(true);
         } else {
             panel.setLayer(loginPanelLayer, 20);
@@ -218,10 +221,16 @@ public class MainFrame extends javax.swing.JFrame implements EventListener {
         setLoginVisible(false);
         switch (state) {
             case FAILED:
+                setLoginVisible(true);
+                setCoursesLocked(true);
+                setLoginLocked(false);
+                break;
             case STARTED:
+                setLoginVisible(false);
                 setCoursesLocked(true);
                 break;
             case COMPLETED:
+                setLoginVisible(false);
                 setCoursesLocked(false);
                 break;
         }
