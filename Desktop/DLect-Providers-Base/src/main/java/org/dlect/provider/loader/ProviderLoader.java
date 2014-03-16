@@ -27,13 +27,11 @@ public class ProviderLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProviderLoader.class);
 
-    @SuppressWarnings("unchecked")
     public static final List<Class<? extends ProviderDetailBuilder>> PROVIDERS = ImmutableList
             .<Class<? extends ProviderDetailBuilder>>builder()
-            .add(
-                    TestProviderDetailBuilder.class,
-                    UQProviderDetailBuilder.class
-            ).build();
+//            .add(TestProviderDetailBuilder.class)
+            .add(UQProviderDetailBuilder.class)
+            .build();
 
     public List<ProviderDetail> getProviders() {
         List<ProviderDetail> details = Lists.newArrayList();
