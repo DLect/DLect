@@ -1,13 +1,22 @@
-applyJava()
-
+applyJava('DLect');
 
 configurations {
     rawJar
 }
 
+buildscript {
+    repositories {
+        mavenCentral();
+        jcenter();
+    }
+    dependencies {
+        classpath 'net.sf.proguard:proguard-gradle:4.11'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:0.8'
+    }
+}
+apply plugin: 'shadow'
+
 dependencies {
-    compile group: 'com.google.code.findbugs', name: 'jsr305', version:'2.0.0'
-    compile group: 'javax.inject', name: 'javax.inject', version:'1'
     compile desktop.standalone()
     
     rawJar desktop.updater()
@@ -16,10 +25,95 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
 }
 
-//task includeUpdater(type: Copy) {
-//    from configurations.rawJar.iterator().next()
-//    into "$buildDir/libs"
-//    rename {_ -> "updater.jar"}
-//}
-//processResources.dependsOn(includeUpdater)
+task includeUpdater(type: Copy) {
+    from configurations.rawJar
+    into new File(sourceSets.main.output.resourcesDir, "updater/")
+    rename {name -> "updater.jar"}
+    include {incl -> incl.getName().toLowerCase().contains("update") && incl.getName().toLowerCase().contains("dlect")};
+}
+processResources.dependsOn(includeUpdater)
 
+def releaseDir = file("$buildDir/dist")
+def shadowedJar = file(new File(releaseDir, "$archivesBaseName-$version-shadow.jar"))
+def proguardJar = file(new File(releaseDir, "$archivesBaseName-$version-proguard.jar"))
+
+shadow {
+    filter('*:*') {
+        exclude "*"
+        exclude "META-INF/*"
+        exclude "org/apache/commons/logging/impl/AvalonLogger*"
+        exclude "org/apache/commons/logging/impl/Log4JLogger*"
+        exclude "org/apache/commons/logging/impl/LogKitLogger*"
+        exclude "org/apache/commons/logging/impl/ServletContextCleaner*"
+        exclude "javax/annotation/**"
+        exclude "com/googlecode/mp4parser/util/Logger"
+    }
+    filter(findbugs()) {
+        exclude "**"
+    }
+    filter(':Desktop:Desktop-DLect-Release') {
+        include "*"
+        include "META-INF/*.MF"
+    }
+    outputFile = shadowedJar;
+}
+    
+build.dependsOn(shadowJar)
+
+def javaHome = System.getProperty('java.home');
+task generateRelease(type: proguard.gradle.ProGuardTask) {
+    injars shadowedJar;
+    outjars proguardJar
+    libraryjars "$javaHome/lib/rt.jar"
+    libraryjars "$javaHome/lib/jsse.jar"
+    libraryjars "$javaHome/lib/jce.jar"
+    
+    allowaccessmodification
+    
+    dontoptimize
+    dontobfuscate
+    
+    keeppackagenames
+    
+    printmapping new File(releaseDir, "proguard-mappings.txt");
+    
+    //dontskipnonpubliclibraryclassmembers
+
+    keep "@**Xml* class ** {*;}"
+    
+    keep "class org.dlect.**{*;}"
+
+    keepattributes "*"
+    
+    keep "public enum ** { *; }"
+    
+    keep "public class ${mainClassName} {\
+                            public static void main(java.lang.String[]);\
+                            }"
+    // TODO(Later) add tagging back into final build.
+    //keep "class org.jaudiotagger.**{*;}"
+    //keep "class com.coremedia.iso.**{*;}"
+    keep "public class org.slf4j.**{ *; }"
+    keep "class org.apache.commons.logging.impl.LogFactoryImpl{*;}"
+    keep "class org.apache.commons.logging.impl.SimpleLog{*;}"
+    keep "class org.apache.commons.logging.impl.Jdk14Logger{*;}"
+    //    keep "class org.apache.commons.lang3.text.translate.NumericEntityUnescaper{*;}"
+    //    keep "class org.apache.commons.lang3.text.translate.NumericEntityUnescaper\$OPTION{*;}"
+    dontwarn "com.googlecode.mp4parser.util.AndroidLogger"
+    dontwarn "javax.annotation.**"
+    
+}
+generateRelease.dependsOn(shadowJar)
+
+task copyProguardJarToRelease(type: Copy) {    
+    from proguardJar
+    into releaseDir
+    rename(/.*?\.jar/, 'DLect.jar');
+}
+
+copyProguardJarToRelease.dependsOn(generateRelease)
+
+task release{}
+
+build.dependsOn(release)
+release.dependsOn(copyProguardJarToRelease)
