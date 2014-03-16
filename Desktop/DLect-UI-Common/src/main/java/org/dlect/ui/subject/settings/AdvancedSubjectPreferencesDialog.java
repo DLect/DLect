@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.ui.prefs.subject;
+package org.dlect.ui.subject.settings;
 
 import java.awt.Window;
 import org.dlect.controller.MainController;
