@@ -66,4 +66,9 @@ public class DownloadParameter {
                && Objects.equal(this.subject, other.subject);
     }
 
+    @Override
+    public String toString() {
+        return "DownloadParameter{" + "downloadType=" + downloadType + ", lecture=" + lecture + ", subject=" + subject + '}';
+    }
+
 }
