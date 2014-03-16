@@ -11,6 +11,7 @@ import org.dlect.controller.MainController;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.model.Lecture;
+import org.dlect.model.LectureDownload;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
 
@@ -53,6 +54,12 @@ public class SingleDownloadWorker extends SwingWorker<DLectException, Void> {
     @Override
     protected DLectException doInBackground() throws Exception {
         try {
+            LectureDownload ld = lecture.getLectureDownloads().get(downloadType);
+
+            if (ld == null || ld.isDownloaded()) {
+                // No information or already downloaded; so don't attempt.
+                return null;
+            }
             controller.getDownloadController().downloadLectureDownload(subject, lecture, downloadType);
             return null;
         } catch (DLectException ex) {
