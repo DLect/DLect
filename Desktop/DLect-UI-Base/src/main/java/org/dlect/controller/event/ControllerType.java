@@ -18,17 +18,12 @@ public enum ControllerType implements EventID {
 
     @Override
     public Class<?> getAppliedClass() {
-        return Controller.class; // TODO fix this.
+        return Controller.class;
     }
 
     @Override
     public String getName() {
         return name();
-    }
-
-    @Override
-    public boolean isUniqueId() {
-        return false;
     }
 
 }
