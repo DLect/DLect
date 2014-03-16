@@ -10,6 +10,7 @@ import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.model.Database;
+import org.dlect.model.Semester;
 import org.dlect.model.Subject;
 import org.dlect.model.Subject.SubjectEventID;
 
@@ -30,6 +31,24 @@ public class SubjectDisplaySettingHandler implements EventListener, Initilisable
     @Override
     public void init() {
         helper = new SubjectDisplaySettingHelper(mc.getDatabaseHandler().getDatabase());
+    }
+
+    public boolean isSemesterDisplayed(Semester s) {
+        if (s.getSubjects().isEmpty()) {
+            return false;
+        }
+        for (Subject sub : s.getSubjects()) {
+            if (!isSubjectDisplayed(sub)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setSemesterDisplayed(Semester s, boolean b) {
+        for (Subject sub : s.getSubjects()) {
+            setSubjectDisplayed(sub, b);
+        }
     }
 
     public boolean isSubjectDisplayed(Subject s) {
