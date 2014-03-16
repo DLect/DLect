@@ -5,8 +5,9 @@
  */
 package org.dlect.model;
 
-import com.google.common.collect.ImmutableSet;
-import java.util.Set;
+import com.google.common.collect.ImmutableSortedSet;
+import java.util.Collection;
+import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -33,7 +34,7 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
 
     @XmlElementWrapper(name = "subjects")
     @XmlElement(name = "subject")
-    private final Set<Subject> subjects;
+    private final SortedSet<Subject> subjects;
 
     public Semester() {
         subjects = newWrappedListenableSortedSet(SemesterEventID.SUBJECT);
@@ -83,17 +84,16 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
      *
      * @return An immutable copy of the subjects in this semester.
      */
-    public ImmutableSet<Subject> getSubjects() {
+    public ImmutableSortedSet<Subject> getSubjects() {
         return copyOf(subjects);
     }
 
     /**
-     * Store only these subjects in this semester objects. This function will fire remove events for every object
-     * currently in the set; then will fire add events for every object in the given set.
+     * Store only these subjects in this semester objects. This function will fire events correctly.
      *
      * @param subjects The set of subjects to copy and store in this semester.
      */
-    public void setSubjects(Set<Subject> subjects) {
+    public void setSubjects(Collection<Subject> subjects) {
         setSet(this.subjects, subjects);
     }
 
