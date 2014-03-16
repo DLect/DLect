@@ -23,7 +23,9 @@ import org.dlect.controller.file.JarFolderFileController;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
 import org.dlect.file.FileController;
+import org.dlect.logging.ControllerLogger;
 import org.dlect.ui.MainFrame;
+import org.dlect.update.UpdateController;
 
 /**
  *
@@ -34,6 +36,7 @@ public class GUIController extends MainController {
     private StartupController startupController;
     private MainFrame mainFrame;
     private final FileController fileController;
+    private UpdateController uc;
 
     public static void main(String[] args) throws IOException {
         long t = System.currentTimeMillis();
@@ -46,19 +49,14 @@ public class GUIController extends MainController {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             // Never happens.
         }
-        System.out.println(t);
+        StartupController.initLogging();
+        
         GUIController mc = new GUIController();
         mc.addListener(new DebuggingEventListener());
         mc.init();
-
-        System.out.println(mc.getDatabaseHandler().getDatabase());
-
-        StartupController c = mc.getStartupController();
-        c.startup(t);
     }
 
     public GUIController() {
-        // TODO save frequently
         super();
         fileController = new JarFolderFileController();
     }
@@ -74,6 +72,9 @@ public class GUIController extends MainController {
         this.mainFrame = StartupController.initMainFrame(this);
         this.startupController = new StartupController(this);
         this.mainFrame.setLoginLocked(false);
+        uc = new UpdateController(this);
+        uc.init();
+        uc.checkForUpdates();
     }
 
     public MainFrame getMainFrame() {
@@ -92,7 +93,7 @@ public class GUIController extends MainController {
 
         @Override
         public void processEvent(Event e) {
-            System.out.println(e);
+            ControllerLogger.LOGGER.info("Event: " + e);
         }
 
     }
