@@ -11,7 +11,6 @@ import org.dlect.controller.download.event.DownloadEvent;
 import org.dlect.controller.download.event.DownloadParameter;
 import org.dlect.controller.download.event.DownloadStatus;
 import org.dlect.controller.event.ControllerListenable;
-import org.dlect.controller.helper.Controller;
 import org.dlect.exception.DLectException;
 import org.dlect.model.Database;
 import org.dlect.model.Lecture;
@@ -24,7 +23,7 @@ import org.dlect.model.formatter.DownloadType;
  *
  * @author lee
  */
-public class DownloadController extends ControllerListenable<DownloadController> implements Controller {
+public class DownloadController extends ControllerListenable<DownloadController> {
 
     private final MainController ctl;
 
