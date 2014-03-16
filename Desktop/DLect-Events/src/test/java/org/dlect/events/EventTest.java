@@ -33,7 +33,7 @@ public class EventTest {
         ).addEqualityGroup(
                 new Event(o2, TestObjectEventID.ID, 1, 2)
         ).addEqualityGroup(
-                new Event(o1, TestObjectEventID.NAME,  1, 2)
+                new Event(o1, TestObjectEventID.NAME, 1, 2)
         ).addEqualityGroup(
                 new Event(o1, TestObjectEventID.ID, 5, 2)
         ).addEqualityGroup(
@@ -114,17 +114,12 @@ public class EventTest {
             public String getName() {
                 return "Name";
             }
-
-            @Override
-            public boolean isUniqueId() {
-                return false;
-            }
         };
         Event e = new Event(source, eid, 10, 20);
 
         assertSame(eid, e.getEventID());
     }
-    
+
     /**
      * Test of getEventID method, of class Event.
      */
@@ -142,14 +137,9 @@ public class EventTest {
             public String getName() {
                 return "Name";
             }
-
-            @Override
-            public boolean isUniqueId() {
-                return false;
-            }
         };
         Event e = new Event(source, eid, 10, 20);
-        
+
         // Must use eventID.getAppliedClass(); not source.getClass();
         assertEquals(Object.class, e.getSourceClass());
     }
@@ -162,7 +152,7 @@ public class EventTest {
         TestObject source = new TestObject();
         Object before = new Object();
         Event e = new Event(source, TestObjectEventID.ID, before, 20);
-        
+
         // Must use eventID.getAppliedClass(); not source.getClass();
         assertSame(before, e.getBefore());
     }
@@ -175,7 +165,7 @@ public class EventTest {
         TestObject source = new TestObject();
         Object after = new Object();
         Event e = new Event(source, TestObjectEventID.ID, 10, after);
-        
+
         // Must use eventID.getAppliedClass(); not source.getClass();
         assertSame(after, e.getAfter());
     }

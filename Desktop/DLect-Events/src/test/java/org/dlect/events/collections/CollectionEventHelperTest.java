@@ -71,11 +71,6 @@ public class CollectionEventHelperTest {
             public String getName() {
                 return "Name";
             }
-
-            @Override
-            public boolean isUniqueId() {
-                return false;
-            }
         };
         source = new Object();
         testObject = new CollectionEventHelper<>(source, eventID, adapter);

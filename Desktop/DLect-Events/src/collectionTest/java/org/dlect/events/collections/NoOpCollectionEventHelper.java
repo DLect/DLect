@@ -75,10 +75,6 @@ class NoOpCollectionEventHelper<T> extends CollectionEventHelper<T> {
             return name();
         }
 
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
     }
 
 }

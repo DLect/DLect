@@ -29,11 +29,6 @@ public class TestObject {
         public String getName() {
             return name();
         }
-
-        @Override
-        public boolean isUniqueId() {
-            return this == ID;
-        }
     }
 
 }

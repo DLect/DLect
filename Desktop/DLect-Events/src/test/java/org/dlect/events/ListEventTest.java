@@ -33,11 +33,6 @@ public class ListEventTest {
         public String getName() {
             return "name";
         }
-
-        @Override
-        public boolean isUniqueId() {
-            return false;
-        }
     };
 
     @Test

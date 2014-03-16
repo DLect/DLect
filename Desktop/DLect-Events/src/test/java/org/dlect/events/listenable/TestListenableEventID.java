@@ -25,9 +25,4 @@ public enum TestListenableEventID implements EventID {
         return name();
     }
 
-    @Override
-    public boolean isUniqueId() {
-        return false;
-    }
-
 }
