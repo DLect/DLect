@@ -4,30 +4,20 @@
  */
 package org.dlect.ui.prefs;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.Set;
 import java.util.TreeMap;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import org.dlect.controller.MainController;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.events.wrapper.Wrappers;
+import org.dlect.model.Database;
+import org.dlect.model.Database.DatabaseEventID;
 import org.dlect.model.Semester;
-import org.dlect.model.Subject;
-import org.dlect.ui.helper.WrappingUtil;
+import org.dlect.model.Semester.SemesterEventID;
 
 /**
  *
@@ -35,12 +25,14 @@ import org.dlect.ui.helper.WrappingUtil;
  */
 public class CoursePreferencePanel extends PreferencePanel implements EventListener {
 
-    private TreeMap<Semester, SemesterCheckController> semesterCtls = new TreeMap<Semester, SemesterCheckController>();
+    private static final long serialVersionUID = 1L;
+
+    private final TreeMap<Semester, SemesterRowGroupHandler> semesterCtls = Maps.newTreeMap();
 
     public CoursePreferencePanel(MainController ctl) {
         super(ctl);
         initComponents();
-        //ctl.addControllerListener(this);
+        Wrappers.addSwingListenerTo(this, ctl, Database.class, Semester.class);
     }
 
     /**
@@ -60,7 +52,7 @@ public class CoursePreferencePanel extends PreferencePanel implements EventListe
         setLayout(new java.awt.GridBagLayout());
 
         shownLabel.setText("Shown");
-        shownLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
+        shownLabel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2)));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -68,18 +60,7 @@ public class CoursePreferencePanel extends PreferencePanel implements EventListe
         add(shownLabel, gridBagConstraints);
 
         paddingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout paddingPanelLayout = new javax.swing.GroupLayout(paddingPanel);
-        paddingPanel.setLayout(paddingPanelLayout);
-        paddingPanelLayout.setHorizontalGroup(
-            paddingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 356, Short.MAX_VALUE)
-        );
-        paddingPanelLayout.setVerticalGroup(
-            paddingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
-        );
-
+        paddingPanel.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -88,20 +69,9 @@ public class CoursePreferencePanel extends PreferencePanel implements EventListe
         gridBagConstraints.weighty = 1.0;
         add(paddingPanel, gridBagConstraints);
 
-        endPaddingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
+        endPaddingPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
         endPaddingPanel.setPreferredSize(new java.awt.Dimension(0, 0));
-
-        javax.swing.GroupLayout endPaddingPanelLayout = new javax.swing.GroupLayout(endPaddingPanel);
-        endPaddingPanel.setLayout(endPaddingPanelLayout);
-        endPaddingPanelLayout.setHorizontalGroup(
-            endPaddingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        endPaddingPanelLayout.setVerticalGroup(
-            endPaddingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
+        endPaddingPanel.setLayout(new java.awt.GridLayout(1, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -114,42 +84,39 @@ public class CoursePreferencePanel extends PreferencePanel implements EventListe
     private javax.swing.JLabel shownLabel;
     // End of variables declaration//GEN-END:variables
 
-    public void doInitComponents() {
-        semesterCtls.clear();
-        this.removeAll();
-//        Blackboard b = getController().getPropertiesController().getBlackboard();
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        paddingPanel.setPreferredSize(new Dimension(0, 0));
-        paddingPanel.setMinimumSize(new Dimension(0, 0));
-        this.add(paddingPanel, gbc);
-        gbc.gridx = 1;
-        gbc.weightx = 0;
-        this.add(shownLabel, gbc);
-        gbc.gridx = 2;
-        this.add(endPaddingPanel, gbc);
-//        for (Semester s : b.getSemesters()) {
-//            addSemester(s, gbc);
-//        }
-    }
+    public void doRefresh() {
+        MainController mc = getController();
+        ImmutableSortedSet<Semester> semesters = mc.getDatabaseHandler().getDatabase().getSemesters();
 
-    @Override
-    public void doSave() {
-        for (SemesterCheckController scc : semesterCtls.values()) {
-            for (Map.Entry<Subject, SubjectTableRow> entry : scc.checkBoxes.entrySet()) {
-                Subject subject = entry.getKey();
-                TableRow tableRow = entry.getValue();
-//                subject.setDownloadEnabled(tableRow.check.isSelected());
+        Set<Semester> toRemove = Sets.newHashSet(semesterCtls.keySet());
+        toRemove.removeAll(semesters);
+        for (Semester s : toRemove) {
+            semesterCtls.remove(s).removeFromLayout(this);
+        }
+
+        int row = 1;
+        for (Semester s : semesters) {
+            SemesterRowGroupHandler get = semesterCtls.get(s);
+            if (get == null) {
+                get = new SemesterRowGroupHandler(s, mc);
+                semesterCtls.put(s, get);
+                get.createItems();
             }
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridy = row;
+            int change = get.doLayout(this, gbc);
+
+            row += change;
         }
     }
 
     @Override
+    public void doSave() {
+    }
+
+    @Override
     public void doPreShow() {
-        doInitComponents();
+        doRefresh();
     }
 
     @Override
@@ -159,179 +126,19 @@ public class CoursePreferencePanel extends PreferencePanel implements EventListe
 
     @Override
     public String getTabTooltip() {
-        return "Choose which courses you would like displayed on the home screen";
+        return "Choose which courses you would like displayed on the main screen";
     }
 
     @Override
     public boolean isModified() {
-        for (SemesterCheckController scc : semesterCtls.values()) {
-            for (Map.Entry<Subject, SubjectTableRow> entry : scc.checkBoxes.entrySet()) {
-                Subject subject = entry.getKey();
-                TableRow tableRow = entry.getValue();
-//                if (tableRow.check.isSelected() != subject.isDownloadEnabled()) {
-//                    return true;
-//                }
-            }
-        }
         return false;
-    }
-
-    private void addSemester(Semester s, GridBagConstraints gbc) {
-        SemesterCheckController scc = new SemesterCheckController(s);
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.weightx = 1;
-        this.add(scc.row.labelholder, gbc);
-        gbc.gridx = 1;
-        gbc.weightx = 0;
-        this.add(scc.row.checkholder, gbc);
-        gbc.gridx = 2;
-        this.add(scc.row.buttonholder, gbc);
-        for (SubjectTableRow tr : scc.checkBoxes.values()) {
-            JPanel l = tr.labelholder;
-            JPanel c = tr.checkholder;
-            JPanel b = tr.buttonholder;
-            gbc.gridy++;
-            gbc.gridx = 0;
-            gbc.weightx = 1;
-            this.add(l, gbc);
-            gbc.gridx = 1;
-            gbc.weightx = 0;
-            this.add(c, gbc);
-            gbc.gridx = 2;
-            gbc.weightx = 0;
-            this.add(b, gbc);
-        }
-        semesterCtls.put(s, scc);
     }
 
     @Override
     public void processEvent(Event e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private class SemesterCheckController {
-
-        private final Semester s;
-        private final SortedMap<Subject, SubjectTableRow> checkBoxes;
-        private final TableRow row;
-
-        private SemesterCheckController(Semester s) {
-            this.s = s;
-            Border labelBorder = new MatteBorder(1, 0, 2, 0, Color.BLACK);
-            Border paddingPanelBorder = new MatteBorder(1, 1, 2, 1, Color.BLACK);
-            Border checkBorder = new MatteBorder(1, 1, 2, 0, Color.BLACK);
-
-            Color bgColor = CoursePreferencePanel.this.getBackground().darker();
-
-            JCheckBox c = new JCheckBox();
-            c.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    for (TableRow tableRow : checkBoxes.values()) {
-                        tableRow.check.setSelected(row.check.isSelected());
-                    }
-                }
-            });
-            JPanel cp = WrappingUtil.wrapCenterNoFill(c, checkBorder);
-            cp.setOpaque(true);
-            cp.setBackground(bgColor);
-
-            JLabel l = new JLabel(s.getLongName());
-            Font f = l.getFont();
-            JPanel lp = WrappingUtil.wrapCenterBothFill(l, labelBorder);
-            lp.setBackground(bgColor);
-            l.setFont(f.deriveFont(Font.BOLD, f.getSize() * 1.25f));
-
-            WrappingUtil.initRedirectListeners(c, lp, cp, l);
-
-            JPanel bp = new JPanel();
-            bp.setBorder(paddingPanelBorder);
-            bp.setBackground(bgColor);
-            bp.setOpaque(true);
-
-            row = new TableRow(l, lp, c, cp, bp);
-            checkBoxes = new TreeMap<Subject, SubjectTableRow>(new Comparator<Subject>() {
-                @Override
-                public int compare(Subject o1, Subject o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-            initCheckBoxes();
-        }
-
-        private void initCheckBoxes() {
-            Border labelBorder = new CompoundBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK), new EmptyBorder(0, 10, 0, 0));
-            Border checkBorder = new MatteBorder(0, 1, 1, 0, Color.BLACK);
-            Border buttonBorder = new MatteBorder(0, 1, 1, 1, Color.BLACK);
-//            for (final Subject subject : s.getSubjects()) {
-            final JCheckBox c = new JCheckBox();
-//                c.setSelected(subject.isDownloadEnabled());
-            c.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    updateChecks();
-                }
-            });
-            JPanel cp = WrappingUtil.wrapCenterNoFill(c, checkBorder);
-
-            JButton b = new JButton("Subject Settings");
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-//                        new AdvancedSubjectPreferencesDialog(SwingUtilities.windowForComponent(CoursePreferencePanel.this), subject, getController()).setVisible(true);
-                }
-            });
-            JPanel bp = WrappingUtil.wrapCenterHorizontalFill(b, buttonBorder);
-
-//                JLabel l = new JLabel(subject.getName());
-//                l.setOpaque(true);
-//                JPanel lp = WrappingUtil.wrapCenterBothFill(l, labelBorder);
-//
-//                WrappingUtil.initRedirectListeners(c, lp, cp, l);
-//                WrappingUtil.initRedirectListeners(b, bp);
-//
-//                checkBoxes.put(subject, new SubjectTableRow(l, lp, c, cp, b, bp));
-//            }
-            updateChecks();
-        }
-
-        private void updateChecks() {
-            boolean semChecked = true;
-            for (Map.Entry<Subject, SubjectTableRow> e : checkBoxes.entrySet()) {
-                if (!e.getValue().check.isSelected()) {
-                    semChecked = false;
-                    break;
-                }
-            }
-            row.check.setSelected(semChecked);
+        if (e.getEventID().equals(DatabaseEventID.SEMESTER) || e.getEventID().equals(SemesterEventID.SUBJECT)) {
+            doRefresh();
         }
     }
 
-    private class TableRow {
-
-        final JLabel label;
-        final JPanel labelholder;
-        final JCheckBox check;
-        final JPanel checkholder;
-        final JPanel buttonholder;
-
-        public TableRow(JLabel label, JPanel labelholder, JCheckBox check, JPanel checkholder, JPanel buttonholder) {
-            this.label = label;
-            this.labelholder = labelholder;
-            this.check = check;
-            this.checkholder = checkholder;
-            this.buttonholder = buttonholder;
-        }
-    }
-
-    private class SubjectTableRow extends TableRow {
-
-        final JButton button;
-
-        public SubjectTableRow(JLabel label, JPanel labelholder, JCheckBox check, JPanel checkholder, JButton button, JPanel buttonholder) {
-            super(label, labelholder, check, checkholder, buttonholder);
-            this.button = button;
-        }
-    }
 }
