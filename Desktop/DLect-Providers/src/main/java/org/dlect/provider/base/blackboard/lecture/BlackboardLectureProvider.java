@@ -93,7 +93,7 @@ public class BlackboardLectureProvider implements LectureProvider {
     }
 
     protected Map<DownloadType, ImmutableLectureDownload> getDownloadType(URI url) throws IOException {
-        String urlPostfix = "%2Fmedia."; // <= URLEncoded.encoded("/media.")
+        String urlPostfix = "%2Fmedia."; // <= URL Encoded "/media."
 
         Map<DownloadType, ImmutableLectureDownload> map = Maps.newHashMap();
 
