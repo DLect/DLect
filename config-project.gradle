@@ -31,7 +31,7 @@ def configureJava(task) {
 }
 
 
-gradle.allprojects {
+gradle.allprojects {    
     ext.applyJava = {mainClass ->
         apply plugin: 'java'
         apply plugin: 'jacoco'
@@ -46,17 +46,16 @@ gradle.allprojects {
         if(mainClass) {
             apply plugin:'application'
 
+            mainClassName = mainClass
+            
             task debug(dependsOn: classes, type: JavaExec) {
                 debug = true
                 classpath += tasks.run.classpath
             }
-            tasks.withType(JavaExec.class).all {task ->
-                task.main = mainClass
-            }
         }
         
         jacocoTestReport {
-            //group = "reporting"
+            group = "reporting"
             description = "Generate Jacoco coverage reports after running tests."
             reports {
                 xml.enabled true
@@ -92,16 +91,20 @@ gradle.allprojects {
         tasks.withType(AbstractArchiveTask.class).all { task ->
             version = project.completeVersion
         }
+            
         tasks.withType(Jar.class).all { task ->
             task.manifest {
                 attributes(
                     "Author": "Lee Symes", 
-                    "Build-Version": version, 
+                    "DLect-Build-Version": version, 
                     "Home-Url": "http://uqlectures.sf.net/", 
                     "Build-Date": buildStart)
+                if(mainClass) {
+                    attributes("Main-Class": mainClass)
+                }
             }
         }
-        
+                   
         
         // Setup other config that can be applied.
         project.ext.applyMaven()
