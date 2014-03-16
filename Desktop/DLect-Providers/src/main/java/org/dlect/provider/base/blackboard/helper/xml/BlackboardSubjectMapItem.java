@@ -8,6 +8,8 @@ package org.dlect.provider.base.blackboard.helper.xml;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -16,6 +18,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
  *
  * @author lee
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BlackboardSubjectMapItem {
 
     @XmlAttribute(name = "contentid")
@@ -65,7 +68,5 @@ public class BlackboardSubjectMapItem {
     public String toString() {
         return "BlackboardSubjectMapItem{" + "contentId=" + contentId + ", name=" + name + ", viewUrl=" + viewUrl + ", linkType=" + linkType + ", availiable=" + availiable + ", children=" + children + '}';
     }
-
-    
 
 }

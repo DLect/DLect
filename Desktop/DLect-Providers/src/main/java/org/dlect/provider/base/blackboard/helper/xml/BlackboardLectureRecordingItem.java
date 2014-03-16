@@ -6,11 +6,14 @@
 package org.dlect.provider.base.blackboard.helper.xml;
 
 import java.net.URI;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author lee
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BlackboardLectureRecordingItem {
 
     private final String contentId;

@@ -7,11 +7,14 @@ package org.dlect.provider.base.blackboard.helper.xml;
 
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 /**
  *
  * @author lee
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BlackboardLectureRecordingPage {
 
     private final ImmutableList<BlackboardLectureRecordingItem> items;

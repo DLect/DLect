@@ -5,6 +5,8 @@
  */
 package org.dlect.provider.base.blackboard.helper.xml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.dlect.model.helper.ImmutableDate;
@@ -14,6 +16,7 @@ import org.dlect.provider.base.blackboard.helper.BlackboardXmlDateTypeAdapter;
  *
  * @author lee
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BlackboardSubject {
 
     @XmlAttribute(name = "bbid")

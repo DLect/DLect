@@ -5,6 +5,8 @@
  */
 package org.dlect.provider.base.blackboard.helper.xml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lee
  */
 @XmlRootElement(name = "s")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BlackboardProviderXmlDetails {
 
     @XmlElement(name = "b2_url")

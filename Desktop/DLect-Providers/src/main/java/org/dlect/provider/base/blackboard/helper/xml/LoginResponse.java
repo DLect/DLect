@@ -5,6 +5,8 @@
  */
 package org.dlect.provider.base.blackboard.helper.xml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lee
  */
 @XmlRootElement(name = "mobileresponse")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class LoginResponse {
 
     @XmlAttribute(name = "status")
