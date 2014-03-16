@@ -14,6 +14,7 @@ import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Controller;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
+import org.dlect.logging.ControllerLogger;
 import org.dlect.model.Database;
 import org.dlect.model.Semester;
 import org.dlect.model.Subject;
@@ -23,6 +24,17 @@ import org.dlect.model.Subject;
  * @author lee
  */
 public class LectureStateUpdater implements EventListener {
+
+    private static final LectureStateUpdateHandler NO_OP_UPDATE_HANDLER = new LectureStateUpdateHandler(null) {
+
+        @Override
+        protected void initImpl() {
+        }
+
+        @Override
+        protected void updateLecturesImpl() {
+        }
+    };
 
     private final Database d;
     private final Map<Subject, LectureStateUpdateHandler> lectureHandlers = Maps.newHashMap();
@@ -54,8 +66,10 @@ public class LectureStateUpdater implements EventListener {
                             get.setSubject(subject);
                         }
 
-                        System.out.println("Updating for " + subject.getId() + ": " + get.getClass());
+                        ControllerLogger.LOGGER.info("Updating for " + subject.getId() + ": " + get.getClass());
                         get.updateLectures();
+
+                        lectureHandlers.put(subject, NO_OP_UPDATE_HANDLER);
                     }
                 }
             }
