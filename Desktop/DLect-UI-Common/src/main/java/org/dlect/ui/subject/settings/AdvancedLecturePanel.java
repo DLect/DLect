@@ -135,14 +135,12 @@ public class AdvancedLecturePanel extends SubjectPreferencesPanel implements Eve
 
     @Override
     public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause) {
-        // TODO error.
+        // TODO show error box.
     }
-    
-    
 
     @Override
     public void doPreShow() {
-        // TODO write pre show method.
+        updateSubjectLectures();
     }
 
     @Override
