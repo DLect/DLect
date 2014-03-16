@@ -10,7 +10,7 @@ import org.dlect.controller.event.ControllerType;
 import org.dlect.controller.helper.Controller;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.ControllerStateHelper.ControllerStateHelperEventID;
-import org.dlect.controller.helper.SubjectDataHelper.DownloadState;
+import org.dlect.controller.helper.subject.SubjectDataHelper.DownloadState;
 import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.controller.worker.ErrorDisplayable;
 import org.dlect.controller.worker.SubjectWorker;
@@ -32,7 +32,7 @@ import org.dlect.ui.prefs.PreferencesDialog;
 import org.dlect.ui.prefs.PreferencesDialogImpl;
 import org.dlect.ui.subject.MultiSubjectDisplayPanel;
 
-import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.*;
+import static org.dlect.controller.helper.subject.SubjectDataHelper.DownloadState.*;
 
 
 /*
@@ -244,7 +244,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
         if (EventIdListings.DOWNLOAD_UPDATE_EVENT_IDS.contains(e.getEventID())) {
             updateButtonState();
         } else if (e.getEventID().equals(ControllerStateHelperEventID.DOWNLOAD)) {
-            updateButtonState(); // TODO update this.
+            updateButtonState();
         } else if (e.getEventID().equals(ControllerStateHelperEventID.CONTROLLER)) {
             updateButtonState();
         }
@@ -262,6 +262,7 @@ public class CoursesScreen extends javax.swing.JPanel implements
     public void showErrorBox(ControllerType type, Object parameter, DLectExceptionCause get) {
         // TODO(Later) show try again button if type==Subject && get==NO_CONN.
         // TODO - show error box.
+        // TODO write utility class to show these boxes in a consitent manner.
     }
 
     @Override
