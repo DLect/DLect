@@ -125,8 +125,8 @@ public class TableLayout implements LayoutManager2 {
                 if (tableConstraints.isFullHeight()) {
                     if (fullHeightColumns.containsKey(x)) {
                         throw new IllegalArgumentException("The column " + x
-                                + " has an element in it AND it has a Full"
-                                + " Height Element in it.");
+                                                           + " has an element in it AND it has a Full"
+                                                           + " Height Element in it.");
                     }
                     fullHeightColumns.put(x, Boolean.TRUE);
                 } else {

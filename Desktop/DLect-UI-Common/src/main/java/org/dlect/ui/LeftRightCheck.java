@@ -53,7 +53,7 @@ public class LeftRightCheck extends JCheckBox {
         super(leftText, icon, selected);
         this.minReqestedWidth = minReqestedWidth;
         rightLabel = new JLabel(rightText, TRAILING);
-        // TODO figure out how to make the font work right on OSX
+        // TODO(Later) figure out how to make the font work right on OSX
         this.setLayout(new BaseLineSingleElementLayoutManager(10));
         this.add(rightLabel);
     }
@@ -124,7 +124,7 @@ public class LeftRightCheck extends JCheckBox {
                 if (checkComponent(cc)) {
                     Dimension childSize = this.component.getPreferredSize();
                     parentSize.height = Math.max(parentSize.height,
-                            childSize.height);
+                                                 childSize.height);
                     parentSize.width += childSize.width;
                 }
                 parentSize.width = Math.max(parentSize.width, minReqestedWidth);
@@ -145,7 +145,7 @@ public class LeftRightCheck extends JCheckBox {
             }
             this.component.setSize(parent.getSize());
             this.component.setLocation(0, getBaseline(parent)
-                    - getBaseline(this.component));
+                                          - getBaseline(this.component));
         }
 
         private int getBaseline(Component c) {
@@ -156,7 +156,7 @@ public class LeftRightCheck extends JCheckBox {
             if (parent == null) {
                 return false;
             } else if (parent.getComponentCount() >= 1
-                    && parent.getComponent(0).isVisible()) {
+                       && parent.getComponent(0).isVisible()) {
                 this.component = parent.getComponent(0);
                 return true;
             } else {

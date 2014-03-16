@@ -43,7 +43,7 @@ public abstract class ControllerListenable<T extends ControllerListenable<T>> ex
             param = s;
             return this;
         }
-        
+
         public ControllerEventBuilder parameter(Subject s, Lecture l, DownloadType dt) {
             param = new DownloadParameter(s, l, dt);
             return this;

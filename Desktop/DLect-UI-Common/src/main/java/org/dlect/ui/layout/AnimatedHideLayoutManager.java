@@ -73,8 +73,8 @@ public class AnimatedHideLayoutManager implements LayoutManager {
     @Override
     public String toString() {
         return "AnimatedHideLayoutManager{" + "head=" + head + ", pane="
-                + pane + ", parent=" + parent + ", animationPercentage="
-                + animationPercentage + '}';
+               + pane + ", parent=" + parent + ", animationPercentage="
+               + animationPercentage + '}';
     }
 
     @Override

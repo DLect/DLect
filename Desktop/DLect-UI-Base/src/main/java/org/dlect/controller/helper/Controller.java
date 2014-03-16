@@ -10,5 +10,5 @@ package org.dlect.controller.helper;
  * @author lee
  */
 public interface Controller extends Initilisable {
-    
+
 }

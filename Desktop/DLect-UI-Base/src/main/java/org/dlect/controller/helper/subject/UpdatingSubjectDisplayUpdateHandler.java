@@ -39,7 +39,7 @@ public class UpdatingSubjectDisplayUpdateHandler extends SubjectDisplayUpdateHan
 
     @Override
     public void updateSubjects() {
-                ImmutableSortedSet<Semester> semesters = getDatabase().getSemesters();
+        ImmutableSortedSet<Semester> semesters = getDatabase().getSemesters();
         if (semesters.isEmpty()) {
             return;
         }

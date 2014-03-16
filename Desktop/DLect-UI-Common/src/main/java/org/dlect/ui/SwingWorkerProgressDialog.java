@@ -16,12 +16,14 @@ import javax.swing.Timer;
  * @author lee
  */
 public class SwingWorkerProgressDialog extends javax.swing.JDialog {
+
     private static final long serialVersionUID = 1L;
 
     private final Worker w;
 
     /**
      * Creates new form SwingWorkerProgressDialog
+     *
      * @param parent
      * @param w
      */

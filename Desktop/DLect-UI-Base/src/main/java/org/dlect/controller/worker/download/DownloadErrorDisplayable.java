@@ -17,5 +17,5 @@ import org.dlect.model.formatter.DownloadType;
 public interface DownloadErrorDisplayable {
 
     public void showDownloadError(Subject subject, Lecture lecture, DownloadType downloadType, DLectExceptionCause failureCause);
-    
+
 }

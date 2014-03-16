@@ -6,7 +6,6 @@
 package org.dlect.controller.worker.download;
 
 import com.google.common.collect.ImmutableSet;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

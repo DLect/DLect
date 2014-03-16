@@ -23,8 +23,8 @@ public class WrappingUtil {
 
     public static MouseEvent duplicateEvent(MouseEvent e) {
         return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(),
-                e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(),
-                e.getButton());
+                              e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(),
+                              e.getButton());
     }
 
     private static MouseListener wrapMouseListener(final MouseListener ml, final JComponent origin) {
@@ -66,7 +66,7 @@ public class WrappingUtil {
         return wrap(p, entry, anchor, fill, b);
     }
 
-    public  static JPanel wrap(JPanel p, JComponent entry, int anchor, int fill, Border b) {
+    public static JPanel wrap(JPanel p, JComponent entry, int anchor, int fill, Border b) {
         p.setLayout(new GridBagLayout());
         p.setBorder(b);
         GridBagConstraints c = new GridBagConstraints();

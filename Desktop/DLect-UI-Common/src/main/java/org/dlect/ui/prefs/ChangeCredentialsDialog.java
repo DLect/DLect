@@ -32,7 +32,7 @@ public class ChangeCredentialsDialog extends JDialog {
 //        final String uname = c.getPropertiesController().getBlackboard().getUsername();
 //        final String pword = c.getPropertiesController().getBlackboard().getUsername();
 //        final Class provClass = c.getPropertiesController().getProviderClass();
-        loginPane = null; // TODO
+        loginPane = null; // TODO(Later) implement change credentials dialog
 //        loginPane = new LoginPanel(c) {
 //            @Override
 //            public void cancel() {

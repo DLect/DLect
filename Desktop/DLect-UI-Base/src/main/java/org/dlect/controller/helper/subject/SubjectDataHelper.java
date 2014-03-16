@@ -6,17 +6,10 @@
 package org.dlect.controller.helper.subject;
 
 import com.google.common.base.Objects;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
 import org.dlect.controller.MainController;
 import org.dlect.controller.event.ControllerListenable;
-import org.dlect.controller.helper.subject.SubjectInformation;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
-import org.dlect.model.Stream;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
 
@@ -37,7 +30,6 @@ public class SubjectDataHelper extends ControllerListenable<SubjectDataHelper> i
 //            return new SubjectInformation();
 //        }
 //    });
-
     public SubjectDataHelper(MainController mc) {
         //mc.addListener(this, Database.class, Semester.class, Subject.class, Lecture.class, LectureDownload.class);
     }
@@ -52,6 +44,7 @@ public class SubjectDataHelper extends ControllerListenable<SubjectDataHelper> i
 
     @Override
     public void processEvent(Event e) {
+        // TODO(Later) make this entire file work better.
 //        if(e.getEventID().equals(LectureDownloadEventID.DOWNLOADED)) {
 //            if(Boolean.TRUE.equals(e.getBefore())) {
 //                

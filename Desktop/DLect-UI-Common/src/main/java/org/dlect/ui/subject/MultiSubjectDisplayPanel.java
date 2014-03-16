@@ -58,7 +58,7 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
         this.shownSubjects = Sets.newTreeSet();
         this.subjectPanes = Maps.newHashMap();
         this.listingHandler = new SubjectListingHandler(controller.getDatabaseHandler().getDatabase());
-        
+
         this.setLayout(new GridBagLayout());
         Wrappers.addSwingListenerTo(this, controller, Database.class, Semester.class);
     }

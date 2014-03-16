@@ -25,7 +25,7 @@ public class PreconfiguredDownloader {
     }
 
     public void doDownload(Subject s, Lecture l, DownloadType dt) {
-        // TODO change this.
+        // TODO(LAter) change this to run on a single thread executor.
         new SingleDownloadWorker(displayable, mc, s, l, dt).execute();
     }
 

@@ -25,7 +25,6 @@ public class DropDownArrow extends JButton {
     {
         super.setOpaque(false);
         super.setText("");
-        
     }
 
     @Override

@@ -5,8 +5,6 @@
  */
 package org.dlect.controller.helper;
 
-import org.dlect.controller.data.DatabaseHandler;
-
 /**
  *
  * @author lee

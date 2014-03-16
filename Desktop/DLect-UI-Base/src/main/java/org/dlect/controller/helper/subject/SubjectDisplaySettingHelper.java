@@ -21,11 +21,11 @@ public class SubjectDisplaySettingHelper {
         this.database = database;
     }
 
-    public  String getKeyFor(Subject s) {
+    public String getKeyFor(Subject s) {
         return getKeyFor(s.getId());
     }
 
-    public  String getKeyFor(String bbid) {
+    public String getKeyFor(String bbid) {
         return KEY_PREFIX + bbid;
     }
 
@@ -34,11 +34,12 @@ public class SubjectDisplaySettingHelper {
         String displayed = database.getSetting(displayedKey);
         if (displayed == null) {
             setSubjectDisplayed(s, false);
+            return false;
         }
         return Boolean.valueOf(displayed);
     }
 
-    public  void setSubjectDisplayed(Subject s, boolean b) {
+    public void setSubjectDisplayed(Subject s, boolean b) {
         String displayedKey = getKeyFor(s);
 
         database.addSetting(displayedKey, Boolean.toString(b));

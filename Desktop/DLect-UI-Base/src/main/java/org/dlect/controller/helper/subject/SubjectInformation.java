@@ -9,7 +9,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
 import java.util.Map.Entry;
-import org.dlect.controller.helper.SubjectDataHelper.DownloadState;
+import org.dlect.controller.helper.subject.SubjectDataHelper.DownloadState;
 import org.dlect.helper.LectureHelper;
 import org.dlect.model.Lecture;
 import org.dlect.model.LectureDownload;

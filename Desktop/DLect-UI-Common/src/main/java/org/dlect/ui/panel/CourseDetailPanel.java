@@ -44,10 +44,10 @@ import org.dlect.ui.LeftRightCheck;
 import org.dlect.ui.decorator.DownloadButtonDotter;
 import org.dlect.ui.layout.TableConstraints;
 import org.dlect.ui.layout.TableLayout;
-import org.dlect.ui.prefs.subject.AdvancedSubjectPreferencesDialog;
+import org.dlect.ui.subject.settings.AdvancedSubjectPreferencesDialog;
 
-import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.ALL_DOWNLOADED;
-import static org.dlect.controller.helper.SubjectDataHelper.DownloadState.NONE_SELECTED;
+import static org.dlect.controller.helper.subject.SubjectDataHelper.DownloadState.ALL_DOWNLOADED;
+import static org.dlect.controller.helper.subject.SubjectDataHelper.DownloadState.NONE_SELECTED;
 
 /**
  *

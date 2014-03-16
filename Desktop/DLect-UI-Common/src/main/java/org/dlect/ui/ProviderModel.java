@@ -38,9 +38,10 @@ public class ProviderModel extends DefaultComboBoxModel<String> {
 
     /**
      * The index in the list of this provider; or 0 if it does not exist.
-     * 
+     *
      * @param provider
-     * @return 
+     *
+     * @return
      */
     public int getProviderIndex(ProviderDetail provider) {
         int listIdx = providers.indexOf(provider);

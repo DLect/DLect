@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.controller.event;
 
 /**
@@ -11,7 +10,7 @@ package org.dlect.controller.event;
  * @author lee
  */
 public enum ControllerState {
+
     STARTED, COMPLETED, FAILED;
-    
-    
+
 }

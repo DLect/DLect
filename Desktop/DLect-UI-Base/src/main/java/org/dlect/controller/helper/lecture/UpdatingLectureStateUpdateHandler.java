@@ -12,8 +12,6 @@ import org.dlect.model.Stream;
 import org.dlect.model.Subject;
 import org.dlect.model.formatter.DownloadType;
 
-import static com.google.common.collect.ImmutableList.builder;
-
 /**
  *
  * @author lee

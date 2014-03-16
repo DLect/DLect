@@ -26,14 +26,14 @@ public class EventIdListings {
             .add(SubjectEventID.LECTURE)
             .add(ControllerStateHelperEventID.values())
             .build();
-    
+
     public static final ImmutableSet<EventID> DOWNLOAD_TYPE_UPDATE_EVENT_IDS = ImmutableSet
             .<EventID>builder()
             .add(LectureDownloadEventID.DOWNLOADED, LectureDownloadEventID.DOWNLOAD_ENABLED)
             .add(LectureEventID.LECTURE_DOWNLOAD)
             .add(SubjectEventID.LECTURE)
             .build();
-    
+
     public static final ImmutableSet<EventID> LECTURE_STREAM_UPDATE_EVENT_IDS = ImmutableSet
             .<EventID>builder()
             .add(StreamEventID.NAME)
