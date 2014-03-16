@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 /**
  * TODO(Later) replace all references of SimpleDateFormat with this implementation and remove the synchronisation.
+ *
  * @see SimpleDateFormat
  * @author lee
  */
@@ -26,9 +27,9 @@ public class ThreadLocalDateFormat extends ThreadLocal<DateFormat> {
         this.timeZone = TimeZone.getTimeZone("GMT");
     }
 
-    public ThreadLocalDateFormat(String dateFormat, TimeZone setGmtTimezone) {
+    public ThreadLocalDateFormat(String dateFormat, TimeZone formatTimeZone) {
         this.dateFormat = dateFormat;
-        this.timeZone = setGmtTimezone;
+        this.timeZone = formatTimeZone;
     }
 
     @Override
@@ -40,6 +41,10 @@ public class ThreadLocalDateFormat extends ThreadLocal<DateFormat> {
 
     public final String format(Date date) {
         return get().format(date);
+    }
+
+    public final String format(long date) {
+        return get().format(new Date(date));
     }
 
     public Date parse(String source) throws ParseException {
