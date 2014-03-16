@@ -41,9 +41,9 @@ public class DLect {
 
     private static LoadStyle getLoadStyleFromArgs(String[] args, LoadStyle defaultStyle) {
         for (String arg : args) {
-            if ("--tray".equalsIgnoreCase(arg) || "-t".equalsIgnoreCase(arg)) {
+            if (arg.matches("-[Tt]")) {
                 return LoadStyle.TRAY;
-            } else if ("--gui".equalsIgnoreCase(arg) || "-g".equalsIgnoreCase(arg)) {
+            } else if (arg.matches("-[Gg]")) {
                 return LoadStyle.STANDALONE;
             }
         }
@@ -55,6 +55,9 @@ public class DLect {
         TRAY, STANDALONE;
 
         protected static LoadStyle from(String s) {
+            if (s == null) {
+                return STANDALONE;
+            }
             String n = s.toUpperCase();
             for (LoadStyle loadStyle : values()) {
                 if (loadStyle.name().startsWith(n)) {
