@@ -18,10 +18,9 @@
  */
 package org.dlect.provider.base.blackboard.helper;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.dlect.model.helper.ImmutableDate;
+import org.dlect.model.helper.ThreadLocalDateFormat;
 
 /**
  *
@@ -32,18 +31,16 @@ public class BlackboardXmlDateTypeAdapter extends XmlAdapter<String, ImmutableDa
     /**
      * TODO(Later) check that this applies to universities in GMT+0.
      */
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX";
+    public static final ThreadLocalDateFormat DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 
     @Override
     public String marshal(ImmutableDate v) throws Exception {
-        DateFormat f = new SimpleDateFormat(DATE_FORMAT);
-        return f.format(v);
+        return DATE_FORMAT.format(v);
     }
 
     @Override
     public ImmutableDate unmarshal(String v) throws Exception {
-        DateFormat f = new SimpleDateFormat(DATE_FORMAT);
-        return ImmutableDate.of(f.parse(v));
+        return ImmutableDate.of(DATE_FORMAT.parse(v));
     }
 
 }
