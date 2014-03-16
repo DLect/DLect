@@ -14,5 +14,7 @@ public class CommonSettingNames {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String PROVIDER_CODE = "provider-code";
+    public static final String UUID = "uuid";
+    public static final String BBID = "bbid";
 
 }
