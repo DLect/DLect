@@ -5,11 +5,12 @@
  */
 package org.dlect.controller;
 
-import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerListenable;
+import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
 import org.dlect.exception.DLectException;
 import org.dlect.model.Subject;
+import org.dlect.provider.WrappedProvider;
 
 /**
  *
@@ -32,7 +33,8 @@ public class LectureController extends ControllerListenable<LectureController> {
         event(ControllerType.LECTURE).state(ControllerState.STARTED).parameter(s).fire();
         boolean event = false;
         try {
-            ctl.getProviderHelper().getProvider().getLecturesIn(s);
+            WrappedProvider provider = ctl.getProviderHelper().getProvider();
+            provider.getLecturesIn(s);
             event(ControllerType.LECTURE).state(ControllerState.COMPLETED).parameter(s).fire();
             event = true;
         } finally {

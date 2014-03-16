@@ -8,14 +8,14 @@ package org.dlect.controller;
 import org.dlect.controller.event.ControllerListenable;
 import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
-import org.dlect.controller.helper.Initilisable;
 import org.dlect.exception.DLectException;
+import org.dlect.provider.WrappedProvider;
 
 /**
  *
  * @author lee
  */
-public class SubjectController extends ControllerListenable<SubjectController> implements Initilisable {
+public class SubjectController extends ControllerListenable<SubjectController> {
 
     private final MainController ctl;
 
@@ -32,7 +32,8 @@ public class SubjectController extends ControllerListenable<SubjectController> i
         event(ControllerType.SUBJECT).state(ControllerState.STARTED).fire();
         boolean event = false;
         try {
-            ctl.getProviderHelper().getProvider().getSubjects();
+            WrappedProvider provider = ctl.getProviderHelper().getProvider();
+            provider.getSubjects();
             event(ControllerType.SUBJECT).state(ControllerState.COMPLETED).fire();
             event = true;
         } finally {

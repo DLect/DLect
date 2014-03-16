@@ -9,9 +9,9 @@ import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.controller.event.ControllerListenable;
 import org.dlect.controller.event.ControllerState;
 import org.dlect.controller.event.ControllerType;
-import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.EventID;
 import org.dlect.exception.DLectException;
+import org.dlect.provider.WrappedProvider;
 import org.dlect.provider.loader.ProviderDetail;
 
 import static org.dlect.helper.Conditions.checkNonNull;
@@ -21,7 +21,7 @@ import static org.dlect.model.helper.CommonSettingNames.*;
  *
  * @author Lee Symes
  */
-public class LoginController extends ControllerListenable<LoginController> implements Initilisable {
+public class LoginController extends ControllerListenable<LoginController> {
 
     private final MainController ctl;
 
@@ -44,7 +44,8 @@ public class LoginController extends ControllerListenable<LoginController> imple
         event(ControllerType.LOGIN).state(ControllerState.STARTED).fire();
         boolean event = false;
         try {
-            ctl.getProviderHelper().getProvider().doLogin();
+            WrappedProvider provider = ctl.getProviderHelper().getProvider();
+            provider.doLogin();
             event(ControllerType.LOGIN).state(ControllerState.COMPLETED).fire();
             event = true;
         } finally {
