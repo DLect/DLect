@@ -10,9 +10,6 @@ gradle.allprojects {
         def testing() {
             return proj(":Desktop:DLectTestUtil")
         }
-        def commonUI() {
-//            return proj(":Desktop:DLect-Common-UI")
-        }
         def standalone() {
             return proj(":Desktop:DLect-Standalone")
         }
@@ -24,10 +21,6 @@ gradle.allprojects {
         }
         def media() {
             return proj(":Desktop:DLect-Media")
-        }
-        def oldData() {
-//            deprecated("oldData")
-//            return proj(":Desktop:DLectData")
         }
         def ui = new Object() {
             def base() {

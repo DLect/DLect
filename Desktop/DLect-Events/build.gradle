@@ -19,23 +19,12 @@ task collectionTest(type:Test){
     testClassesDir = project.sourceSets.collectionTest.output.classesDir
     classpath = project.sourceSets.collectionTest.runtimeClasspath
     reports {
-        /*xml{
-            enabled true
-            destination test.reports.xml.destination
-        }*/
         html{
             enabled true
             destination "${buildDir}/reports/collectionTest"
         }
     }
-    
-    
-    mustRunAfter test
-    dependsOn test
 }
-
-collectionTest.mustRunAfter test
-collectionTest.dependsOn test
 
 build.dependsOn collectionTest
 

@@ -4,8 +4,6 @@ dependencies {
     compile         desktop.data()
     compile         proj(":Desktop:DLect-Providers-Interface")
     compile         proj(":Desktop:DLect-Providers")
-//    compile         "org.reflections:reflections:0.9.9-RC1"
-//    compile         "javassist:javassist:3.12.1.GA"
     
     testCompile     projectTestingCommon()
     testCompile     desktop.testing()
