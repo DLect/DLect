@@ -134,7 +134,7 @@ public class ApplicationPreferencePanel extends PreferencePanel implements Event
 
     @Override
     public void processEvent(Event e) {
-        // TODO implement listening to changes in Update style and login information.
+        // TODO(LAter) implement listening to changes in Update style and login information.
     }
 
     private void updateSelectionChanged(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSelectionChanged
