@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import org.dlect.controller.MainController;
-import org.dlect.controller.data.DatabaseHandler;
-import org.dlect.controller.data.DatabaseHandler.DatabaseHandlerEventID;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.Event;
 import org.dlect.events.EventListener;
@@ -36,20 +34,18 @@ public class ProviderHelper implements EventListener, Initilisable {
     public ProviderHelper(MainController mc) {
         this.mc = mc;
         this.pl = new ProviderLoader();
-        this.mc.addListener(this, Database.class, DatabaseHandler.class);
     }
 
     @Override
     public void init() {
         updateProvider();
+        this.mc.addListener(this, Database.class);
     }
 
     @Override
     public void processEvent(Event e) {
         // TODO(Later) add checks for username change.
-        if (e.getEventID().equals(DatabaseHandlerEventID.DATABASE_LOADED)) {
-            updateProvider();
-        } else if (e.getEventID().equals(DatabaseEventID.SETTING)) {
+        if (e.getEventID().equals(DatabaseEventID.SETTING)) {
             Object after = e.getAfter();
             if (after instanceof Entry) {
                 Entry<?, ?> newSetting = (Entry<?, ?>) after;
@@ -85,11 +81,11 @@ public class ProviderHelper implements EventListener, Initilisable {
                 break;
             }
         }
-        providerDetail = pd;
         if (pd == null) {
             provider = null;
             return;
         }
+        providerDetail = pd;
 
         try {
             provider = this.pl.loadProvider(pd, db, mc.getFileController());
