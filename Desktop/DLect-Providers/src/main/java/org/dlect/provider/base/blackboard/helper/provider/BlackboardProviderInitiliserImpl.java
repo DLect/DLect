@@ -57,7 +57,7 @@ public class BlackboardProviderInitiliserImpl implements BlackboardProviderIniti
             return new BlackboardProviderDetails(new URI(bpd.getB2Url()), bpd.isHttpAuth(), bpd.isSslLogin());
         } catch (URISyntaxException ex) {
             ProviderLogger.LOGGER.error("Problem converting url: " + bpd.getB2Url(), ex);
-            throw new DLectException(DLectExceptionCause.ILLEGAL_PROVIDER_STATE, ex);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         }
     }
 

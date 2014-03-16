@@ -72,7 +72,7 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
                 return new BlackboardLectureRecordingItem(contentId, title, captureDate, url);
             } catch (MalformedURLException | URISyntaxException ex) {
                 ProviderLogger.LOGGER.error("Failed to create url from matcher. " + contentId.replace('\n', ' '), ex);
-                throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT, ex);
+                throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
             }
         }
     }
