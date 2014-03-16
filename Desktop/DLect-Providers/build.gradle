@@ -1,10 +1,7 @@
 applyJava();
 
-dependencies {    
-    compile         mp4parser()
-    compile         jaudiotagger()
+dependencies {
     compile         desktop.data()
-    compile         commonsIO()
     compile         httpClient()
     
     compile         proj(":Desktop:DLect-Providers-Interface")
