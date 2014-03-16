@@ -32,6 +32,8 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
 
     public static final String DLECT_FOLDER_NAME = ".DLect";
     public static final String DLECT_DATABASE_NAME = "DLect-data.xml";
+    public static final String DLECT_LOGGING_NAME = "DLect-log.txt";
+    public static final String DLECT_UPDATER_LOGGING_NAME = "DLect-updater-log.txt";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
 
@@ -58,17 +60,36 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
         event(DatabaseHandlerEventID.DATABASE_LOADED).before(null).after(database).fire();
     }
 
-    protected File getDatabaseFile() {
+    public static File getDatabaseFile() {
+        File dataFolder = getDLectFolder();
+        File dataFile = new File(dataFolder, DLECT_DATABASE_NAME);
+        return dataFile;
+    }
+
+    public static File getDLectFolder() {
         File jarFolder = JavaHelper.getJarFile().getParentFile();
         File dataFolder = new File(jarFolder, DLECT_FOLDER_NAME);
-        File dataFile = new File(dataFolder, DLECT_DATABASE_NAME);
+        if (!dataFolder.exists()) {
+            dataFolder.mkdirs();
+        }
+        return dataFolder;
+    }
+
+    public static File getLoggingFile() {
+        File dataFolder = getDLectFolder();
+        File dataFile = new File(dataFolder, DLECT_LOGGING_NAME);
+        return dataFile;
+    }
+
+    public static File getUpdateLoggingFile() {
+        File dataFolder = getDLectFolder();
+        File dataFile = new File(dataFolder, DLECT_UPDATER_LOGGING_NAME);
         return dataFile;
     }
 
     protected Database loadDatabase(File dataFile) {
         if (dataFile.exists()) {
             try {
-                // TODO load db from dataFile.
                 return DatabaseLoader.load(dataFile);
             } catch (JAXBException | FileNotFoundException ex) {
                 LOGGER.error("Failed to load database from file(" + dataFile + "). File Follows.", ex);
