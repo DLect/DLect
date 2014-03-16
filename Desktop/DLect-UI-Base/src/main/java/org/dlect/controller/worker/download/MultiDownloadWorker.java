@@ -37,8 +37,6 @@ public class MultiDownloadWorker extends SwingWorker<Void, Void> {
     protected Void doInBackground() throws Exception {
         ExecutorService service = Executors.newSingleThreadExecutor();
         for (DownloadParameter param : toDownload) {
-            System.out.println("Running Param: " + param);
-            System.out.println(param.getSubject() + "\n" + param.getLecture() + "\n" + param.getDownloadType());
             service.submit(new SingleDownloadWorker(displayable, controller, param.getSubject(), param.getLecture(), param.getDownloadType()));
         }
         service.shutdown();

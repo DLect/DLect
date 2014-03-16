@@ -120,7 +120,7 @@ public class SubjectInformation {
     public boolean isStreamEnabled(Stream s) {
         final int slcC = getStreamLectureCount().count(s);
         final int selcC = getStreamEnabledLectureCount().count(s);
-        System.out.println(slcC + " --> " + selcC);
+        
         return slcC == selcC;
     }
 

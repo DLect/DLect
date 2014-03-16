@@ -33,7 +33,6 @@ public class UpdateCheckingHelper {
     }
 
     public void doUpdate(@Nonnull UpdateStyle us) throws UpdateException {
-        System.out.println("Do Update: " + us);
         final Database db = mc.getDatabaseHandler().getDatabase();
         boolean update = updateChecker.isUpdateAvaliable(db.getSetting(CommonSettingNames.PROVIDER_CODE),
                                                          db.getSetting(CommonSettingNames.UUID),

@@ -185,12 +185,10 @@ public class LoginInputPanel extends javax.swing.JPanel {
     }
 
     public void setProvider(ProviderDetail provider) {
-        System.out.println("Set PRovider: " + provider);
         if (provider == null) {
             institutionCombo.setSelectedIndex(0);
         } else {
             int idx = model.getProviderIndex(provider);
-            System.out.println("Set PRovider Index: " + idx);
             institutionCombo.setSelectedIndex(idx);
         }
     }

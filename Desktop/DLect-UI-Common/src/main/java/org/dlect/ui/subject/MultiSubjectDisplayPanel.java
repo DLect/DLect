@@ -116,7 +116,6 @@ public class MultiSubjectDisplayPanel extends JPanel implements EventListener {
                     }
                     this.remove(pane);
                     this.add(pane, tC);
-                    System.out.println("Adding " + subject);
                     tC.gridy++;
                     pane.loadLectures();
                 } else {

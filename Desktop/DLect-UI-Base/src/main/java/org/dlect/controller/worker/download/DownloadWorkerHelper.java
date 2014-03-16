@@ -42,7 +42,6 @@ public class DownloadWorkerHelper {
                 }
             }
         }
-        System.out.println("PARAM: " + param);
         new MultiDownloadWorker(displayable, controller, param).execute();
     }
 

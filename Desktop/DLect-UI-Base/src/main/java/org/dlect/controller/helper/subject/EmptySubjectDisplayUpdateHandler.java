@@ -26,7 +26,7 @@ public class EmptySubjectDisplayUpdateHandler extends SubjectDisplayUpdateHandle
             return;
         }
         Semester newest = getDatabase().getSemesters().last();
-        System.out.println("Updating: " + newest);
+        
         setSemesterEnabled(newest, true);
     }
 

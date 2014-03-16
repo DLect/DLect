@@ -50,8 +50,6 @@ public class UpdateController extends Listenable<UpdateController> implements In
 
         UpdateStyle us = getUpdateSetting(d.getDatabase());
 
-        System.out.println("Style: " + us);
-
         if (us != UpdateStyle.NONE) {
             try {
                 helper.doUpdate(us);
