@@ -10,23 +10,23 @@ import org.dlect.controller.download.DownloadController;
 import org.dlect.controller.helper.ControllerStateHelper;
 import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.helper.Initilisables;
-import org.dlect.controller.helper.SubjectDataHelper;
 import org.dlect.controller.helper.lecture.LectureDownloadStateUpdater;
 import org.dlect.controller.helper.lecture.LectureStateUpdater;
+import org.dlect.controller.helper.subject.SubjectDataHelper;
 import org.dlect.controller.helper.subject.SubjectDisplaySettingHandler;
 import org.dlect.controller.helper.subject.SubjectDisplayUpdater;
 import org.dlect.controller.provider.ProviderHelper;
 import org.dlect.events.listenable.Listenable;
 import org.dlect.file.FileController;
-import org.dlect.logging.ControllerLogger;
+import org.dlect.model.helper.CommonSettingNames;
+
+import static java.util.UUID.randomUUID;
 
 /**
  *
  * @author lee
  */
 public abstract class MainController extends Listenable<MainController> implements Initilisable {
-
-    private final long uuid;
 
     private LoginController loginController;
     private SubjectController subjectController;
@@ -38,10 +38,8 @@ public abstract class MainController extends Listenable<MainController> implemen
     private ControllerStateHelper controllerStateHelper;
     private SubjectDataHelper subjectDataHelper;
     private SubjectDisplaySettingHandler subjectDisplayHelper;
-    private DatabaseSavingHandler databaseSavingHandler;
 
     public MainController() {
-        this.uuid = Double.doubleToRawLongBits(System.currentTimeMillis() * Math.random());
     }
 
     public abstract FileController getFileController();
@@ -59,17 +57,25 @@ public abstract class MainController extends Listenable<MainController> implemen
         this.controllerStateHelper = new ControllerStateHelper(this);
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
         this.subjectDataHelper = new SubjectDataHelper(this);
-        this.addChild(databaseHandler, loginController, subjectController, lectureController, downloadController, controllerStateHelper, subjectDataHelper);
-        Initilisables.doInit(databaseHandler, providerHelper, loginController, subjectController, lectureController, downloadController, controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
 
-        ControllerLogger.LOGGER.error("Hello World 1");
+        databaseHandler.init();
+        databaseHandler.addTemporarySetting(CommonSettingNames.UUID, randomUUID().toString());
+
+        if (databaseHandler.getSetting(CommonSettingNames.BBID) == null) {
+            databaseHandler.addSetting(CommonSettingNames.BBID, randomUUID().toString());
+        }
+
+        this.addChild(databaseHandler, loginController, subjectController,
+                      lectureController, downloadController, controllerStateHelper,
+                      subjectDataHelper);
+        Initilisables.doInit(databaseHandler, providerHelper, loginController,
+                             subjectController, lectureController, downloadController,
+                             controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
 
         DatabaseSavingHandler.registerOn(this);
         LectureStateUpdater.registerOn(this);
         LectureDownloadStateUpdater.registerOn(this);
         SubjectDisplayUpdater.registerOn(this);
-        
-        ControllerLogger.LOGGER.error("Hello World 2");
     }
 
     public DownloadController getDownloadController() {
@@ -106,10 +112,6 @@ public abstract class MainController extends Listenable<MainController> implemen
 
     public SubjectDisplaySettingHandler getSubjectDisplayHelper() {
         return subjectDisplayHelper;
-    }
-
-    public long getUuid() {
-        return uuid;
     }
 
 }
