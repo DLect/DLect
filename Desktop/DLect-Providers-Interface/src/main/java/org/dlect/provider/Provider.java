@@ -22,5 +22,5 @@ public interface Provider {
     public LectureProvider getLectureProvider();
 
     public DownloadProvider getDownloadProvider();
-    
+
 }

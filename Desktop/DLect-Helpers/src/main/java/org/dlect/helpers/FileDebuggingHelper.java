@@ -49,7 +49,7 @@ public class FileDebuggingHelper {
         } catch (IOException ex) {
             l.error("IOException thrown at line " + lineNo, ex);
         }
-        if(lineNo == 0) {
+        if (lineNo == 0) {
             l.error("<<FILE EMPTY>>");
         }
         l.error("------------------------------------------------");

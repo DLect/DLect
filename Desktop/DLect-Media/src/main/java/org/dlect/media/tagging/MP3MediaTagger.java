@@ -26,17 +26,17 @@ import org.jaudiotagger.tag.TagException;
  */
 @MediaTaggerFor("mp3")
 public class MP3MediaTagger implements MediaTagger {
-    
+
     public boolean apply(File inFile, File outFile, MediaMetaData data) {
         try {
             FileUtils.moveFile(inFile, outFile);
             AudioFile read = AudioFileIO.read(outFile);
             Tag tag = read.getTagOrCreateAndSetDefault();
-            
+
             tag.setField(FieldKey.TITLE, data.getTitle());
             tag.setField(FieldKey.ALBUM, data.getAlbum());
             tag.setField(FieldKey.COMMENT, data.getComment());
-            
+
             read.commit();
             return true;
         } catch (CannotReadException | CannotWriteException | IOException | ReadOnlyFileException ex) {
@@ -46,5 +46,5 @@ public class MP3MediaTagger implements MediaTagger {
         }
         return false;
     }
-    
+
 }

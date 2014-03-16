@@ -43,11 +43,8 @@ public class MediaTagEncoder {
         MediaTagger tagger = MEDIA_TAGGERS.get(dt);
         if (s.getTagFormat().isEnabled() && format != null && tagger != null) {
             MediaMetaData a = new MediaMetaData(getName(s, l, dt), getAlbum(s, l, dt));
-            
-            
+
             // TODO(LAteR) implement tagging in MediaTagEncoder.
-            
-            
         }
         if (!success) {
             try {

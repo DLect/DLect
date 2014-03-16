@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
  * @author lee
  */
 public class RecordingEventListener implements EventListener {
-    
+
     private final List<Event> recieved = Lists.newArrayList();
     private final List<Event> notAsserted = Lists.newArrayList();
     private final List<Event> asserted = Lists.newArrayList();
-    
+
     public void assertEvent(Event evt) {
         if (!notAsserted.contains(evt)) {
             if (recieved.contains(evt)) {
@@ -36,22 +36,22 @@ public class RecordingEventListener implements EventListener {
             asserted.add(evt);
         }
     }
-    
+
     public void noMoreEvents() {
         assertTrue("Events still left to assert: " + notAsserted, notAsserted.isEmpty());
     }
-    
+
     @Override
     public void processEvent(Event e) {
         TestLogging.LOG.error("Event Fired: {}", e);
         recieved.add(e);
         notAsserted.add(e);
     }
-    
+
     static RecordingEventListener addListener(Listenable<?> loaded) {
         RecordingEventListener l = new RecordingEventListener();
         loaded.addListener(l);
         return l;
     }
-    
+
 }

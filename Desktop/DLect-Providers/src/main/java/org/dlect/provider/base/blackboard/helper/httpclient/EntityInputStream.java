@@ -19,7 +19,7 @@ public class EntityInputStream extends InputStream {
     private final HttpEntity entity;
     private final InputStream is;
 
-    public EntityInputStream(HttpEntity entity) throws IOException{
+    public EntityInputStream(HttpEntity entity) throws IOException {
         this.entity = entity;
         this.is = entity.getContent();
     }

@@ -324,15 +324,15 @@ public class BaseEventAdapterTest {
         BaseEventAdapter e2 = mock(BaseEventAdapter.class);
 
         when(e2.getParentAdapter()).thenReturn(null);
-        
+
         nonMockedTestObject.setParentAdapter(e2);
-        
+
         nonMockedTestObject.fireEvent(e);
 
         verify(e).getSourceClass();
-        
+
         verifyNoMoreInteractions(e);
-        
+
         verify(e2).fireEvent(e);
     }
 

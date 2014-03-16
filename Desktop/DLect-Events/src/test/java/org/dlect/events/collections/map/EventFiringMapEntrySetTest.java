@@ -253,6 +253,7 @@ public class EventFiringMapEntrySetTest {
         }
         verifyNoMoreInteractions(helper);
     }
+
     @Test
     public void testRetainAll_AllRetained() {
         Map<String, String> content = fillMap(1, 10);

@@ -15,7 +15,7 @@ import org.dlect.exception.DLectExceptionCause;
  * @author lee
  */
 public class BlackboardProviderInitiliserWithBackupImpl extends BlackboardProviderInitiliserImpl {
-    
+
     private final BlackboardProviderInformation providerInformation;
 
     /**
@@ -26,7 +26,7 @@ public class BlackboardProviderInitiliserWithBackupImpl extends BlackboardProvid
         super(providerInformation.getProviderCode());
         this.providerInformation = providerInformation;
     }
-    
+
     private BlackboardProviderDetails buildProviderFromInformation() throws DLectException {
         try {
             return new BlackboardProviderDetails(new URI(providerInformation.getBlackboardUrl()),
@@ -36,7 +36,7 @@ public class BlackboardProviderInitiliserWithBackupImpl extends BlackboardProvid
             throw new DLectException(DLectExceptionCause.ILLEGAL_PROVIDER_STATE, "Failed to create URI from given string: " + providerInformation.getBlackboardUrl(), ex);
         }
     }
-    
+
     @Override
     public BlackboardProviderDetails getProviderDetails() throws DLectException {
         try {
@@ -49,5 +49,5 @@ public class BlackboardProviderInitiliserWithBackupImpl extends BlackboardProvid
             }
         }
     }
-    
+
 }

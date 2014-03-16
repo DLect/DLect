@@ -13,5 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author lee
  */
 public class ProviderLogger {
+
     public static final Logger LOGGER = LoggerFactory.getLogger(ProviderLogger.class);
 }

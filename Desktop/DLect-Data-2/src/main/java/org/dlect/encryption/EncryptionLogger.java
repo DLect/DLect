@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.encryption;
 
 import org.slf4j.Logger;
@@ -14,5 +13,6 @@ import org.slf4j.LoggerFactory;
  * @author lee
  */
 public class EncryptionLogger {
+
     public static final Logger LOGGER = LoggerFactory.getLogger(EncryptionLogger.class);
 }

@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.events.listenable;
 
 import java.util.Map.Entry;
 import org.dlect.events.EventAdapter;
 import org.dlect.events.EventID;
 import org.dlect.events.collections.CollectionEventHelper;
-
 
 public class MapValueListenableCollectionEventHelper<K, V extends Listenable<V>> extends CollectionEventHelper<Entry<K, V>> {
 
@@ -36,7 +34,5 @@ public class MapValueListenableCollectionEventHelper<K, V extends Listenable<V>>
         ListenableCollectionEventHelper.removeListenable(original.getValue(), this.getAdapter());
         super.fireReplace(original, replacement); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }

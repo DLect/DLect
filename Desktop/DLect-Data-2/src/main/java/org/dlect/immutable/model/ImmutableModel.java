@@ -12,6 +12,6 @@ package org.dlect.immutable.model;
 public interface ImmutableModel<T> {
 
     public void copyTo(T s);
-    
+
     public T copyToNew();
 }

@@ -109,7 +109,7 @@ public class EventFiringMapValueSetTest {
         Iterator<String> it = testValues.iterator();
         for (; it.hasNext();) {
             it.next();
-            
+
             it.remove();
         }
 
@@ -216,6 +216,7 @@ public class EventFiringMapValueSetTest {
         }
         verifyNoMoreInteractions(helper);
     }
+
     @Test
     public void testRetainAll_AllRetained() {
         Map<String, String> content = fillMap(1, 10);

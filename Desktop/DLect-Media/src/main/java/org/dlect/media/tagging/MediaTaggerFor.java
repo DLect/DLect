@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.media.tagging;
 
 import java.lang.annotation.Documented;
@@ -20,7 +19,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface MediaTaggerFor {
-    
+
     String[] value();
-    
+
 }

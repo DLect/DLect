@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.dlect.events.testListener;
 
 import com.google.common.collect.Lists;
@@ -24,18 +23,16 @@ public class TestEventListener implements EventListener {
     }
 
     /**
-     * 
+     *
      * @return A changeable view of the events list.
      */
     public List<Event> getEvents() {
         return Collections.unmodifiableList(events);
     }
 
-    
-    
     @Override
     public void processEvent(Event e) {
         events.add(e);
     }
-    
+
 }

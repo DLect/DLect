@@ -29,7 +29,7 @@ public class TestEventAdapter implements EventAdapter {
 
     @Override
     public EventAdapter getParentAdapter() {
-        return this.parentAdapter;  
+        return this.parentAdapter;
     }
 
     @Override

@@ -76,7 +76,6 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
             return name();
         }
 
-
     }
 
 }

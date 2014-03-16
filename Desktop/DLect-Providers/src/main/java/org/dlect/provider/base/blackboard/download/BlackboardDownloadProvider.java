@@ -21,7 +21,6 @@ import org.dlect.provider.DownloadProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 
-
 /**
  *
  * @author lee

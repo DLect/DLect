@@ -119,11 +119,11 @@ public class EventAdapterBuilderTest {
     @Test
     public void testSetDefaultAdapterClass_Valid() throws Exception {
         Object oldClass = getStaticField(EventAdapterBuilder.class, ADAPTER_CLASS_FIELD_NAME);
-        
+
         EventAdapterBuilder.setEventAdapterClass(TestEventAdapter.class);
-        
+
         Object newClass = getStaticField(EventAdapterBuilder.class, ADAPTER_CLASS_FIELD_NAME);
-        
+
         assertNotEquals("Class not changed even though the method succeded", oldClass, newClass);
         assertEquals("Class not the expected one.", TestEventAdapter.class, newClass);
     }
@@ -136,13 +136,13 @@ public class EventAdapterBuilderTest {
     @Test
     public void testSetDefaultAdapterClass_ResetWithNull() throws Exception {
         setStaticField(EventAdapterBuilder.class, ADAPTER_CLASS_FIELD_NAME, TestEventAdapter.class);
-        
+
         Object oldClass = getStaticField(EventAdapterBuilder.class, ADAPTER_CLASS_FIELD_NAME);
 
         EventAdapterBuilder.setEventAdapterClass(null);
 
         Object newClass = getStaticField(EventAdapterBuilder.class, ADAPTER_CLASS_FIELD_NAME);
-        
+
         assertNotEquals("Class not changed even though the method succeded", oldClass, newClass);
         assertEquals("Class not the expected one.", EventAdapterBuilder.DEFAULT_ADAPTER_CLASS, newClass);
     }

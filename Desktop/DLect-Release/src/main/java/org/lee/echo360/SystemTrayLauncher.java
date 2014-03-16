@@ -11,6 +11,6 @@ public class SystemTrayLauncher implements Launcher {
 
     @Override
     public void launch(long startTime, String... args) throws AWTException {
-            //ApplicationController.doStartup(startTime, args);
+        //ApplicationController.doStartup(startTime, args);
     }
 }

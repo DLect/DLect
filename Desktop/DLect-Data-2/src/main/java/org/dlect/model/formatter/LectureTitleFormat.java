@@ -54,7 +54,6 @@ public enum LectureTitleFormat {
         }
     }
 
-
     public abstract String format(Subject s, Lecture l);
 
 }

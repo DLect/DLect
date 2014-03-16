@@ -49,7 +49,7 @@ public class GUIController extends MainController {
             // Never happens.
         }
         StartupController.initLogging();
-        
+
         GUIController mc = new GUIController();
         mc.addListener(new DebuggingEventListener());
         mc.init();
