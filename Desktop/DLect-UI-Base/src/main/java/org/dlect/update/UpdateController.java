@@ -5,11 +5,13 @@
  */
 package org.dlect.update;
 
-import org.dlect.controller.helper.Initilisable;
 import org.dlect.controller.MainController;
 import org.dlect.controller.data.DatabaseHandler;
+import org.dlect.controller.event.ControllerState;
+import org.dlect.controller.helper.Initilisable;
 import org.dlect.events.EventID;
 import org.dlect.events.listenable.Listenable;
+import org.dlect.model.Database;
 
 /**
  *
@@ -17,7 +19,7 @@ import org.dlect.events.listenable.Listenable;
  */
 public class UpdateController extends Listenable<UpdateController> implements Initilisable {
 
-    public static final String NO_UPDATE_CHECK_SETTING = "NoUpdateCheck?";
+    public static final String UPDATE_STYLE_SETTING = "UpdateStyle";
     private final MainController ctl;
 
     private UpdateCheckingHelper helper;
@@ -28,7 +30,7 @@ public class UpdateController extends Listenable<UpdateController> implements In
 
     @Override
     public void init() {
-        helper = new UpdateCheckingHelper();
+        helper = new UpdateCheckingHelper(ctl);
     }
 
     /**
@@ -46,28 +48,38 @@ public class UpdateController extends Listenable<UpdateController> implements In
         }
         DatabaseHandler d = ctl.getDatabaseHandler();
 
-        String dontCheck = d.getSetting(NO_UPDATE_CHECK_SETTING);
-        if (dontCheck == null) {
-            // Defaults to false - I.E. check unless otherwise instructed.
-            dontCheck = "false";
-        }
-        // Invalid string will return false; causing a check.
-        if (Boolean.parseBoolean(dontCheck)) {
-            // User requested that the updates not be checked. 
-            return true;
-        } else {
+        UpdateStyle us = getUpdateSetting(d.getDatabase());
 
-            // TODO get UpdateStyle from DB.
-            UpdateStyle us = null;
+        System.out.println("Style: " + us);
 
+        if (us != UpdateStyle.NONE) {
             try {
                 helper.doUpdate(us);
-                fireEvent(UpdateControllerEventID.UPDATE_CHECK_COMPLETED);
+                event(UpdateControllerEventID.UPDATE_CHECK_COMPLETED).before(null).after(ControllerState.COMPLETED).fire();
             } catch (UpdateException ex) {
-                // TODO debug
+                event(UpdateControllerEventID.UPDATE_CHECK_COMPLETED).before(null).after(ControllerState.FAILED).fire();
+                UpdateLogger.LOGGER.error("Failed to updated due to an exception.", ex);
             }
             return true;
+        } else {
+            return false;
         }
+    }
+
+    public static void addUpdateSetting(UpdateStyle us, Database d) {
+        d.addSetting(UPDATE_STYLE_SETTING, us.name());
+    }
+
+    public static UpdateStyle getUpdateSetting(Database d) {
+        UpdateStyle us;
+        String updateStyle = d.getSetting(UPDATE_STYLE_SETTING);
+        try {
+            us = UpdateStyle.valueOf(updateStyle);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            us = UpdateStyle.AUTOMATIC;
+            addUpdateSetting(us, d);
+        }
+        return us;
     }
 
     public static enum UpdateControllerEventID implements EventID {
