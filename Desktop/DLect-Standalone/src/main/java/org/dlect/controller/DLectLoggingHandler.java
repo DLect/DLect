@@ -6,6 +6,7 @@
 package org.dlect.controller;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -17,6 +18,8 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 import org.dlect.controller.data.DatabaseHandler;
+import org.dlect.encryption.DatabaseKeyHandler;
+import org.dlect.model.helper.CommonSettingNames;
 import org.dlect.model.helper.ThreadLocalDateFormat;
 import org.dlect.update.ApplicationInformation;
 
@@ -44,10 +47,25 @@ public class DLectLoggingHandler extends StreamHandler {
 
     private static class DLectLogFormatter extends Formatter {
 
+        private static final ImmutableList<String> CENSORED_KEYWORDS = ImmutableList.of(CommonSettingNames.USERNAME,
+                                                                                        CommonSettingNames.PASSWORD,
+                                                                                        DatabaseKeyHandler.AES_KEY_SETTING_NAME);
+
         private static final int width = 120;
         private static final int mainWidth = width - 4;
 
         public DLectLogFormatter() {
+        }
+
+        private String formatCheckedMessage(LogRecord record) {
+            String msg = formatMessage(record);
+            for (String ck : CENSORED_KEYWORDS) {
+                if (msg.contains(ck)) {
+                    return "This message contained private information and as a result was censured to prevent "
+                           + "data breaches. The censured key word was: " + ck;
+                }
+            }
+            return msg;
         }
 
         @Override
@@ -118,7 +136,7 @@ public class DLectLoggingHandler extends StreamHandler {
             b.append('|').append(record.getSourceMethodName());
             b.append('<').append('\n');
 
-            b.append(padLines(formatMessage(record), "  ")).append("\n");
+            b.append(padLines(formatCheckedMessage(record), "  ")).append("\n");
 
             Throwable thrown = record.getThrown();
             if (thrown != null) {

@@ -78,7 +78,7 @@ public class DatabaseKeyHandler {
         Key aesKey = new SecretKeySpec(key, "AES");
         return new DatabaseKeyHandler(aesKey);
     }
-    private static final String AES_KEY_SETTING_NAME = "AES-Key";
+    public  static final String AES_KEY_SETTING_NAME = "AES-Key";
 
     private static byte[] newKey() {
         byte[] bytes = new SecureRandom().generateSeed(16);

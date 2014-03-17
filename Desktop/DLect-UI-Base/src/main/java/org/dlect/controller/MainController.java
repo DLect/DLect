@@ -58,6 +58,8 @@ public abstract class MainController extends Listenable<MainController> implemen
         this.subjectDisplayHelper = new SubjectDisplaySettingHandler(this);
         this.subjectDataHelper = new SubjectDataHelper(this);
 
+        addChild(databaseHandler);
+        
         databaseHandler.init();
         databaseHandler.addTemporarySetting(CommonSettingNames.UUID, randomUUID().toString());
 
@@ -65,10 +67,10 @@ public abstract class MainController extends Listenable<MainController> implemen
             databaseHandler.addSetting(CommonSettingNames.BBID, randomUUID().toString());
         }
 
-        this.addChild(databaseHandler, loginController, subjectController,
+        this.addChild(loginController, subjectController,
                       lectureController, downloadController, controllerStateHelper,
                       subjectDataHelper);
-        Initilisables.doInit(databaseHandler, providerHelper, loginController,
+        Initilisables.doInit(providerHelper, loginController,
                              subjectController, lectureController, downloadController,
                              controllerStateHelper, subjectDisplayHelper, subjectDataHelper);
 
