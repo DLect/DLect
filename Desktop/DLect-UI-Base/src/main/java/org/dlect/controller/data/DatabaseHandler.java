@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DatabaseHandler extends Listenable<DatabaseHandler> implements Initilisable {
 
-    public static final String DLECT_FOLDER_NAME = ".DLect";
     public static final String DLECT_DATABASE_NAME = "DLect-data.xml";
     public static final String DLECT_LOGGING_NAME = "DLect-log.txt";
     public static final String DLECT_UPDATER_LOGGING_NAME = "DLect-updater-log.txt";
@@ -67,12 +66,7 @@ public class DatabaseHandler extends Listenable<DatabaseHandler> implements Init
     }
 
     public static File getDLectFolder() {
-        File jarFolder = JavaHelper.getJarFile().getParentFile();
-        File dataFolder = new File(jarFolder, DLECT_FOLDER_NAME);
-        if (!dataFolder.exists()) {
-            dataFolder.mkdirs();
-        }
-        return dataFolder;
+        return JavaHelper.getJarFile().getParentFile();
     }
 
     public static File getLoggingFile() {

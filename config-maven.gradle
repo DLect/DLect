@@ -4,7 +4,7 @@ gradle.allprojects {
         outFormat.timeZone = java.util.TimeZone.getTimeZone("UTC")
         return outFormat.format(new Date())
     }()
-    if(mavenVersion.matches(/\d+(.\d+)+-([A].*|[B].*|[S].*)/)) {
+    if(mavenVersion.matches(/\d+(.\d+)+-([A].*|[B].*|[S].*|[D].*)/)) {
         ext.completeVersion = mavenVersion + "-" + buildStart
     } else if(mavenVersion.matches(/\d+(.\d+)+(-RC)?/)) {
         ext.completeVersion = mavenVersion
