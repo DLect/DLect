@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.update;
+package org.dlect.update;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -76,7 +76,7 @@ public class UpdateImpl {
             while ((lastRead = nc.read(reads, 0, READ_SIZE)) > 0) {
                 fc.write(reads, 0, lastRead);
                 currentPosition += lastRead;
-                if(currentPosition > (max / 2)) {
+                if (currentPosition > (max / 2)) {
                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException ex) {
@@ -84,8 +84,8 @@ public class UpdateImpl {
                     }
                 }
                 publish(Pair.of("Downloading at " + toSpeed(currentPosition
-                        / ((double) (System.currentTimeMillis() - startTime))),
-                        hasContentLength ? (int) currentPosition : 2));
+                                                            / ((double) (System.currentTimeMillis() - startTime))),
+                                hasContentLength ? (int) currentPosition : 2));
             }
         } finally {
             if (con != null) {
@@ -143,7 +143,7 @@ public class UpdateImpl {
     }
 
     private static void debugHeaders(HttpURLConnection con) throws IOException {
-        if (con != null) {
+        if (con == null) {
             return;
         }
         System.out.println("------------------------------------");

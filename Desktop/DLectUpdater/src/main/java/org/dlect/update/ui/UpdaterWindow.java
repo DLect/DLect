@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.update.ui;
+package org.dlect.update.ui;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -15,7 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author lee
  */
 public class UpdaterWindow extends javax.swing.JFrame {
-    
+
     public static void start(final String location) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -39,9 +39,12 @@ public class UpdaterWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form UpdaterWindow
+     *
+     * @param loc
      */
     public UpdaterWindow(String loc) {
         initComponents();
+        ChangeLogPane.configureLogPane(changeLogPane, jScrollPane1);
         this.location = loc;
         new DownloadUpdateWorker(jProgressBar1) {
             @Override
@@ -59,6 +62,7 @@ public class UpdaterWindow extends javax.swing.JFrame {
             }
         }.execute();
         this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -71,9 +75,10 @@ public class UpdaterWindow extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        changeLogColapsePane1 = new org.lee.echo360.update.ui.ChangeLogPane();
         jLabel1 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        changeLogPane = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DLect Updater");
@@ -82,22 +87,13 @@ public class UpdaterWindow extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(400, 250));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        changeLogColapsePane1.setMinimumSize(new java.awt.Dimension(400, 250));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(changeLogColapsePane1, gridBagConstraints);
-
         jLabel1.setText("Download the latest version of DLect");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jProgressBar1.setToolTipText("");
@@ -109,7 +105,18 @@ public class UpdaterWindow extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         getContentPane().add(jProgressBar1, gridBagConstraints);
+
+        jScrollPane1.setViewportView(changeLogPane);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(jScrollPane1, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -126,8 +133,9 @@ public class UpdaterWindow extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.lee.echo360.update.ui.ChangeLogPane changeLogColapsePane1;
+    private javax.swing.JEditorPane changeLogPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

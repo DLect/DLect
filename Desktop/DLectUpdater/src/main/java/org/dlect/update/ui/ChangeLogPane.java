@@ -2,11 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.update.ui;
+package org.dlect.update.ui;
 
 import java.awt.Desktop;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +15,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.HyperlinkEvent;
@@ -26,10 +24,10 @@ import javax.swing.event.HyperlinkListener;
  *
  * @author lee
  */
-public class ChangeLogPane extends JScrollPane {
-    
-    public ChangeLogPane() {
-        JEditorPane e = new JEditorPane("text/html", HTML_PREFIX + "<b>Loading Changelog.</b><br>" + CHANGE_LOG_LINK_HTML);
+public class ChangeLogPane {
+
+    public static void configureLogPane(JEditorPane e, JScrollPane scrollPane) {
+        e.setText(HTML_PREFIX + "<b>Loading Changelog.</b><br>" + CHANGE_LOG_LINK_HTML);
         e.setEditable(false);
         e.setContentType("text/html");
         e.addHyperlinkListener(new HyperlinkListener() {
@@ -48,23 +46,22 @@ public class ChangeLogPane extends JScrollPane {
                 }
             }
         });
-        new ChangeLogWorker(e, this).execute();
-        this.setViewportView(e);
+        new ChangeLogWorker(e, scrollPane).execute();
     }
     private static final String HTML_PREFIX = "<html><font style='font-family: verdana,arial,sans-serif'>";
     private static final String CHANGE_LOG_LINK_HTML = "To read the change log online visit <a href='http://uqlectures.sourceforge.net/?h=rdme'>http://uqlectures.sourceforge.net/?h=rdme</a>";
     private static final String ERROR_MESSAGE = HTML_PREFIX + "<b>Error</b> retrieving the change log. " + CHANGE_LOG_LINK_HTML;
-    
-    private class ChangeLogWorker extends SwingWorker<String, Void> {
-        
+
+    private static class ChangeLogWorker extends SwingWorker<String, Void> {
+
         private final JEditorPane pane;
         private final JScrollPane sPane;
-        
+
         public ChangeLogWorker(JEditorPane pane, JScrollPane sPane) {
             this.pane = pane;
             this.sPane = sPane;
         }
-        
+
         @Override
         protected void done() {
             try {
@@ -79,7 +76,7 @@ public class ChangeLogPane extends JScrollPane {
             sPane.getViewport().setViewPosition(new Point());
             pane.setCaretPosition(0);
         }
-        
+
         @Override
         protected String doInBackground() throws Exception {
             URL updateDesc = new URL("http://uqlectures.sourceforge.net/?h=cl");
@@ -91,7 +88,7 @@ public class ChangeLogPane extends JScrollPane {
             }
             return HTML_PREFIX + builder.toString();
         }
-        
+
         private InputStream openURL(URL updateDesc) throws IOException {
             HttpURLConnection c = (HttpURLConnection) updateDesc.openConnection();
             c.setInstanceFollowRedirects(true);

@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.update.ui;
+package org.dlect.update.ui;
 
-import org.lee.echo360.update.Pair;
+import org.dlect.update.Pair;
 import java.io.File;
 import java.util.List;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-import org.lee.echo360.update.UpdateImpl;
+import org.dlect.update.UpdateImpl;
 
 /**
  *

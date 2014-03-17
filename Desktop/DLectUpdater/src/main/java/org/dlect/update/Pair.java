@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lee.echo360.update;
+package org.dlect.update;
 
 import java.util.Map;
 

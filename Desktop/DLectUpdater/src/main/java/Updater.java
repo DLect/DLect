@@ -3,9 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.lee.echo360.update.InstallImpl;
-import org.lee.echo360.update.UpdateImpl;
-import org.lee.echo360.update.ui.UpdaterWindow;
+import org.dlect.update.InstallImpl;
+import org.dlect.update.UpdateImpl;
+import org.dlect.update.ui.UpdaterWindow;
 
 /*
  * To change this template, choose Tools | Templates
@@ -23,9 +23,10 @@ public class Updater {
         if (args.length > 1) {
             for (int i = 1; i < args.length; i++) {
                 String a = args[i];
-                if (a.matches("-[-]?[AaQqSs]")) {
+                System.out.println("Arg: " + a);
+                if (a.matches("^-[-]?[AaQqSs].*")) {
                     silent = true;
-                } else if (a.matches("-[-]?[MmGgVv]")) {
+                } else if (a.matches("^-[-]?[MmGgVv].*")) {
                     silent = true;
                 }
             }
