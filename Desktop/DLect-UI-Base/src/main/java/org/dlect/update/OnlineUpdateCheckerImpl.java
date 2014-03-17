@@ -22,7 +22,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class OnlineUpdateCheckerImpl implements OnlineUpdateChecker {
 
-    private static final URI UPDATE_CHECK_URI = URI.create("http://uqlectures.sourceforge.net/update_1.php");
+    private static final URI UPDATE_CHECK_URI = URI.create("http://uqlectures.sourceforge.net/update.php");
     private static final String UPDATE_REQUIRED_HEADER = "X-Update-Required";
 
     private HttpEntity generateEntity(String selectedProvider, String uuid, String bbid) {
