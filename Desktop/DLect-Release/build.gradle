@@ -25,6 +25,12 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
 }
 
+tasks.withType(Jar.class).all { task ->
+    task.manifest {
+        attributes("SplashScreen-Image": "splash/splashScreen.png")
+    }
+}
+
 task includeUpdater(type: Copy) {
     from configurations.rawJar
     into new File(sourceSets.main.output.resourcesDir, "updater/")
