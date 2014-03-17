@@ -54,23 +54,25 @@ public class LectureStateUpdater implements EventListener {
                     }
                 }
             } else if (ce.getEventID() == ControllerType.LECTURE && ce.getAfter() != ControllerState.STARTED) {
-                for (Semester sem : d.getSemesters()) {
-                    for (Subject subject : sem.getSubjects()) {
-                        LectureStateUpdateHandler get = lectureHandlers.get(subject);
+                if (ce.getParameter() instanceof Subject) {
+                    Subject subject = (Subject) ce.getParameter();
+//                for (Semester sem : d.getSemesters()) {
+//                    for (Subject subject : sem.getSubjects()) {
+                    LectureStateUpdateHandler get = lectureHandlers.get(subject);
 
-                        if (get == null) {
-                            get = new EmptyLectureStateUpdateHandler(subject);
-                            get.init();
-                        } else {
-                            // Subject that it was configured on may not be the same object as the current one.
-                            get.setSubject(subject);
-                        }
-
-                        ControllerLogger.LOGGER.info("Updating for " + subject.getId() + ": " + get.getClass());
-                        get.updateLectures();
-
-                        lectureHandlers.put(subject, NO_OP_UPDATE_HANDLER);
+                    if (get == null) {
+                        get = new EmptyLectureStateUpdateHandler(subject);
+                        get.init();
                     }
+                    // Subject that it was configured on may not be the same object as the current one.
+                    get.setSubject(subject);
+
+                    ControllerLogger.LOGGER.info("Updating for " + subject.getId() + ": " + get.getClass());
+                    get.updateLectures();
+
+                    lectureHandlers.put(subject, NO_OP_UPDATE_HANDLER);
+//                    }
+//                }
                 }
             }
         }
