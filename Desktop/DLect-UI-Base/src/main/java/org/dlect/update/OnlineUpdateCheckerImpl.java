@@ -11,6 +11,7 @@ import com.google.common.io.CharStreams;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -26,16 +27,18 @@ public class OnlineUpdateCheckerImpl implements OnlineUpdateChecker {
     private static final String UPDATE_REQUIRED_HEADER = "X-Update-Required";
 
     private HttpEntity generateEntity(String selectedProvider, String uuid, String bbid) {
-        return new UrlEncodedFormEntity(Lists.newArrayList(
+        List<BasicNameValuePair> postVars = Lists.newArrayList(
                 of("thisver", ApplicationInformation.APPLICATION_VERSION),
                 of("javaver", ApplicationInformation.JAVA_VERSION),
                 of("bbid", bbid),
                 of("uuid", uuid),
                 of("provider", selectedProvider),
-                of("os-name", ApplicationInformation.OS_TYPE),
-                of("os-type", ApplicationInformation.OS_VERSON),
-                of("os-arch", ApplicationInformation.OS_ARCHITECTURE)
-        ), Charsets.UTF_8);
+                of("osname", ApplicationInformation.OS_TYPE),
+                of("osversion", ApplicationInformation.OS_VERSON),
+                of("osarch", ApplicationInformation.OS_ARCHITECTURE)
+        );
+        UpdateLogger.LOGGER.error("Posting: " + postVars);
+        return new UrlEncodedFormEntity(postVars, Charsets.UTF_8);
     }
 
     private BasicNameValuePair of(String name, String value) {
