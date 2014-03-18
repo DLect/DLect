@@ -72,7 +72,7 @@ public class FolderFileController implements FileController {
     }
     
     public String formatSubjectFolder(Subject s) {
-        return s.getName().replaceAll("[\\\\/:;]", "|");
+        return s.getName().replaceAll("[\\\\/:;]", "-");
     }
     
     public String formatLectureDate(Lecture l, LectureDownload ld) {
