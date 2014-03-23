@@ -61,7 +61,7 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
     public BlackboardLectureRecordingItem parseItem(URL base, String contentId, String itemHtml) throws DLectException {
         Matcher m = LECTURE_RECORDING_INFORMATION.matcher(itemHtml);
         if (!m.find()) {
-            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, "Recording information regular expression failed. Input: " + itemHtml);
         } else {
             try {
                 String title = m.group(1);
