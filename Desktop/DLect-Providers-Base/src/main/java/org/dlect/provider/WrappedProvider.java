@@ -11,10 +11,13 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.dlect.encryption.DatabaseDecryptionHandler;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
@@ -67,7 +70,7 @@ public class WrappedProvider {
         Optional<String> pwd = deh.getEncryptedSetting(PASSWORD);
 
         if (!usr.isPresent() || !pwd.isPresent()) {
-            throw new DLectException(DLectExceptionCause.BAD_CREDENTIALS);
+            throw new DLectException(DLectExceptionCause.BAD_CREDENTIALS, "username or password not present.");
         }
 
         doInit();
@@ -134,7 +137,7 @@ public class WrappedProvider {
         InputStream is = new BufferedInputStream(p.getDownloadProvider().getDownloadStreamFor(ImmutableLectureDownload.from(ld)));
         OutputStream os = null;
         try {
-            os = new BufferedOutputStream(new FileOutputStream(fc.getFileForDownload(s, l, ld)));
+            os = new BufferedOutputStream(new FileOutputStream(ensureFileWritable(s, l, ld)));
         } catch (IOException ex) {
             try {
                 is.close();
@@ -163,12 +166,28 @@ public class WrappedProvider {
                 try {
                     oss.write(load, 0, lastRead);
                 } catch (IOException ex) {
-                    throw new DLectException(DLectExceptionCause.DISK_ERROR);
+                    throw new DLectException(DLectExceptionCause.DISK_ERROR, "Failed to write to disk.");
                 }
             } while (lastRead >= 0);
         } catch (IOException ex) {
             ProviderLogger.LOGGER.error("Error closing stream for download.", ex);
         }
+    }
+
+    protected File ensureFileWritable(Subject s, Lecture l, LectureDownload ld) throws IOException {
+        Path dlInto = fc.getFileForDownload(s, l, ld).toPath();
+        
+        if(Files.isDirectory(dlInto)) {
+            throw new IOException("The file to download into is actually a directory! File: " + dlInto);
+        }
+        
+        Path parent = dlInto.getParent();
+        if(parent != null) {
+            if(Files.notExists(parent)) {
+                Files.createDirectories(parent);
+            }
+        }                
+        return dlInto.toFile();
     }
 
     public synchronized void doInit() throws DLectException {

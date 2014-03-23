@@ -1,0 +1,13 @@
+Ensure that downloads go into their subject's folder. 
+
+Ensure that the folder is not created until the download is started.
+
+Add a Try Again/Refresh button to both SubjectPane and the SubjectListingPanel
+
+Add a button to restart DLect when an update is detected. 
+ \ Maybe force the Updater window to show.
+ 
+Add a Report Error button to error dialogs.
+ \ Maybe add one to the main panel/login panel for other errors.
+ \ Would need to implement something to allow the reports to be stored with additional information such as the user's description ect.
+ 

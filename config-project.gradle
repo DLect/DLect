@@ -34,7 +34,6 @@ def configureJava(task) {
 gradle.allprojects {    
     ext.applyJava = {mainClass ->
         apply plugin: 'java'
-        apply plugin: 'jacoco'
         
         dependencies {
             compile     slf4jBase()
@@ -53,19 +52,22 @@ gradle.allprojects {
                 classpath += tasks.run.classpath
             }
         }
-        
-        jacocoTestReport {
-            group = "reporting"
-            description = "Generate Jacoco coverage reports after running tests."
-            reports {
-                xml.enabled true
-                html.enabled true
-                csv.enabled false
+        if(!JavaVersion.current().isJava8Compatible()) {
+            // JaCoCo doesn't work in java 8 currently
+            apply plugin: 'jacoco'
+            jacocoTestReport {
+                group = "reporting"
+                description = "Generate Jacoco coverage reports after running tests."
+                reports {
+                    xml.enabled true
+                    html.enabled true
+                    csv.enabled false
+                }
             }
+                
+            tasks["build"].dependsOn jacocoTestReport
         }
-        
-        tasks["build"].dependsOn jacocoTestReport
-        
+            
         tasks.withType( JavaCompile.class ).all { task->
             configureJava(task);
         }
