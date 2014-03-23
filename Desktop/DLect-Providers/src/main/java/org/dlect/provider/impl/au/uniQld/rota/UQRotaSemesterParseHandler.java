@@ -5,6 +5,7 @@
  */
 package org.dlect.provider.impl.au.uniQld.rota;
 
+import com.google.common.base.Optional;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -14,7 +15,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @author lee
  */
-public class UQRotaSemesterParserHandler extends DefaultHandler {
+public class UQRotaSemesterParseHandler extends DefaultHandler {
 
     private boolean started;
     private StringBuilder content;
@@ -24,11 +25,12 @@ public class UQRotaSemesterParserHandler extends DefaultHandler {
     private String semNumber;
     private String semYear;
 
-    public ImmutableSemester getSemester() {
+    public Optional<ImmutableSemester> getSemester() {
         if (id == null || name == null || semNumber == null || semYear == null) {
-            throw new IllegalStateException("Not completed reading in semester information");
+            // TODO Log this error.
+            return Optional.absent();
         } else {
-            return new ImmutableSemester(id, name, "Sem " + semNumber + ", " + semYear);
+            return Optional.of(new ImmutableSemester(id, name, "Sem " + semNumber + ", " + semYear));
         }
     }
 
