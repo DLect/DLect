@@ -5,6 +5,7 @@
  */
 package org.dlect.provider.impl.au.uniQld.rota;
 
+import com.google.common.base.Optional;
 import java.io.IOException;
 import java.net.URI;
 import javax.xml.parsers.ParserConfigurationException;
@@ -36,10 +37,10 @@ public class UQRotaSemesterParser {
         this.client = blackboardHttpClient;
     }
 
-    public ImmutableSemester getSemester(int semCode) throws DLectException {
+    public Optional<ImmutableSemester> getSemester(int semCode) throws DLectException {
         URI u = URI.create("http://rota.eait.uq.edu.au/semester/" + semCode + ".xml");
 
-        UQRotaSemesterParserHandler handler = new UQRotaSemesterParserHandler();
+        UQRotaSemesterParseHandler handler = new UQRotaSemesterParseHandler();
         try {
             SAXParser saxParser = PARSER_FACTORY.newSAXParser();
 
