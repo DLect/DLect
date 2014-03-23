@@ -13,6 +13,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -20,11 +23,17 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.dlect.provider.base.blackboard.helper.httpclient.EntityInputStream;
+import org.apache.http.protocol.HttpContext;
 
 public class BlackboardHttpClientImpl implements BlackboardHttpClient {
 
-    private final HttpClient client = HttpClients.createDefault();
+    private final HttpClient client = HttpClients.custom().addInterceptorLast(new HttpRequestInterceptor() {
+
+        @Override
+        public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+            request.addHeader("User-Agent", DLECT_IDENTIFIER);
+        }
+    }).build();
 
     @Override
     public InputStream doGet(URI uri) throws IOException {

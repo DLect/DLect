@@ -16,9 +16,9 @@ import java.util.Map;
  */
 public interface BlackboardHttpClient {
 
-    public static final String DLECT_IDENTIFIER = "DLect-V2.2";
+    public static final String DLECT_IDENTIFIER = "DLect Lecture Recording Helper/3.0";
 
-    public InputStream doPost(URI uri, Map<String, String> credentials) throws IOException;
+    public InputStream doPost(URI uri, Map<String, String> postVars) throws IOException;
 
     public InputStream doGet(URI uri) throws IOException;
 
