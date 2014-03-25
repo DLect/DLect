@@ -5,11 +5,15 @@
  */
 package org.dlect.provider.impl.au.uniQld.rota;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import java.util.List;
+import com.google.common.collect.Sets;
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.Map.Entry;
+import java.util.Set;
+import org.dlect.logging.ProviderLogger;
+import org.dlect.model.helper.ThreadLocalDateFormat;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -20,6 +24,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class UQRotaOfferingParseHandler extends DefaultHandler {
 
+    private static final ThreadLocalDateFormat DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd");
+
     private StringBuilder content;
     private OfferingParseState state = null;
 
@@ -27,13 +33,20 @@ public class UQRotaOfferingParseHandler extends DefaultHandler {
 
     private String currentSeriesName;
     private UQRotaStream currentStream;
-    private List<UQRotaStreamSession> sessions;
+    private Set<UQRotaStreamSession> sessions;
     private UQRotaStreamSession currentSession;
 
-    void printStuffs() {
-        System.out.println("Streams: ");
-        System.out.println(Joiner.on("\n").useForNull("null").join(streamSeries.entries()));
-
+    public Set<UQRotaStream> getStreams() {
+        Set<UQRotaStream> streams = Sets.newHashSet();
+        for (Entry<String, Collection<UQRotaStream>> e : streamSeries.asMap().entrySet()) {
+            Collection<UQRotaStream> seriesStreams = e.getValue();
+            if (seriesStreams.size() == 1) {
+                UQRotaStream stream = seriesStreams.iterator().next();
+                stream.setGroupNumber("");
+            }
+            streams.addAll(seriesStreams);
+        }
+        return streams;
     }
 
     @Override
@@ -49,7 +62,14 @@ public class UQRotaOfferingParseHandler extends DefaultHandler {
         } else if ("building".equalsIgnoreCase(qName)) {
             state = OfferingParseState.BUILDING;
         } else if ("event".equalsIgnoreCase(qName)) {
-            // TODO read attributes and store.
+            if (Boolean.parseBoolean(attributes.getValue("taught"))) {
+                try {
+                    currentSession.addDate(DATE_FORMAT.parse(attributes.getValue("date")));
+                } catch (ParseException ex) {
+                    ProviderLogger.LOGGER.error("Failed to parse date: \"" + attributes.getValue("date") + "\"", ex);
+                }
+            }
+
         }
     }
 
@@ -66,10 +86,10 @@ public class UQRotaOfferingParseHandler extends DefaultHandler {
                 currentSeriesName = c;
             } else if (state == OfferingParseState.GROUP) {
                 currentStream = new UQRotaStream();
-                currentStream.setGroupName(c);
+                currentStream.setGroupNumber(c);
                 currentStream.setSeriesName(currentSeriesName);
                 streamSeries.put(currentSeriesName, currentStream);
-                sessions = Lists.newArrayList();
+                sessions = Sets.newHashSet();
             }
         } else if (state == OfferingParseState.SESSION) {
             if ("startmins".equalsIgnoreCase(qName)) {
