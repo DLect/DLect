@@ -38,7 +38,7 @@ public class UQRotaOfferingSearchParseHandler extends DefaultHandler {
             return;
         }
         if ("id".equalsIgnoreCase(qName)) {
-            offeringId = Integer.parseInt(content.toString());
+            offeringId = Integer.parseInt(content.toString().trim());
         }
         content = null;
     }

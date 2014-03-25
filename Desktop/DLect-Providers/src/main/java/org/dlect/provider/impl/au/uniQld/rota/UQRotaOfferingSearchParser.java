@@ -31,7 +31,7 @@ public class UQRotaOfferingSearchParser {
         this.client = client;
     }
 
-    private String getJsonFor(String subjectCode, int semesterNum) {
+    protected String getJsonFor(String subjectCode, int semesterNum) {
         String cleanedCode = subjectCode.replaceAll("[^A-Z0-9]", "");
         cleanedCode = cleanedCode.substring(0, 8);
 
