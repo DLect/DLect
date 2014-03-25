@@ -5,11 +5,11 @@
  */
 package org.dlect.provider.impl.au.uniQld.rota;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import java.util.Collection;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -19,7 +19,16 @@ public class UQRotaStream {
 
     private String seriesName;
     private String groupName;
-    private final List<UQRotaStreamSession> session = Lists.newArrayList();
+    private final Set<UQRotaStreamSession> session = Sets.newHashSet();
+
+    public UQRotaStream() {
+    }
+
+    public UQRotaStream(String seriesName, String groupName, Collection<UQRotaStreamSession> session) {
+        this.seriesName = seriesName;
+        this.groupName = groupName;
+        this.session.addAll(session);
+    }
 
     public String getSeriesName() {
         return seriesName;
@@ -33,12 +42,12 @@ public class UQRotaStream {
         return groupName;
     }
 
-    public void setGroupName(String groupName) {
+    public void setGroupNumber(String groupName) {
         this.groupName = groupName;
     }
 
-    public List<UQRotaStreamSession> getSession() {
-        return ImmutableList.copyOf(session);
+    public Set<UQRotaStreamSession> getSession() {
+        return ImmutableSet.copyOf(session);
     }
 
     public void setSession(Collection<UQRotaStreamSession> c) {
@@ -48,7 +57,30 @@ public class UQRotaStream {
 
     @Override
     public String toString() {
-        return "UQRotaStream{" + "seriesName=" + seriesName + ", groupName=" + groupName + ", session=" + Joiner.on("\n\t").useForNull("null").join(session) + '}';
+        return "\nUQRotaStream{" + "seriesName=" + seriesName + ", groupName=" + groupName + ", session=" + session + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.seriesName, this.groupName, this.session);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UQRotaStream other = (UQRotaStream) obj;
+        if (!Objects.equals(this.seriesName, other.getSeriesName())) {
+            return false;
+        }
+        if (!Objects.equals(this.groupName, other.getGroupName())) {
+            return false;
+        }
+        return Objects.equals(this.session, other.getSession());
     }
 
 }
