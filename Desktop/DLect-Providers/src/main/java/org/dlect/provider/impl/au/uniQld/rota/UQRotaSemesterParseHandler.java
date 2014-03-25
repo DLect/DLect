@@ -49,14 +49,15 @@ public class UQRotaSemesterParseHandler extends DefaultHandler {
         } else if (content == null || !started) {
             return;
         }
+        String c = content.toString().trim();
         if ("id".equalsIgnoreCase(qName)) {
-            id = Integer.valueOf(content.toString());
+            id = Integer.valueOf(c);
         } else if ("name".equalsIgnoreCase(qName)) {
-            name = content.toString();
+            name = c;
         } else if ("number".equalsIgnoreCase(qName)) {
-            semNumber = content.toString();
+            semNumber = c;
         } else if ("year".equalsIgnoreCase(qName)) {
-            semYear = content.toString();
+            semYear = c;
         }
         content = null;
     }
