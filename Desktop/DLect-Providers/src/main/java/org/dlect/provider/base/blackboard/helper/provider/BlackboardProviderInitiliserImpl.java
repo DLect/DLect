@@ -20,11 +20,14 @@ import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardProviderXmlDetails;
 
-import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_SHORT_IDENTIFIER;
 
 public class BlackboardProviderInitiliserImpl implements BlackboardProviderInitiliser {
 
-    private static final String BASE_URL = "https://mlcs.medu.com/api/b2_registration/refresh_info?q=&carrier_code=&carrier_name=&device_name=&platform=&timestamp=&registration_id=&f=xml&device_id=&android=1&v=1&language=en_GB&ver=" + DLECT_IDENTIFIER + "&client_id=";
+    private static final String BASE_URL = "https://mlcs.medu.com/api/b2_registration/refresh_info?"
+                                           + "q=&carrier_code=&carrier_name=&device_name=&platform="
+                                           + "&timestamp=&registration_id=&f=xml&device_id=&"
+                                           + "&v=1&language=en_GB&ver=" + DLECT_SHORT_IDENTIFIER + "&client_id=";
 
     private final int providerCode;
 
