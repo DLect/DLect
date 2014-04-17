@@ -42,15 +42,20 @@ import org.dlect.logging.ProviderLogger;
 
 public class BlackboardHttpClientImpl implements BlackboardHttpClient {
 
-    private final HttpClient client = HttpClients.custom().addInterceptorLast(new HttpRequestInterceptor() {
+    private static final HttpRequestInterceptor DLECT_USER_AGENT_REQUEST_INTERCEPTOR = new DLectUserAgentRequestInterceptor();
+    private static final HttpResponseInterceptor REDIRECT_MONITORING_RESPONSE_INTERCEPTOR = new RedirectMonitoringResponseInterceptor();
 
-        @Override
-        public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
-            request.addHeader("User-Agent", DLECT_IDENTIFIER);
-        }
-    }).build();
     private static final String LAST_REDIRECT_URL = "last_redirect_url";
 
+    private final HttpClient cookieClient = HttpClients.custom()
+            .addInterceptorLast(DLECT_USER_AGENT_REQUEST_INTERCEPTOR)
+            .addInterceptorFirst(REDIRECT_MONITORING_RESPONSE_INTERCEPTOR)
+            .build();
+    private final HttpClient noCookieClient = HttpClients.custom()
+            .addInterceptorLast(DLECT_USER_AGENT_REQUEST_INTERCEPTOR)
+            .addInterceptorFirst(REDIRECT_MONITORING_RESPONSE_INTERCEPTOR)
+            .setDefaultCookieStore(new NoOpCookieStore())
+            .build();
 
     @Override
     public HttpResponceStream doGet(URI uri) throws IOException {
@@ -109,6 +114,57 @@ public class BlackboardHttpClientImpl implements BlackboardHttpClient {
         }
     }
 
+    protected static class NoOpCookieStore implements CookieStore {
+
+        public NoOpCookieStore() {
+        }
+
+        @Override
+        public void addCookie(Cookie cookie) {
+        }
+
+        @Override
+        public void clear() {
+        }
+
+        @Override
+        public boolean clearExpired(Date date) {
+            return false;
+        }
+
+        @Override
+        public List<Cookie> getCookies() {
+            return ImmutableList.of();
+        }
+    }
+
+    protected static class DLectUserAgentRequestInterceptor implements HttpRequestInterceptor {
+
+        public DLectUserAgentRequestInterceptor() {
+        }
+
+        @Override
+        public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+            request.setHeader("User-Agent", DLECT_IDENTIFIER);
+            request.setHeader("X-DLect-Version", ApplicationInformation.APPLICATION_VERSION);
+        }
+    }
+
+    private static class RedirectMonitoringResponseInterceptor implements HttpResponseInterceptor {
+
+        public RedirectMonitoringResponseInterceptor() {
+        }
+
+        @Override
+        public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
+            if (response.containsHeader("Location")) {
+                Header location = response.getFirstHeader("Location");
+                ProviderLogger.LOGGER.error("Redirecting to: " + location);
+                if (location != null) {
+                    context.setAttribute(LAST_REDIRECT_URL, location.getValue());
+                }
+            }
+        }
     }
 
 }
