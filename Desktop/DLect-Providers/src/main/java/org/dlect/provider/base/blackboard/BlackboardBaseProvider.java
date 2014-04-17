@@ -5,6 +5,7 @@
  */
 package org.dlect.provider.base.blackboard;
 
+import org.dlect.provider.base.blackboard.lecture.plugin.impl.BlackboardLectureCustomiser;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.logging.ProviderLogger;
@@ -24,6 +25,8 @@ import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInit
 import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInitiliserImpl;
 import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInitiliserWithBackupImpl;
 import org.dlect.provider.base.blackboard.lecture.BlackboardLectureProvider;
+import org.dlect.provider.base.blackboard.lecture.BlackboardStreamProvider;
+import org.dlect.provider.base.blackboard.lecture.plugin.BlackboardLectureItemParserBuilder;
 import org.dlect.provider.base.blackboard.login.BlackboardSslFormLoginProvider;
 import org.dlect.provider.base.blackboard.subject.BlackboardSubjectProvider;
 
@@ -34,7 +37,8 @@ import org.dlect.provider.base.blackboard.subject.BlackboardSubjectProvider;
 public class BlackboardBaseProvider implements Provider {
 
     private final BlackboardSubjectCustomiser subjectCustomiser;
-    private final BlackboardLectureCustomiser lectureCustomiser;
+    private final BlackboardLectureItemParserBuilder parserBuilder;
+    private final BlackboardStreamProvider streamProvider;
     private final BlackboardProviderInitiliser providerInitiliser;
     private final BlackboardHttpClient httpClient;
     private final BlackboardXmlParser xmlParser;
@@ -44,26 +48,38 @@ public class BlackboardBaseProvider implements Provider {
     private LectureProvider lectureProvider = null;
     private DownloadProvider downloadProvider = null;
 
-    public BlackboardBaseProvider(int providerCode, BlackboardSubjectCustomiser subjectCustomiser, BlackboardLectureCustomiser lectureCustomiser) {
-        this(subjectCustomiser, lectureCustomiser, new BlackboardProviderInitiliserImpl(providerCode),
+    public BlackboardBaseProvider(int providerCode,
+                                  BlackboardSubjectCustomiser subjectCustomiser,
+                                  BlackboardLectureItemParserBuilder parserBuilder,
+                                  BlackboardStreamProvider streamProvider) {
+        this(new BlackboardProviderInitiliserImpl(providerCode),
+             subjectCustomiser, parserBuilder, streamProvider,
              new BlackboardHttpClientImpl(), new BlackboardXmlParserImpl());
     }
 
-    public BlackboardBaseProvider(BlackboardProviderInformation providerInformation, BlackboardSubjectCustomiser subjectCustomiser, BlackboardLectureCustomiser lectureCustomiser) {
-        this(subjectCustomiser, lectureCustomiser, new BlackboardProviderInitiliserWithBackupImpl(providerInformation),
+    public BlackboardBaseProvider(BlackboardProviderInformation providerInformation,
+                                  BlackboardSubjectCustomiser subjectCustomiser,
+                                  BlackboardLectureItemParserBuilder parserBuilder,
+                                  BlackboardStreamProvider streamProvider) {
+        this(new BlackboardProviderInitiliserWithBackupImpl(providerInformation),
+             subjectCustomiser, parserBuilder, streamProvider,
              new BlackboardHttpClientImpl(), new BlackboardXmlParserImpl());
     }
 
-    public BlackboardBaseProvider(BlackboardSubjectCustomiser subjectCustomiser,
-                                  BlackboardLectureCustomiser lectureCustomiser,
-                                  BlackboardProviderInitiliser providerInitiliser,
+    public BlackboardBaseProvider(BlackboardProviderInitiliser providerInitiliser,
+                                  BlackboardSubjectCustomiser subjectCustomiser,
+                                  BlackboardLectureItemParserBuilder parserBuilder,
+                                  BlackboardStreamProvider streamProvider,
                                   BlackboardHttpClient httpClient,
                                   BlackboardXmlParser xmlParser) {
-        this.subjectCustomiser = subjectCustomiser;
-        this.lectureCustomiser = lectureCustomiser;
         this.providerInitiliser = providerInitiliser;
-        this.httpClient = httpClient;
+
+        this.subjectCustomiser = subjectCustomiser;
         this.xmlParser = xmlParser;
+        this.parserBuilder = parserBuilder;
+
+        this.streamProvider = streamProvider;
+        this.httpClient = httpClient;
     }
 
     @Override
@@ -97,7 +113,7 @@ public class BlackboardBaseProvider implements Provider {
         }
 
         subjectProvider = new BlackboardSubjectProvider(u.getBaseUrl(), subjectCustomiser, httpClient, xmlParser);
-        lectureProvider = new BlackboardLectureProvider(u.getBaseUrl(), lectureCustomiser, httpClient, xmlParser);
+        lectureProvider = new BlackboardLectureProvider(u.getBaseUrl(), httpClient, xmlParser, parserBuilder, streamProvider);
         downloadProvider = new BlackboardDownloadProvider(httpClient);
     }
 
