@@ -17,11 +17,13 @@ import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.model.helper.ThreadLocalDateFormat;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.HttpResponceStream;
 import org.dlect.test.helper.DataLoader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -41,11 +43,11 @@ public class UQRotaOfferingParserTest {
     @Mock
     private BlackboardHttpClient httpClient;
 
+    @InjectMocks
     private UQRotaOfferingParser testObject;
 
     @Before
     public void setUp() {
-        testObject = new UQRotaOfferingParser(httpClient);
     }
 
     @After
@@ -89,7 +91,7 @@ public class UQRotaOfferingParserTest {
      */
     @Test
     public void testGetStreamsFor_doGetValidXml() throws Exception {
-        ByteArrayInputStream is = toIs(DataLoader.loadResource("org/dlect/provider/impl/au/uniQld/rota/offeringComplete.xml", this, 1000));
+        HttpResponceStream is = toIs(DataLoader.loadResource("org/dlect/provider/impl/au/uniQld/rota/offeringComplete.xml", this, 1000));
         when(httpClient.doGet(getUriFor(1))).thenReturn(is);
 
         Set<UQRotaStream> result = testObject.getStreamsFor(1);
@@ -124,8 +126,8 @@ public class UQRotaOfferingParserTest {
         return DATE.parse(y + "-" + m + "-" + d);
     }
 
-    private ByteArrayInputStream toIs(String str) {
-        return new ByteArrayInputStream(str.getBytes(UTF_8));
+    private HttpResponceStream toIs(String str) {
+        return new HttpResponceStream(new ByteArrayInputStream(str.getBytes(UTF_8)), URI.create("http://www.google.com/"));
     }
 
     private URI getUriFor(int offeringId) {

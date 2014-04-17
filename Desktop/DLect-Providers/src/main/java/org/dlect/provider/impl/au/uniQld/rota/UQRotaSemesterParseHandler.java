@@ -50,7 +50,7 @@ public class UQRotaSemesterParseHandler extends DefaultHandler {
             return;
         }
         String c = content.toString().trim();
-        if ("id".equalsIgnoreCase(qName)) {
+        if (id == null && "id".equalsIgnoreCase(qName)) {
             id = Integer.valueOf(c);
         } else if ("name".equalsIgnoreCase(qName)) {
             name = c;

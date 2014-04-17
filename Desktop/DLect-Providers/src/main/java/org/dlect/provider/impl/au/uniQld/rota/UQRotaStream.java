@@ -38,7 +38,7 @@ public class UQRotaStream {
         this.seriesName = seriesName;
     }
 
-    public String getGroupName() {
+    public String getGroupNumber() {
         return groupName;
     }
 
@@ -77,7 +77,7 @@ public class UQRotaStream {
         if (!Objects.equals(this.seriesName, other.getSeriesName())) {
             return false;
         }
-        if (!Objects.equals(this.groupName, other.getGroupName())) {
+        if (!Objects.equals(this.groupName, other.getGroupNumber())) {
             return false;
         }
         return Objects.equals(this.session, other.getSession());

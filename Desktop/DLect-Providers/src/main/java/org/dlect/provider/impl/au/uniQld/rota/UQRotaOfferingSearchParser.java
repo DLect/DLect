@@ -31,12 +31,14 @@ public class UQRotaOfferingSearchParser {
         this.client = client;
     }
 
-    protected String getJsonFor(String subjectCode, int semesterNum) {
+    protected static String getJsonFor(String subjectCode, int semesterNum) {
         String cleanedCode = subjectCode.replaceAll("[^A-Z0-9]", "");
         cleanedCode = cleanedCode.substring(0, 8);
 
-        // Pre-encoded: {"course_code":"...", "semester_id": ...}
-        String json = "%7B\"course_code\"%3A+\"" + cleanedCode + "\"%2C+\"semester_id\"%3A+" + semesterNum + "%7D";
+        // Pre-encoded: {"course_code":"...", "semester_id": ..., "mode": "Internal"}
+        String json = "%7B%22course_code%22%3A+%22" + cleanedCode + "%22%2C"
+                      + "+%22semester_id%22%3A+" + semesterNum + "%2C"
+                      + "+%22mode%22%3A+%22Internal%22%7D";
 
         return json;
     }
