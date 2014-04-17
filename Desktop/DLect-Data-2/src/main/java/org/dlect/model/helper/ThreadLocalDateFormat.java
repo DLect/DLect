@@ -24,7 +24,7 @@ public class ThreadLocalDateFormat extends ThreadLocal<DateFormat> {
 
     public ThreadLocalDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
-        this.timeZone = TimeZone.getTimeZone("GMT");
+        this.timeZone = TimeZone.getTimeZone("UTC");
     }
 
     public ThreadLocalDateFormat(String dateFormat, TimeZone formatTimeZone) {
@@ -37,8 +37,8 @@ public class ThreadLocalDateFormat extends ThreadLocal<DateFormat> {
         DateFormat f = new SimpleDateFormat(dateFormat);
         f.setTimeZone(timeZone);
         return f;
-    }
-
+    }    
+    
     public final String format(Date date) {
         return get().format(date);
     }
