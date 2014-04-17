@@ -1,0 +1,19 @@
+Sem 1 2013 (Code: 3131)(GC, Logan, Nathan)
+&sp=S1004ICT&sp=S3131&sp=SUGRD&sp=SGC&sp=SP&sp=SGC&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+&sp=S1004ICT&sp=S3131&sp=SUGRD&sp=SLG&sp=SP&sp=SLG&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+&sp=S1004ICT&sp=S3131&sp=SUGRD&sp=SNA&sp=SP&sp=SNA&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+Sem 1 2012 (Code: ????)(GC, Logan, Nathan)
+&sp=S1004ICT&sp=S3121&sp=SUGRD&sp=SGC&sp=SP&sp=SGC&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+&sp=S1004ICT&sp=S3121&sp=SUGRD&sp=SLG&sp=SP&sp=SLG&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+&sp=S1004ICT&sp=S3121&sp=SUGRD&sp=SNA&sp=SP&sp=SNA&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+
+
+
+&sp=S<<A>>&sp=S<<B>>&sp=S<<C>>&sp=S<<D>>&sp=S<<E>>&sp=S<<D>>&sp=l0&sp=SStipHome&sp=SCourse+search&sp=0&sp=SCourse+search&sp=F
+
+
+A: Course Code
+B: Semester Code
+C: {UGRD}, {PGRD} - Undergrad or PostGrad ect.
+D: Campus Code -> {GC}, {LG}, {NA}, {SB}, {MG}
+E: Learning mode. {P}=>"In Person", {MM}=>"Mixed Mode",

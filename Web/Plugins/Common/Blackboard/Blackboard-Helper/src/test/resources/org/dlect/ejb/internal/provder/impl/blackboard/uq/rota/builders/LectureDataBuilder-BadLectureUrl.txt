@@ -1,0 +1,32 @@
+<li id="contentListItem:_410796_1" class="clearfix read">
+
+    <img alt="" src="./ListContent - Echo360 page_files/echo360.gif" class="item_icon">
+
+    <div class="item clearfix" id="_410796_1">
+        <h3>
+            <span class="reorder editmode hideme"><span><img src="./ListContent - Echo360 page_files/generic_updown.gif" alt=""></span></span>
+
+            <span style="color:#000000;">2013-08-05 09:00:00 - Problems &amp; Applications - Mon 09:00 Rm: STLUCIA 01-E302</span>
+        </h3>
+    </div>
+    <div class="details">
+        <div class="vtbegenerated">
+            <div version="1.0">Capture Date/Time: 2013-08-05 09:00:00<br>
+                <a id="So, you wanted a URL -----?" 
+                    href="uru://So, you wanted a URL?" target="_blank">
+                        Problems &amp; Applications - Mon 09:00 Rm: STLUCIA 01-E302
+                </a><br>
+                <a id="So, you wanted a URL -----?" 
+                    href="uru://So, you wanted a URL?" target="_blank">
+                        Download Lecture Audio
+                </a><br>
+                <a id="So, you wanted a URL -----?" 
+                    href="uru://So, you wanted a URL?" target="_blank">
+                        Download Lecture Video
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="_410796_1previewModule" class="moduleSample">
+    </div>
+</li>

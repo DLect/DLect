@@ -1,0 +1,169 @@
+def printObject(obj, prefix, maxLevels) {
+    try {
+        obj.properties.each { prop, val ->
+            if(prop.equals("class")) {
+            } else if(maxLevels <= 0 || val == null) {
+                println prefix + prop + " => {" + val + "}"
+            } else {
+                println prefix + prop + " =\\"
+                printObject(val, prefix + "\t", maxLevels - 1)
+            }
+        }
+    }catch(Exception e)  {
+    }
+}
+
+def configureJava(task) {
+    if(!task.options.compilerArgs.find({item -> 
+                item.startsWith("-proc:")
+            })) {
+        task.options.compilerArgs += [
+            "-proc:none"
+        ]
+    }
+    if(hasProperty("warnAll") && warnAll) {
+        task.options.compilerArgs += ["-Xlint:all"]
+    }
+    task.options.warnings=true
+    task.sourceCompatibility = 1.7
+    task.targetCompatibility = 1.7
+    task.options.encoding = 'UTF-8'
+}
+
+
+gradle.allprojects {    
+    ext.applyJava = {mainClass ->
+        apply plugin: 'java'
+        apply plugin: 'jacoco'
+        
+        dependencies {
+            compile     slf4jBase()
+            
+            provided    findbugs()
+            
+            testCompile testing()
+        }
+        if(mainClass) {
+            apply plugin:'application'
+
+            mainClassName = mainClass
+            
+            task debug(dependsOn: classes, type: JavaExec) {
+                debug = true
+                classpath += tasks.run.classpath
+            }
+        }
+        
+        jacocoTestReport {
+            group = "reporting"
+            description = "Generate Jacoco coverage reports after running tests."
+            reports {
+                xml.enabled true
+                html.enabled true
+                csv.enabled false
+            }
+        }
+        
+        tasks["build"].dependsOn jacocoTestReport
+        
+        tasks.withType( JavaCompile.class ).all { task->
+            configureJava(task);
+        }
+
+        tasks.withType( Javadoc.class ).all { task ->
+            task.doFirst({
+                    println ""
+                })
+        }
+        test {
+            ignoreFailures = true
+        }
+        
+        task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        artifacts {
+            archives jar
+            archives sourcesJar
+        }
+        tasks.withType(AbstractArchiveTask.class).all { task ->
+            version = project.completeVersion
+        }
+            
+        tasks.withType(Jar.class).all { task ->
+            task.manifest {
+                attributes(
+                    "Author": "Lee Symes", 
+                    "DLect-Build-Version": version, 
+                    "Home-Url": "http://uqlectures.sf.net/", 
+                    "Build-Date": buildStart)
+                if(mainClass) {
+                    attributes("Main-Class": mainClass)
+                }
+            }
+        }
+                   
+        
+        // Setup other config that can be applied.
+        project.ext.applyMaven()
+        project.ext.applyProvided()
+    }
+    
+    ext.applyEJB = {
+        
+    }
+    
+    ext.executableJar = { mainName ->
+        apply plugin:'application'
+        mainClassName = mainName
+    }
+    
+    ext.applyJpaModelGen = {
+        configurations {
+            jpaModelGen
+        }
+        dependencies.jpaModelGen "org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.5.1"
+        
+        def genTarget = file("${buildDir}/generated-sources");
+        
+        project.sourceSets.each { sourceSet ->
+            def taskName = "generate" + sourceSet.name.capitalize() + "Annotations"
+            def destDir = file("${genTarget}/${sourceSet.name}")
+
+            task ("${taskName}PreCopy", type: Copy, group: 'build') {
+                from sourceSet.resources.srcDirs
+                exclude "**/*.java"
+                into destDir
+            }
+            task ("${taskName}", type: JavaCompile, group: 'build'){
+                source = sourceSet.java
+                classpath = sourceSet.compileClasspath + configurations.jpaModelGen
+                options.compilerArgs += [
+                        "-proc:only"
+                ]
+                destinationDir = destDir
+            }
+            configureJava(tasks[taskName])
+            
+            sourceSet.java.srcDirs destDir
+
+            tasks[sourceSet.processResourcesTaskName].dependsOn tasks["${taskName}PreCopy"]
+            tasks[taskName].dependsOn tasks["${taskName}PreCopy"]
+            tasks[sourceSet.compileJavaTaskName].dependsOn tasks[taskName]
+        }
+    }
+
+    ext.applyProvided = {
+        project.sourceSets {
+            main {
+                compileClasspath = configurations.compile + configurations.provided + configurations.optional
+            }
+            test {
+                compileClasspath = compileClasspath + configurations.provided + configurations.optional
+                runtimeClasspath = runtimeClasspath + configurations.provided + configurations.optional
+            }
+        }
+    }
+}

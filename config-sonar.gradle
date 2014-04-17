@@ -1,0 +1,24 @@
+apply plugin: "sonar-runner"
+
+if(hasProperty("configureSonarRunner")) {
+    configureSonarRunner()
+}
+
+sonarRunner {
+    sonarProperties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.projectVersion", project.completeVersion
+    }
+}
+
+subprojects {
+    sonarRunner {
+        sonarProperties {
+            property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+            property "sonar.junit.reportsPath", "${project.buildDir}/test-results/"
+        }
+    }
+}
+
+
+// All sonar properties are given on a command line

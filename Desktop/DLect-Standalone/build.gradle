@@ -1,0 +1,21 @@
+
+applyJava("org.dlect.controller.GUIController")
+
+
+dependencies {
+    compile googleGuava()
+    compile commonsLang3()
+    compile httpClient()
+    compile commonsIO()
+    
+    compile jhlabsFilters()
+    compile swinglabs.jxlayer()
+    compile swinglabs.swingx.painters()
+    compile swinglabs.swingx.layout()
+    
+    compile proj(":Desktop:DLect-UI-Common")
+    
+    runtime slf4jLogger()
+    
+    testCompile desktop.testing()
+}

@@ -1,0 +1,8 @@
+applyJava();
+
+dependencies {    
+    compile         desktop.data()
+        
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}

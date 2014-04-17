@@ -1,0 +1,11 @@
+applyJava()
+
+dependencies {
+    compile     googleGuava()
+    
+    compile     testing()
+    compile     powermock()
+    compile     reflections()
+    
+    compile     commonsLang()
+}

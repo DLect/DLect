@@ -1,0 +1,35 @@
+/////////// Adding Dependencies on request. //////////
+gradle.allprojects {
+    ext.web = new Object() {
+        def database() {
+            return proj(':Web:Database')
+        }    
+        def databaseUtils() {
+            return proj(':Web:Database-Utils-Interface')
+        }
+
+        def beans() {
+            return proj(':Web:Beans')
+        }
+        
+        def baseEjbInterfaces() {
+            return proj(':Web:Base-Interfaces')
+        }
+
+
+        def testingEjb() {
+            return proj(':Web:Testing-EJB')
+        }
+        def plugin = new Object() {
+            def ejbInterface() {
+                return proj(':Web:Plugins:Plugin-EJB-Interface')
+            }
+            def providerBase() {
+                return proj(':Web:Plugins:Provider-Base')
+            }
+            def searchBase() {
+                return proj(':Web:Plugins:Search-Base')
+            }
+        }
+    }
+}

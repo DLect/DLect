@@ -1,0 +1,11 @@
+applyJava();
+
+dependencies {
+    compile         desktop.data()
+    compile         httpClient()
+    
+    compile         proj(":Desktop:DLect-Providers-Interface")
+    
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}

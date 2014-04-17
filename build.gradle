@@ -1,0 +1,46 @@
+import org.gradle.api.artifacts.*
+
+apply plugin: 'base' // To add "clean" task to the root project.
+
+subprojects {
+    //apply from: file('maven.gradle')
+    apply from: rootProject.file('common.gradle')
+}
+
+task javadoc(type: Javadoc) { 
+    title = 'DLect'
+    destinationDir = new File(buildDir, 'javadoc') 
+    
+    // Note: The closures below are executed lazily.
+    source {
+        subprojects.collect {project -> 
+            if(project.hasProperty("sourceSets")) {
+                project.sourceSets.main.allJava
+            } else []
+        } 
+    }
+    classpath.from {
+        files(subprojects.collect {project -> 
+                if(project.hasProperty("sourceSets")) {
+                    project.sourceSets.main.compileClasspath
+                } else []
+            }) 
+    }
+    // Might need a classpath 
+    doFirst {
+        println ""
+    }
+}
+
+task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
+    gradleVersion = '1.10'
+}
+
+apply from: rootProject.file('config-project.gradle')
+apply from: rootProject.file('config-maven.gradle')
+if(hasProperty("sonar")) {
+    apply from: rootProject.file('config-sonar.gradle')
+}
+apply from: rootProject.file('deps.gradle')
+apply from: rootProject.file('deps-desktop.gradle')
+apply from: rootProject.file('deps-web.gradle')

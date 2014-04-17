@@ -1,0 +1,16 @@
+applyJava();
+
+dependencies {
+//    compile googleGuava()
+
+    compile httpClient()
+
+    compile projectData()
+    compile web.database()
+    // TODO find a way to remove this tight coupling.
+    compile web.plugin.providerBase()
+    
+    provided javaEE()
+
+    testCompile projectTestingCommon()
+}

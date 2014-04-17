@@ -1,0 +1,12 @@
+applyJava();
+
+applyEJB();
+
+dependencies {
+    compile     googleGuava();
+    compile     projectData();
+    compile     web.database();
+    compile     web.databaseUtils();
+    
+    provided    javaEE();
+}

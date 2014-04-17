@@ -1,0 +1,10 @@
+applyJava();
+
+dependencies {
+    compile         desktop.data()
+    compile         proj(":Desktop:DLect-Providers-Interface")
+    compile         proj(":Desktop:DLect-Providers")
+    
+    testCompile     projectTestingCommon()
+    testCompile     desktop.testing()
+}

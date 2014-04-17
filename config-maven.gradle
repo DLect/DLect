@@ -1,0 +1,28 @@
+gradle.allprojects {
+    ext.buildStart = {
+        def outFormat = new java.text.SimpleDateFormat("yyyyMMdd.HHmmss")
+        outFormat.timeZone = java.util.TimeZone.getTimeZone("UTC")
+        return outFormat.format(new Date())
+    }()
+    if(mavenVersion.matches(/\d+(.\d+)+-([A].*|[B].*|[S].*|[D].*)/)) {
+        ext.completeVersion = mavenVersion + "-" + buildStart
+    } else if(mavenVersion.matches(/\d+(.\d+)+(-RC)?/)) {
+        ext.completeVersion = mavenVersion
+    } else {
+        throw new InvalidUserDataException("Maven Version should be num[.num]+-[ALPHA|BETA|SNAPSHOT|RC]: " + mavenVersion)
+    }
+    ext.version = completeVersion;
+    
+    ext.applyMaven = {   
+        project.group = mavenGroupId
+        project.version = completeVersion
+        
+        configure(install.repositories.mavenInstaller) {
+            pom.project {
+                groupId = mavenGroupId
+                artifactId = mavenArtifactId
+                version = completeVersion
+            }
+        }
+    }
+}

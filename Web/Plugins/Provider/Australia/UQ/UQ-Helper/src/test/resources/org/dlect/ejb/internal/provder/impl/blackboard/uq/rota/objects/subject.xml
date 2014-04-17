@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is part of DLect. DLect is a suite of code that facilitates the downloading of lecture recordings.
+
+Copyright © 2014 Lee Symes.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
+
+-->
+
+<course>
+    <code>MATH2302</code>
+    <units>2</units>
+    <name>Discrete Mathematics II: Theory &amp; Applications</name>
+    <description>This course introduces students both to the basics in discrete mathematics &amp; to modern applications. Topics include graph theory &amp; algorithms, coding theory, cryptography, enumeration, design theory &amp; other combinatorial topics. Applications such as error-correcting CDs &amp; electronic encryption techniques are included.</description>
+    <coordinator>Assoc Prof Diane Donovan (dmd@maths.uq.edu.au)</coordinator>
+    <faculty>Science</faculty>
+    <school>Mathematics &amp; Physics School</school>
+    <last_update>2014-01-04T17:41:59+00:00</last_update>
+    <prereqs>
+        <text>MATH1061</text>
+        <course>MATH1061</course>
+        <expression>
+            <all_of>
+                <course>MATH1061</course>
+            </all_of>
+        </expression>
+    </prereqs>
+    <recommended>
+        <text> </text>
+        <expression>
+        </expression>
+    </recommended>
+    <incompatible>
+        <text>MATH2300</text>
+        <course>MATH2300</course>
+    </incompatible>
+    <dependents>
+        <course>MATH3301</course>
+        <course>MATH3302</course>
+        <course>MATH4302</course>
+        <course>MATH4303</course>
+    </dependents>
+    <offerings>
+        <offering>
+            <id>11514</id>
+            <semester>
+                <id>6260</id>
+                <name>Semester 2, 2012</name>
+                <number>2</number>
+                <year>2012</year>
+            </semester>
+            <location>St Lucia</location>
+            <mode>Internal</mode>
+            <sinet_class>62014</sinet_class>
+            <campus>
+                <code>STLUC</code>
+                <name>St Lucia</name>
+            </campus>
+            <last_update>2012-10-03T11:33:11+00:00</last_update>
+        </offering>
+        <offering>
+            <id>11517</id>
+            <semester>
+                <id>6160</id>
+                <name>Semester 2, 2011</name>
+                <number>2</number>
+                <year>2011</year>
+            </semester>
+            <location>St Lucia</location>
+            <mode>Internal</mode>
+            <sinet_class>63981</sinet_class>
+            <campus>
+                <code>STLUC</code>
+                <name>St Lucia</name>
+            </campus>
+            <last_update></last_update>
+        </offering>
+        <offering>
+            <id>16990</id>
+            <semester>
+                <id>6360</id>
+                <name>Semester 2, 2013</name>
+                <number>2</number>
+                <year>2013</year>
+            </semester>
+            <location>St Lucia</location>
+            <mode>Internal</mode>
+            <sinet_class>61863</sinet_class>
+            <campus>
+                <code>STLUC</code>
+                <name>St Lucia</name>
+            </campus>
+            <last_update>2013-09-27T03:32:56+00:00</last_update>
+        </offering>
+        <offering>
+            <id>22975</id>
+            <semester>
+                <id>6460</id>
+                <name>Semester 2, 2014</name>
+                <number>2</number>
+                <year>2014</year>
+            </semester>
+            <location>St Lucia</location>
+            <mode>Internal</mode>
+            <sinet_class>61749</sinet_class>
+            <campus>
+                <code>STLUC</code>
+                <name>St Lucia</name>
+            </campus>
+            <last_update></last_update>
+        </offering>
+    </offerings>
+</course>

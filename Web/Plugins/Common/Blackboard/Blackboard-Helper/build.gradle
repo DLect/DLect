@@ -1,0 +1,15 @@
+applyJava();
+
+dependencies {
+    compile     googleGuava()
+    compile     projectData()
+    compile     web.database()
+    compile     web.databaseUtils()
+    compile     web.beans()
+    
+    compile     relProject("Blackboard-Objects")
+    
+    compile     web.plugin.providerBase()
+    
+    provided    javaEE()
+}

@@ -1,0 +1,27 @@
+Holidays
+ - Add some holly & misletoe to DLect's logo on Facebook.
+ - Change the color scheme(of progress bars) to use Christmas themed colors 
+    like holly green and berry red.
+ - Maybe bring back fireworks for New Years.
+
+GENERAL
+FIXED     - No lecture stream is selected by default.
+FIXED     - Unknown Stream never downloaded
+FIXED     - Set Serial Version on all saved classes
+
+UI
+LOW     - The 'Lecture Found' is Misaligned
+LOW     - Select All not ticked.
+
+UPDATER
+FIXED     - Not finding the wiki page
+
+UQ
+FIXED     - There seems to be trailing spaces on Course names - Check out UQ's REGEXP
+FIXED     - 12:00:00 is interpreted as 00:00:00
+
+
+Make a request to:
+Request URL:
+http://lecture.recordings.uq.edu.au:8080/ess/client/api/sections/<<COURSE-UUID>>/presentations/<<LECTURE-UUID>>/details.json?callback=EC.loadDetailsSuccess&isFaculty=false&timeZone=Australia/Brisbane&_=1391516418301
+

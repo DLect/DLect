@@ -1,0 +1,95 @@
+/////////// Adding Dependencies on request. //////////
+
+def slf4jVer = "1.7+"
+def pwrMckVer = "1.5.2"
+def httpVer = "4.3+"
+def swingXVer = "1.6.5-1"
+
+
+gradle.allprojects {
+    ext.proj = { projectPath ->
+        if(projectPath.count(":") <= 1) {
+            // Has exactly 1 ':' in; so don't transform it.
+            return project(projectPath)
+        }
+        def folderPath = projectPath.substring(1, projectPath.lastIndexOf(":"))
+        def projectName = projectPath.substring(projectPath.lastIndexOf(":") + 1)
+        def name = folderPath.replace(":", "-") + "-" + projectName
+        
+        return project(":" + folderPath + ":" + name)
+    }
+    ext.relProject = { projectName ->
+        return proj(project.parent.path + ':' + projectName)
+    }
+    ext.deprecated = { name ->
+        println "Project " + project.path + " Uses ${name}. It should not."
+    }
+    
+    
+    ext.findbugs = {
+        return 'com.google.code.findbugs:annotations:2.0.3'
+    }    
+    ext.googleGuava = {
+        return "com.google.guava:guava:16.0"
+    }
+    ext.httpClient = {
+        return ["org.apache.httpcomponents:httpclient:${httpVer}",
+                "org.apache.httpcomponents:httpcore:${httpVer}"];
+    }
+    ext.commonsLang = {
+        deprecated("Commons Lang 2")
+        return "commons-lang:commons-lang:2.6"
+    }
+    ext.commonsLang3 = {
+        return "org.apache.commons:commons-lang3:3.1"
+    }
+    ext.commonsIO = {
+        return "commons-io:commons-io:2.4"
+    }
+    ext.powermock = {
+        return ["org.powermock:powermock-api-mockito:${pwrMckVer}", 
+                "org.powermock:powermock-module-junit4:${pwrMckVer}"]
+    }
+    ext.reflections = {
+        return "org.reflections:reflections:0.9.9-RC1"
+    }
+    ext.slf4jBase = {
+        return "org.slf4j:slf4j-api:${slf4jVer}"
+    }
+    ext.slf4jLogger = {
+        return ["org.slf4j:slf4j-jdk14:${slf4jVer}"]
+    }
+    ext.testing = {
+        return ["junit:junit:4.11+", 
+                "org.mockito:mockito-all:1.9+"] << slf4jLogger()
+    }
+    
+    ext.guavaTesting = {
+        return "com.google.guava:guava-testlib:16.0"
+    }
+    
+    
+    ext.javaEE = {
+        return ["javax.ws.rs:jsr311-api:1.1.1", 
+                "javax:javaee-api:7.0",
+                "javax.ejb:ejb-api:3.0"];
+    }
+    
+    ext.jpaModel = {
+        return "org.eclipse.persistence:eclipselink:2.5.1"
+    }
+    
+    ext.projectData = {
+        deprecated("projectData")
+        return proj(':Web:Data')
+    }
+    
+    ext.projectTestingJaxB = {
+        return proj(':Utilities:Testing:JAX-B')
+    }
+    ext.projectTestingCommon = {
+        return proj(':Utilities:Testing:Common')    
+    }
+    
+    
+}

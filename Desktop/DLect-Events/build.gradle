@@ -1,0 +1,39 @@
+applyJava()
+
+sourceSets {
+    // Note that just declaring this sourceset creates two configurations.
+    collectionTest {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+        }
+    }
+}
+
+configurations {
+    collectionTestCompile.extendsFrom testCompile
+    collectionTestRuntime.extendsFrom testRuntime
+}
+
+task collectionTest(type:Test){
+    testClassesDir = project.sourceSets.collectionTest.output.classesDir
+    classpath = project.sourceSets.collectionTest.runtimeClasspath
+    reports {
+        html{
+            enabled true
+            destination "${buildDir}/reports/collectionTest"
+        }
+    }
+}
+
+build.dependsOn collectionTest
+
+dependencies {
+    compile googleGuava()
+    
+    testCompile desktop.testing()
+    testCompile projectTestingCommon()
+    testCompile guavaTesting()
+    
+    collectionTestCompile guavaTesting()
+}

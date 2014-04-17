@@ -1,0 +1,36 @@
+//
+// This file is to be applied to every subproject.
+//
+
+if(!file("build.gradle").exists()) return;
+
+apply plugin: 'maven'
+
+repositories {
+    //mavenLocal()
+    mavenCentral();
+    maven{url "https://oss.sonatype.org/content/repositories/snapshots/"}
+    
+    // You may define additional repositories, or even remove "mavenCentral()".
+    // Read more about repositories here:
+    //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:repositories
+}
+
+
+configurations {
+    provided {
+        project.conf2ScopeMappings.addMapping(300, provided, "provided")        
+    }
+    optional {
+        project.conf2ScopeMappings.addMapping(300, optional, "provided")
+    }
+}
+
+task createFolders(description: 'Creates the source folders if they do not exist.') doLast {
+    sourceSets*.allSource*.srcDirs*.each { File srcDir ->
+        if (!srcDir.isDirectory()) {
+            println "Creating source folder: ${srcDir}"
+            srcDir.mkdirs()
+        }
+    }
+}

@@ -1,0 +1,5 @@
+applyJava('Updater');
+
+dependencies {
+    testCompile googleGuava()
+}

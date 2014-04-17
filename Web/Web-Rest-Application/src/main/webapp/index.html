@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="jquery.json-2.4.js"></script>
+    </head>
+    <body>
+        <h2>Rota(Offerings/find.xml)</h2>
+        <form action="http://rota.eait.uq.edu.au/offerings/find.xml">
+            <textarea name="with" rows="4" cols="20"></textarea>
+            <input type="submit" value="Go" />
+        </form>
+
+        <h2>JQuery Login :D</h2>
+        <form id="jqDLectLogin">
+            Username: <input id="jqDLectUName" type="text" name="username" value="" size="10" /><br />
+            Password: <input id="jqDLectPWord" type="password" name="password" value="" size="10" /><br />
+            <input type="button" id="jqDLectGo" value="Login to DLect"/>
+        </form>
+        <div id="jqDLectLoginRes"></div>
+        <div id="jqDLectSemesters"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("#jqDLectGo").click(function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "rest/login/do",
+                        headers: {accept: "application/json"},
+                        data: {username: $("#jqDLectUName").val(), password: $("#jqDLectPWord").val(), code: "BBM921"},
+                        complete: function(jqXHR, textStatus) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            $("#jqDLectLoginRes").append(textStatus);
+                            $("<div/>", {text: (jqXHR.responseText)}).appendTo("#jqDLectLoginRes");
+                        }
+                    });
+                });
+            });
+
+            function loginCallback(data) {
+                $("#jqDLectLoginRes").text(data);
+            }
+
+
+
+        </script>
+        <h2>Login to DLect</h2>
+        <form name="login" action="rest/login/do" method="POST" enctype="multipart/form-data">
+            Username: <input type="text" name="username" value="" size="10" /><br />
+            Password: <input type="password" name="password" value="" size="10" /><br />
+            <input type="hidden" name="code" value="BBM921" />
+            <input type="submit" value="Submit" />
+        </form>
+        <h2>Login to UQ Directly</h2>
+        <form name="login" action="https://learn.uq.edu.au/webapps/Bb-mobile-BBLEARN/sslUserLogin?v=1&language=en_GB&ver=3.1.2" method="POST" enctype="application/x-www-form-urlencoded">
+            Username: <input type="text" name="username" value="" size="10" /><br />
+            Password: <input type="password" name="password" value="" size="10" /><br />
+            <input type="submit" value="Submit" />
+        </form>
+
+    </body>
+</html>

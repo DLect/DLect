@@ -1,0 +1,16 @@
+applyJava();
+
+dependencies {
+    compile     googleGuava()
+    compile     projectData()
+    compile     web.beans()
+    
+    compile     web.plugin.providerBase()
+
+    compile     proj(":Web:Plugins:Common:Blackboard:Blackboard-Helper")
+    compile     proj(":Web:Plugins:Common:Echo360:Echo360-Helper")
+    
+    provided    javaEE()
+    
+    testCompile projectTestingCommon()
+}
