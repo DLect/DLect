@@ -5,6 +5,7 @@
  */
 package org.dlect.update;
 
+import org.dlect.helper.ApplicationInformation;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
