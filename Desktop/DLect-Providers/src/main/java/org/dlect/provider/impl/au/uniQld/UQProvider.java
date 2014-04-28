@@ -5,11 +5,6 @@
  */
 package org.dlect.provider.impl.au.uniQld;
 
-import com.google.common.collect.ImmutableSet;
-import java.util.Date;
-import java.util.Set;
-import org.dlect.immutable.model.ImmutableSemester;
-import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.provider.base.blackboard.BlackboardBaseProvider;
 import org.dlect.provider.base.blackboard.helper.provider.BlackboardProviderInformation;
 import org.dlect.provider.impl.au.uniQld.rota.UQRotaHelper;
@@ -32,7 +27,11 @@ public class UQProvider extends BlackboardBaseProvider {
     }
 
     public UQProvider(UQRotaHelper helper) {
-        super(UQ_PROVIDER_INFORMATION, new UQSubjectCustomiser(helper), new UQLectureCustomiser(helper));
+        this(helper, new UQLectureCustomiser(helper));
+    }
+
+    public UQProvider(UQRotaHelper helper, UQLectureCustomiser customiser) {
+        super(UQ_PROVIDER_INFORMATION, new UQSubjectCustomiser(helper), customiser, customiser);
     }
 
 }
