@@ -57,7 +57,7 @@ public class UQRotaHelperImpl implements UQRotaHelper {
     }
 
     public UQRotaHelperImpl(BlackboardHttpClient client) {
-        this(new UQRotaSemesterParser(client), new UQRotaOfferingSearchParser(client), new UQRotaOfferingParser(client));
+        this(new UQRotaSemesterParserImpl(client), new UQRotaOfferingSearchParserImpl(client), new UQRotaOfferingParserImpl(client));
     }
 
     public UQRotaHelperImpl(UQRotaSemesterParser semesterParser,
@@ -79,7 +79,7 @@ public class UQRotaHelperImpl implements UQRotaHelper {
             ProviderLogger.LOGGER.error("Failed to find semester information for code: " + semCode, ex);
         }
         // Make a best guess about the semester information.
-        return new ImmutableSemester(semCode, "Sem Code: " + semCode, Integer.toString(semCode));
+        return new ImmutableSemester(semCode, "Semester " + semCode, Integer.toString(semCode));
     }
 
     @Override
