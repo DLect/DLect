@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<offerings>
+    <offering>
+        <id>21081</id>
+        <course>CSSE1001</course>
+        <semester>
+            <id>6420</id>
+            <name>Semester 1, 2014</name>
+            <number>1</number>
+            <year>2014</year>
+        </semester>
+        <location>St Lucia</location>
+        <mode>Internal</mode>
+        <sinet_class>20892</sinet_class>
+        <campus>
+            <code>STLUC</code>
+            <name>St Lucia</name>
+        </campus>
+        <last_update>2014-03-24T17:34:03+00:00</last_update>
+    </offering>
+    <offering>
+        <id>21082</id>
+        <course>CSSE1001</course>
+        <semester>
+            <id>6420</id>
+            <name>Semester 1, 2014</name>
+            <number>1</number>
+            <year>2014</year>
+        </semester>
+        <location>St Lucia</location>
+        <mode>Internal</mode>
+        <sinet_class>20892</sinet_class>
+        <campus>
+            <code>STLUC</code>
+            <name>St Lucia</name>
+        </campus>
+        <last_update>2014-03-24T17:34:03+00:00</last_update>
+    </offering>
+</offerings>
