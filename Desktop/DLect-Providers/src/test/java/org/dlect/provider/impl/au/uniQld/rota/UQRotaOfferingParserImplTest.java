@@ -37,14 +37,14 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
-public class UQRotaOfferingParserTest {
+public class UQRotaOfferingParserImplTest {
 
     private static final ThreadLocalDateFormat DATE = new ThreadLocalDateFormat("yyyy-M-d");
     @Mock
     private BlackboardHttpClient httpClient;
 
     @InjectMocks
-    private UQRotaOfferingParser testObject;
+    private UQRotaOfferingParserImpl testObject;
 
     @Before
     public void setUp() {
