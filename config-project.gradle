@@ -34,9 +34,11 @@ def configureJava(task) {
 gradle.allprojects {    
     ext.applyJava = {mainClass ->
         apply plugin: 'java'
+        apply plugin: 'groovy'
         
         dependencies {
             compile     slf4jBase()
+            compile     groovyLibs()
             
             provided    findbugs()
             
