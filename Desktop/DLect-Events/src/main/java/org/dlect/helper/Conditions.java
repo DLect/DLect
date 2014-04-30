@@ -12,9 +12,22 @@ package org.dlect.helper;
  */
 public class Conditions {
 
-    public static void checkNonNull(Object check, String varName) {
+    public static <T> T checkNonNull(T check, String varName) {
         if (check == null) {
             throw new IllegalArgumentException(varName + " should not be null");
+        }
+        return check;
+    }
+
+    public static void checkTrue(boolean check, String desc) {
+        if (!check) {
+            throw new IllegalArgumentException(desc == null ? "Condition was false" : desc);
+        }
+    }
+
+    public static void checkFalse(boolean check, String desc) {
+        if (!check) {
+            throw new IllegalArgumentException(desc == null ? "Condition was false" : desc);
         }
     }
 
