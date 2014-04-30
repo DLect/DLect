@@ -1,0 +1,10 @@
+applyJava();
+
+dependencies {
+    compile         desktop.events()
+    
+    testCompile     projectTestingCommon()
+    testCompile     projectTestingJaxB()
+    testCompile     desktop.testing()
+    testCompile     guavaTesting()
+}
