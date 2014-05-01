@@ -12,6 +12,6 @@ addons:
       name: "DLect/DLect"
       description: "DLect downloads and organises lecture recordings from the University of Queensland"
     notification_email: dlect@outlook.com
-    build_command_prepend:
-    build_command:
+    build_command_prepend: 
+    build_command: gradle
     branch_pattern: *-staging
