@@ -67,10 +67,10 @@ class VersionSpockTest extends Specification {
     @Unroll
     def "parseVersion{Strict}{Invalid}[#versionInputString]"(versionInputString, _x) {
         when:
-            Version.parseVersion(versionInputString)
+        Version.parseVersion(versionInputString)
         
         then:
-            thrown(IllegalArgumentException)
+        thrown(IllegalArgumentException)
             
         where:
         versionInputString  | _x
@@ -125,19 +125,53 @@ class VersionSpockTest extends Specification {
          "1.2.3.4.5.6.7.8" | _
          "123.123.123"     | _
     }
+    
     @Unroll
     def "parseVersion{Non Strict}{Invalid}[#versionString] -> #versionString"(versionString, _x) {
         when:
-            Version.parseVersion(versionString)
+        Version.parseVersion(versionString)
         
         then:
-            thrown(IllegalArgumentException)
+        thrown(IllegalArgumentException)
         where:
         versionString       | _x
          "-Pre"             | _
          "--"               | _
          ""                 | _
          "             "    | _
+    }
+    
+    @Unroll
+    def "[#subVersion].isSubversion[#version] -> #result"(subVersion, version, result) {
+        when:
+        def subVer = new Version(subVersion)
+        def ver = new Version(version)
+
+        then:
+        subVer.isSubversion(ver) == result
+        
+        where:
+        subVersion      | version      | result
+        [1]             | [1]          | true
+        [1, 0]          | [1]          | true
+        [1, 1]          | [1]          | true
+        [1, 2, 3, 4]    | [1]          | true
+        [2]             | [1]          | false
+        [2, 0]          | [1]          | false
+        [1]             | [1, 1]       | false
+        [1, 0]          | [1, 1]       | false
+        [1, 0, 1]       | [1, 1]       | false
+        [1, 1]          | [1, 1]       | true
+        [1, 2, 3, 4]    | [1, 1]       | false
+        [1, 3]          | [1, 1]       | false
+        [1, 2, 3, 4]    | [3, 4, 5, 6] | false
+        [3]             | [3, 4, 5, 6] | false
+        [3, 4]          | [3, 4, 5, 6] | false
+        [3, 4, 5]       | [3, 4, 5, 6] | false
+        [3, 4, 5, 6]    | [3, 4, 5, 6] | true
+        [3, 4, 5, 6, 7] | [3, 4, 5, 6] | true
+        [3, 4, 5, 7]    | [3, 4, 5, 6] | false
+        [3, 4, 6]       | [3, 4, 5, 6] | false
     }
     
 }

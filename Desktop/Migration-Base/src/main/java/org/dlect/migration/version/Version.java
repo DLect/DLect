@@ -12,6 +12,8 @@ import com.google.common.primitives.Ints;
 import java.util.List;
 import org.dlect.helper.Conditions;
 
+import static org.dlect.helper.Conditions.*;
+
 /**
  *
  * @author lee
@@ -82,6 +84,14 @@ public class Version implements Comparable<Version> {
         return this.compareTo(other) == 0;
     }
 
+    public int getVersionNumberAt(int position) {
+        if (position >= versionNumber.size()) {
+            return 0;
+        } else {
+            return versionNumber.get(position);
+        }
+    }
+
     public ImmutableList<Integer> getVersionNumbers() {
         return ImmutableList.copyOf(versionNumber);
     }
@@ -104,6 +114,22 @@ public class Version implements Comparable<Version> {
         return hash;
     }
 
+    public boolean isSubversion(Version parent) {
+        checkNonNull(parent, "Version");
+
+        List<Integer> parentVers = parent.getVersionNumbers();
+
+        for (int i = 0; i < parentVers.size(); i++) {
+            int pvi = parentVers.get(i);
+
+            if (pvi != getVersionNumberAt(i)) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
     @Override
     public String toString() {
         return getClass() + "[" + getVersionString() + "]";
@@ -111,7 +137,8 @@ public class Version implements Comparable<Version> {
 
     /**
      * This implementation is strict. Any invalid characters, multiple dots in a row and an initial dot will cause this
-     * to throw an illegal argument exception. To parse a version in laissez faire mode, call {@link
+     * to throw an illegal argument exception. To parse a version in laissez faire mode, call
+     * {@link #parseVersionNonStrict(java.lang.String) }
      *
      * @param versionString
      *
@@ -122,8 +149,9 @@ public class Version implements Comparable<Version> {
     }
 
     /**
-     * This implementation is strict. Any invalid characters, multiple dots in a row and an initial dot will cause this
-     * to throw an illegal argument exception. To parse a version in laissez faire mode, call {@link
+     * This implementation is very laissez faire. The version string can be riddled with invalid characters and still
+     * produce a valid version. Please note that this can cause some unexpected results. Such as {@code 1.0-2014-04-12}
+     * will produce a version of {@code 1.20140412}
      *
      * @param versionString
      *
@@ -134,15 +162,14 @@ public class Version implements Comparable<Version> {
     }
 
     /**
-     * This implementation is very laissez faire. The version string can be riddled with invalid characters and still
-     * produce a
+     *
      *
      * @param versionString
      * @param strictMode
      *
      * @return
      */
-    protected static Version parseVersion(String versionString, boolean strictMode) {
+    public static Version parseVersion(String versionString, boolean strictMode) {
         // REmove everything except dots and numbers
         String cleaned = versionString;
         if (!strictMode) {
