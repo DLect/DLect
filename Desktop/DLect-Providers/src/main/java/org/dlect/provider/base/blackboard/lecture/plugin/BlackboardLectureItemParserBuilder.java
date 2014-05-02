@@ -5,9 +5,9 @@
  */
 package org.dlect.provider.base.blackboard.lecture.plugin;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import java.util.Set;
+import com.google.common.collect.ImmutableList;
+import java.util.Collection;
+import java.util.List;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 
 /**
@@ -16,19 +16,21 @@ import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient
  */
 public abstract class BlackboardLectureItemParserBuilder {
 
-    public final Set<BlackboardLectureItemParser> of(BlackboardLectureItemParser... parsers) {
-        return ImmutableSet.copyOf(parsers);
+    public final List<BlackboardLectureItemParser> of(BlackboardLectureItemParser... parsers) {
+        return ImmutableList.copyOf(parsers);
     }
 
-    public final Set<BlackboardLectureItemParser> build(BlackboardHttpClient c) {
-        Set<BlackboardLectureItemParser> unsafe = buildParsers(c);
+    public final List<BlackboardLectureItemParser> build(BlackboardHttpClient c) {
+        Collection<BlackboardLectureItemParser> unsafe = buildParsers(c);
         if (unsafe == null) {
-            return ImmutableSet.of();
+            return ImmutableList.of();
         }
-        Set<BlackboardLectureItemParser> copy = Sets.newHashSet(unsafe);
-        copy.remove(null);
-        return ImmutableSet.copyOf(copy);
+        try {
+            return ImmutableList.copyOf(unsafe);
+        } catch (NullPointerException e) {
+            return ImmutableList.of();
+        }
     }
 
-    protected abstract Set<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c);
+    protected abstract Collection<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c);
 }

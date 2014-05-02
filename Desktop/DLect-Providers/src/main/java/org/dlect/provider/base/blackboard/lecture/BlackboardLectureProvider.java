@@ -6,6 +6,7 @@
 package org.dlect.provider.base.blackboard.lecture;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import org.dlect.immutable.model.ImmutableLecture;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
-import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
@@ -89,7 +89,7 @@ public class BlackboardLectureProvider implements LectureProvider {
     protected ImmutableSubjectData parseLectureItems(BlackboardSubjectContentListing listing, URI baseUri,
                                                      ImmutableSemester sem, ImmutableSubject s) throws IOException,
                                                                                                        DLectException {
-        Set<BlackboardLectureItemParser> parsers = Sets.newHashSet(builder.build(httpClient));
+        Set<BlackboardLectureItemParser> parsers = ImmutableList.copyOf(builder.build(httpClient));
 
         Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
         streams.addAll(streamProvider.getLectureStreamsFor(sem, s));

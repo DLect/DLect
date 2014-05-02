@@ -10,7 +10,7 @@ import java.net.URI;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
@@ -45,9 +45,9 @@ public class UQLectureCustomiser extends BlackboardLectureItemParserBuilder impl
     }
 
     @Override
-    protected Set<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
-        return of(new BlackboardInlineLectureItemParser(c, this),
-                  new EchoCenterLectureProvider(c, this));
+    protected List<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
+        return of(new EchoCenterLectureProvider(c, this),
+                  new BlackboardInlineLectureItemParser(c, this));
     }
 
     @Override
