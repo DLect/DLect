@@ -96,8 +96,8 @@ public class BlackboardLectureProvider implements LectureProvider {
         Set<ImmutableLecture> lectures = Sets.newHashSet(s.getLectures());
         Multimap<ImmutableLecture, ImmutableStream> lectureStreams = fillMultimap(lectures);
 
-        for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
-            for (BlackboardLectureItemParser p : parsers) {
+        for (BlackboardLectureItemParser p : parsers) {
+            for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
                 BlackboardLectureMapping lm = p.getLecturesIn(baseUri, bsmi, sem, s);
                 if (lm != null) {
                     lectures.addAll(lm.getLectures());
