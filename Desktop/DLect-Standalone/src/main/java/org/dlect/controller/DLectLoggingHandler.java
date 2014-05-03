@@ -21,7 +21,7 @@ import org.dlect.controller.data.DatabaseHandler;
 import org.dlect.encryption.DatabaseKeyHandler;
 import org.dlect.model.helper.CommonSettingNames;
 import org.dlect.model.helper.ThreadLocalDateFormat;
-import org.dlect.update.ApplicationInformation;
+import org.dlect.helper.ApplicationInformation;
 
 import static com.google.common.base.Strings.padEnd;
 

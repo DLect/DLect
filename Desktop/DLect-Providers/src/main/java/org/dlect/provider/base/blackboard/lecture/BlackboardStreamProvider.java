@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard;
+package org.dlect.provider.base.blackboard.lecture;
 
-import com.google.common.base.Optional;
-import java.net.URI;
 import java.util.Collection;
-import java.util.Date;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
@@ -17,11 +14,8 @@ import org.dlect.immutable.model.ImmutableSubject;
  *
  * @author lee
  */
-public interface BlackboardLectureCustomiser {
-
-    public Optional<Date> getLectureTime(URI u, String title, String captureDate);
+public interface BlackboardStreamProvider {
 
     public Collection<ImmutableStream> getLectureStreamsFor(ImmutableSemester sem, ImmutableSubject s);
 
-    public Collection<ImmutableStream> getLectureStream(URI u, String title, Date lectureTime, ImmutableSemester sem, ImmutableSubject s);
 }

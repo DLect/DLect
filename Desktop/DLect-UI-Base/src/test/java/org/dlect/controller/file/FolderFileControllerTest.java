@@ -29,9 +29,6 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked")
 public class FolderFileControllerTest {
 
-    @Mock
-    private Object o;
-
     private TestFolderFileController testObject;
     private File temporaryFolder;
 
@@ -44,13 +41,6 @@ public class FolderFileControllerTest {
 
     @After
     public void tearDown() {
-    }
-
-    @Test
-    public void testExamplar() throws Exception {
-        Object o = mock(Object.class);
-        assertNotNull(o);
-        fail();
     }
 
     /**
@@ -95,16 +85,18 @@ public class FolderFileControllerTest {
         File targetFolder = new File(temporaryFolder, "Subject");
         File targetFile = new File(targetFolder, "Subject ~ Lect Downl.mp4");
         
-        assertFalse(Files.notExists(targetFolder.toPath()));
-        assertFalse(Files.notExists(targetFile.toPath()));
+        System.out.println(targetFolder.toPath());
+        
+        assertTrue(Files.notExists(targetFolder.toPath()));
+        assertTrue(Files.notExists(targetFile.toPath()));
 
         File ffd = testObject.getFileForDownload(s, l, ld);
         
         assertEquals(targetFile, ffd);
         assertEquals(targetFolder, ffd.getParentFile());
         
-        assertFalse(Files.notExists(targetFolder.toPath()));
-        assertFalse(Files.notExists(targetFile.toPath()));
+        assertTrue(Files.notExists(targetFolder.toPath()));
+        assertTrue(Files.notExists(targetFile.toPath()));
     }
 
     /**

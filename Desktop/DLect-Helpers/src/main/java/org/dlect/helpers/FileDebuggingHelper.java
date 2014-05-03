@@ -10,8 +10,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 
 /**
@@ -32,7 +35,11 @@ public class FileDebuggingHelper {
     }
 
     public static void debugStringToLogger(String fileContent, String name, Logger l) {
-        debugReaderToLogger(new StringReader(fileContent), name, l);
+        debugReaderToLogger(new StringReader(fileContent == null ? "<<NULL>>" : fileContent), name, l);
+    }
+
+    public static void debugUTF8StreamToLogger(InputStream r, String name, Logger l) {
+        debugReaderToLogger(new InputStreamReader(r, StandardCharsets.UTF_8), name, l);
     }
 
     public static void debugReaderToLogger(Reader r, String name, Logger l) {

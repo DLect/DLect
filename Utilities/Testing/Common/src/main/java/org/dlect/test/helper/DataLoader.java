@@ -40,7 +40,8 @@ public class DataLoader {
      *
      * @param fileName The file to load from.
      *
-     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if the file is not
+     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if
+     *         the file is not
      *         accessible or is empty.
      */
     public static String loadFromFile(String fileName) throws IOException {
@@ -53,7 +54,8 @@ public class DataLoader {
      *
      * @param fileName The file to load from.
      *
-     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if the file is not
+     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if
+     *         the file is not
      *         accessible or is empty.
      */
     public static String loadFromFile(File fileName) throws IOException {
@@ -66,7 +68,8 @@ public class DataLoader {
      * @param fileName  The file to load from.
      * @param minLength The minimum length of the file, if shorter than then fail the test.
      *
-     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if the file is not
+     * @return A non-empty string representing the content of the file given by the file name; or 'fails' the test if
+     *         the file is not
      *         accessible or is empty.
      */
     public static String loadFromFile(String fileName, int minLength) throws IOException {
@@ -80,7 +83,7 @@ public class DataLoader {
 
     public static String loadFromStream(InputStream stream, int minLength) throws IOException {
         String ret = CharStreams.toString(new InputStreamReader(stream, Charsets.UTF_8));
-        assertTrue(ret.length() >= minLength);
+        assertTrue("File too short. Min length: " + minLength + "; Actual Length: " + ret.length(), ret.length() >= minLength);
         return ret;
     }
 

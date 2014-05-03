@@ -1,9 +1,12 @@
 applyJava();
 
 dependencies {
+    compile         commonsLang3()
     compile         desktop.data()
     compile         httpClient()
     
+    compile         'org.json:json:20140107'
+
     compile         proj(":Desktop:DLect-Providers-Interface")
     
     testCompile     projectTestingCommon()

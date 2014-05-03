@@ -13,8 +13,8 @@ import com.google.common.collect.testing.features.CollectionSize;
 import com.google.common.collect.testing.features.ListFeature;
 import java.util.Arrays;
 import java.util.List;
-import junit.framework.TestCase;
 import junit.framework.Test;
+import junit.framework.TestCase;
 
 /**
  *

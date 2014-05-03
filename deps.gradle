@@ -1,8 +1,7 @@
 /////////// Adding Dependencies on request. //////////
 
-def slf4jVer = "1.7+"
+def slf4jVer = "1.7.7"
 def pwrMckVer = "1.5.2"
-def httpVer = "4.3+"
 def swingXVer = "1.6.5-1"
 
 
@@ -29,12 +28,15 @@ gradle.allprojects {
     ext.findbugs = {
         return 'com.google.code.findbugs:annotations:2.0.3'
     }    
+    ext.groovyLibs = {
+        return "org.codehaus.groovy:groovy-all:2.2.2"
+    }
     ext.googleGuava = {
         return "com.google.guava:guava:16.0"
     }
     ext.httpClient = {
-        return ["org.apache.httpcomponents:httpclient:${httpVer}",
-                "org.apache.httpcomponents:httpcore:${httpVer}"];
+        return ["org.apache.httpcomponents:httpclient:4.3.3",
+                "org.apache.httpcomponents:httpcore:4.3.2"];
     }
     ext.commonsLang = {
         deprecated("Commons Lang 2")
@@ -60,8 +62,9 @@ gradle.allprojects {
         return ["org.slf4j:slf4j-jdk14:${slf4jVer}"]
     }
     ext.testing = {
-        return ["junit:junit:4.11+", 
-                "org.mockito:mockito-all:1.9+"] << slf4jLogger()
+        return ["junit:junit:4.11", 
+                "org.mockito:mockito-all:1.9.5",
+                "org.spockframework:spock-core:0.7-groovy-2.0"] << slf4jLogger()
     }
     
     ext.guavaTesting = {

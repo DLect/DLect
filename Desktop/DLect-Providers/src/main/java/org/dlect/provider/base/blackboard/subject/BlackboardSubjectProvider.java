@@ -28,7 +28,7 @@ import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubject;
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectListing;
 
-import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_SHORT_IDENTIFIER;
 
 /**
  *
@@ -39,7 +39,7 @@ public class BlackboardSubjectProvider implements SubjectProvider {
     private static final ImmutableList<ImmutableLecture> EMPTY_LECTURE_LIST = ImmutableList.of();
     private static final ImmutableList<ImmutableStream> EMPTY_STREAM_LIST = ImmutableList.of();
 
-    private static final String ENROLLMENTS_LOCATION = "enrollments?course_type=ALL&include_grades=false&language=en_GB&v=1&ver=" + DLECT_IDENTIFIER;
+    private static final String ENROLLMENTS_LOCATION = "enrollments?course_type=ALL&include_grades=false&language=en_GB&v=1&ver=" + DLECT_SHORT_IDENTIFIER;
 
     private final URI baseUrl;
     private final BlackboardHttpClient httpClient;

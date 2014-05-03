@@ -22,7 +22,7 @@ public class BlackboardProviderInformation {
         this.httpAuth = httpAuth;
         this.ssl = ssl;
     }
-
+    
     public int getProviderCode() {
         return providerCode;
     }
