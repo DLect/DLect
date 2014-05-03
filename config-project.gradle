@@ -31,13 +31,9 @@ def configureJava(task) {
 }
 
 // Fail the build test failures if property given or running on Travis-CI
-println  System.env.TRAVIS
 
 def failBuildOnTestFailure = hasProperty("failOnTestFailure") || System.env.TRAVIS;
 def runJaCoCo = !hasProperty("noJaCoCo");
-
-println "failBuildOnTestFailure $failBuildOnTestFailure"
-println "runJaCoCo $runJaCoCo"
 
 println JavaVersion.current();
 
