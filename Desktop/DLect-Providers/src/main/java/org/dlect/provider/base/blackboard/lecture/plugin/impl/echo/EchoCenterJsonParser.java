@@ -63,7 +63,7 @@ public class EchoCenterJsonParser {
             String startTimeString = lectureItem.getString("startTime");
             try {
                 Date startTime = START_TIME_DATE_FORMAT.parse(startTimeString);
-
+                
                 lectures.add(new EchoCenterLecture(uuid, title, startTime, baseUrl));
             } catch (ParseException ex) {
                 ProviderLogger.LOGGER.error("Failed to parse the start time: `" + startTimeString + "`", ex);
@@ -73,9 +73,7 @@ public class EchoCenterJsonParser {
     }
 
     public List<EchoCenterLecture> parseSectionJSON() {
-
-        // Change pageSize to 50 in production. It will handle most course's lectures in a single request.
-        int pageSize = 2;
+        int pageSize = 50;
         int pageNo = 1;
         int totalResults;
         int detectedResults;
@@ -102,14 +100,10 @@ public class EchoCenterJsonParser {
         URI jsonURI = toUri(baseURI, "/ess/client/api/sections/" + sectionId
                                      + "/section-data.json?pageIndex=" + pageNumber + "&pageSize=" + pageSize);
 
-        System.out.println("Request to: " + jsonURI);
-
         try (HttpResponceStream jsonResponse = httpClient.doGet(jsonURI)) {
             String json = getStringStream(jsonResponse);
             try {
                 JSONObject obj = new JSONObject(new JSONTokener(json));
-
-                System.out.println(obj.toString(0));
 
                 JSONObject section = obj.optJSONObject("section");
                 if (section == null) {
