@@ -64,7 +64,8 @@ gradle.allprojects {
     ext.testing = {
         return ["junit:junit:4.11", 
                 "org.mockito:mockito-all:1.9.5",
-                "org.spockframework:spock-core:0.7-groovy-2.0"] << slf4jLogger()
+                "org.spockframework:spock-core:0.7-groovy-2.0",
+                "cglib:cglib-nodep:3.1"] << slf4jLogger()
     }
     
     ext.guavaTesting = {
