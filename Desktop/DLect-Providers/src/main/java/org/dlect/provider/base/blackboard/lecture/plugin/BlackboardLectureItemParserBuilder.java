@@ -16,21 +16,9 @@ import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient
  */
 public abstract class BlackboardLectureItemParserBuilder {
 
-    public final List<BlackboardLectureItemParser> of(BlackboardLectureItemParser... parsers) {
+    public List<BlackboardLectureItemParser> of(BlackboardLectureItemParser... parsers) {
         return ImmutableList.copyOf(parsers);
     }
 
-    public final List<BlackboardLectureItemParser> build(BlackboardHttpClient c) {
-        Collection<BlackboardLectureItemParser> unsafe = buildParsers(c);
-        if (unsafe == null) {
-            return ImmutableList.of();
-        }
-        try {
-            return ImmutableList.copyOf(unsafe);
-        } catch (NullPointerException e) {
-            return ImmutableList.of();
-        }
-    }
-
-    protected abstract Collection<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c);
+    public abstract Collection<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c);
 }

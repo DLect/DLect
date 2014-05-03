@@ -90,7 +90,7 @@ public class BlackboardLectureProvider implements LectureProvider {
     protected ImmutableSubjectData parseLectureItems(BlackboardSubjectContentListing listing, URI baseUri,
                                                      ImmutableSemester sem, ImmutableSubject s) throws IOException,
                                                                                                        DLectException {
-        List<BlackboardLectureItemParser> parsers = ImmutableList.copyOf(builder.build(httpClient));
+        List<BlackboardLectureItemParser> parsers = ImmutableList.copyOf(builder.buildParsers(httpClient));
 
         Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
         streams.addAll(streamProvider.getLectureStreamsFor(sem, s));
