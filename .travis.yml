@@ -15,4 +15,4 @@ addons:
     notification_email: dlect@outlook.com
     build_command_prepend: 
     build_command: gradle clean build
-    branch_pattern: *-staging
+    branch_pattern: .*-staging
