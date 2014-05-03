@@ -52,14 +52,13 @@ public class BlackboardHttpClientImplTest {
      */
     @Test
     public void testDoGet() throws Exception {
-        assumeConnection("http://rota.eait.uq.edu.au/semester/6420.xml");
-        FileDebuggingHelper.debugUTF8StreamToLogger(
-                testObject.doGet(
-                        URI.create("http://rota.eait.uq.edu.au/semester/6420.xml")
-                ),
-                "semester",
-                TestLogging.LOG);
-
+//        assumeConnection("http://rota.eait.uq.edu.au/semester/6420.xml");
+//        FileDebuggingHelper.debugUTF8StreamToLogger(
+//                testObject.doGet(
+//                        URI.create("http://rota.eait.uq.edu.au/semester/6420.xml")
+//                ),
+//                "semester",
+//                TestLogging.LOG);
     }
 
     /**
