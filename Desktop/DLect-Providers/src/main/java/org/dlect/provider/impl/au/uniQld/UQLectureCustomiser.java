@@ -45,7 +45,7 @@ public class UQLectureCustomiser extends BlackboardLectureItemParserBuilder impl
     }
 
     @Override
-    protected List<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
+    public List<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
         return of(new EchoCenterLectureProvider(c, this),
                   new BlackboardInlineLectureItemParser(c, this));
     }
