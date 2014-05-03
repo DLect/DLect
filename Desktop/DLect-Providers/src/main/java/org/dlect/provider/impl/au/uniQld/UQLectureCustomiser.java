@@ -35,7 +35,7 @@ public class UQLectureCustomiser extends BlackboardLectureItemParserBuilder impl
                                                                                        BlackboardLectureCustomiser {
 
     //private static final TimeZone UQ_TIMEZONE = TimeZone.getTimeZone("GMT+10:00");
-    private static final ThreadLocalDateFormat LECTOPIA_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final ThreadLocalDateFormat LECTOPIA_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd HH:mm:ss");
     //private static final Pattern ROOM_NUMBER_FROM_LECTURE_TITLE = Pattern.compile("");
 
     private final UQRotaHelper helper;
