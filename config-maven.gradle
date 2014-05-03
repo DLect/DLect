@@ -5,7 +5,7 @@ gradle.allprojects {
         return outFormat.format(new Date())
     }()
     if(mavenVersion.matches(/\d+(.\d+)+-([A].*|[B].*|[S].*|[D].*)/)) {
-        ext.completeVersion = mavenVersion + "-" + buildStart
+        ext.completeVersion = mavenVersion// + "-" + buildStart
     } else if(mavenVersion.matches(/\d+(.\d+)+(-RC)?/)) {
         ext.completeVersion = mavenVersion
     } else {

@@ -6,9 +6,9 @@
 package org.dlect.provider.base.blackboard.helper.httpclient;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.Map;
+import org.dlect.helper.ApplicationInformation;
 
 /**
  *
@@ -16,10 +16,13 @@ import java.util.Map;
  */
 public interface BlackboardHttpClient {
 
-    public static final String DLECT_IDENTIFIER = "DLect-V2.2";
+    public static final String DLECT_SHORT_IDENTIFIER = "DLect-" + ApplicationInformation.APPLICATION_VERSION;
+    public static final String DLECT_IDENTIFIER = "DLect Lecture Recording Helper/" + ApplicationInformation.APPLICATION_VERSION;
 
-    public InputStream doPost(URI uri, Map<String, String> credentials) throws IOException;
+    public HttpResponceStream doPost(URI uri, Map<String, String> postVars) throws IOException;
 
-    public InputStream doGet(URI uri) throws IOException;
+    public HttpResponceStream doGet(URI uri) throws IOException;
+    
+    public HttpResponceStream doGetWithoutCookies(URI uri) throws IOException;
 
 }

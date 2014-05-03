@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<offering>
+    <id>1022</id>
+    <course>PSYC6000</course>
+    <semester>
+        <id>6260</id>
+        <name>Semester 2, 2012</name>
+        <number>2</number>
+        <year>2012</year>
+    </semester>
+    <location>St Lucia</location>
+    <mode>Internal</mode>
+    <sinet_class>61199</sinet_class>
+    <campus>
+        <code>STLUC</code>
+        <name>St Lucia</name>
+    </campus>
+    <last_update>2012-10-03T11:30:38+00:00</last_update>
+    <series>
+        <series>
+            <id>4377</id>
+            <name>L</name>
+            <groups>
+                <group>
+                    <id>14812</id>
+                    <name>01</name>
+                    <groupname/>
+                    <sessions>
+                        <session>
+                            <id>16863</id>
+                            <day>Wed</day>
+                            <start>12:00 PM</start>
+                            <finish>1:50 PM</finish>
+                            <startmins>720</startmins>
+                            <finishmins>830</finishmins>
+                            <room>102E</room>
+                            <building>
+                                <id>33</id>
+                                <campus>STLUC</campus>
+                                <number>43A</number>
+                                <name>Frank White Building</name>
+                            </building>
+                            <events>
+                                <event date="2012-07-25" taught="true"/>
+                                <event date="2012-08-01" taught="true"/>
+                            </events>
+                        </session>
+                        <session>
+                            <id>16863</id>
+                            <day>Thu</day>
+                            <start>12:00 PM</start>
+                            <finish>1:50 PM</finish>
+                            <startmins>300</startmins>
+                            <finishmins>350</finishmins>
+                            <room>1E</room>
+                            <building>
+                                <id>33</id>
+                                <campus>STLUCIA</campus>
+                                <number>4A</number>
+                                <name>Frank White Building</name>
+                            </building>
+                            <events>
+                                <event date="2012-07-26" taught="true"/>
+                                <event date="2012-08-02" taught="true"/>
+                            </events>
+                        </session>
+                    </sessions>
+                </group>
+            </groups>
+        </series>
+        <series>
+            <id>4381</id>
+            <name>T</name>
+            <groups>
+                <group>
+                    <id>14816</id>
+                    <name>1</name>
+                    <groupname/>
+                    <sessions>
+                        <session>
+                            <id>16868</id>
+                            <day>Wed</day>
+                            <start>2:00 PM</start>
+                            <finish>2:50 PM</finish>
+                            <startmins>840</startmins>
+                            <finishmins>890</finishmins>
+                            <room>211</room>
+                            <building>
+                                <id>15</id>
+                                <campus>STLUC</campus>
+                                <number>35</number>
+                                <name>Chamberlain Building</name>
+                            </building>
+                            <events>
+                                <event date="2012-07-25" taught="true"/>
+                            </events>
+                        </session>
+                    </sessions>
+                </group>
+                <group>
+                    <id>14821</id>
+                    <name>2</name>
+                    <groupname/>
+                    <sessions>
+                        <session>
+                            <id>16873</id>
+                            <day>Wed</day>
+                            <start>3:00 PM</start>
+                            <finish>3:50 PM</finish>
+                            <startmins>900</startmins>
+                            <finishmins>950</finishmins>
+                            <room>237</room>
+                            <building>
+                                <id>245</id>
+                                <campus>STLUC</campus>
+                                <number>3</number>
+                                <name>Steele Building</name>
+                            </building>
+                            <events>
+                                <event date="2012-07-25" taught="true"/>
+                            </events>
+                        </session>
+                    </sessions>
+                </group>
+            </groups>
+        </series>
+    </series>
+    <assessment></assessment>
+</offering>

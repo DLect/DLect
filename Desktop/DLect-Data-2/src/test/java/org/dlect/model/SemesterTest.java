@@ -28,7 +28,7 @@ public class SemesterTest {
     @Test
     public void testJaxB() {
         Semester s = new Semester();
-        s.setSubjects(Sets.newHashSet(new Subject(), new Subject()));
+        s.setSubjects(Sets.newHashSet(new Subject("1", "Sub1"), new Subject("2", "Sub2")));
         s.setNum(1020);
         s.setLongName("Semester 1020 Long Name");
         s.setCoursePostfixName("Sem 1020. Course Prefix");

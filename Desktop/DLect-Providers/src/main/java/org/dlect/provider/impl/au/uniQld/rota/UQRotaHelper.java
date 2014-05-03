@@ -20,6 +20,6 @@ public interface UQRotaHelper {
 
     public Set<ImmutableStream> getStreamsFor(String subjectCode, int semCode);
 
-    public Set<ImmutableStream> getStreamsFor(String subjectCode, int semCode, Date lectureTime, String lectureRoom);
+    public Set<ImmutableStream> getStreamsFor(String subjectCode, int semCode, Date lectureTime, String lectureBuilding, String lectureRoom);
 
 }

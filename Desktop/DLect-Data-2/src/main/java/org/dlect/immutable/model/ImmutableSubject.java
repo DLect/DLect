@@ -86,6 +86,11 @@ public class ImmutableSubject implements Comparable<ImmutableSubject> {
     }
 
     @Override
+    public String toString() {
+        return "ImmutableSubject{" + "bbid=" + bbid + ", name=" + name + ", lectures=" + lectures + ", streams=" + streams + '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

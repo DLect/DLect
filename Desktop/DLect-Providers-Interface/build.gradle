@@ -2,6 +2,7 @@ applyJava();
 
 dependencies {    
     compile         desktop.data()
+    compile         desktop.helpers()
         
     testCompile     projectTestingCommon()
     testCompile     desktop.testing()
