@@ -15,6 +15,7 @@ public class DLectException extends Exception {
 
     private final DLectExceptionCause causeCode;
 
+    @Deprecated
     public DLectException(DLectExceptionCause causeCode) {
         this.causeCode = causeCode;
     }

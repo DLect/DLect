@@ -3,20 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.update;
+package org.dlect.helper;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-import org.dlect.logging.ControllerLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author lee
  */
 public class ApplicationInformation {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationInformation.class);
 
     public static final String OS_TYPE;
     public static final String OS_VERSON;
@@ -33,7 +36,7 @@ public class ApplicationInformation {
         JAVA_VERSION = System.getProperty("java.version", "?");
     }
 
-    public static String getApplicationVersion() {
+    protected static String getApplicationVersion() {
         try {
             Enumeration<URL> r = ClassLoader.getSystemClassLoader().getResources("META-INF/MANIFEST.MF");
 
@@ -49,7 +52,7 @@ public class ApplicationInformation {
             }
             return "3.0.?(V)";
         } catch (IOException ex) {
-            ControllerLogger.LOGGER.error("Failed to load manifest", ex);
+            LOGGER.error("Failed to load manifest", ex);
             return "3.0.?(E)";
         }
     }

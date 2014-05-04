@@ -1,0 +1,7 @@
+DLect Mobile
+
+ - Use the libraries that were written for DLect-Desktop.
+    - Change the Java version to 6 as there is limited support for Java 7 features on Android.
+ - This means that we can test the water with an android app without having to shell out for a web server.
+ - Potentially use Grails or Scala for the website.
+ - Maybe use one of the languages like Node.js for it's speed and simplicity; however I would have to learn it.

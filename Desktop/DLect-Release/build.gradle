@@ -57,6 +57,9 @@ shadow {
     filter(findbugs()) {
         exclude "**"
     }
+    filter(groovyLibs()) {
+        exclude "**"
+    }
     filter(':Desktop:Desktop-DLect-Release') {
         include "*"
         include "META-INF/*.MF"

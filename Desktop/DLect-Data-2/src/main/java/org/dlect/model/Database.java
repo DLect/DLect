@@ -12,15 +12,20 @@ import java.util.Map;
 import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.dlect.events.EventID;
+import org.dlect.helper.ApplicationInformation;
 import org.dlect.model.helper.XmlListenable;
 
 @XmlRootElement(name = "dlect")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Database extends XmlListenable<Database> {
+
+    @XmlAttribute(name = "desktop-version")
+    private String versionString = ApplicationInformation.APPLICATION_VERSION;
 
     @XmlElementWrapper(name = "semesters")
     @XmlElement(name = "semester")
@@ -71,9 +76,17 @@ public class Database extends XmlListenable<Database> {
         setMap(this.settings, settings);
     }
 
+    public String getVersionString() {
+        return versionString;
+    }
+
+    public void setVersionString(String versionString) {
+        this.versionString = versionString;
+    }
+
     @Override
     public String toString() {
-        return "Database{" + "semesters=" + getSemesters() + '}';
+        return "Database{" + "version=" + versionString + "semesters=" + getSemesters() + '}';
     }
 
     public static enum DatabaseEventID implements EventID {

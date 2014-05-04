@@ -84,7 +84,7 @@ public class ImmutableLecture implements Comparable<ImmutableLecture> {
 
     @Override
     public String toString() {
-        return "ImmutableLecture{" + "contentID=" + contentID + ", time=" + time + ", enabled=" + enabled + ", streams=" + streams + ", lectureDownloads=" + lectureDownloads + '}';
+        return "ImmutableLecture{" + "contentID=" + contentID + ", time=" + time + ", enabled=" + enabled + ", streams=" + streams + '}';
     }
 
     public static ImmutableLecture from(Lecture lecture) {

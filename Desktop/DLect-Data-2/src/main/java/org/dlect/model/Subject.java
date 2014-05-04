@@ -54,6 +54,12 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
         playlistFormat = new PlaylistFormat();
     }
 
+    public Subject(String id, String name) {
+        this();
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public int compareTo(Subject o) {
         if (o == null) {
