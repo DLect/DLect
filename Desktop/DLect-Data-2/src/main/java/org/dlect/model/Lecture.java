@@ -60,7 +60,7 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
             // Equals consitent.
             return 0;
         } else if (c_time == 0) {
-            // Names are equal but BBIDs are not; use them to keep equals consitency.
+            // Names are equal but BBIDs are not; use BBID to keep equals consitency.
             return c_cid;
         } else {
             // Names and BBIDs not equal so use the name to get a nice sort.

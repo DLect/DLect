@@ -30,14 +30,21 @@ def configureJava(task) {
     task.options.encoding = 'UTF-8'
 }
 
+// Fail the build test failures if property given or running on Travis-CI
+
+def failBuildOnTestFailure = hasProperty("failOnTestFailure") || System.env.TRAVIS;
+def runJaCoCo = !hasProperty("noJaCoCo");
+
+println JavaVersion.current();
 
 gradle.allprojects {    
     ext.applyJava = {mainClass ->
         apply plugin: 'java'
-        apply plugin: 'jacoco'
+        apply plugin: 'groovy'
         
         dependencies {
             compile     slf4jBase()
+            testCompile     groovyLibs()
             
             provided    findbugs()
             
@@ -53,19 +60,22 @@ gradle.allprojects {
                 classpath += tasks.run.classpath
             }
         }
-        
-        jacocoTestReport {
-            group = "reporting"
-            description = "Generate Jacoco coverage reports after running tests."
-            reports {
-                xml.enabled true
-                html.enabled true
-                csv.enabled false
+        if(!JavaVersion.current().isJava8Compatible() && runJaCoCo) {
+            // JaCoCo doesn't work in java 8 currently
+            apply plugin: 'jacoco'
+            jacocoTestReport {
+                group = "reporting"
+                description = "Generate Jacoco coverage reports after running tests."
+                reports {
+                    xml.enabled true
+                    html.enabled true
+                    csv.enabled false
+                }
             }
+                
+            tasks["build"].dependsOn jacocoTestReport
         }
-        
-        tasks["build"].dependsOn jacocoTestReport
-        
+            
         tasks.withType( JavaCompile.class ).all { task->
             configureJava(task);
         }
@@ -76,7 +86,7 @@ gradle.allprojects {
                 })
         }
         test {
-            ignoreFailures = true
+            ignoreFailures = !failBuildOnTestFailure;
         }
         
         task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {

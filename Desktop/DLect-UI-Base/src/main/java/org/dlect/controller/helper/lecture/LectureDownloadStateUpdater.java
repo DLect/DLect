@@ -8,6 +8,7 @@ package org.dlect.controller.helper.lecture;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 import org.dlect.controller.MainController;
 import org.dlect.controller.download.event.DownloadEvent;
@@ -100,7 +101,7 @@ public class LectureDownloadStateUpdater implements EventListener {
         FileController fc = controller.getFileController();
 
         try {
-            ld.setDownloaded(fc.getFileForDownload(s, l, ld).exists());
+            ld.setDownloaded(Files.exists(fc.getFileForDownload(s, l, ld).toPath()));
         } catch (IOException ex) {
             ProviderLogger.LOGGER.error("Failed to create file for " + s + "; " + l + "; " + ld, ex);
             ld.setDownloaded(false);

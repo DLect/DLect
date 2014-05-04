@@ -47,11 +47,11 @@ public class TestProvider implements Provider, LoginProvider, SubjectProvider {
             Logger.getLogger(TestProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (username.equals("bad")) {
-            throw new DLectException(DLectExceptionCause.INVALID_DATA_FORMAT);
+            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, "The responce were bad");
         } else if (username.equals("no")) {
-            throw new DLectException(DLectExceptionCause.NO_CONNECTION);
+            throw new DLectException(DLectExceptionCause.NO_CONNECTION, "No connection detected");
         } else if (!username.equals("good")) {
-            throw new DLectException(DLectExceptionCause.BAD_CREDENTIALS);
+            throw new DLectException(DLectExceptionCause.BAD_CREDENTIALS, "Bad credentials");
         }
     }
 

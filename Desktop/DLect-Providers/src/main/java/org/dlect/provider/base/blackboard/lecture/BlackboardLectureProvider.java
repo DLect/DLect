@@ -5,45 +5,35 @@
  */
 package org.dlect.provider.base.blackboard.lecture;
 
-import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectMapItem;
-import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
-import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingItem;
-import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectContentListing;
-import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
 import org.dlect.immutable.model.ImmutableLecture;
-import org.dlect.immutable.model.ImmutableLectureDownload;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
-import org.dlect.logging.ProviderLogger;
-import org.dlect.model.formatter.DownloadType;
-import org.dlect.provider.objects.ImmutableSubjectData;
 import org.dlect.provider.LectureProvider;
-import org.dlect.provider.base.blackboard.BlackboardLectureCustomiser;
-import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
+import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectContentListing;
+import org.dlect.provider.base.blackboard.helper.xml.BlackboardSubjectMapItem;
+import org.dlect.provider.base.blackboard.lecture.plugin.BlackboardLectureItemParser;
+import org.dlect.provider.base.blackboard.lecture.plugin.BlackboardLectureItemParserBuilder;
+import org.dlect.provider.base.blackboard.lecture.plugin.BlackboardLectureMapping;
+import org.dlect.provider.objects.ImmutableSubjectData;
 
-import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_IDENTIFIER;
+import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient.DLECT_SHORT_IDENTIFIER;
 
 /**
  *
@@ -51,37 +41,24 @@ import static org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHtt
  */
 public class BlackboardLectureProvider implements LectureProvider {
 
-    private static final ImmutableMap<DownloadType, String> DOWNLOAD_TYPE_EXTENSIONS = ImmutableMap
-            .<DownloadType, String>builder()
-            .put(DownloadType.AUDIO, "mp3")
-            .put(DownloadType.VIDEO, "m4v")
-            .build();
-
-    private static final String ECHO360_LINK_TYPE = "resource/x-apreso";
+    protected static final String SUBJECT_BASE_URL = "courseMap?v=1&language=en_GB&ver=" + DLECT_SHORT_IDENTIFIER + "&course_id=";
 
     private final URI baseUrl;
     private final BlackboardHttpClient httpClient;
-    private final BlackboardLectureCustomiser lectureCustomiser;
     private final BlackboardXmlParser xmlParser;
-    private final BlackboardLecturePageParser lecturePageParser;
-
-    public BlackboardLectureProvider(URI baseUrl,
-                                     BlackboardLectureCustomiser lectureCustomiser,
-                                     BlackboardHttpClient httpClient,
-                                     BlackboardXmlParser xmlParser) {
-        this(baseUrl, httpClient, lectureCustomiser, xmlParser, new BlackboardLecturePageParserImpl(httpClient));
-    }
+    private final BlackboardLectureItemParserBuilder builder;
+    private final BlackboardStreamProvider streamProvider;
 
     public BlackboardLectureProvider(URI baseUrl,
                                      BlackboardHttpClient httpClient,
-                                     BlackboardLectureCustomiser lectureCustomiser,
                                      BlackboardXmlParser xmlParser,
-                                     BlackboardLecturePageParser lecturePageParser) {
+                                     BlackboardLectureItemParserBuilder builder,
+                                     BlackboardStreamProvider streamProvider) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
-        this.lectureCustomiser = lectureCustomiser;
         this.xmlParser = xmlParser;
-        this.lecturePageParser = lecturePageParser;
+        this.builder = builder;
+        this.streamProvider = streamProvider;
     }
 
     protected Multimap<ImmutableLecture, ImmutableStream> fillMultimap(Collection<ImmutableLecture> lectures) {
@@ -92,55 +69,17 @@ public class BlackboardLectureProvider implements LectureProvider {
         return ls;
     }
 
-    protected Map<DownloadType, ImmutableLectureDownload> getDownloadType(URI url) throws IOException {
-        String urlPostfix = "%2Fmedia."; // <= URL Encoded "/media."
-
-        Map<DownloadType, ImmutableLectureDownload> map = Maps.newHashMap();
-
-        for (Entry<DownloadType, String> entry : DOWNLOAD_TYPE_EXTENSIONS.entrySet()) {
-            DownloadType dt = entry.getKey();
-            String ext = entry.getValue();
-
-            try {
-                map.put(dt, new ImmutableLectureDownload(
-                        new URL(url.toString() + urlPostfix + ext).toURI(), ext, false, false));
-            } catch (MalformedURLException | URISyntaxException ex) {
-                throw new IOException(ex);
-            }
-        }
-
-        return map;
-    }
-
     @Override
     public ImmutableSubjectData getLecturesIn(ImmutableSemester sem, ImmutableSubject s) throws DLectException {
-        String subjectContentLocation = "courseMap?v=1&language=en_GB&ver=" + DLECT_IDENTIFIER + "&course_id=" + s.getId();
+        String subjectContentLocation = SUBJECT_BASE_URL + s.getId();
 
         try (InputStream contentStream = httpClient.doGet(new URL(baseUrl.toURL(), subjectContentLocation).toURI())) {
             BlackboardSubjectContentListing listing = xmlParser.parseSubjectContent(contentStream);
 
             URI baseUri = URI.create(listing.getRootUrl());
 
-            List<String> exploredPages = Lists.newArrayList();
+            return parseLectureItems(listing, baseUri, sem, s);
 
-            Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
-            streams.addAll(lectureCustomiser.getLectureStreamsFor(sem, s));
-            Set<ImmutableLecture> lectures = Sets.newHashSet(s.getLectures());
-            Multimap<ImmutableLecture, ImmutableStream> lectureStreams = fillMultimap(lectures);
-
-            for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
-                if (ECHO360_LINK_TYPE.equals(bsmi.getLinkType()) && bsmi.isAvaliable()) {
-                    URI normal = BlackboardLectureUtils.normaliseUri(baseUri, bsmi.getViewUrl());
-
-                    if (!exploredPages.contains(normal.toString())) {
-                        BlackboardLectureRecordingPage page = lecturePageParser.getPageFor(normal);
-
-                        processPage(page, lectures, lectureStreams, sem, s);
-                    }
-                }
-            }
-
-            return new ImmutableSubjectData(lectureStreams, lectures, streams);
         } catch (IOException ex) {
             throw new DLectException(DLectExceptionCause.NO_CONNECTION, ex);
         } catch (URISyntaxException ex) {
@@ -148,32 +87,27 @@ public class BlackboardLectureProvider implements LectureProvider {
         }
     }
 
-    protected void processPage(BlackboardLectureRecordingPage page,
-                               Set<ImmutableLecture> lectures,
-                               Multimap<ImmutableLecture, ImmutableStream> lectureStreams,
-                               ImmutableSemester semester,
-                               ImmutableSubject subject) throws DLectException {
-        for (BlackboardLectureRecordingItem blri : page.getItems()) {
-            try {
+    protected ImmutableSubjectData parseLectureItems(BlackboardSubjectContentListing listing, URI baseUri,
+                                                     ImmutableSemester sem, ImmutableSubject s) throws IOException,
+                                                                                                       DLectException {
+        List<BlackboardLectureItemParser> parsers = ImmutableList.copyOf(builder.buildParsers(httpClient));
 
-                Optional<Date> opDate = lectureCustomiser.getLectureTime(blri.getUrl(), blri.getTitle(), blri.getCaptureDate());
+        Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
+        streams.addAll(streamProvider.getLectureStreamsFor(sem, s));
+        Set<ImmutableLecture> lectures = Sets.newHashSet(s.getLectures());
+        Multimap<ImmutableLecture, ImmutableStream> lectureStreams = fillMultimap(lectures);
 
-                if (opDate.isPresent()) {
-                    Date d = opDate.get();
-                    Collection<ImmutableStream> streams = lectureCustomiser.getLectureStream(blri.getUrl(), blri.getTitle(), d, semester, subject);
-
-                    Map<DownloadType, ImmutableLectureDownload> downloads = getDownloadType(blri.getUrl());
-
-                    ImmutableLecture l = new ImmutableLecture(blri.getContentId(), d, false, streams, downloads);
-
-                    lectureStreams.putAll(l, streams);
-                    lectures.add(l);
+        for (BlackboardLectureItemParser p : parsers) {
+            for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
+                BlackboardLectureMapping lm = p.getLecturesIn(baseUri, bsmi, sem, s);
+                if (lm != null) {
+                    lectures.addAll(lm.getLectures());
+                    lectureStreams.putAll(lm.getLectureStreamMapping());
+                    streams.addAll(lm.getLectureStreamMapping().values());
                 }
-            } catch (IOException ex) {
-                ProviderLogger.LOGGER.error("Failed to process page item " + blri, ex);
-                throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
             }
         }
+        return new ImmutableSubjectData(lectureStreams, lectures, streams);
     }
 
 }

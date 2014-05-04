@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dlect.provider.base.blackboard.lecture;
+package org.dlect.provider.base.blackboard.lecture.plugin.impl;
 
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
 import java.net.URI;

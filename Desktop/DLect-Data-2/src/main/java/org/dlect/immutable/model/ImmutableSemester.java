@@ -31,6 +31,13 @@ public class ImmutableSemester {
         this.subject = ImmutableSet.copyOf(subject);
     }
 
+    public ImmutableSemester(int num, String longName, String coursePostfixName) {
+        this.num = num;
+        this.longName = longName;
+        this.coursePostfixName = coursePostfixName;
+        this.subject = ImmutableSet.of();
+    }
+
     public int getNum() {
         return num;
     }
