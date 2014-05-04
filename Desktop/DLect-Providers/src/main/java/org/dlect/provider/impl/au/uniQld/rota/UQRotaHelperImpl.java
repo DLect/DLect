@@ -144,7 +144,6 @@ public class UQRotaHelperImpl implements UQRotaHelper {
     @Nonnull
     protected Set<UQRotaStream> getAllStreamsIn(String subjectCode, int semCode) {
         Integer offeringId = getOfferingId(semCode, subjectCode);
-        System.out.println("Offering ID: " + offeringId);
         if (offeringId == null) {
             return ImmutableSet.of();
         }
