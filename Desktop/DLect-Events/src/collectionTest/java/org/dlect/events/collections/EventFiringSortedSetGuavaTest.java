@@ -44,8 +44,6 @@ public class EventFiringSortedSetGuavaTest extends TestCase {
                 // them to specify how the collection should behave, and
                 // what operations are supported.
                 .withFeatures(
-                        CollectionFeature.ALLOWS_NULL_QUERIES,
-                        CollectionFeature.ALLOWS_NULL_VALUES,
                         CollectionFeature.FAILS_FAST_ON_CONCURRENT_MODIFICATION,
                         CollectionFeature.GENERAL_PURPOSE,
                         CollectionFeature.KNOWN_ORDER,

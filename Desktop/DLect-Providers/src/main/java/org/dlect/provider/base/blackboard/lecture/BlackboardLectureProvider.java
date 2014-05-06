@@ -6,6 +6,7 @@
 package org.dlect.provider.base.blackboard.lecture;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
@@ -21,7 +23,6 @@ import org.dlect.immutable.model.ImmutableLecture;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
-import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.LectureProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
@@ -89,15 +90,15 @@ public class BlackboardLectureProvider implements LectureProvider {
     protected ImmutableSubjectData parseLectureItems(BlackboardSubjectContentListing listing, URI baseUri,
                                                      ImmutableSemester sem, ImmutableSubject s) throws IOException,
                                                                                                        DLectException {
-        Set<BlackboardLectureItemParser> parsers = Sets.newHashSet(builder.build(httpClient));
+        List<BlackboardLectureItemParser> parsers = ImmutableList.copyOf(builder.buildParsers(httpClient));
 
         Set<ImmutableStream> streams = Sets.newHashSet(s.getStreams());
         streams.addAll(streamProvider.getLectureStreamsFor(sem, s));
         Set<ImmutableLecture> lectures = Sets.newHashSet(s.getLectures());
         Multimap<ImmutableLecture, ImmutableStream> lectureStreams = fillMultimap(lectures);
 
-        for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
-            for (BlackboardLectureItemParser p : parsers) {
+        for (BlackboardLectureItemParser p : parsers) {
+            for (BlackboardSubjectMapItem bsmi : listing.getAllItems()) {
                 BlackboardLectureMapping lm = p.getLecturesIn(baseUri, bsmi, sem, s);
                 if (lm != null) {
                     lectures.addAll(lm.getLectures());

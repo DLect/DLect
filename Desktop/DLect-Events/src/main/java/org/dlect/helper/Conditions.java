@@ -5,6 +5,8 @@
  */
 package org.dlect.helper;
 
+import java.util.Collection;
+
 /**
  * An extension of {@link com.google.common.base.Preconditions }.
  *
@@ -19,6 +21,20 @@ public class Conditions {
         return check;
     }
 
+    public static <T, C extends Collection<T>> C checkNonEmpty(C check, String varName) {
+        checkNonNull(check, varName);
+        if (check.isEmpty()) {
+            throw new IllegalArgumentException(varName + " should not be empty");
+        }
+        return check;
+    }
+
+    public static void checkMinSize(int testSize, int minExpectedSize, String varName) {
+        if (testSize < minExpectedSize) {
+            throw new IllegalArgumentException(varName + " should be at least " + minExpectedSize + ". Was " + testSize);
+        }
+    }
+
     public static void checkTrue(boolean check, String desc) {
         if (!check) {
             throw new IllegalArgumentException(desc == null ? "Condition was false" : desc);
@@ -26,8 +42,8 @@ public class Conditions {
     }
 
     public static void checkFalse(boolean check, String desc) {
-        if (!check) {
-            throw new IllegalArgumentException(desc == null ? "Condition was false" : desc);
+        if (check) {
+            throw new IllegalArgumentException(desc == null ? "Condition was true" : desc);
         }
     }
 

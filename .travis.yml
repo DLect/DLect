@@ -1,1 +1,18 @@
 language: java
+
+env:
+  global:
+   - TERM=dumb
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "X5ZHvBKqWdyh/xUN/x+cReh0PdHS4p+1BOzIg66SZWKOjEIBQBW1y3hvfCYzWG4UZ4haZsbdjVd1FLwjG08I/9wBp+kFe1ncBFDPUzjBHMsyjtSRBk6ZxqPZ9my1NDEeFv6/QWPAI0leHRRFOScmiaZkNatT/uacTjSiHCNhkzQ="
+
+addons:
+  coverity_scan:
+    project:
+      name: "DLect/DLect"
+      description: "DLect downloads and organises lecture recordings from the University of Queensland"
+    notification_email: dlect@outlook.com
+    build_command_prepend: gradle clean
+    build_command: gradle -PnoJaCoCo -PfailOnTestFailure build
+    branch_pattern: .*-staging

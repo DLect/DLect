@@ -10,7 +10,7 @@ import java.net.URI;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import org.dlect.immutable.model.ImmutableSemester;
 import org.dlect.immutable.model.ImmutableStream;
 import org.dlect.immutable.model.ImmutableSubject;
@@ -35,7 +35,7 @@ public class UQLectureCustomiser extends BlackboardLectureItemParserBuilder impl
                                                                                        BlackboardLectureCustomiser {
 
     //private static final TimeZone UQ_TIMEZONE = TimeZone.getTimeZone("GMT+10:00");
-    private static final ThreadLocalDateFormat LECTOPIA_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final ThreadLocalDateFormat LECTOPIA_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd HH:mm:ss");
     //private static final Pattern ROOM_NUMBER_FROM_LECTURE_TITLE = Pattern.compile("");
 
     private final UQRotaHelper helper;
@@ -45,9 +45,9 @@ public class UQLectureCustomiser extends BlackboardLectureItemParserBuilder impl
     }
 
     @Override
-    protected Set<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
-        return of(new BlackboardInlineLectureItemParser(c, this),
-                  new EchoCenterLectureProvider(c, this));
+    public List<BlackboardLectureItemParser> buildParsers(BlackboardHttpClient c) {
+        return of(new EchoCenterLectureProvider(c, this),
+                  new BlackboardInlineLectureItemParser(c, this));
     }
 
     @Override
