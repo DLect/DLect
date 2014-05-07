@@ -127,7 +127,7 @@ public class UQRotaOfferingParserImplTest {
     }
 
     private HttpResponceStream toIs(String str) {
-        return new HttpResponceStream(new ByteArrayInputStream(str.getBytes(UTF_8)), URI.create("http://www.google.com/"));
+        return new HttpResponceStream(new ByteArrayInputStream(str.getBytes(UTF_8)), null, URI.create("http://www.google.com/"));
     }
 
     private URI getUriFor(int offeringId) {
