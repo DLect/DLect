@@ -7,6 +7,7 @@ package org.dlect.model;
 
 import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -98,8 +99,13 @@ public class Semester extends XmlListenable<Semester> implements Comparable<Seme
     }
 
     @Override
-    public String toString() {
-        return "Semester{" + "num=" + getNum() + ", longName=" + getLongName() + ", coursePostfixName=" + getCoursePostfixName() + ", subject=" + getSubjects() + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build()
+                .put("num", getNum())
+                .put("longName", getLongName())
+                .put("coursePostfixName", getCoursePostfixName())
+                .put("subject", getSubjects())
+                .build();
     }
 
     /**

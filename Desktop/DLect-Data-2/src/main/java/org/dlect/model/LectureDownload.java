@@ -6,6 +6,7 @@
 package org.dlect.model;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 import org.dlect.events.EventID;
@@ -78,8 +79,12 @@ public class LectureDownload extends XmlListenable<LectureDownload> {
     }
 
     @Override
-    public String toString() {
-        return "LectureDownload{" + "downloadURL=" + downloadURL + ", downloadExtension=" + downloadExtension + ", downloaded=" + downloaded + ", downloadEnabled=" + downloadEnabled + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build()
+                .put("downloadURL" , downloadURL )
+                .put( "downloadExtension" , downloadExtension )
+                .put( "downloaded" , downloaded )
+                .put( "downloadEnabled" , downloadEnabled).build();
     }
 
     @Override
