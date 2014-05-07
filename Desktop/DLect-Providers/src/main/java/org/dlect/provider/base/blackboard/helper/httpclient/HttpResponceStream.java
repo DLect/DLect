@@ -8,6 +8,7 @@ package org.dlect.provider.base.blackboard.helper.httpclient;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import org.apache.http.entity.ContentType;
 
 /**
  *
@@ -15,12 +16,18 @@ import java.net.URI;
  */
 public class HttpResponceStream extends InputStream {
 
-    InputStream wrapped;
-    URI location;
+    private final InputStream wrapped;
+    private final ContentType contentType;
+    private final URI location;
 
-    public HttpResponceStream(InputStream wrapped, URI location) {
+    public HttpResponceStream(InputStream wrapped, ContentType contentType, URI location) {
         this.wrapped = wrapped;
+        this.contentType = contentType;
         this.location = location;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
     }
 
     public URI getLocation() {
