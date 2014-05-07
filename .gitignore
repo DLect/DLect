@@ -10,8 +10,6 @@ DLect.dat
 timings.txt
 output.txt
 
-*.jar
-
 
 # OS Specifics - From https://github.com/github/gitignore/blob/master/Global/
 .DS_Store
