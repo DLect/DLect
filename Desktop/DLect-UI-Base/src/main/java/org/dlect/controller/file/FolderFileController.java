@@ -7,7 +7,6 @@ package org.dlect.controller.file;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +25,7 @@ public class FolderFileController implements FileController {
 
     private final File parentFolder;
 
-    protected static final ThreadLocalDateFormat LECTURE_FILENAME_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd hh.mm");
+    protected static final ThreadLocalDateFormat LECTURE_FILENAME_DATE_FORMAT = new ThreadLocalDateFormat("yyyy-MM-dd HH.mm");
 
     public FolderFileController() {
         this.parentFolder = null;

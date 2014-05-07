@@ -8,6 +8,7 @@ package org.dlect.model;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.Nonnull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -159,8 +160,15 @@ public class Subject extends XmlListenable<Subject> implements Comparable<Subjec
     }
 
     @Override
-    public String toString() {
-        return "Subject{" + "id=" + id + ", name=" + name + ", tagFormat=" + tagFormat + ", playlistFormat=" + playlistFormat + ", lectures=" + lectures + ", streams=" + streams + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build()
+                .put("id", id)
+                .put("name", name)
+                .put("tagFormat", tagFormat)
+                .put("playlistFormat", playlistFormat)
+                .put("lectures", lectures)
+                .put("streams", streams)
+                .build();
     }
 
     public static enum SubjectEventID implements EventID {

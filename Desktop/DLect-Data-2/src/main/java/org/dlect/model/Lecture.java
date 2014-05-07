@@ -115,8 +115,14 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
     }
 
     @Override
-    public String toString() {
-        return "Lecture{" + "contentID=" + contentID + ", time=" + time + ", enabled=" + enabled + ", streams=" + streams + ", lectureDownloads=" + lectureDownloads + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build()
+                .put("contentID", contentID)
+                .put("time", time)
+                .put("enabled", enabled)
+                .put("streams", streams)
+                .put("lectureDownloads", lectureDownloads)
+                .build();
     }
 
     @Override
@@ -135,10 +141,7 @@ public class Lecture extends XmlListenable<Lecture> implements Comparable<Lectur
             return false;
         }
         final Lecture other = (Lecture) obj;
-        if (!Objects.equals(this.contentID, other.contentID)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.getContentID(), other.getContentID());
     }
 
     public static enum LectureEventID implements EventID {

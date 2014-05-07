@@ -32,6 +32,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
@@ -88,16 +89,11 @@ public class BlackboardHttpClientImpl implements BlackboardHttpClient {
             HttpContext c = new BasicHttpContext();
             HttpResponse r = client.execute(httpGet, c);
 
-            Header[] h = r.getAllHeaders();
-
             URI t = getUriAfterRedirects(c);
 
-//            ProviderLogger.LOGGER.error("Headers: " + r.getStatusLine() + ":: -> " + t);
-//            
-//            for (Header header : h) {
-//                ProviderLogger.LOGGER.error(header.getName() + ": " + header.getValue());
-//            }
-            return new HttpResponceStream(new EntityInputStream(r.getEntity()), t);
+            ContentType contentType = ContentType.get(r.getEntity());
+
+            return new HttpResponceStream(new EntityInputStream(r.getEntity()), contentType, t);
         } catch (URISyntaxException ex) {
             throw new IOException(ex);
         }

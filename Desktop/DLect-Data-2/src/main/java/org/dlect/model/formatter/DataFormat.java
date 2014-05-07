@@ -15,13 +15,13 @@ import org.dlect.events.EventID;
 import org.dlect.model.helper.XmlListenable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class Formatable<T extends Formatable<T>> extends XmlListenable<T> {
+public abstract class DataFormat<T extends DataFormat<T>> extends XmlListenable<T> {
 
     @XmlElementWrapper(name = "formats")
     @XmlElement(name = "format")
     private final Map<DownloadType, LectureTitleFormat> formats;
 
-    public Formatable(EventID formatEventID) {
+    public DataFormat(EventID formatEventID) {
         this.formats = newWrappedMap(formatEventID);
     }
 

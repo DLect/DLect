@@ -5,6 +5,7 @@
  */
 package org.dlect.model.formatter;
 
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,7 +17,7 @@ import org.dlect.events.listenable.EventBuilder;
  * @author lee
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PlaylistFormat extends Formatable<PlaylistFormat> {
+public class PlaylistFormat extends DataFormat<PlaylistFormat> {
 
     @XmlElement(name = "style")
     private PlaylistStyle style = PlaylistStyle.DISABLED;
@@ -33,6 +34,11 @@ public class PlaylistFormat extends Formatable<PlaylistFormat> {
         EventBuilder<PlaylistStyle> b = event(PlaylistFormatEventID.STYLE).before(getStyle());
         this.style = (style == null ? PlaylistStyle.DISABLED : style);
         b.after(getStyle()).fire();
+    }
+
+    @Override
+    public Map<String, Object> getObjectsToFormat() {
+        return build().put("style", style).build();
     }
 
     public static enum PlaylistFormatEventID implements EventID {

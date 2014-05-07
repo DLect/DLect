@@ -7,6 +7,7 @@ package org.dlect.model;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Ordering;
+import java.util.Map;
 import org.dlect.events.EventID;
 import org.dlect.events.listenable.EventBuilder;
 import org.dlect.model.helper.XmlListenable;
@@ -58,8 +59,8 @@ public class Stream extends XmlListenable<Stream> implements Comparable<Stream> 
     }
 
     @Override
-    public String toString() {
-        return "Stream{" + "name=" + getName() + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build().put("name", getName()).build();
     }
 
     public static enum StreamEventID implements EventID {
