@@ -31,13 +31,15 @@ import org.dlect.events.collections.EventFiringList;
 import org.dlect.events.collections.EventFiringMap;
 import org.dlect.events.collections.EventFiringSet;
 import org.dlect.events.collections.EventFiringSortedSet;
+import org.dlect.helper.formattable.Formattable;
+import org.dlect.helper.formattable.Formattables;
 
 /**
  *
  * @author lee
  * @param <T> The class that this class should use.
  */
-public class Listenable<T extends Listenable<T>> {
+public class Listenable<T extends Listenable<T>> implements Formattable {
 
     protected <S extends Comparable> Ordering<S> ordering() {
         return Ordering.natural().nullsLast();
@@ -88,6 +90,20 @@ public class Listenable<T extends Listenable<T>> {
         return new EventBuilder<>(this, eid, getAdapter());
     }
 
+    @Override
+    public String toString() {
+        return Formattables.toString(this);
+    }
+
+    @Override
+    public Map<String, Object> getObjectsToFormat() {
+        return build().build();
+    }
+
+    protected ImmutableMap.Builder<String, Object> build() {
+        return ImmutableMap.builder();
+    }
+    
     //<editor-fold defaultstate="collapsed" desc=" COLLECTIONS HELPER METHODS ">
     protected <E> List<E> newWrappedList(EventID eventID) {
         return new EventFiringList<>(Collections.synchronizedList(Lists.<E>newArrayList()), new CollectionEventHelper<E>(this, eventID, getAdapter()));

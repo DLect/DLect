@@ -110,7 +110,7 @@ public class FolderFileControllerTest {
      * Test of formatLectureDate method, of class FolderFileController.
      */
     @Test
-    public void testFormatLectureDate() {
+    public void testFormatLectureDate() {                     
     }
 
 }

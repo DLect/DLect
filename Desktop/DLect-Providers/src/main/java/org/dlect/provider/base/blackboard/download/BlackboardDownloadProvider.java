@@ -16,10 +16,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.dlect.exception.DLectException;
 import org.dlect.exception.DLectExceptionCause;
+import org.dlect.helpers.FileDebuggingHelper;
 import org.dlect.immutable.model.ImmutableLectureDownload;
+import org.dlect.logging.ProviderLogger;
 import org.dlect.provider.DownloadProvider;
 import org.dlect.provider.base.blackboard.helper.BlackboardXmlParser;
 import org.dlect.provider.base.blackboard.helper.httpclient.BlackboardHttpClient;
+import org.dlect.provider.base.blackboard.helper.httpclient.HttpResponceStream;
 
 /**
  *
@@ -38,11 +41,15 @@ public class BlackboardDownloadProvider implements DownloadProvider {
     @Override
     public InputStream getDownloadStreamFor(ImmutableLectureDownload lectureDownload) throws DLectException {
         String responce;
-        try (InputStream r = httpClient.doGet(lectureDownload.getDownloadURL())) {
-            responce = CharStreams.toString(new InputStreamReader(r, Charsets.UTF_8));
+        try (HttpResponceStream r = httpClient.doGet(lectureDownload.getDownloadURL())) {
+            if (r.getContentType().getMimeType().toLowerCase().contains("html")) {
+                responce = CharStreams.toString(new InputStreamReader(r, Charsets.UTF_8));
+            } else {
+                return r;
+            }
         } catch (IOException ex) {
             throw new DLectException(DLectExceptionCause.NO_CONNECTION,
-                                     "Failed to get lecture page.",
+                                     "Failed to get lecture page for url " + lectureDownload.getDownloadURL() + ".",
                                      ex);
         }
 
@@ -63,7 +70,7 @@ public class BlackboardDownloadProvider implements DownloadProvider {
             }
         } else {
             throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE,
-                                     "Failed to parse page at " + lectureDownload.getDownloadExtension());
+                                     "Failed to parse page at " + lectureDownload.getDownloadURL());
         }
     }
 

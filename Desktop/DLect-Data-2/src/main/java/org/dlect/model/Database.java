@@ -85,8 +85,11 @@ public class Database extends XmlListenable<Database> {
     }
 
     @Override
-    public String toString() {
-        return "Database{" + "version=" + versionString + "semesters=" + getSemesters() + '}';
+    public Map<String, Object> getObjectsToFormat() {
+        return build()
+                .put("versionString", getVersionString())
+                .put("semesters", getSemesters())
+                .build();
     }
 
     public static enum DatabaseEventID implements EventID {
