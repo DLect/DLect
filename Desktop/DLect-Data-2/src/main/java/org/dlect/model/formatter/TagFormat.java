@@ -5,6 +5,7 @@
  */
 package org.dlect.model.formatter;
 
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,7 +17,7 @@ import org.dlect.events.listenable.EventBuilder;
  * @author lee
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TagFormat extends Formatable<TagFormat> {
+public class TagFormat extends DataFormat<TagFormat> {
 
     @XmlElement(name = "enabled")
     private boolean enabled;
@@ -33,6 +34,11 @@ public class TagFormat extends Formatable<TagFormat> {
         EventBuilder<Boolean> b = event(TagFormatterEventID.ENABLED).before(isEnabled());
         this.enabled = enabled;
         b.after(isEnabled()).fire();
+    }
+
+    @Override
+    public Map<String, Object> getObjectsToFormat() {
+        return build().put("enabled", enabled).build();
     }
 
     public static enum TagFormatterEventID implements EventID {
