@@ -22,7 +22,7 @@ class UQRotaHelperImplSpockTest extends Specification {
     UQRotaOfferingParser offParser = Mock(UQRotaOfferingParser)
     UQRotaHelperImpl obj = new UQRotaHelperImpl(semParser, offSearchParser, offParser)
        
-
+    
     
     @Unroll
     def "getSemester[#code] with Exception Throw"(code, _x) {

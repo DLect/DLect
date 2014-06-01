@@ -8,6 +8,7 @@ package org.dlect.provider.base.blackboard.lecture.plugin.impl;
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingPage;
 import org.dlect.provider.base.blackboard.helper.xml.BlackboardLectureRecordingItem;
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
 import java.io.IOException;
@@ -45,23 +46,25 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
                 String contentId = m.group(1);
                 String itemHtml = m.group(2);
 
-                items.add(parseItem(normal.toURL(), contentId, itemHtml));
+                // This allows the parseItem to return nothing(Optional.absent())
+                items.addAll(parseItem(normal.toURL(), contentId, itemHtml).asSet());
             }
-
             return new BlackboardLectureRecordingPage(items);
         } catch (MalformedURLException ex) {
             ProviderLogger.LOGGER.error("Failed to get URL: " + normal, ex);
-            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
+            throw new  DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
         } catch (IOException ex) {
             ProviderLogger.LOGGER.error("Failed to load page from uri: " + normal, ex);
             throw new DLectException(DLectExceptionCause.NO_CONNECTION, ex);
         }
     }
 
-    public BlackboardLectureRecordingItem parseItem(URL base, String contentId, String itemHtml) throws DLectException {
+    protected Optional<BlackboardLectureRecordingItem> parseItem(URL base, String contentId, String itemHtml) throws DLectException {
         Matcher m = LECTURE_RECORDING_INFORMATION.matcher(itemHtml);
         if (!m.find()) {
-            throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, "Recording information regular expression failed. Input: " + itemHtml);
+            // Page segment doesn't match the regexp so ignore it; but still report the error in the logs.
+            ProviderLogger.LOGGER.error("Recording information regular expression failed. Input: " + itemHtml);
+            return Optional.absent();
         } else {
             try {
                 String title = m.group(1);
@@ -69,9 +72,11 @@ public class BlackboardLecturePageParserImpl extends BlackboardLecturePageParser
                 String urlBase = m.group(3);
 
                 URI url = new URL(base, urlBase).toURI();
-                return new BlackboardLectureRecordingItem(contentId, title, captureDate, url);
+                return Optional.of(new BlackboardLectureRecordingItem(contentId, title, captureDate, url));
             } catch (MalformedURLException | URISyntaxException ex) {
+                // Keep error logs.
                 ProviderLogger.LOGGER.error("Failed to create url from matcher. " + contentId.replace('\n', ' '), ex);
+                // Change this to return null or Optional.absent().
                 throw new DLectException(DLectExceptionCause.ILLEGAL_SERVICE_RESPONCE, ex);
             }
         }
