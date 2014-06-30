@@ -6,6 +6,7 @@
 package org.dlect.events.collections;
 
 import com.google.common.collect.ForwardingSortedSet;
+import com.google.common.collect.ImmutableSortedSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -29,6 +30,12 @@ public class EventFiringSortedSet<E> extends ForwardingSortedSet<E> {
     @Override
     protected SortedSet<E> delegate() {
         return delegate;
+    }
+
+    public ImmutableSortedSet<E> immutableCopy() {
+        synchronized (delegate) {
+            return ImmutableSortedSet.copyOf(delegate);
+        }
     }
 
     protected CollectionEventHelper<E> getHelper() {

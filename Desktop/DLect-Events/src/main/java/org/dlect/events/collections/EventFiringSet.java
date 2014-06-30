@@ -6,6 +6,7 @@
 package org.dlect.events.collections;
 
 import com.google.common.collect.ForwardingSet;
+import com.google.common.collect.ImmutableSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -29,6 +30,12 @@ public class EventFiringSet<E> extends ForwardingSet<E> {
     @Override
     protected Set<E> delegate() {
         return delegate;
+    }
+
+    public ImmutableSet<E> immutableCopy() {
+        synchronized (delegate) {
+            return ImmutableSet.copyOf(delegate);
+        }
     }
 
     protected CollectionEventHelper<E> getHelper() {

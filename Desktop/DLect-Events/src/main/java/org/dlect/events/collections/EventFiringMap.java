@@ -9,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ForwardingIterator;
 import com.google.common.collect.ForwardingMap;
 import com.google.common.collect.ForwardingMapEntry;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.Iterator;
@@ -34,6 +35,10 @@ public class EventFiringMap<K, V> extends ForwardingMap<K, V> {
     @Override
     protected Map<K, V> delegate() {
         return delegate;
+    }
+
+    public ImmutableMap<K, V> immutableCopy() {synchronized (delegate) {
+        return ImmutableMap.copyOf(delegate);}
     }
 
     protected CollectionEventHelper<Entry<K, V>> getHelper() {

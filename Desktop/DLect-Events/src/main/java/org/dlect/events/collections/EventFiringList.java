@@ -6,6 +6,7 @@
 package org.dlect.events.collections;
 
 import com.google.common.collect.ForwardingList;
+import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +30,12 @@ public class EventFiringList<E> extends ForwardingList<E> {
 
     protected CollectionEventHelper<E> getHelper() {
         return helper;
+    }
+
+    public ImmutableList<E> immutableCopy() {
+        synchronized (delegate) {
+            return ImmutableList.copyOf(delegate);
+        }
     }
 
     @Override

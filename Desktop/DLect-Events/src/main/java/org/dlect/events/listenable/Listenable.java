@@ -41,7 +41,7 @@ import org.dlect.helper.formattable.Formattables;
  */
 public class Listenable<T extends Listenable<T>> implements Formattable {
 
-    protected <S extends Comparable> Ordering<S> ordering() {
+    protected <S extends Comparable<?>> Ordering<S> ordering() {
         return Ordering.natural().nullsLast();
     }
 
@@ -103,7 +103,7 @@ public class Listenable<T extends Listenable<T>> implements Formattable {
     protected ImmutableMap.Builder<String, Object> build() {
         return ImmutableMap.builder();
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc=" COLLECTIONS HELPER METHODS ">
     protected <E> List<E> newWrappedList(EventID eventID) {
         return new EventFiringList<>(Collections.synchronizedList(Lists.<E>newArrayList()), new CollectionEventHelper<E>(this, eventID, getAdapter()));
@@ -172,24 +172,36 @@ public class Listenable<T extends Listenable<T>> implements Formattable {
     }
 
     protected <T> ImmutableSet<T> copyOf(Set<T> set) {
+        if (set instanceof EventFiringSet) {
+            return ((EventFiringSet<T>) set).immutableCopy();
+        }
         synchronized (set) {
             return ImmutableSet.copyOf(set);
         }
     }
 
     protected <K, V> ImmutableMap<K, V> copyOf(Map<K, V> map) {
+        if (map instanceof EventFiringMap) {
+            return ((EventFiringMap<K, V>) map).immutableCopy();
+        }
         synchronized (map) {
             return ImmutableMap.copyOf(map);
         }
     }
 
-    protected <T> ImmutableList<T> copyOf(List<T> map) {
-        synchronized (map) {
-            return ImmutableList.copyOf(map);
+    protected <T> ImmutableList<T> copyOf(List<T> list) {
+        if (list instanceof EventFiringList) {
+            return ((EventFiringList<T>) list).immutableCopy();
+        }
+        synchronized (list) {
+            return ImmutableList.copyOf(list);
         }
     }
 
     protected <T> ImmutableSortedSet<T> copyOf(SortedSet<T> set) {
+        if (set instanceof EventFiringSortedSet) {
+            return ((EventFiringSortedSet<T>) set).immutableCopy();
+        }
         synchronized (set) {
             return ImmutableSortedSet.copyOf(set);
         }
